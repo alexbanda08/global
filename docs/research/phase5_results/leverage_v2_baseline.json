@@ -1,0 +1,29 @@
+{
+  "P3": {
+    "label": "P3",
+    "sharpe": 2.13,
+    "cagr": 0.385,
+    "mdd": -0.124,
+    "calmar": 3.11,
+    "min_yr": 0.116,
+    "pos_yrs": 6
+  },
+  "P5": {
+    "label": "P5",
+    "sharpe": 2.14,
+    "cagr": 0.318,
+    "mdd": -0.181,
+    "calmar": 1.75,
+    "min_yr": 0.102,
+    "pos_yrs": 6
+  },
+  "P7": {
+    "label": "P7",
+    "sharpe": 2.04,
+    "cagr": 0.43,
+    "mdd": -0.152,
+    "calmar": 2.84,
+    "min_yr": 0.128,
+    "pos_yrs": 6
+  }
+}

@@ -1,0 +1,52 @@
+//@version=5
+strategy("Optimized BTC Mean Reversion (RSI 20/65)", overlay=true, initial_capital=10000, default_qty_type=strategy.percent_of_equity, default_qty_value=100, commission_type=strategy.commission.percent, commission_value=0.04, pyramiding=0, calc_on_every_tick=false)
+
+emaLength = input.int(200, "EMA Period", minval=1)
+rsiPeriod = input.int(14, "RSI Period", minval=1)
+rsiBullLevel = input.float(20, "RSI OS", minval=10, maxval=50)
+rsiBearLevel = input.float(65, "RSI OB", minval=50, maxval=90)
+stopLossPct = input.float(4.0, "SL %", minval=0.1, maxval=20.0, step=0.1) / 100
+takeProfitPct = input.float(6.0, "TP %", minval=0.1, maxval=30.0, step=0.1) / 100
+
+// V5 IS: RSI only, no stoch
+startDate = input.time(timestamp("2025-08-31 00:00"), "Start Date")
+endDate   = input.time(timestamp("2025-12-20 23:59"), "End Date")
+inDateRange = time >= startDate and time <= endDate
+
+ema = ta.ema(close, emaLength)
+rsi = ta.rsi(close, rsiPeriod)
+
+longSignal  = rsi < rsiBullLevel and close > ema * 0.9
+shortSignal = rsi > rsiBearLevel and close < ema
+
+var float entryPrice = na
+var float longStopPrice = na
+var float longTargetPrice = na
+var float shortStopPrice = na
+var float shortTargetPrice = na
+
+inLongPosition  = strategy.position_size > 0
+inShortPosition = strategy.position_size < 0
+noPosition      = strategy.position_size == 0
+
+if inDateRange and noPosition
+    if longSignal
+        entryPrice := close
+        longStopPrice := entryPrice * (1 - stopLossPct)
+        longTargetPrice := entryPrice * (1 + takeProfitPct)
+        strategy.entry("Long", strategy.long)
+    if shortSignal
+        entryPrice := close
+        shortStopPrice := entryPrice * (1 + stopLossPct)
+        shortTargetPrice := entryPrice * (1 - takeProfitPct)
+        strategy.entry("Short", strategy.short)
+
+if inLongPosition
+    strategy.exit("Exit Long", from_entry="Long", stop=longStopPrice, limit=longTargetPrice)
+if inShortPosition
+    strategy.exit("Exit Short", from_entry="Short", stop=shortStopPrice, limit=shortTargetPrice)
+
+if not inDateRange and strategy.position_size != 0
+    strategy.close_all()
+
+plot(ema, "EMA 200", color=color.new(color.yellow, 0), linewidth=2)

@@ -1,0 +1,99 @@
+             V24 + V25 Overlay Report
+
+          Appendix to V23 9-coin portfolio · 2026-04-21 · 5 OOS-validated overlays
+
+Executive summary
+
+This appendix documents the seven overlays layered on top of the V23 core portfolio. V24 contributed two (ETH Regime
+Router 2h, LINK RSI+BB Scalp 15m). V25 adds five more, three of which take capital allocation and two of which remain
+paper-only. The single biggest change is AVAX V25 MTF Confluence 1h, which produces CAGR +320% / Sharpe +2.19 with
+OOS beating IS -- a genuine upgrade over the V23 AVAX RangeKalman. The rest of V25 (SOL, DOGE overlays) adds
+diversification and Sharpe improvement rather than CAGR.
+
+Overlay   TF    Role       Full CAGR   Full Sh    OOS Sh                            Action
+AVAX V25    1h       LIVE     +320.6%      +2.19      +2.74                         50% AVAX
+SOL V25     1h       LIVE      +86.4%      +1.55      +1.43                          30% SOL
+DOGE V25   30m       LIVE      +32.9%      +1.13      +0.92                         30% DOGE
+AVAX V25    1h       LIVE      +19.4%      +0.80      +0.72
+SUI V25    30m       LIVE      +37.7%      +0.94      +0.84                             paper
+                                                                                        paper
+
+Go-live priority: AVAX V25 MTF Conf is the single change that moves expected portfolio CAGR up materially (from +82%
+pure V23 to ~+95-100% blended). Everything else is Sharpe/DD improvement. If you want the minimum incremental change
+to the V23 portfolio, deploy AVAX V25 50/50 alongside V23 AVAX RangeKalman and keep everything else as pure V23.
+AVAX V25 MTF Confluence @ 1h
+
+PRIMARY V25 WINNER -- promoted to core AVAX allocation
+
+EMA(12)/EMA(50) crossover on 1h bars, gated by 4h close > 4h EMA(50). Long only in 4h uptrend, short only in 4h
+downtrend. Backtested single strongest V25 signal: CAGR +320% net, Sharpe 2.19, OOS beats IS. Suggested allocation:
+50% of AVAX sub-account (50/50 with V23 RangeKalman).
+
+Metric         Full             IS (2020-2023)   OOS (2024-2026)
+CAGR (net)             +320.6%          +197.9%          +584.6%
+Sharpe                   +2.19            +1.78            +2.74
+Trades                     481              288              193
+Max DD                  -43.7%               --               --
+Profit Factor             1.79               --               --
+Win %                    37.2%               --               --
+SOL V25 MTF Confluence @ 1h
+
+Diversifier overlay on V23 SOL BB-Break
+
+Same MTF family as AVAX V25, tuned for SOL (EMA 20/50). OOS holds: +73% CAGR, Sharpe +1.43. V23 BB-Break still
+dominates raw CAGR (+139%), but the two signal families fire on different timing -- stacking reduces combined variance.
+Suggested allocation: 30% overlay (70/30 V23 / V25).
+
+Metric         Full             IS (2020-2023)   OOS (2024-2026)
+CAGR (net)              +86.4%           +93.5%           +73.4%
+Sharpe                   +1.55            +1.61            +1.43
+Trades                     452              269              182
+Max DD                  -41.4%               --               --
+Profit Factor             1.56               --               --
+Win %                    35.2%               --               --
+DOGE V25 Seasonal RSI+BB @ 30m
+
+Hour-of-day (06-12 UTC) mean-reversion
+
+RSI+BB contrarian signal restricted to the 06:00-12:00 UTC window. That window captures Asian + European morning flows
+where DOGE has structurally higher mean-reversion. Full CAGR +33%, Sharpe +1.13. OOS +25%, Sharpe +0.92.
+Suggested allocation: 30% overlay on V23 DOGE.
+
+Metric         Full             IS (2020-2023)   OOS (2024-2026)
+CAGR (net)              +32.9%           +42.9%           +24.6%
+Sharpe                   +1.13            +1.36            +0.92
+Trades                     77               36               41
+Max DD                  -24.7%               --               --
+Profit Factor             1.95               --               --
+Win %                    46.8%               --               --
+AVAX V25 Seasonal RSI+BB @ 1h (PAPER ONLY)
+
+Seasonal edge confirmation on second coin
+
+Same 06-12 UTC window as DOGE Seasonal. OOS holds (+18% CAGR, Sharpe +0.72) but CAGR alone is too low to justify
+capital. Kept as paper-only -- its value is confirming that the 06-12 UTC seasonality is a real alt-coin effect, not overfit to
+DOGE.
+
+Metric         Full             IS (2020-2023)   OOS (2024-2026)
+CAGR (net)              +19.4%           +20.8%           +17.5%
+Sharpe                   +0.80            +0.86            +0.72
+Trades                     53               32               21
+Max DD                  -30.7%               --               --
+Profit Factor             1.83               --               --
+Win %                    35.8%               --               --
+SUI V25 MTF Confluence @ 30m (PAPER ONLY)
+
+30m MTF variant -- weaker than V23 SUI BB-Break
+
+EMA(40)/EMA(100) on 30m bars, gated by 4h trend. OOS holds but lower CAGR (+31%) and lower Sharpe (+0.84) than the
+V23 SUI BB-Break winner (+160% / Sh 1.66). Kept as paper-only -- upgrade to 15% overlay only if 4 weeks live show parity
+with backtest.
+
+Metric         Full             IS (2020-2023)   OOS (2024-2026)
+CAGR (net)              +37.7%           +50.2%           +30.9%
+Sharpe                   +0.94            +1.10            +0.84
+Trades                     311              76               234
+Max DD                  -38.9%               --               --
+Profit Factor             1.25               --               --
+Win %                    36.0%               --               --
+

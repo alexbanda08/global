@@ -1,0 +1,239 @@
+[
+  {
+    "label": "V22_BTC_RangeKalman_2h",
+    "error": "C:\\Users\\alexandre bandarra\\Desktop\\global\\data\\binance\\parquet\\BTCUSDT\\2h"
+  },
+  {
+    "label": "V22_ETH_RangeKalman_1h",
+    "error": "v4c_range_kalman() got an unexpected keyword argument 'alpha'"
+  },
+  {
+    "label": "V22_SOL_RangeKalman_2h",
+    "error": "C:\\Users\\alexandre bandarra\\Desktop\\global\\data\\binance\\parquet\\SOLUSDT\\2h"
+  },
+  {
+    "sharpe": 0.801,
+    "cagr": 0.3315,
+    "max_dd": -0.6306,
+    "calmar": 0.526,
+    "n_trades": 71,
+    "win_rate": 0.296,
+    "final_equity": 33725.05,
+    "n_bars": 9306,
+    "has_shorts": false,
+    "per_year": {
+      "2022": {
+        "sharpe": -1.233,
+        "return": -0.4531,
+        "n_bars": 2190
+      },
+      "2023": {
+        "sharpe": 2.726,
+        "return": 4.7764,
+        "n_bars": 2190
+      },
+      "2024": {
+        "sharpe": 0.401,
+        "return": 0.0707,
+        "n_bars": 2196
+      },
+      "2025": {
+        "sharpe": 0.498,
+        "return": 0.1267,
+        "n_bars": 2190
+      },
+      "2026": {
+        "sharpe": -1.668,
+        "return": -0.1151,
+        "n_bars": 540
+      }
+    },
+    "label": "SOL_BBBreak_LS_4h",
+    "symbol": "SOLUSDT",
+    "tf": "4h",
+    "module": "run_v38b_smc_mixes.py",
+    "fn": "sig_bbbreak",
+    "fn_kwargs": "{}",
+    "data_start": "2022-01-01"
+  },
+  {
+    "sharpe": -0.126,
+    "cagr": -0.1665,
+    "max_dd": -0.6822,
+    "calmar": -0.244,
+    "n_trades": 84,
+    "win_rate": 0.262,
+    "final_equity": 4615.62,
+    "n_bars": 9306,
+    "has_shorts": false,
+    "per_year": {
+      "2022": {
+        "sharpe": -1.183,
+        "return": -0.478,
+        "n_bars": 2190
+      },
+      "2023": {
+        "sharpe": 1.651,
+        "return": 1.0175,
+        "n_bars": 2190
+      },
+      "2024": {
+        "sharpe": 0.26,
+        "return": -0.0132,
+        "n_bars": 2196
+      },
+      "2025": {
+        "sharpe": -1.327,
+        "return": -0.524,
+        "n_bars": 2190
+      },
+      "2026": {
+        "sharpe": -0.872,
+        "return": -0.0753,
+        "n_bars": 540
+      }
+    },
+    "label": "DOGE_TTM_Squeeze_Pop_4h",
+    "symbol": "DOGEUSDT",
+    "tf": "4h",
+    "module": "run_v30_creative.py",
+    "fn": "sig_ttm_squeeze",
+    "fn_kwargs": "{}",
+    "data_start": "2022-01-01"
+  },
+  {
+    "sharpe": 0.463,
+    "cagr": 0.1093,
+    "max_dd": -0.5059,
+    "calmar": 0.216,
+    "n_trades": 36,
+    "win_rate": 0.306,
+    "final_equity": 15532.82,
+    "n_bars": 9306,
+    "has_shorts": false,
+    "per_year": {
+      "2022": {
+        "sharpe": -0.883,
+        "return": -0.2441,
+        "n_bars": 2190
+      },
+      "2023": {
+        "sharpe": 1.697,
+        "return": 0.8769,
+        "n_bars": 2190
+      },
+      "2024": {
+        "sharpe": 0.171,
+        "return": -0.0444,
+        "n_bars": 2196
+      },
+      "2025": {
+        "sharpe": 0.861,
+        "return": 0.2284,
+        "n_bars": 2190
+      },
+      "2026": {
+        "sharpe": -2.309,
+        "return": -0.0674,
+        "n_bars": 540
+      }
+    },
+    "label": "SOL_SuperTrend_Flip_4h",
+    "symbol": "SOLUSDT",
+    "tf": "4h",
+    "module": "run_v30_creative.py",
+    "fn": "sig_supertrend_flip",
+    "fn_kwargs": "{}",
+    "data_start": "2022-01-01"
+  },
+  {
+    "sharpe": 0.933,
+    "cagr": 0.4721,
+    "max_dd": -0.6011,
+    "calmar": 0.785,
+    "n_trades": 69,
+    "win_rate": 0.377,
+    "final_equity": 51650.6,
+    "n_bars": 9306,
+    "has_shorts": false,
+    "per_year": {
+      "2022": {
+        "sharpe": 1.244,
+        "return": 0.7924,
+        "n_bars": 2190
+      },
+      "2023": {
+        "sharpe": 0.788,
+        "return": 0.3341,
+        "n_bars": 2190
+      },
+      "2024": {
+        "sharpe": 1.355,
+        "return": 1.1343,
+        "n_bars": 2196
+      },
+      "2025": {
+        "sharpe": 0.543,
+        "return": 0.1578,
+        "n_bars": 2190
+      },
+      "2026": {
+        "sharpe": -1.684,
+        "return": -0.1224,
+        "n_bars": 540
+      }
+    },
+    "label": "DOGE_HTF_Donchian_4h",
+    "symbol": "DOGEUSDT",
+    "tf": "4h",
+    "module": "run_v34_expand.py",
+    "fn": "sig_htf_donchian_ls",
+    "fn_kwargs": "{}",
+    "data_start": "2022-01-01"
+  },
+  {
+    "sharpe": -0.083,
+    "cagr": -0.0389,
+    "max_dd": -0.4246,
+    "calmar": -0.092,
+    "n_trades": 49,
+    "win_rate": 0.49,
+    "final_equity": 8450.27,
+    "n_bars": 9306,
+    "has_shorts": false,
+    "per_year": {
+      "2022": {
+        "sharpe": 0.214,
+        "return": 0.0229,
+        "n_bars": 2190
+      },
+      "2023": {
+        "sharpe": -1.033,
+        "return": -0.1542,
+        "n_bars": 2190
+      },
+      "2024": {
+        "sharpe": 0.353,
+        "return": 0.0584,
+        "n_bars": 2196
+      },
+      "2025": {
+        "sharpe": 0.178,
+        "return": 0.0146,
+        "n_bars": 2190
+      },
+      "2026": {
+        "sharpe": -2.482,
+        "return": -0.0855,
+        "n_bars": 540
+      }
+    },
+    "label": "ETH_CCI_Extreme_Rev_4h",
+    "symbol": "ETHUSDT",
+    "tf": "4h",
+    "module": "run_v30_creative.py",
+    "fn": "sig_cci_extreme",
+    "fn_kwargs": "{}",
+    "data_start": "2022-01-01"
+  }
+]

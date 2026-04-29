@@ -1,0 +1,42 @@
+{
+  "V40_3_canonical": {
+    "label": "V40_3_canonical",
+    "sharpe": 1.46,
+    "cagr": 0.1439,
+    "mdd": -0.0901,
+    "calmar": 1.597,
+    "min_yr": 0.0269,
+    "pos_yrs": 6,
+    "total_yrs": 6
+  },
+  "V40_3_tp12": {
+    "label": "V40_3_tp12",
+    "sharpe": 1.5,
+    "cagr": 0.0946,
+    "mdd": -0.0533,
+    "calmar": 1.774,
+    "min_yr": 0.0261,
+    "pos_yrs": 6,
+    "total_yrs": 6
+  },
+  "V40_3_mixed": {
+    "label": "V40_3_mixed",
+    "sharpe": 1.757,
+    "cagr": 0.1383,
+    "mdd": -0.0708,
+    "calmar": 1.954,
+    "min_yr": 0.0379,
+    "pos_yrs": 6,
+    "total_yrs": 6
+  },
+  "V40_4_mixed": {
+    "label": "V40_4_mixed",
+    "sharpe": 1.319,
+    "cagr": 0.1046,
+    "mdd": -0.0646,
+    "calmar": 1.619,
+    "min_yr": 0.0217,
+    "pos_yrs": 6,
+    "total_yrs": 6
+  }
+}

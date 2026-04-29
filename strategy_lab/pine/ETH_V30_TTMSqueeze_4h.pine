@@ -1,0 +1,74 @@
+//@version=5
+// ETH V30 TTMSqueeze 4h
+// TTM_Squeeze_Pop — V30 winner, OOS PASS
+// Params: {"bb_k": 1.8, "kc_mult": 1.5, "mom_n": 10}  | Exits: TP=6×ATR  SL=1.5×ATR  Trail=3.5×ATR  MH=20  Risk=3.0%  Lev=3.0×
+// Sim: 0.045% taker fee, 3 bps slippage, ATR-risk sizing, next-bar-open fills.
+strategy("ETH V30 TTMSqueeze 4h", overlay=true,
+     initial_capital=10000,
+     default_qty_type=strategy.cash, default_qty_value=0,
+     commission_type=strategy.commission.percent, commission_value=0.045,
+     slippage=3, pyramiding=0, calc_on_every_tick=false,
+     process_orders_on_close=false)
+
+// ---- Inputs ----
+bb_n = input.int(20, "BB length")
+bb_k = input.float(1.8, "BB mult")
+kc_n = input.int(20, "KC length")
+kc_mult = input.float(1.5, "KC mult")
+mom_n = input.int(10, "Donchian midline length")
+
+// ---- Shared ----
+risk_per_trade = 3.0 / 100.0
+lev_cap        = 3.0
+tp_atr         = 6
+sl_atr         = 1.5
+trail_atr      = 3.5
+max_hold       = 20
+
+// ---- Indicators ----
+atr_v = ta.atr(14)
+
+bb_mid = ta.sma(close, bb_n)
+bb_sd  = ta.stdev(close, bb_n)
+bb_up  = bb_mid + bb_k*bb_sd
+bb_dn  = bb_mid - bb_k*bb_sd
+
+kc_mid = ta.ema(close, kc_n)
+kc_up  = kc_mid + kc_mult*atr_v
+kc_dn  = kc_mid - kc_mult*atr_v
+
+squeeze_on = bb_up < kc_up and bb_dn > kc_dn
+release    = not squeeze_on and squeeze_on[1]
+
+mid_donch = (ta.highest(high, mom_n) + ta.lowest(low, mom_n)) / 2
+long_sig  = release and close > mid_donch
+short_sig = release and close < mid_donch
+
+// ---- Sizing ----
+qty_from_risk() =>
+    risk_dollars = strategy.equity * risk_per_trade
+    sl_dist = sl_atr * atr_v
+    qty_risk = sl_dist > 0 ? risk_dollars / sl_dist : 0
+    qty_cap  = (strategy.equity * lev_cap) / close
+    math.min(qty_risk, qty_cap)
+
+// ---- Entries ----
+if long_sig
+    q = qty_from_risk()
+    if q > 0
+        strategy.entry("L", strategy.long, qty=q)
+        strategy.exit("Lx", "L", profit=tp_atr*atr_v/syminfo.mintick, loss=sl_atr*atr_v/syminfo.mintick,
+                      trail_points=trail_atr*atr_v/syminfo.mintick, trail_offset=trail_atr*atr_v/syminfo.mintick)
+
+if short_sig
+    q = qty_from_risk()
+    if q > 0
+        strategy.entry("S", strategy.short, qty=q)
+        strategy.exit("Sx", "S", profit=tp_atr*atr_v/syminfo.mintick, loss=sl_atr*atr_v/syminfo.mintick,
+                      trail_points=trail_atr*atr_v/syminfo.mintick, trail_offset=trail_atr*atr_v/syminfo.mintick)
+
+// ---- Max hold timeout ----
+var int bars_in = 0
+bars_in := strategy.position_size != 0 ? bars_in + 1 : 0
+if bars_in >= max_hold
+    strategy.close_all()

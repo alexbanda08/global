@@ -1,0 +1,303 @@
+WARN: failed to load _scan_run_v38_smc from C:\Users\alexandre bandarra\Desktop\global\strategy_lab\run_v38_smc.py: 'charmap' codec can't encode character '\u2b50' in position 47: character maps to <undefined>
+WARN: failed to load _scan_run_v38_smc from C:\Users\alexandre bandarra\Desktop\global\strategy_lab\run_v38_smc.py: 'charmap' codec can't encode character '\u2b50' in position 47: character maps to <undefined>
+WARN: failed to load _scan_run_v38_smc from C:\Users\alexandre bandarra\Desktop\global\strategy_lab\run_v38_smc.py: 'charmap' codec can't encode character '\u2b50' in position 47: character maps to <undefined>
+WARN: failed to load _scan_run_v38_smc from C:\Users\alexandre bandarra\Desktop\global\strategy_lab\run_v38_smc.py: 'charmap' codec can't encode character '\u2b50' in position 47: character maps to <undefined>
+WARN: failed to load _scan_run_v38_smc from C:\Users\alexandre bandarra\Desktop\global\strategy_lab\run_v38_smc.py: 'charmap' codec can't encode character '\u2b50' in position 47: character maps to <undefined>
+WARN: failed to load _scan_run_v38_smc from C:\Users\alexandre bandarra\Desktop\global\strategy_lab\run_v38_smc.py: 'charmap' codec can't encode character '\u2b50' in position 47: character maps to <undefined>
+WARN: failed to load _scan_run_v38_smc from C:\Users\alexandre bandarra\Desktop\global\strategy_lab\run_v38_smc.py: 'charmap' codec can't encode character '\u2b50' in position 47: character maps to <undefined>
+[1/294] ema_trend_adx on BTCUSDT @ 4h ... n_trades= 34 | Sharpe_oos=+0.89 | Calmar=+1.10 | MDD= -20.2% | gates=1/7
+[2/294] ema_trend_adx on ETHUSDT @ 4h ... n_trades= 34 | Sharpe_oos=+0.33 | Calmar=+0.21 | MDD= -26.2% | gates=1/7
+[3/294] ema_trend_adx on SOLUSDT @ 4h ... n_trades= 30 | Sharpe_oos=+0.17 | Calmar=+0.03 | MDD= -19.9% | gates=3/7
+[4/294] donchian_breakout on BTCUSDT @ 4h ... n_trades= 96 | Sharpe_oos=+1.19 | Calmar=+2.14 | MDD= -15.4% | gates=3/7
+[5/294] donchian_breakout on ETHUSDT @ 4h ... n_trades=101 | Sharpe_oos=+1.02 | Calmar=+1.30 | MDD= -25.7% | gates=1/7
+[6/294] donchian_breakout on SOLUSDT @ 4h ... n_trades= 95 | Sharpe_oos=+0.79 | Calmar=+1.62 | MDD= -16.4% | gates=4/7
+[7/294] rsi_mean_reversion on BTCUSDT @ 4h ... n_trades= 10 | Sharpe_oos=-0.21 | Calmar=-0.23 | MDD= -21.4% | gates=2/7
+[8/294] rsi_mean_reversion on ETHUSDT @ 4h ... n_trades=  9 | Sharpe_oos=+0.08 | Calmar=-0.03 | MDD= -16.2% | gates=2/7
+[9/294] rsi_mean_reversion on SOLUSDT @ 4h ... n_trades=  9 | Sharpe_oos=-0.23 | Calmar=-0.31 | MDD= -31.8% | gates=2/7
+[10/294] squeeze_breakout on BTCUSDT @ 4h ... n_trades= 99 | Sharpe_oos=+0.27 | Calmar=+0.22 | MDD= -14.9% | gates=3/7
+[11/294] squeeze_breakout on ETHUSDT @ 4h ... n_trades=104 | Sharpe_oos=+0.75 | Calmar=+1.21 | MDD= -12.8% | gates=3/7
+[12/294] squeeze_breakout on SOLUSDT @ 4h ... n_trades= 99 | Sharpe_oos=+1.18 | Calmar=+2.41 | MDD= -12.8% | gates=4/7
+[13/294] macd_htf on BTCUSDT @ 4h ... n_trades=123 | Sharpe_oos=+0.81 | Calmar=+0.78 | MDD= -21.0% | gates=2/7
+[14/294] macd_htf on ETHUSDT @ 4h ... n_trades=113 | Sharpe_oos=-0.84 | Calmar=-0.64 | MDD= -27.3% | gates=1/7
+[15/294] macd_htf on SOLUSDT @ 4h ... n_trades=114 | Sharpe_oos=+0.86 | Calmar=+1.50 | MDD= -16.9% | gates=4/7
+[16/294] supertrend on BTCUSDT @ 4h ... n_trades= 75 | Sharpe_oos=+1.04 | Calmar=+1.77 | MDD= -19.2% | gates=3/7
+[17/294] supertrend on ETHUSDT @ 4h ... n_trades= 79 | Sharpe_oos=+0.42 | Calmar=+0.34 | MDD= -26.8% | gates=0/7
+[18/294] supertrend on SOLUSDT @ 4h ... n_trades= 73 | Sharpe_oos=+0.14 | Calmar=-0.18 | MDD= -28.5% | gates=1/7
+[19/294] gaussian_channel on BTCUSDT @ 4h ... n_trades= 10 | Sharpe_oos=+0.82 | Calmar=+1.15 | MDD= -21.3% | gates=1/7
+[20/294] gaussian_channel on ETHUSDT @ 4h ... n_trades=  6 | Sharpe_oos=+0.00 | Calmar=-0.23 | MDD= -23.7% | gates=0/7
+[21/294] gaussian_channel on SOLUSDT @ 4h ... n_trades=  5 | Sharpe_oos=-1.26 | Calmar=-1.16 | MDD= -41.0% | gates=0/7
+[22/294] volume_breakout on BTCUSDT @ 4h ... n_trades= 72 | Sharpe_oos=+0.71 | Calmar=+0.76 | MDD= -17.3% | gates=3/7
+[23/294] volume_breakout on ETHUSDT @ 4h ... n_trades= 76 | Sharpe_oos=+0.90 | Calmar=+1.02 | MDD= -19.8% | gates=3/7
+[24/294] volume_breakout on SOLUSDT @ 4h ... n_trades= 82 | Sharpe_oos=-0.06 | Calmar=-0.25 | MDD= -20.6% | gates=2/7
+[25/294] ema_trend_adx_v2 on BTCUSDT @ 4h ... n_trades= 34 | Sharpe_oos=+1.03 | Calmar=+1.39 | MDD= -16.6% | gates=3/7
+[26/294] ema_trend_adx_v2 on ETHUSDT @ 4h ... n_trades= 34 | Sharpe_oos=+0.15 | Calmar=+0.03 | MDD= -19.6% | gates=3/7
+[27/294] ema_trend_adx_v2 on SOLUSDT @ 4h ... n_trades= 30 | Sharpe_oos=-0.56 | Calmar=-0.69 | MDD= -19.1% | gates=2/7
+[28/294] volume_breakout_v2 on BTCUSDT @ 4h ... n_trades= 47 | Sharpe_oos=-0.03 | Calmar=-0.23 | MDD= -21.5% | gates=1/7
+[29/294] volume_breakout_v2 on ETHUSDT @ 4h ... n_trades= 50 | Sharpe_oos=+0.69 | Calmar=+0.97 | MDD= -18.7% | gates=3/7
+[30/294] volume_breakout_v2 on SOLUSDT @ 4h ... n_trades= 55 | Sharpe_oos=+0.10 | Calmar=-0.12 | MDD= -27.9% | gates=2/7
+[31/294] donchian_v2 on BTCUSDT @ 4h ... n_trades= 66 | Sharpe_oos=+0.56 | Calmar=+0.62 | MDD= -18.4% | gates=3/7
+[32/294] donchian_v2 on ETHUSDT @ 4h ... n_trades= 67 | Sharpe_oos=+0.42 | Calmar=+0.37 | MDD= -23.1% | gates=2/7
+[33/294] donchian_v2 on SOLUSDT @ 4h ... n_trades= 74 | Sharpe_oos=+0.29 | Calmar=+0.19 | MDD= -21.6% | gates=2/7
+[34/294] supertrend_v2 on BTCUSDT @ 4h ... n_trades= 43 | Sharpe_oos=+0.74 | Calmar=+0.94 | MDD= -18.3% | gates=2/7
+[35/294] supertrend_v2 on ETHUSDT @ 4h ... n_trades= 35 | Sharpe_oos=+0.70 | Calmar=+0.96 | MDD= -15.8% | gates=3/7
+[36/294] supertrend_v2 on SOLUSDT @ 4h ... n_trades= 36 | Sharpe_oos=-0.19 | Calmar=-0.43 | MDD= -26.9% | gates=2/7
+[37/294] ensemble_trend_vol on BTCUSDT @ 4h ... n_trades= 19 | Sharpe_oos=+1.23 | Calmar=+2.76 | MDD=  -9.4% | gates=4/7
+[38/294] ensemble_trend_vol on ETHUSDT @ 4h ... n_trades= 16 | Sharpe_oos=-1.98 | Calmar=-1.13 | MDD= -11.5% | gates=2/7
+[39/294] ensemble_trend_vol on SOLUSDT @ 4h ... n_trades= 16 | Sharpe_oos=+0.99 | Calmar=+2.13 | MDD= -10.9% | gates=4/7
+[40/294] gaussian_channel_v2 on BTCUSDT @ 4h ... n_trades= 13 | Sharpe_oos=+1.89 | Calmar=+6.08 | MDD=  -6.3% | gates=4/7
+[41/294] gaussian_channel_v2 on ETHUSDT @ 4h ... n_trades= 12 | Sharpe_oos=+1.47 | Calmar=+3.00 | MDD=  -9.6% | gates=3/7
+[42/294] gaussian_channel_v2 on SOLUSDT @ 4h ... n_trades=  8 | Sharpe_oos=-1.45 | Calmar=-1.28 | MDD= -22.8% | gates=1/7
+[43/294] sig_orb on BTCUSDT @ 15m ... n_trades=543 | Sharpe_oos=-0.79 | Calmar=-0.69 | MDD= -39.8% | gates=1/7
+[44/294] sig_orb on ETHUSDT @ 15m ... n_trades=547 | Sharpe_oos=-0.18 | Calmar=-0.44 | MDD= -33.7% | gates=1/7
+[45/294] sig_orb on SOLUSDT @ 15m ... n_trades=522 | Sharpe_oos=-2.01 | Calmar=-1.13 | MDD= -64.3% | gates=0/7
+[46/294] sig_rsi_bb on BTCUSDT @ 15m ... n_trades= 27 | Sharpe_oos=+1.06 | Calmar=+1.49 | MDD= -29.7% | gates=1/7
+[47/294] sig_rsi_bb on ETHUSDT @ 15m ... n_trades= 27 | Sharpe_oos=-1.09 | Calmar=-0.92 | MDD= -53.5% | gates=0/7
+[48/294] sig_rsi_bb on SOLUSDT @ 15m ... n_trades= 22 | Sharpe_oos=-0.68 | Calmar=-0.98 | MDD= -56.6% | gates=1/7
+[49/294] sig_st_dual on BTCUSDT @ 15m ... n_trades=301 | Sharpe_oos=-0.22 | Calmar=-0.49 | MDD= -26.5% | gates=1/7
+[50/294] sig_st_dual on ETHUSDT @ 15m ... n_trades=302 | Sharpe_oos=-1.15 | Calmar=-1.01 | MDD= -41.9% | gates=0/7
+[51/294] sig_st_dual on SOLUSDT @ 15m ... n_trades=264 | Sharpe_oos=-0.06 | Calmar=-0.50 | MDD= -37.1% | gates=1/7
+[52/294] sig_vwap_band on BTCUSDT @ 15m ... n_trades=969 | Sharpe_oos=-1.47 | Calmar=-0.96 | MDD= -49.5% | gates=1/7
+[53/294] sig_vwap_band on ETHUSDT @ 15m ... n_trades=936 | Sharpe_oos=-1.83 | Calmar=-1.04 | MDD= -61.6% | gates=1/7
+[54/294] sig_vwap_band on SOLUSDT @ 15m ... n_trades=927 | Sharpe_oos=-0.42 | Calmar=-0.73 | MDD= -55.0% | gates=1/7
+[55/294] sig_kelt_rsi on BTCUSDT @ 4h ... n_trades= 36 | Sharpe_oos=+1.46 | Calmar=+3.77 | MDD= -15.2% | gates=3/7
+[56/294] sig_kelt_rsi on ETHUSDT @ 4h ... n_trades= 35 | Sharpe_oos=+0.50 | Calmar=+0.43 | MDD= -29.2% | gates=1/7
+[57/294] sig_kelt_rsi on SOLUSDT @ 4h ... n_trades= 29 | Sharpe_oos=+1.23 | Calmar=+2.73 | MDD= -21.7% | gates=2/7
+[58/294] sig_mtf_conf on BTCUSDT @ 4h ... n_trades= 53 | Sharpe_oos=+0.98 | Calmar=+1.78 | MDD= -18.4% | gates=3/7
+[59/294] sig_mtf_conf on ETHUSDT @ 4h ... n_trades= 52 | Sharpe_oos=-0.24 | Calmar=-0.55 | MDD= -30.0% | gates=0/7
+[60/294] sig_mtf_conf on SOLUSDT @ 4h ... n_trades= 57 | Sharpe_oos=-0.09 | Calmar=-0.54 | MDD= -36.4% | gates=1/7
+[61/294] sig_squeeze on BTCUSDT @ 4h ... n_trades= 46 | Sharpe_oos=+0.37 | Calmar=+0.34 | MDD= -20.9% | gates=1/7
+[62/294] sig_squeeze on ETHUSDT @ 4h ... n_trades= 50 | Sharpe_oos=-0.10 | Calmar=-0.50 | MDD= -30.7% | gates=0/7
+[63/294] sig_squeeze on SOLUSDT @ 4h ... n_trades= 57 | Sharpe_oos=+0.51 | Calmar=+0.51 | MDD= -26.9% | gates=1/7
+[64/294] sig_sweep on BTCUSDT @ 4h ... n_trades= 10 | Sharpe_oos=+0.47 | Calmar=+0.31 | MDD= -38.0% | gates=1/7
+[65/294] sig_sweep on ETHUSDT @ 4h ... n_trades= 11 | Sharpe_oos=-0.25 | Calmar=-0.46 | MDD= -41.9% | gates=1/7
+[66/294] sig_sweep on SOLUSDT @ 4h ... n_trades=  9 | Sharpe_oos=-0.48 | Calmar=-0.74 | MDD= -58.2% | gates=1/7
+[67/294] sig_atr_sqz on BTCUSDT @ 4h ... n_trades=  6 | Sharpe_oos=+1.02 | Calmar=+1.92 | MDD= -16.7% | gates=3/7
+[68/294] sig_atr_sqz on ETHUSDT @ 4h ... n_trades=  2 | Sharpe_oos=-0.70 | Calmar=-0.85 | MDD= -42.2% | gates=0/7
+[69/294] sig_atr_sqz on SOLUSDT @ 4h ... n_trades=  2 | Sharpe_oos=-1.13 | Calmar=-1.06 | MDD= -35.5% | gates=2/7
+[70/294] sig_engulf on BTCUSDT @ 4h ... n_trades= 14 | Sharpe_oos=+1.17 | Calmar=+1.74 | MDD= -26.8% | gates=2/7
+[71/294] sig_engulf on ETHUSDT @ 4h ... n_trades= 11 | Sharpe_oos=+0.88 | Calmar=+1.49 | MDD= -23.7% | gates=1/7
+[72/294] sig_engulf on SOLUSDT @ 4h ... n_trades= 12 | Sharpe_oos=+1.03 | Calmar=+1.63 | MDD= -39.7% | gates=2/7
+[73/294] sig_liq_sweep on BTCUSDT @ 4h ... n_trades= 11 | Sharpe_oos=+0.76 | Calmar=+0.84 | MDD= -27.7% | gates=1/7
+[74/294] sig_liq_sweep on ETHUSDT @ 4h ... n_trades= 13 | Sharpe_oos=-1.54 | Calmar=-1.04 | MDD= -51.8% | gates=0/7
+[75/294] sig_liq_sweep on SOLUSDT @ 4h ... n_trades= 17 | Sharpe_oos=-0.91 | Calmar=-0.93 | MDD= -63.9% | gates=1/7
+[76/294] sig_msb on BTCUSDT @ 4h ... n_trades= 41 | Sharpe_oos=+0.00 | Calmar=-0.23 | MDD= -24.8% | gates=1/7
+[77/294] sig_msb on ETHUSDT @ 4h ... n_trades= 37 | Sharpe_oos=+0.87 | Calmar=+0.92 | MDD= -37.2% | gates=1/7
+[78/294] sig_msb on SOLUSDT @ 4h ... n_trades= 30 | Sharpe_oos=+0.26 | Calmar=-0.01 | MDD= -34.4% | gates=1/7
+[79/294] sig_order_block on BTCUSDT @ 4h ... n_trades= 21 | Sharpe_oos=+0.65 | Calmar=+0.63 | MDD= -29.6% | gates=1/7
+[80/294] sig_order_block on ETHUSDT @ 4h ... n_trades= 20 | Sharpe_oos=-0.05 | Calmar=-0.33 | MDD= -33.7% | gates=0/7
+[81/294] sig_order_block on SOLUSDT @ 4h ... n_trades= 19 | Sharpe_oos=-0.85 | Calmar=-0.87 | MDD= -57.5% | gates=1/7
+[82/294] sig_rsi_div on BTCUSDT @ 4h ... n_trades=  1 | Sharpe_oos=+1.01 | Calmar=+1.61 | MDD= -29.1% | gates=2/7
+[83/294] sig_rsi_div on ETHUSDT @ 4h ... n_trades=  1 | Sharpe_oos=+0.21 | Calmar=-0.16 | MDD= -43.9% | gates=0/7
+[84/294] sig_rsi_div on SOLUSDT @ 4h ... n_trades=  2 | Sharpe_oos=+0.37 | Calmar=-0.11 | MDD= -41.4% | gates=1/7
+[85/294] sig_daily_ema_cross on BTCUSDT @ 4h ... n_trades= 13 | Sharpe_oos=+0.27 | Calmar=+0.08 | MDD= -36.8% | gates=1/7
+[86/294] sig_daily_ema_cross on ETHUSDT @ 4h ... n_trades= 22 | Sharpe_oos=-0.90 | Calmar=-0.93 | MDD= -38.3% | gates=0/7
+[87/294] sig_daily_ema_cross on SOLUSDT @ 4h ... n_trades= 14 | Sharpe_oos=-0.48 | Calmar=-0.74 | MDD= -54.1% | gates=1/7
+[88/294] sig_htf_donchian on BTCUSDT @ 4h ... n_trades= 30 | Sharpe_oos=+1.27 | Calmar=+2.98 | MDD= -15.9% | gates=3/7
+[89/294] sig_htf_donchian on ETHUSDT @ 4h ... n_trades= 38 | Sharpe_oos=-0.07 | Calmar=-0.32 | MDD= -33.3% | gates=1/7
+[90/294] sig_htf_donchian on SOLUSDT @ 4h ... n_trades= 37 | Sharpe_oos=-0.29 | Calmar=-0.67 | MDD= -34.7% | gates=0/7
+[91/294] sig_trend_pullback on BTCUSDT @ 4h ... n_trades=  8 | Sharpe_oos=+0.71 | Calmar=+0.89 | MDD= -29.1% | gates=1/7
+[92/294] sig_trend_pullback on ETHUSDT @ 4h ... n_trades= 11 | Sharpe_oos=-1.57 | Calmar=-1.08 | MDD= -55.9% | gates=0/7
+[93/294] sig_trend_pullback on SOLUSDT @ 4h ... n_trades=  7 | Sharpe_oos=-0.29 | Calmar=-0.75 | MDD= -54.8% | gates=1/7
+[94/294] sig_vwap_fade on BTCUSDT @ 4h ... n_trades= 11 | Sharpe_oos=+0.22 | Calmar=+0.02 | MDD= -44.3% | gates=1/7
+[95/294] sig_vwap_fade on ETHUSDT @ 4h ... n_trades=  9 | Sharpe_oos=-0.09 | Calmar=-0.33 | MDD= -38.3% | gates=1/7
+[96/294] sig_vwap_fade on SOLUSDT @ 4h ... n_trades= 10 | Sharpe_oos=-1.12 | Calmar=-0.90 | MDD= -64.0% | gates=1/7
+[97/294] sig_lateral_bb_fade on BTCUSDT @ 4h ... n_trades= 14 | Sharpe_oos=+0.17 | Calmar=+0.10 | MDD= -13.8% | gates=3/7
+[98/294] sig_lateral_bb_fade on ETHUSDT @ 4h ... n_trades= 12 | Sharpe_oos=+2.49 | Calmar=+8.39 | MDD= -12.7% | gates=4/7
+[99/294] sig_lateral_bb_fade on SOLUSDT @ 4h ... n_trades= 10 | Sharpe_oos=+0.82 | Calmar=+0.97 | MDD= -39.7% | gates=1/7
+[100/294] sig_regime_switch on BTCUSDT @ 4h ... n_trades= 32 | Sharpe_oos=+0.87 | Calmar=+1.34 | MDD= -19.4% | gates=2/7
+[101/294] sig_regime_switch on ETHUSDT @ 4h ... n_trades= 36 | Sharpe_oos=+0.45 | Calmar=+0.50 | MDD= -21.2% | gates=1/7
+[102/294] sig_regime_switch on SOLUSDT @ 4h ... n_trades= 28 | Sharpe_oos=+1.01 | Calmar=+1.60 | MDD= -31.6% | gates=2/7
+[103/294] sig_trend_grade on BTCUSDT @ 4h ... n_trades= 10 | Sharpe_oos=+0.47 | Calmar=+0.36 | MDD= -32.8% | gates=1/7
+[104/294] sig_trend_grade on ETHUSDT @ 4h ... n_trades= 11 | Sharpe_oos=-1.11 | Calmar=-1.05 | MDD= -32.6% | gates=1/7
+[105/294] sig_trend_grade on SOLUSDT @ 4h ... n_trades=  9 | Sharpe_oos=-0.01 | Calmar=-0.48 | MDD= -54.8% | gates=1/7
+[106/294] sig_cci_extreme on BTCUSDT @ 4h ... n_trades= 25 | Sharpe_oos=+1.68 | Calmar=+4.45 | MDD= -13.8% | gates=3/7
+[107/294] sig_cci_extreme on ETHUSDT @ 4h ... n_trades= 31 | Sharpe_oos=+0.17 | Calmar=-0.10 | MDD= -37.1% | gates=1/7
+[108/294] sig_cci_extreme on SOLUSDT @ 4h ... n_trades= 24 | Sharpe_oos=+0.48 | Calmar=+0.27 | MDD= -39.7% | gates=1/7
+[109/294] sig_connors_rsi on BTCUSDT @ 4h ... n_trades= 21 | Sharpe_oos=-0.04 | Calmar=-0.16 | MDD= -26.2% | gates=1/7
+[110/294] sig_connors_rsi on ETHUSDT @ 4h ... n_trades= 21 | Sharpe_oos=-1.19 | Calmar=-1.07 | MDD= -50.1% | gates=0/7
+[111/294] sig_connors_rsi on SOLUSDT @ 4h ... n_trades= 18 | Sharpe_oos=-0.42 | Calmar=-1.05 | MDD= -41.3% | gates=1/7
+[112/294] sig_supertrend_flip on BTCUSDT @ 4h ... n_trades= 18 | Sharpe_oos=+0.50 | Calmar=+0.34 | MDD= -37.3% | gates=1/7
+[113/294] sig_supertrend_flip on ETHUSDT @ 4h ... n_trades= 21 | Sharpe_oos=-0.07 | Calmar=-0.31 | MDD= -33.4% | gates=1/7
+[114/294] sig_supertrend_flip on SOLUSDT @ 4h ... n_trades= 16 | Sharpe_oos=-0.39 | Calmar=-0.63 | MDD= -56.9% | gates=1/7
+[115/294] sig_ttm_squeeze on BTCUSDT @ 4h ... n_trades= 40 | Sharpe_oos=+0.79 | Calmar=+1.09 | MDD= -22.1% | gates=1/7
+[116/294] sig_ttm_squeeze on ETHUSDT @ 4h ... n_trades= 46 | Sharpe_oos=+0.16 | Calmar=-0.13 | MDD= -28.9% | gates=1/7
+[117/294] sig_ttm_squeeze on SOLUSDT @ 4h ... n_trades= 39 | Sharpe_oos=+0.82 | Calmar=+1.03 | MDD= -32.7% | gates=1/7
+[118/294] sig_vwap_zfade on BTCUSDT @ 4h ... n_trades=  2 | Sharpe_oos=+1.51 | Calmar=+2.45 | MDD= -26.2% | gates=2/7
+[119/294] sig_vwap_zfade on ETHUSDT @ 4h ... n_trades=  2 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[120/294] sig_vwap_zfade on SOLUSDT @ 4h ... n_trades=  1 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[121/294] sig_atr_burst on BTCUSDT @ 15m ... n_trades=  5 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[122/294] sig_atr_burst on ETHUSDT @ 15m ... n_trades= 10 | Sharpe_oos=-1.00 | Calmar=-0.86 | MDD= -33.2% | gates=2/7
+[123/294] sig_atr_burst on SOLUSDT @ 15m ... n_trades=  5 | Sharpe_oos=+0.85 | Calmar=+0.98 | MDD= -43.1% | gates=1/7
+[124/294] sig_keltner_pullback on BTCUSDT @ 15m ... n_trades= 17 | Sharpe_oos=+0.91 | Calmar=+1.26 | MDD= -28.9% | gates=1/7
+[125/294] sig_keltner_pullback on ETHUSDT @ 15m ... n_trades= 19 | Sharpe_oos=+1.35 | Calmar=+2.41 | MDD= -28.3% | gates=2/7
+[126/294] sig_keltner_pullback on SOLUSDT @ 15m ... n_trades= 17 | Sharpe_oos=+0.58 | Calmar=+0.40 | MDD= -39.8% | gates=1/7
+[127/294] sig_vwap_scalp on BTCUSDT @ 15m ... n_trades=376 | Sharpe_oos=-1.00 | Calmar=-0.89 | MDD= -40.6% | gates=1/7
+[128/294] sig_vwap_scalp on ETHUSDT @ 15m ... n_trades=405 | Sharpe_oos=-1.52 | Calmar=-1.04 | MDD= -54.9% | gates=0/7
+[129/294] sig_vwap_scalp on SOLUSDT @ 15m ... n_trades=381 | Sharpe_oos=-0.16 | Calmar=-0.75 | MDD= -37.5% | gates=1/7
+[130/294] sig_htf_donchian_ls on BTCUSDT @ 4h ... n_trades= 30 | Sharpe_oos=+1.27 | Calmar=+2.98 | MDD= -15.9% | gates=3/7
+[131/294] sig_htf_donchian_ls on ETHUSDT @ 4h ... n_trades= 38 | Sharpe_oos=-0.07 | Calmar=-0.32 | MDD= -33.3% | gates=1/7
+[132/294] sig_htf_donchian_ls on SOLUSDT @ 4h ... n_trades= 37 | Sharpe_oos=-0.29 | Calmar=-0.67 | MDD= -34.7% | gates=0/7
+[133/294] sig_bos on BTCUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[134/294] sig_bos on ETHUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[135/294] sig_bos on SOLUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[136/294] sig_choch on BTCUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[137/294] sig_choch on ETHUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[138/294] sig_choch on SOLUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[139/294] sig_confluence_ob_bos on BTCUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[140/294] sig_confluence_ob_bos on ETHUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[141/294] sig_confluence_ob_bos on SOLUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[142/294] sig_fvg on BTCUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[143/294] sig_fvg on ETHUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[144/294] sig_fvg on SOLUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[145/294] sig_fvg_fade on BTCUSDT @ 4h ... n_trades=250 | Sharpe_oos=-1.24 | Calmar=-0.81 | MDD= -47.1% | gates=0/7
+[146/294] sig_fvg_fade on ETHUSDT @ 4h ... n_trades=290 | Sharpe_oos=-0.30 | Calmar=-0.43 | MDD= -42.6% | gates=1/7
+[147/294] sig_fvg_fade on SOLUSDT @ 4h ... n_trades=281 | Sharpe_oos=-0.24 | Calmar=-0.67 | MDD= -33.5% | gates=0/7
+[148/294] sig_liquidity on BTCUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[149/294] sig_liquidity on ETHUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[150/294] sig_liquidity on SOLUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[151/294] sig_ob on BTCUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[152/294] sig_ob on ETHUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[153/294] sig_ob on SOLUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[154/294] mix_bbbreak_bos on BTCUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[155/294] mix_bbbreak_bos on ETHUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[156/294] mix_bbbreak_bos on SOLUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[157/294] mix_bbbreak_ob on BTCUSDT @ 4h ... n_trades= 30 | Sharpe_oos=+1.07 | Calmar=+2.04 | MDD= -18.2% | gates=3/7
+[158/294] mix_bbbreak_ob on ETHUSDT @ 4h ... n_trades= 32 | Sharpe_oos=+0.77 | Calmar=+1.00 | MDD= -25.9% | gates=1/7
+[159/294] mix_bbbreak_ob on SOLUSDT @ 4h ... n_trades= 30 | Sharpe_oos=-0.22 | Calmar=-0.67 | MDD= -29.3% | gates=1/7
+[160/294] mix_donchian_bos on BTCUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[161/294] mix_donchian_bos on ETHUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[162/294] mix_donchian_bos on SOLUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[163/294] mix_donchian_choch_reverse on BTCUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[164/294] mix_donchian_choch_reverse on ETHUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[165/294] mix_donchian_choch_reverse on SOLUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[166/294] sig_bbbreak on BTCUSDT @ 4h ... n_trades= 30 | Sharpe_oos=+1.07 | Calmar=+2.04 | MDD= -18.2% | gates=3/7
+[167/294] sig_bbbreak on ETHUSDT @ 4h ... n_trades= 32 | Sharpe_oos=+0.77 | Calmar=+1.00 | MDD= -25.9% | gates=1/7
+[168/294] sig_bbbreak on SOLUSDT @ 4h ... n_trades= 30 | Sharpe_oos=-0.22 | Calmar=-0.67 | MDD= -29.3% | gates=1/7
+[169/294] sig_donchian on BTCUSDT @ 4h ... n_trades= 50 | Sharpe_oos=+1.08 | Calmar=+2.19 | MDD= -16.8% | gates=3/7
+[170/294] sig_donchian on ETHUSDT @ 4h ... n_trades= 56 | Sharpe_oos=+0.52 | Calmar=+0.49 | MDD= -28.8% | gates=1/7
+[171/294] sig_donchian on SOLUSDT @ 4h ... n_trades= 48 | Sharpe_oos=-0.19 | Calmar=-0.54 | MDD= -32.2% | gates=0/7
+[172/294] v11_regime_ensemble on BTCUSDT @ 4h ... n_trades= 29 | Sharpe_oos=+0.39 | Calmar=+0.54 | MDD= -10.4% | gates=3/7
+[173/294] v11_regime_ensemble on ETHUSDT @ 4h ... n_trades= 25 | Sharpe_oos=+0.57 | Calmar=+0.71 | MDD= -11.2% | gates=3/7
+[174/294] v11_regime_ensemble on SOLUSDT @ 4h ... n_trades= 32 | Sharpe_oos=+1.41 | Calmar=+3.34 | MDD=  -9.8% | gates=4/7
+[175/294] v12a_pullback_trend on BTCUSDT @ 4h ... n_trades= 99 | Sharpe_oos=+1.17 | Calmar=+2.34 | MDD= -14.4% | gates=3/7
+[176/294] v12a_pullback_trend on ETHUSDT @ 4h ... n_trades= 91 | Sharpe_oos=+0.17 | Calmar=+0.02 | MDD= -32.0% | gates=1/7
+[177/294] v12a_pullback_trend on SOLUSDT @ 4h ... n_trades= 83 | Sharpe_oos=+0.18 | Calmar=-0.01 | MDD= -27.8% | gates=1/7
+[178/294] v12b_bb_squeeze_break on BTCUSDT @ 4h ... n_trades= 76 | Sharpe_oos=+0.46 | Calmar=+0.51 | MDD= -15.5% | gates=3/7
+[179/294] v12b_bb_squeeze_break on ETHUSDT @ 4h ... n_trades= 86 | Sharpe_oos=+0.56 | Calmar=+0.72 | MDD= -15.5% | gates=3/7
+[180/294] v12b_bb_squeeze_break on SOLUSDT @ 4h ... n_trades= 57 | Sharpe_oos=+0.49 | Calmar=+0.58 | MDD= -17.5% | gates=3/7
+[181/294] v12c_higher_lows on BTCUSDT @ 4h ... n_trades=108 | Sharpe_oos=+0.39 | Calmar=+0.31 | MDD= -24.5% | gates=1/7
+[182/294] v12c_higher_lows on ETHUSDT @ 4h ... n_trades= 98 | Sharpe_oos=+1.73 | Calmar=+4.99 | MDD= -14.2% | gates=3/7
+[183/294] v12c_higher_lows on SOLUSDT @ 4h ... n_trades= 95 | Sharpe_oos=+0.14 | Calmar=-0.08 | MDD= -32.9% | gates=1/7
+[184/294] v12d_nr7_break on BTCUSDT @ 4h ... n_trades= 92 | Sharpe_oos=+0.27 | Calmar=+0.16 | MDD= -22.7% | gates=1/7
+[185/294] v12d_nr7_break on ETHUSDT @ 4h ... n_trades= 90 | Sharpe_oos=+0.57 | Calmar=+0.97 | MDD= -14.8% | gates=2/7
+[186/294] v12d_nr7_break on SOLUSDT @ 4h ... n_trades= 87 | Sharpe_oos=+0.92 | Calmar=+1.35 | MDD= -24.7% | gates=2/7
+[187/294] v19a_static_grid on BTCUSDT @ 4h ... n_trades= 68 | Sharpe_oos=-0.90 | Calmar=-0.95 | MDD= -11.5% | gates=2/7
+[188/294] v19a_static_grid on ETHUSDT @ 4h ... n_trades= 76 | Sharpe_oos=-2.69 | Calmar=-1.25 | MDD= -19.4% | gates=2/7
+[189/294] v19a_static_grid on SOLUSDT @ 4h ... n_trades= 68 | Sharpe_oos=-0.42 | Calmar=-0.49 | MDD= -13.3% | gates=2/7
+[190/294] v19b_atr_grid_adaptive on BTCUSDT @ 4h ... n_trades= 73 | Sharpe_oos=-0.83 | Calmar=-1.24 | MDD=  -8.8% | gates=2/7
+[191/294] v19b_atr_grid_adaptive on ETHUSDT @ 4h ... n_trades= 85 | Sharpe_oos=-2.16 | Calmar=-1.22 | MDD= -23.2% | gates=1/7
+[192/294] v19b_atr_grid_adaptive on SOLUSDT @ 4h ... n_trades= 58 | Sharpe_oos=+0.37 | Calmar=+0.36 | MDD= -11.7% | gates=2/7
+[193/294] v20a_heikin_supertrend on BTCUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[194/294] v20a_heikin_supertrend on ETHUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[195/294] v20a_heikin_supertrend on SOLUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[196/294] v20b_dema_ichimoku on BTCUSDT @ 4h ... n_trades=108 | Sharpe_oos=-0.02 | Calmar=-0.11 | MDD= -18.2% | gates=3/7
+[197/294] v20b_dema_ichimoku on ETHUSDT @ 4h ... n_trades= 90 | Sharpe_oos=-1.22 | Calmar=-0.78 | MDD= -25.9% | gates=1/7
+[198/294] v20b_dema_ichimoku on SOLUSDT @ 4h ... n_trades= 96 | Sharpe_oos=+1.15 | Calmar=+2.31 | MDD= -13.8% | gates=4/7
+[199/294] v20c_ott on BTCUSDT @ 4h ... n_trades=318 | Sharpe_oos=+0.42 | Calmar=+0.34 | MDD= -22.4% | gates=2/7
+[200/294] v20c_ott on ETHUSDT @ 4h ... n_trades=271 | Sharpe_oos=-0.27 | Calmar=-0.29 | MDD= -31.9% | gates=2/7
+[201/294] v20c_ott on SOLUSDT @ 4h ... n_trades=283 | Sharpe_oos=+0.22 | Calmar=+0.11 | MDD= -16.3% | gates=3/7
+[202/294] v20d_squeeze_ichimoku on BTCUSDT @ 4h ... n_trades= 32 | Sharpe_oos=+1.27 | Calmar=+2.46 | MDD=  -9.4% | gates=4/7
+[203/294] v20d_squeeze_ichimoku on ETHUSDT @ 4h ... n_trades= 39 | Sharpe_oos=+0.60 | Calmar=+0.54 | MDD= -18.8% | gates=3/7
+[204/294] v20d_squeeze_ichimoku on SOLUSDT @ 4h ... n_trades= 28 | Sharpe_oos=+0.61 | Calmar=+0.73 | MDD= -16.4% | gates=3/7
+[205/294] v3a_htf_rising on BTCUSDT @ 4h ... n_trades= 28 | Sharpe_oos=+0.94 | Calmar=+1.51 | MDD= -17.6% | gates=3/7
+[206/294] v3a_htf_rising on ETHUSDT @ 4h ... n_trades= 25 | Sharpe_oos=+0.53 | Calmar=+0.60 | MDD= -21.9% | gates=1/7
+[207/294] v3a_htf_rising on SOLUSDT @ 4h ... n_trades= 21 | Sharpe_oos=+0.11 | Calmar=-0.12 | MDD= -29.1% | gates=1/7
+[208/294] v3b_adx on BTCUSDT @ 4h ... n_trades= 41 | Sharpe_oos=+1.18 | Calmar=+3.14 | MDD= -11.2% | gates=3/7
+[209/294] v3b_adx on ETHUSDT @ 4h ... n_trades= 32 | Sharpe_oos=+0.74 | Calmar=+1.21 | MDD= -18.5% | gates=2/7
+[210/294] v3b_adx on SOLUSDT @ 4h ... n_trades= 42 | Sharpe_oos=+0.22 | Calmar=+0.04 | MDD= -26.6% | gates=1/7
+[211/294] v3c_slope on BTCUSDT @ 4h ... n_trades= 42 | Sharpe_oos=+0.93 | Calmar=+1.35 | MDD= -19.5% | gates=2/7
+[212/294] v3c_slope on ETHUSDT @ 4h ... n_trades= 37 | Sharpe_oos=+0.45 | Calmar=+0.47 | MDD= -21.9% | gates=1/7
+[213/294] v3c_slope on SOLUSDT @ 4h ... n_trades= 44 | Sharpe_oos=+0.94 | Calmar=+1.43 | MDD= -23.8% | gates=2/7
+[214/294] v3d_composite on BTCUSDT @ 4h ... n_trades= 23 | Sharpe_oos=+1.23 | Calmar=+3.27 | MDD= -11.2% | gates=3/7
+[215/294] v3d_composite on ETHUSDT @ 4h ... n_trades= 19 | Sharpe_oos=+0.98 | Calmar=+2.13 | MDD= -14.9% | gates=3/7
+[216/294] v3d_composite on SOLUSDT @ 4h ... n_trades= 17 | Sharpe_oos=+0.43 | Calmar=+0.36 | MDD= -27.0% | gates=2/7
+[217/294] v3e_score2of3 on BTCUSDT @ 4h ... n_trades= 41 | Sharpe_oos=+1.00 | Calmar=+1.80 | MDD= -16.3% | gates=3/7
+[218/294] v3e_score2of3 on ETHUSDT @ 4h ... n_trades= 35 | Sharpe_oos=+0.41 | Calmar=+0.39 | MDD= -21.9% | gates=1/7
+[219/294] v3e_score2of3 on SOLUSDT @ 4h ... n_trades= 43 | Sharpe_oos=+0.42 | Calmar=+0.35 | MDD= -26.0% | gates=2/7
+[220/294] v4a_ott on BTCUSDT @ 4h ... n_trades=232 | Sharpe_oos=-0.03 | Calmar=-0.18 | MDD= -24.2% | gates=1/7
+[221/294] v4a_ott on ETHUSDT @ 4h ... n_trades=229 | Sharpe_oos=-0.15 | Calmar=-0.28 | MDD= -29.2% | gates=1/7
+[222/294] v4a_ott on SOLUSDT @ 4h ... n_trades=276 | Sharpe_oos=+0.39 | Calmar=+0.47 | MDD= -16.5% | gates=3/7
+[223/294] v4b_ott_twin on BTCUSDT @ 4h ... n_trades=239 | Sharpe_oos=-0.18 | Calmar=-0.32 | MDD= -25.7% | gates=1/7
+[224/294] v4b_ott_twin on ETHUSDT @ 4h ... n_trades=247 | Sharpe_oos=-2.38 | Calmar=-1.16 | MDD= -40.6% | gates=1/7
+[225/294] v4b_ott_twin on SOLUSDT @ 4h ... n_trades=273 | Sharpe_oos=-0.03 | Calmar=-0.38 | MDD= -19.8% | gates=2/7
+[226/294] v4c_range_kalman on BTCUSDT @ 4h ... n_trades= 30 | Sharpe_oos=+0.22 | Calmar=+0.14 | MDD= -18.1% | gates=3/7
+[227/294] v4c_range_kalman on ETHUSDT @ 4h ... n_trades= 27 | Sharpe_oos=+0.60 | Calmar=+0.84 | MDD= -15.8% | gates=3/7
+[228/294] v4c_range_kalman on SOLUSDT @ 4h ... n_trades= 28 | Sharpe_oos=+1.81 | Calmar=+5.42 | MDD= -13.9% | gates=4/7
+[229/294] v4d_trend_strength on BTCUSDT @ 4h ... n_trades=113 | Sharpe_oos=+1.72 | Calmar=+5.00 | MDD=  -8.0% | gates=4/7
+[230/294] v4d_trend_strength on ETHUSDT @ 4h ... n_trades= 96 | Sharpe_oos=+0.01 | Calmar=-0.10 | MDD= -22.9% | gates=2/7
+[231/294] v4d_trend_strength on SOLUSDT @ 4h ... n_trades= 92 | Sharpe_oos=+0.15 | Calmar=+0.01 | MDD= -13.8% | gates=3/7
+[232/294] v4e_ott_vol_donchian on BTCUSDT @ 4h ... n_trades= 64 | Sharpe_oos=+0.82 | Calmar=+1.06 | MDD= -18.4% | gates=3/7
+[233/294] v4e_ott_vol_donchian on ETHUSDT @ 4h ... n_trades= 69 | Sharpe_oos=+0.69 | Calmar=+1.02 | MDD= -15.9% | gates=3/7
+[234/294] v4e_ott_vol_donchian on SOLUSDT @ 4h ... n_trades= 81 | Sharpe_oos=-0.61 | Calmar=-0.77 | MDD= -27.7% | gates=1/7
+[235/294] v4f_ott_pullback on BTCUSDT @ 4h ... n_trades= 10 | Sharpe_oos=+0.39 | Calmar=+0.50 | MDD=  -3.8% | gates=2/7
+[236/294] v4f_ott_pullback on ETHUSDT @ 4h ... n_trades=  7 | Sharpe_oos=-0.80 | Calmar=-0.86 | MDD=  -1.2% | gates=2/7
+[237/294] v4f_ott_pullback on SOLUSDT @ 4h ... n_trades=  3 | Sharpe_oos=-0.04 | Calmar=-0.10 | MDD=  -4.1% | gates=2/7
+[238/294] v4g_mtf_ott on BTCUSDT @ 4h ... n_trades= 54 | Sharpe_oos=+1.05 | Calmar=+1.08 | MDD= -25.5% | gates=1/7
+[239/294] v4g_mtf_ott on ETHUSDT @ 4h ... n_trades= 57 | Sharpe_oos=-0.96 | Calmar=-1.01 | MDD= -20.1% | gates=1/7
+[240/294] v4g_mtf_ott on SOLUSDT @ 4h ... n_trades= 67 | Sharpe_oos=-0.43 | Calmar=-0.82 | MDD= -19.7% | gates=2/7
+[241/294] v4h_vol_regime_switch on BTCUSDT @ 4h ... n_trades= 13 | Sharpe_oos=+1.30 | Calmar=+2.81 | MDD=  -8.6% | gates=4/7
+[242/294] v4h_vol_regime_switch on ETHUSDT @ 4h ... n_trades= 14 | Sharpe_oos=+0.10 | Calmar=+0.02 | MDD= -15.5% | gates=3/7
+[243/294] v4h_vol_regime_switch on SOLUSDT @ 4h ... n_trades= 10 | Sharpe_oos=+1.04 | Calmar=+1.49 | MDD= -16.2% | gates=3/7
+[244/294] v5_volume_breakout_liqfilter on BTCUSDT @ 4h ... n_trades= 46 | Sharpe_oos=+0.71 | Calmar=+0.94 | MDD= -19.7% | gates=2/7
+[245/294] v5_volume_breakout_liqfilter on ETHUSDT @ 4h ... n_trades= 39 | Sharpe_oos=+0.36 | Calmar=+0.32 | MDD= -21.9% | gates=1/7
+[246/294] v5_volume_breakout_liqfilter on SOLUSDT @ 4h ... n_trades= 48 | Sharpe_oos=+0.42 | Calmar=+0.35 | MDD= -26.0% | gates=2/7
+[247/294] v6_rsi_2065 on BTCUSDT @ 4h ... n_trades=  6 | Sharpe_oos=+0.50 | Calmar=+0.83 | MDD=  -3.4% | gates=3/7
+[248/294] v6_rsi_2065 on ETHUSDT @ 4h ... n_trades=  7 | Sharpe_oos=-0.47 | Calmar=-0.61 | MDD=  -8.5% | gates=2/7
+[249/294] v6_rsi_2065 on SOLUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[250/294] hwr1_bb_meanrev on BTCUSDT @ 4h ... n_trades= 39 | Sharpe_oos=-1.46 | Calmar=-1.25 | MDD= -15.9% | gates=2/7
+[251/294] hwr1_bb_meanrev on ETHUSDT @ 4h ... n_trades= 33 | Sharpe_oos=-0.61 | Calmar=-1.02 | MDD=  -9.4% | gates=3/7
+[252/294] hwr1_bb_meanrev on SOLUSDT @ 4h ... n_trades= 21 | Sharpe_oos=-0.29 | Calmar=-0.39 | MDD= -12.6% | gates=2/7
+[253/294] hwr1b_bb_strict on BTCUSDT @ 4h ... n_trades= 72 | Sharpe_oos=-0.90 | Calmar=-1.10 | MDD= -14.9% | gates=2/7
+[254/294] hwr1b_bb_strict on ETHUSDT @ 4h ... n_trades= 66 | Sharpe_oos=-1.17 | Calmar=-0.98 | MDD= -22.2% | gates=2/7
+[255/294] hwr1b_bb_strict on SOLUSDT @ 4h ... n_trades= 41 | Sharpe_oos=-0.35 | Calmar=-0.46 | MDD= -18.4% | gates=3/7
+[256/294] hwr2_rsi_stoch_oversold on BTCUSDT @ 4h ... n_trades= 22 | Sharpe_oos=+0.04 | Calmar=-0.06 | MDD=  -7.5% | gates=3/7
+[257/294] hwr2_rsi_stoch_oversold on ETHUSDT @ 4h ... n_trades= 22 | Sharpe_oos=-0.07 | Calmar=-0.23 | MDD= -10.1% | gates=3/7
+[258/294] hwr2_rsi_stoch_oversold on SOLUSDT @ 4h ... n_trades=  4 | Sharpe_oos=+1.75 | Calmar=+3.71 | MDD=  -3.6% | gates=4/7
+[259/294] hwr3_pullback_1to1 on BTCUSDT @ 4h ... n_trades=177 | Sharpe_oos=+0.47 | Calmar=+0.71 | MDD= -11.1% | gates=3/7
+[260/294] hwr3_pullback_1to1 on ETHUSDT @ 4h ... n_trades=148 | Sharpe_oos=-0.83 | Calmar=-0.78 | MDD= -24.2% | gates=1/7
+[261/294] hwr3_pullback_1to1 on SOLUSDT @ 4h ... n_trades=130 | Sharpe_oos=+0.62 | Calmar=+0.74 | MDD= -21.0% | gates=2/7
+[262/294] hwr3b_pullback_asym on BTCUSDT @ 4h ... n_trades=127 | Sharpe_oos=+0.41 | Calmar=+0.50 | MDD= -12.0% | gates=3/7
+[263/294] hwr3b_pullback_asym on ETHUSDT @ 4h ... n_trades=112 | Sharpe_oos=-0.67 | Calmar=-0.68 | MDD= -21.4% | gates=1/7
+[264/294] hwr3b_pullback_asym on SOLUSDT @ 4h ... n_trades=101 | Sharpe_oos=+0.40 | Calmar=+0.34 | MDD= -21.3% | gates=2/7
+[265/294] hwr4_keltner_bounce on BTCUSDT @ 4h ... n_trades= 35 | Sharpe_oos=-1.15 | Calmar=-0.86 | MDD= -28.5% | gates=1/7
+[266/294] hwr4_keltner_bounce on ETHUSDT @ 4h ... n_trades= 29 | Sharpe_oos=-0.10 | Calmar=-0.42 | MDD= -10.2% | gates=3/7
+[267/294] hwr4_keltner_bounce on SOLUSDT @ 4h ... n_trades= 14 | Sharpe_oos=-0.85 | Calmar=-0.56 | MDD= -25.2% | gates=1/7
+[268/294] hwr5_tight_tp_wide_sl on BTCUSDT @ 4h ... n_trades= 79 | Sharpe_oos=+0.60 | Calmar=+0.65 | MDD= -13.7% | gates=3/7
+[269/294] hwr5_tight_tp_wide_sl on ETHUSDT @ 4h ... n_trades= 63 | Sharpe_oos=-0.35 | Calmar=-0.31 | MDD= -21.7% | gates=2/7
+[270/294] hwr5_tight_tp_wide_sl on SOLUSDT @ 4h ... n_trades= 57 | Sharpe_oos=-1.68 | Calmar=-1.28 | MDD= -22.5% | gates=1/7
+[271/294] v8a_supertrend_stack on BTCUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[272/294] v8a_supertrend_stack on ETHUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[273/294] v8a_supertrend_stack on SOLUSDT @ 4h ... n_trades=  0 | Sharpe_oos=+0.00 | Calmar=+0.00 | MDD=  +0.0% | gates=2/7
+[274/294] v8b_hma_adx on BTCUSDT @ 4h ... n_trades=100 | Sharpe_oos=+0.97 | Calmar=+1.76 | MDD= -15.0% | gates=3/7
+[275/294] v8b_hma_adx on ETHUSDT @ 4h ... n_trades=106 | Sharpe_oos=+0.56 | Calmar=+0.69 | MDD= -22.1% | gates=1/7
+[276/294] v8b_hma_adx on SOLUSDT @ 4h ... n_trades= 93 | Sharpe_oos=-0.64 | Calmar=-0.88 | MDD= -35.5% | gates=0/7
+[277/294] v8c_vol_regime_donchian on BTCUSDT @ 4h ... n_trades= 29 | Sharpe_oos=+1.48 | Calmar=+2.84 | MDD= -15.7% | gates=3/7
+[278/294] v8c_vol_regime_donchian on ETHUSDT @ 4h ... n_trades= 32 | Sharpe_oos=+1.15 | Calmar=+2.26 | MDD= -16.8% | gates=3/7
+[279/294] v8c_vol_regime_donchian on SOLUSDT @ 4h ... n_trades= 31 | Sharpe_oos=-0.11 | Calmar=-0.46 | MDD= -19.1% | gates=2/7
+[280/294] v9a_v3b_plus_ladder on BTCUSDT @ 4h ... n_trades= 36 | Sharpe_oos=+1.24 | Calmar=+2.88 | MDD= -13.9% | gates=3/7
+[281/294] v9a_v3b_plus_ladder on ETHUSDT @ 4h ... n_trades= 28 | Sharpe_oos=+0.91 | Calmar=+1.42 | MDD= -21.6% | gates=1/7
+[282/294] v9a_v3b_plus_ladder on SOLUSDT @ 4h ... n_trades= 38 | Sharpe_oos=-0.25 | Calmar=-0.52 | MDD= -34.4% | gates=0/7
+[283/294] v9b_v4c_plus_ladder on BTCUSDT @ 4h ... n_trades= 24 | Sharpe_oos=+1.02 | Calmar=+1.81 | MDD= -17.3% | gates=3/7
+[284/294] v9b_v4c_plus_ladder on ETHUSDT @ 4h ... n_trades= 19 | Sharpe_oos=+0.57 | Calmar=+0.57 | MDD= -26.1% | gates=1/7
+[285/294] v9b_v4c_plus_ladder on SOLUSDT @ 4h ... n_trades= 22 | Sharpe_oos=+0.71 | Calmar=+0.94 | MDD= -27.1% | gates=1/7
+[286/294] v9c_v2b_plus_ladder on BTCUSDT @ 4h ... n_trades= 35 | Sharpe_oos=+0.79 | Calmar=+1.00 | MDD= -23.0% | gates=1/7
+[287/294] v9c_v2b_plus_ladder on ETHUSDT @ 4h ... n_trades= 36 | Sharpe_oos=+0.58 | Calmar=+0.56 | MDD= -27.3% | gates=1/7
+[288/294] v9c_v2b_plus_ladder on SOLUSDT @ 4h ... n_trades= 42 | Sharpe_oos=+0.55 | Calmar=+0.53 | MDD= -30.2% | gates=1/7
+[289/294] v9d_hwr1_plus_ladder on BTCUSDT @ 4h ... n_trades= 36 | Sharpe_oos=-0.59 | Calmar=-0.83 | MDD= -15.3% | gates=2/7
+[290/294] v9d_hwr1_plus_ladder on ETHUSDT @ 4h ... n_trades= 33 | Sharpe_oos=+0.08 | Calmar=-0.05 | MDD= -17.8% | gates=3/7
+[291/294] v9d_hwr1_plus_ladder on SOLUSDT @ 4h ... n_trades= 21 | Sharpe_oos=-0.13 | Calmar=-0.24 | MDD= -14.1% | gates=2/7
+[292/294] v9e_v3b_aggressive_runner on BTCUSDT @ 4h ... n_trades= 36 | Sharpe_oos=+1.24 | Calmar=+2.88 | MDD= -13.9% | gates=3/7
+[293/294] v9e_v3b_aggressive_runner on ETHUSDT @ 4h ... n_trades= 28 | Sharpe_oos=+0.91 | Calmar=+1.42 | MDD= -21.6% | gates=1/7
+[294/294] v9e_v3b_aggressive_runner on SOLUSDT @ 4h ... n_trades= 38 | Sharpe_oos=-0.25 | Calmar=-0.52 | MDD= -34.4% | gates=0/7
+
+Results CSV: C:\Users\alexandre bandarra\Desktop\global\docs\research\phase5_results\phase5_existing_book_results.csv

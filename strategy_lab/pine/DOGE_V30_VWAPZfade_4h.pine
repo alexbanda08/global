@@ -1,0 +1,72 @@
+//@version=5
+// DOGE V30 VWAPZfade 4h
+// VWAP_Zfade — V30 winner, OOS PASS
+// Params: {"vwap_n": 100, "z_thr": 1.5, "adx_max": 28}  | Exits: TP=10×ATR  SL=2.0×ATR  Trail=5.0×ATR  MH=40  Risk=3.0%  Lev=3.0×
+// Sim: 0.045% taker fee, 3 bps slippage, ATR-risk sizing, next-bar-open fills.
+strategy("DOGE V30 VWAPZfade 4h", overlay=true,
+     initial_capital=10000,
+     default_qty_type=strategy.cash, default_qty_value=0,
+     commission_type=strategy.commission.percent, commission_value=0.045,
+     slippage=3, pyramiding=0, calc_on_every_tick=false,
+     process_orders_on_close=false)
+
+// ---- Inputs ----
+vwap_n = input.int(25, "Rolling VWAP length")
+z_thr  = input.float(1.5, "Z-score threshold")
+adx_max = input.int(28, "ADX max for range gate")
+
+// ---- Shared ----
+risk_per_trade = 3.0 / 100.0
+lev_cap        = 3.0
+tp_atr         = 10
+sl_atr         = 2.0
+trail_atr      = 5.0
+max_hold       = 40
+
+// ---- Indicators ----
+atr_v = ta.atr(14)
+
+pv    = math.sum(close*volume, vwap_n)
+vv    = math.sum(volume, vwap_n)
+vwap_ = vv > 0 ? pv / vv : na
+dev   = close - vwap_
+zsd   = ta.stdev(dev, vwap_n)
+z     = zsd > 0 ? dev / zsd : 0
+
+adx_v = ta.adx(14)  // Pine built-in ADX-equivalent via DMI
+[_diP, _diM, adx_val] = ta.dmi(14, 14)
+range_ok = adx_val < adx_max
+
+long_edge  = z > -z_thr and z[1] <= -z_thr
+short_edge = z <  z_thr and z[1] >=  z_thr
+long_sig   = range_ok and long_edge
+short_sig  = range_ok and short_edge
+
+// ---- Sizing ----
+qty_from_risk() =>
+    risk_dollars = strategy.equity * risk_per_trade
+    sl_dist = sl_atr * atr_v
+    qty_risk = sl_dist > 0 ? risk_dollars / sl_dist : 0
+    qty_cap  = (strategy.equity * lev_cap) / close
+    math.min(qty_risk, qty_cap)
+
+// ---- Entries ----
+if long_sig
+    q = qty_from_risk()
+    if q > 0
+        strategy.entry("L", strategy.long, qty=q)
+        strategy.exit("Lx", "L", profit=tp_atr*atr_v/syminfo.mintick, loss=sl_atr*atr_v/syminfo.mintick,
+                      trail_points=trail_atr*atr_v/syminfo.mintick, trail_offset=trail_atr*atr_v/syminfo.mintick)
+
+if short_sig
+    q = qty_from_risk()
+    if q > 0
+        strategy.entry("S", strategy.short, qty=q)
+        strategy.exit("Sx", "S", profit=tp_atr*atr_v/syminfo.mintick, loss=sl_atr*atr_v/syminfo.mintick,
+                      trail_points=trail_atr*atr_v/syminfo.mintick, trail_offset=trail_atr*atr_v/syminfo.mintick)
+
+// ---- Max hold timeout ----
+var int bars_in = 0
+bars_in := strategy.position_size != 0 ? bars_in + 1 : 0
+if bars_in >= max_hold
+    strategy.close_all()

@@ -1,0 +1,100 @@
+{
+  "elapsed_s": 14.8,
+  "v69_blend_target": {
+    "sharpe": 2.639,
+    "cagr": 0.6402,
+    "mdd": -0.1259,
+    "calmar": 5.085
+  },
+  "variants": [
+    {
+      "label": "A_target_spec",
+      "config": {
+        "size_mult": 1.75,
+        "leverage_cap": 5.25,
+        "risk_per_trade": 0.03
+      },
+      "headline": {
+        "label": "A_target_spec",
+        "sharpe": 2.614,
+        "cagr": 0.6111,
+        "mdd": -0.1242,
+        "calmar": 4.92
+      },
+      "divergence_pct": {
+        "sharpe": -0.95,
+        "cagr": -4.55,
+        "mdd": 1.35,
+        "calmar": -3.24
+      },
+      "within_10pct": true
+    },
+    {
+      "label": "B_capped_at_3x",
+      "config": {
+        "size_mult": 1.75,
+        "leverage_cap": 3.0,
+        "risk_per_trade": 0.03
+      },
+      "headline": {
+        "label": "B_capped_at_3x",
+        "sharpe": 2.614,
+        "cagr": 0.6111,
+        "mdd": -0.1242,
+        "calmar": 4.92
+      },
+      "divergence_pct": {
+        "sharpe": -0.95,
+        "cagr": -4.55,
+        "mdd": 1.35,
+        "calmar": -3.24
+      },
+      "within_10pct": true
+    },
+    {
+      "label": "C_via_risk_pct",
+      "config": {
+        "size_mult": 1.0,
+        "leverage_cap": 5.25,
+        "risk_per_trade": 0.0525
+      },
+      "headline": {
+        "label": "C_via_risk_pct",
+        "sharpe": 2.614,
+        "cagr": 0.6111,
+        "mdd": -0.1242,
+        "calmar": 4.92
+      },
+      "divergence_pct": {
+        "sharpe": -0.95,
+        "cagr": -4.55,
+        "mdd": 1.35,
+        "calmar": -3.24
+      },
+      "within_10pct": true
+    },
+    {
+      "label": "Z_no_leverage_sanity",
+      "config": {
+        "size_mult": 1.0,
+        "leverage_cap": 3.0,
+        "risk_per_trade": 0.03
+      },
+      "headline": {
+        "label": "Z_no_leverage_sanity",
+        "sharpe": 2.639,
+        "cagr": 0.3329,
+        "mdd": -0.0731,
+        "calmar": 4.552
+      },
+      "divergence_pct": {
+        "sharpe": 0.0,
+        "cagr": -48.0,
+        "mdd": 41.94,
+        "calmar": -10.48
+      },
+      "within_10pct": false
+    }
+  ],
+  "verdict": "PASS \u2014 V69 blend-level estimate is honest; per-position confirms it"
+}

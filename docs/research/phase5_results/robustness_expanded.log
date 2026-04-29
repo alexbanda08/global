@@ -1,0 +1,101 @@
+Auditing 19 cells with >=3/7 Phase-5 gates
+
+== donchian_breakout | SOLUSDT | 4h ==
+  robustness_tests_passed: 0/7
+  per-year Sharpe: 2022:-0.86 2023:+2.17 2024:+1.19
+
+== ensemble_trend_vol | SOLUSDT | 4h ==
+  robustness_tests_passed: 2/7
+  per-year Sharpe: 2022:-1.48 2023:+2.06 2024:+0.60
+
+== gaussian_channel_v2 | BTCUSDT | 4h ==
+  robustness_tests_passed: 1/7
+  per-year Sharpe: 2022:-1.80 2023:-0.71 2024:+2.43
+
+== macd_htf | SOLUSDT | 4h ==
+  robustness_tests_passed: 3/7
+  per-year Sharpe: 2022:-0.40 2023:+1.78 2024:+0.98
+
+== ensemble_trend_vol | BTCUSDT | 4h ==
+  robustness_tests_passed: 2/7
+  per-year Sharpe: 2022:-0.22 2023:+1.70 2024:+0.60
+
+== squeeze_breakout | SOLUSDT | 4h ==
+  robustness_tests_passed: 1/7
+  per-year Sharpe: 2022:-2.71 2023:+1.94 2024:+1.04
+
+== donchian_breakout | BTCUSDT | 4h ==
+  robustness_tests_passed: 1/7
+  per-year Sharpe: 2022:-1.26 2023:+1.52 2024:+1.90
+
+== supertrend | BTCUSDT | 4h ==
+  robustness_tests_passed: 3/7
+  per-year Sharpe: 2022:-0.70 2023:+1.95 2024:+1.70
+
+== ema_trend_adx | SOLUSDT | 4h ==
+  robustness_tests_passed: 3/7
+  per-year Sharpe: 2022:-0.63 2023:+2.61 2024:+1.42
+
+== volume_breakout | ETHUSDT | 4h ==
+  robustness_tests_passed: 3/7
+  per-year Sharpe: 2022:+0.75 2023:+0.40 2024:+0.78
+
+== gaussian_channel_v2 | ETHUSDT | 4h ==
+  robustness_tests_passed: 1/7
+  per-year Sharpe: 2022:-1.11 2023:-0.23 2024:+1.34
+
+== donchian_v2 | BTCUSDT | 4h ==
+  robustness_tests_passed: 2/7
+  per-year Sharpe: 2022:-0.71 2023:+1.80 2024:+1.25
+
+== supertrend_v2 | ETHUSDT | 4h ==
+  robustness_tests_passed: 1/7
+  per-year Sharpe: 2022:-0.18 2023:-2.21 2024:+1.41
+
+== volume_breakout_v2 | ETHUSDT | 4h ==
+  robustness_tests_passed: 4/7
+  per-year Sharpe: 2022:+0.78 2023:+0.49 2024:+0.81
+
+== ema_trend_adx_v2 | BTCUSDT | 4h ==
+  robustness_tests_passed: 2/7
+  per-year Sharpe: 2022:-0.60 2023:+1.79 2024:+0.53
+
+== squeeze_breakout | ETHUSDT | 4h ==
+  robustness_tests_passed: 2/7
+  per-year Sharpe: 2022:-2.95 2023:+0.15 2024:+0.37
+
+== squeeze_breakout | BTCUSDT | 4h ==
+  robustness_tests_passed: 1/7
+  per-year Sharpe: 2022:-2.38 2023:+0.49 2024:+0.88
+
+== ema_trend_adx_v2 | ETHUSDT | 4h ==
+  robustness_tests_passed: 2/7
+  per-year Sharpe: 2022:-0.34 2023:-0.90 2024:+0.02
+
+== volume_breakout | BTCUSDT | 4h ==
+  robustness_tests_passed: 2/7
+  per-year Sharpe: 2022:-0.23 2023:+1.32 2024:+1.25
+
+=== Regime-filter experiments ===
+
+== c1_meta_labeled_donchian_REGIME_FILTERED | ETHUSDT ==
+  robustness_tests_passed: 1/7
+  per-year Sharpe: 2022:+0.00 2023:+0.00 2024:+0.46
+  WFE=-1.246  pos_folds=2/6
+
+== c1_meta_labeled_donchian_VANILLA | ETHUSDT ==
+  robustness_tests_passed: 2/7
+  per-year Sharpe: 2022:+0.00 2023:+0.00 2024:+1.10
+  WFE=6.061  pos_folds=3/6
+
+== gaussian_channel_v2_REGIME_FILTERED | BTCUSDT ==
+  robustness_tests_passed: 1/7
+  per-year Sharpe: 2022:-1.80 2023:-1.09 2024:+2.00
+  WFE=-0.082  pos_folds=2/6
+
+== gaussian_channel_v2_VANILLA | BTCUSDT ==
+  robustness_tests_passed: 1/7
+  per-year Sharpe: 2022:-1.80 2023:-0.71 2024:+2.43
+  WFE=-0.502  pos_folds=4/6
+
+Wrote C:\Users\alexandre bandarra\Desktop\global\docs\research\phase5_results\robustness_expanded.json

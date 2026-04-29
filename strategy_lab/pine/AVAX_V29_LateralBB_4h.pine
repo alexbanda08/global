@@ -1,0 +1,125 @@
+//@version=5
+// ============================================================================
+//  AVAX  —  V29 Lateral BB-Fade (4h)   —  LIVE CANDIDATE
+// ============================================================================
+//  Range-gated Bollinger Band mean-reversion. Only fades the band when the
+//  market is compressed AND ADX is low. Exits via ATR TP/trailing/SL — no
+//  middle-band target. Strongest OOS edge of the V29 round; 7/9 coins show
+//  OOS Sharpe ABOVE their IS Sharpe, i.e. the strategy got BETTER in 2024+.
+//
+//  Python backtest (2020-01 -> 2026-04, $10k, 9 bps fee + 3 bps slip, 3x cap):
+//    FULL  n=48  CAGR +21.0%  Sh +1.00  DD -25.5%  PF 2.21
+//      IS  (2020-2023) n=28  Sh +0.68  CAGR +12.4%
+//      OOS (2024-2026) n=20  Sh +1.45  CAGR +34.8%  DD -18.1%
+//    Verdict: LIVE CANDIDATE — Clean IS/OOS progression; PF 2.2
+//
+//  Entry: ADX(14) < 18 AND BB-width (over last 200 bars)
+//         below its 0.6 quantile AND close crosses UP through lower BB.
+//         Short mirror.
+//  Exits: ATR TP 10x, hard SL 2.0x, trail 5.0x, max hold 40 bars.
+// ============================================================================
+
+strategy("AVAX  V29 Lateral BB-Fade 4h",
+     overlay             = true,
+     initial_capital     = 10000,
+     currency            = currency.USD,
+     default_qty_type    = strategy.percent_of_equity,
+     default_qty_value   = 100,
+     commission_type     = strategy.commission.percent,
+     commission_value    = 0.045,
+     slippage            = 3,
+     pyramiding          = 0,
+     process_orders_on_close = false,
+     close_entries_rule  = "ANY",
+     margin_long         = 33,
+     margin_short        = 33)
+
+grpSig  = "Range-gated signal"
+bbLen   = input.int(30, "BB length",       minval = 5,  group = grpSig)
+bbK     = input.float(1.8, "BB k (stdev)",  step = 0.1,  group = grpSig)
+adxMax  = input.int(18, "Max ADX",      minval = 5,  group = grpSig)
+adxLen  = input.int(14, "ADX length",          minval = 5,  group = grpSig)
+bwLB    = input.int(200, "BW lookback",    minval = 10, group = grpSig)
+bwQ     = input.float(0.6, "BW quantile",   step = 0.05, group = grpSig)
+
+grpExit = "Exits (ATR)"
+atrLen  = input.int(14,    "ATR length",       minval = 2,  group = grpExit)
+tpAtr   = input.float(10.0, "TP x ATR",      step = 0.5, group = grpExit)
+slAtr   = input.float(2.0, "SL x ATR",        step = 0.1, group = grpExit)
+trlAtr  = input.float(5.0, "Trail x ATR",     step = 0.5, group = grpExit)
+maxHold = input.int(40,  "Max hold",         minval = 4,  group = grpExit)
+
+grpRisk = "Sizing"
+riskPct = input.float(5.0, "Risk/trade (% eq.)", step = 0.5, group = grpRisk)
+levCap  = input.float(3.0, "Max leverage",          step = 0.5, group = grpRisk)
+
+// --- Bollinger ---
+bbMid = ta.sma(close, bbLen)
+bbStd = ta.stdev(close, bbLen)
+bbUp  = bbMid + bbK * bbStd
+bbDn  = bbMid - bbK * bbStd
+bw    = (bbUp - bbDn) / bbMid
+
+// Quantile of BB-width over last bwLB bars
+bwQuant = ta.percentile_nearest_rank(bw, bwLB, int(bwQ * 100))
+isCompressed = bw < bwQuant
+
+// --- ADX (Wilder) ---
+[diP, diM, adxV] = ta.dmi(adxLen, adxLen)
+isRange = (adxV < adxMax) and isCompressed
+
+// Close crossing UP through lower band = long fade setup
+longEdge  = (close > bbDn) and (close[1] <= bbDn[1])
+shortEdge = (close < bbUp) and (close[1] >= bbUp[1])
+
+longSig  = isRange and longEdge
+shortSig = isRange and shortEdge
+
+// --- Sizing via ATR ---
+atrVal      = ta.atr(atrLen)
+stopDist    = slAtr * atrVal
+riskDollars = strategy.equity * (riskPct / 100.0)
+qtySized    = stopDist > 0 ? math.min(riskDollars / stopDist, strategy.equity * levCap / close) : 0
+
+if longSig and strategy.position_size == 0
+    strategy.entry("L", strategy.long, qty = qtySized,
+                   alert_message = '{"action":"buy","ticker":"{{ticker}}","qty":"{{strategy.order.contracts}}","price":"{{close}}"}')
+if shortSig and strategy.position_size == 0
+    strategy.entry("S", strategy.short, qty = qtySized,
+                   alert_message = '{"action":"sell","ticker":"{{ticker}}","qty":"{{strategy.order.contracts}}","price":"{{close}}"}')
+
+// --- Exits ---
+var float trailStop = na
+var int   barsIn    = 0
+
+if strategy.position_size > 0
+    barsIn := barsIn + 1
+    tp    = strategy.position_avg_price + tpAtr * atrVal
+    hsl   = strategy.position_avg_price - slAtr * atrVal
+    trail = high - trlAtr * atrVal
+    trailStop := na(trailStop) ? hsl : math.max(trailStop, trail)
+    trailStop := math.max(trailStop, hsl)
+    strategy.exit("X-L", "L", limit = tp, stop = trailStop)
+    if barsIn >= maxHold
+        strategy.close("L", comment = "maxHold")
+else if strategy.position_size < 0
+    barsIn := barsIn + 1
+    tp    = strategy.position_avg_price - tpAtr * atrVal
+    hsl   = strategy.position_avg_price + slAtr * atrVal
+    trail = low + trlAtr * atrVal
+    trailStop := na(trailStop) ? hsl : math.min(trailStop, trail)
+    trailStop := math.min(trailStop, hsl)
+    strategy.exit("X-S", "S", limit = tp, stop = trailStop)
+    if barsIn >= maxHold
+        strategy.close("S", comment = "maxHold")
+else
+    trailStop := na
+    barsIn := 0
+
+// --- Visuals ---
+plot(bbMid, "BB mid", color = color.new(color.aqua, 40))
+plot(bbUp,  "BB up",  color = color.new(color.red,  50))
+plot(bbDn,  "BB dn",  color = color.new(color.lime, 50))
+bgcolor(isRange ? color.new(color.yellow, 92) : na)
+plotshape(longSig,  title = "Long",  style = shape.triangleup,   location = location.belowbar, color = color.lime, size = size.tiny)
+plotshape(shortSig, title = "Short", style = shape.triangledown, location = location.abovebar, color = color.red,  size = size.tiny)

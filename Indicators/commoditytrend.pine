@@ -1,0 +1,77 @@
+// This work is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International  
+// https://creativecommons.org/licenses/by-nc-sa/4.0/
+// © BigBeluga
+
+//@version=6
+indicator("Commodity Trend Reactor [BigBeluga]", max_labels_count = 500)
+
+// ＩＮＰＵＴＳ ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――{
+len = input.int(25, "CCi Length")
+t_len = input.int(20, "Trail Line Length")
+
+upper = input.int(50, "Upper Threshold")
+lower = input.int(-50, "Lower Threshold")
+
+
+low_ = ta.lowest(t_len)
+high_ = ta.highest(t_len)
+
+cci = ta.cci(close, len)
+
+var trend = bool(na)
+color_bg = color(na)
+
+if ta.crossover(cci, upper)
+    trend := true 
+
+if ta.crossunder(cci, lower)
+    trend := false 
+
+
+if trend and trend != trend[1]
+    color_bg := color.new(color.lime, 90)
+
+if not trend and trend != trend[1]
+    color_bg := color.new(color.orange, 90)
+
+
+
+bgcolor(color_bg, force_overlay = true)
+bgcolor(color_bg, force_overlay = false)
+
+
+trail_line = float(na)
+
+if trend
+    trail_line := low_
+if not trend
+    trail_line := high_
+
+
+cci_col = cci < upper and cci > lower ? color.gray : cci > upper ? color.lime : cci < lower ? color.orange : na
+
+pt = plot(trail_line, force_overlay = true, color = trend != trend[1] ? na : (trend ? color.lime : color.orange))
+cls = plot(close, display = display.none, editable = false, force_overlay = true)
+
+cci_p = plot(cci, color = cci_col)
+up = plot(upper, display = display.none, editable = false)
+lw = plot(lower, display = display.none, editable = false)
+
+fill(cci_p, up, cci, upper, cci > upper ? color.rgb(0, 230, 119, 53) : color(na), color(na))
+fill(cci_p, lw, cci, lower, cci < lower ? color.rgb(255, 153, 0, 57) : color(na), color(na))
+
+fill(pt, cls, close, trail_line, color(na), trend != trend[1] ? na : (trend ? color.new(color.lime, 80) : color.new(color.orange, 80)))
+
+plotshape(cci > 200, "Top", shape.square, location.top, color = color.lime)
+plotshape(cci < -200, "Bottom", shape.square, location.bottom, color = color.orange)
+
+
+if cci > 200 
+    label.new(bar_index, high, "■", textcolor = cci_col, color = color(na), style = label.style_label_center, size = size.normal, force_overlay = true)
+if cci < -200 
+    label.new(bar_index, low, "■", textcolor = cci_col, color = color(na), style = label.style_label_center, size = size.normal, force_overlay = true)
+
+hline(upper, linestyle = hline.style_solid)
+hline(0)
+hline(lower, linestyle = hline.style_solid)
+

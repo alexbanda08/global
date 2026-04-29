@@ -1,0 +1,16 @@
+label,sharpe,cagr,mdd,calmar,min_yr,pos_yrs,portfolio,variant
+P3_trend_x_vol,2.09,0.633,-0.226,2.79,0.192,6,P3,trend_x_vol
+P5_trend_x_vol,2.17,0.562,-0.303,1.86,0.223,6,P5,trend_x_vol
+P7_trend_x_vol,2.02,0.73,-0.281,2.6,0.129,6,P7,trend_x_vol
+P3_defensive,2.1,0.388,-0.151,2.56,0.123,6,P3,defensive
+P5_defensive,2.19,0.347,-0.204,1.7,0.14,6,P5,defensive
+P7_defensive,2.02,0.441,-0.184,2.4,0.107,6,P7,defensive
+P3_aggressive,2.03,0.905,-0.319,2.83,0.256,6,P3,aggressive
+P5_aggressive,2.13,0.827,-0.412,2.01,0.246,6,P5,aggressive
+P7_aggressive,1.97,1.056,-0.394,2.68,0.146,6,P7,aggressive
+P3_trend_boost,2.09,0.745,-0.222,3.35,0.225,6,P3,trend_boost
+P5_trend_boost,2.12,0.616,-0.318,1.93,0.22,6,P5,trend_boost
+P7_trend_boost,2.05,0.871,-0.298,2.92,0.126,6,P7,trend_boost
+P3_vol_boost,2.04,0.526,-0.209,2.51,0.153,6,P3,vol_boost
+P5_vol_boost,2.16,0.482,-0.273,1.76,0.14,6,P5,vol_boost
+P7_vol_boost,1.96,0.593,-0.238,2.49,0.16,6,P7,vol_boost

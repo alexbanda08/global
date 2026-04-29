@@ -1,0 +1,335 @@
+"""
+V52 PARITY TEST RUNNER — adapt the import paths to your codebase.
+
+Usage:
+  1. Replace the IMPORT BLOCK below with your project's import paths
+  2. Run: python run_v52_parity.py --fixture-dir tests/v52_fixtures/
+  3. Each of 12 sub-tests prints PASS/FAIL. All must PASS.
+"""
+from __future__ import annotations
+import argparse, json, math, sys
+from pathlib import Path
+import numpy as np
+import pandas as pd
+
+# ============== IMPORT BLOCK — REPLACE WITH YOUR PROJECT'S PATHS ==============
+# Engineer: import your implementations here.
+# Example:
+#   from tradingvenue.indicators import atr_wilder
+#   from tradingvenue.signals.v30 import sig_cci_extreme, sig_supertrend_flip, sig_lateral_bb_fade
+#   from tradingvenue.signals.v50 import sig_mfi_extreme, sig_volume_profile_rot, sig_signed_vol_div
+#   from tradingvenue.regime.hmm import fit_regime_model
+#   from tradingvenue.engine.simulator import simulate_canonical, simulate_v41, simulate_with_funding
+#   from tradingvenue.blend import invvol_blend, eqw_blend
+#
+# These are the symbols your test runner will exercise:
+from tradingvenue.indicators import atr_wilder as atr
+from tradingvenue.signals.v30 import sig_cci_extreme, sig_supertrend_flip, sig_lateral_bb_fade
+from tradingvenue.signals.v50 import sig_mfi_extreme, sig_volume_profile_rot, sig_signed_vol_div
+from tradingvenue.regime.hmm import fit_regime_model
+from tradingvenue.engine.simulator import simulate_canonical, simulate_v41, simulate_with_funding, REGIME_EXITS_4H
+from tradingvenue.blend import invvol_blend, eqw_blend
+# ==============================================================================
+
+EXIT_4H = dict(tp_atr=10.0, sl_atr=2.0, trail_atr=6.0, max_hold=60)
+
+PASS = "\033[32mPASS\033[0m"
+FAIL = "\033[31mFAIL\033[0m"
+
+class TestRunner:
+    def __init__(self, fixture_dir: Path):
+        self.fix = fixture_dir
+        self.passed = 0
+        self.failed = 0
+        self.errors = []
+
+    def _record(self, name: str, ok: bool, msg: str = ""):
+        tag = PASS if ok else FAIL
+        print(f"  {tag} {name}{(' — ' + msg) if msg else ''}")
+        if ok:
+            self.passed += 1
+        else:
+            self.failed += 1
+            self.errors.append((name, msg))
+
+    def _close(self, a, b, rtol):
+        return math.isclose(float(a), float(b), rel_tol=rtol, abs_tol=rtol*max(abs(b), 1e-12))
+
+    # ----- inputs -----
+    def load_inputs(self):
+        self.klines = pd.read_parquet(self.fix / "input_klines.parquet")
+        # multi-index (symbol, timestamp) — split into per-symbol frames
+        self.dfs = {sym: self.klines.xs(sym, level=0).copy() for sym in ["ETH","AVAX","SOL","LINK"]}
+        self.funding = pd.read_parquet(self.fix / "input_funding.parquet")
+        # align funding columns to per-symbol Series
+        self.fund_by_sym = {sym: self.funding[sym] for sym in ["ETH","AVAX","SOL","LINK"]}
+
+    # ----- Test 1: ATR -----
+    def test_atr(self):
+        print("\nTest 1: ATR(14) Wilder smoothing")
+        ref = json.loads((self.fix / "expected_indicators.json").read_text())
+        for sym in ["ETH"]:  # single symbol is sufficient
+            r = ref["atr"][sym]
+            a_impl = atr(self.dfs[sym], n=14)
+            ok = True
+            first_fail = None
+            for idx, exp in zip(r["sample_indices"], r["sample_values"]):
+                if not self._close(a_impl[idx], exp, r["tolerance_rtol"]):
+                    ok = False
+                    first_fail = (idx, exp, float(a_impl[idx]))
+                    break
+            msg = f"sample_idx={first_fail[0]} expected={first_fail[1]} got={first_fail[2]}" if first_fail else ""
+            self._record(f"ATR(14) {sym}", ok, msg)
+
+    # ----- Test 2 + 3: signals -----
+    def test_signals(self):
+        print("\nTest 2+3: Signal functions")
+        ref = json.loads((self.fix / "expected_signals.json").read_text())
+        eth = self.dfs["ETH"]
+        sig_map = {
+            "cci_extreme":     (sig_cci_extreme,         ref["cci_extreme"]["params"]),
+            "supertrend_flip": (sig_supertrend_flip,     ref["supertrend_flip"]["params"]),
+            "lateral_bb_fade": (sig_lateral_bb_fade,     ref["lateral_bb_fade"]["params"]),
+            "mfi_75_25":       (sig_mfi_extreme,         ref["mfi_75_25"]["params"]),
+            "vp_rot_60":       (sig_volume_profile_rot,  ref["vp_rot_60"]["params"]),
+            "svd_tight":       (sig_signed_vol_div,      ref["svd_tight"]["params"]),
+        }
+        for name, (fn, kw) in sig_map.items():
+            try:
+                out = fn(eth, **kw)
+                le, se = out if isinstance(out, tuple) else (out, None)
+                impl_long = [int(i) for i, v in enumerate(le.values) if bool(v)]
+                impl_short = ([int(i) for i, v in enumerate(se.values) if bool(v)]
+                               if se is not None else [])
+                exp_long = ref[name]["long_entry_indices"]
+                exp_short = ref[name]["short_entry_indices"]
+                ok = (impl_long == exp_long) and (impl_short == exp_short)
+                msg = ""
+                if not ok:
+                    diff_long = set(impl_long) ^ set(exp_long)
+                    msg = f"long-diff={len(diff_long)} bars; expected {len(exp_long)} got {len(impl_long)}"
+                self._record(f"signal[{name}]", ok, msg)
+            except Exception as e:
+                self._record(f"signal[{name}]", False, f"raised {type(e).__name__}: {e}")
+
+    # ----- Test 4: regime -----
+    def test_regime(self):
+        print("\nTest 4: Regime classifier")
+        ref = json.loads((self.fix / "expected_regime.json").read_text())
+        try:
+            model, regime_df = fit_regime_model(self.dfs["ETH"], train_frac=0.30, seed=42)
+            ok_k = int(model.best_k) == ref["best_k"]
+            self._record(f"regime best_k = {model.best_k}", ok_k,
+                         "" if ok_k else f"expected {ref['best_k']}")
+            impl_dist = regime_df["label"].value_counts().to_dict()
+            ok_dist = impl_dist == ref["regime_distribution"]
+            self._record("regime distribution", ok_dist,
+                         "" if ok_dist else f"expected={ref['regime_distribution']} got={impl_dist}")
+            impl_first50 = regime_df["label"].iloc[:50].tolist()
+            ok_first = impl_first50 == ref["first_50_regime_labels"]
+            self._record("first 50 regime labels", ok_first,
+                         "" if ok_first else "label sequence diverges")
+        except Exception as e:
+            self._record("regime fit", False, f"raised {type(e).__name__}: {e}")
+
+    # ----- Test 5+6+7: simulators on CCI_ETH -----
+    def test_simulators(self):
+        print("\nTest 5+6+7: Simulator parity")
+        ref = json.loads((self.fix / "expected_trades.json").read_text())
+        eq_ref = json.loads((self.fix / "expected_equity.json").read_text())
+        eth = self.dfs["ETH"]
+        out = sig_cci_extreme(eth)
+        le, se = out if isinstance(out, tuple) else (out, None)
+
+        # Test 5: canonical
+        try:
+            tr, eq = simulate_canonical(eth, le, se, **EXIT_4H)
+            exp = ref["canonical_cci_eth"]
+            ok = self._compare_trades(tr, exp["trades"], rtol=1e-6, name="canonical")
+            self._record(f"canonical sim ({len(tr)} trades)", ok)
+            ok_eq = self._compare_equity(eq, eq_ref["canonical_cci_eth"])
+            self._record(f"canonical equity samples", ok_eq)
+        except Exception as e:
+            self._record("canonical sim", False, f"raised {type(e).__name__}: {e}")
+
+        # Test 6: V41
+        try:
+            _, regime_df = fit_regime_model(eth, train_frac=0.30, seed=42)
+            tr, eq = simulate_v41(eth, le, se, regime_df["label"])
+            exp = ref["v41_regime_adaptive_cci_eth"]
+            ok = self._compare_trades(tr, exp["trades"], rtol=1e-6, name="v41",
+                                        check_regime=True)
+            self._record(f"V41 regime-adaptive sim ({len(tr)} trades)", ok)
+            ok_eq = self._compare_equity(eq, eq_ref["v41_regime_adaptive_cci_eth"])
+            self._record("V41 equity samples", ok_eq)
+        except Exception as e:
+            self._record("V41 sim", False, f"raised {type(e).__name__}: {e}")
+
+        # Test 7: funding
+        try:
+            fund_eth = self.fund_by_sym["ETH"]
+            tr, eq = simulate_with_funding(eth, le, se, fund_eth, **EXIT_4H)
+            exp = ref["with_funding_cci_eth"]
+            ok = self._compare_trades(tr, exp["trades"], rtol=1e-5, name="funding",
+                                        check_funding=True)
+            self._record(f"funding sim ({len(tr)} trades)", ok)
+            ok_eq = self._compare_equity(eq, eq_ref["with_funding_cci_eth"])
+            self._record("funding equity samples", ok_eq)
+        except Exception as e:
+            self._record("funding sim", False, f"raised {type(e).__name__}: {e}")
+
+    def _compare_trades(self, impl: list[dict], expected: list[dict], rtol: float,
+                          name: str, check_regime: bool = False, check_funding: bool = False):
+        if len(impl) != len(expected):
+            print(f"      [{name}] trade count differs: impl={len(impl)} expected={len(expected)}")
+            return False
+        for i, (ti, te) in enumerate(zip(impl, expected)):
+            if int(ti["entry_idx"]) != int(te["entry_idx"]) or int(ti["exit_idx"]) != int(te["exit_idx"]):
+                print(f"      [{name}] trade {i} index mismatch")
+                return False
+            if int(ti["side"]) != int(te["side"]) or ti.get("reason") != te.get("reason"):
+                print(f"      [{name}] trade {i} side/reason mismatch")
+                return False
+            if not self._close(ti["entry"], te["entry"], rtol):
+                print(f"      [{name}] trade {i} entry price diff")
+                return False
+            if not self._close(ti["exit"], te["exit"], rtol):
+                print(f"      [{name}] trade {i} exit price diff")
+                return False
+            if check_regime and ti.get("regime") != te.get("regime"):
+                print(f"      [{name}] trade {i} regime mismatch")
+                return False
+            if check_funding and not self._close(ti.get("funding_cost", 0),
+                                                  te.get("funding_cost", 0), rtol):
+                print(f"      [{name}] trade {i} funding_cost diff")
+                return False
+        return True
+
+    def _compare_equity(self, eq_impl: pd.Series, eq_exp: dict):
+        rtol = eq_exp["tolerance_rtol"]
+        for i, idx in enumerate(eq_exp["sample_indices"]):
+            if not self._close(eq_impl.iloc[idx], eq_exp["sample_values"][i], rtol):
+                return False
+        return True
+
+    # ----- Test 8: end-to-end V52 -----
+    def test_v52_blend(self):
+        print("\nTest 8: End-to-end V52 blend")
+        ref = json.loads((self.fix / "expected_v52_blend.json").read_text())
+        try:
+            v52_eq = self._build_v52_blend()
+        except Exception as e:
+            self._record("V52 blend build", False, f"raised {type(e).__name__}: {e}")
+            return
+
+        head = ref["headline"]
+        rt_h = ref["tolerance_rtol_headline"]
+        ok_final = self._close(v52_eq.iloc[-1], head["final_equity"], rt_h)
+        self._record(f"V52 final equity (impl={float(v52_eq.iloc[-1]):.2f} expected={head['final_equity']})", ok_final)
+
+        # sample equity points
+        rt_s = ref["tolerance_rtol_equity"]
+        all_ok = True; first_fail = None
+        for i, idx in enumerate(ref["sample_indices"]):
+            if not self._close(v52_eq.iloc[idx], ref["sample_equity"][i], rt_s):
+                all_ok = False
+                first_fail = (idx, ref["sample_equity"][i], float(v52_eq.iloc[idx]))
+                break
+        msg = f"first mismatch at idx={first_fail[0]} exp={first_fail[1]} got={first_fail[2]}" if first_fail else ""
+        self._record("V52 equity samples", all_ok, msg)
+
+    def _build_v52_blend(self):
+        # Engineer fills this in to match their pipeline.
+        # The reference pipeline:
+        sleeve_specs = {
+            "CCI_ETH":    ("ETH",  sig_cci_extreme,         {}, "V41"),
+            "STF_AVAX":   ("AVAX", sig_supertrend_flip,     {}, "V45"),
+            "STF_SOL":    ("SOL",  sig_supertrend_flip,     {}, "baseline"),
+            "LATBB_AVAX": ("AVAX", sig_lateral_bb_fade,     {}, "baseline"),
+        }
+        v41_curves = {}
+        for name, (sym, fn, kw, variant) in sleeve_specs.items():
+            df = self.dfs[sym]
+            out = fn(df, **kw); le, se = out if isinstance(out, tuple) else (out, None)
+            fund = self.fund_by_sym[sym]
+            if variant == "baseline":
+                _, eq = simulate_with_funding(df, le, se, fund, **EXIT_4H)
+            elif variant == "V41":
+                _, rdf = fit_regime_model(df, train_frac=0.30, seed=42)
+                _, eq = simulate_with_funding(df, le, se, fund,
+                                                 regime_labels=rdf["label"],
+                                                 regime_exits=REGIME_EXITS_4H)
+            elif variant == "V45":
+                vol = df["volume"]; vmean = vol.rolling(20, min_periods=10).mean()
+                active = vol > 1.1 * vmean
+                _, rdf = fit_regime_model(df, train_frac=0.30, seed=42)
+                _, eq = simulate_with_funding(df, le & active,
+                                                 (se & active) if se is not None else None,
+                                                 fund,
+                                                 regime_labels=rdf["label"],
+                                                 regime_exits=REGIME_EXITS_4H)
+            v41_curves[name] = eq
+
+        p3 = invvol_blend({k: v41_curves[k] for k in ["CCI_ETH","STF_AVAX","STF_SOL"]}, window=500)
+        p5 = eqw_blend({k: v41_curves[k] for k in ["CCI_ETH","LATBB_AVAX","STF_SOL"]})
+        idx = p3.index.intersection(p5.index)
+        v41_r = (0.6 * p3.reindex(idx).pct_change().fillna(0)
+                + 0.4 * p5.reindex(idx).pct_change().fillna(0))
+        v41_eq = (1 + v41_r).cumprod() * 10_000.0
+
+        div_specs = [
+            ("MFI_SOL",  "SOL",  sig_mfi_extreme,        dict(lower=25, upper=75), "V41"),
+            ("VP_LINK",  "LINK", sig_volume_profile_rot, dict(win=60, n_bins=15), "baseline"),
+            ("SVD_AVAX", "AVAX", sig_signed_vol_div,
+             dict(lookback=20, cvd_win=50, min_cvd_threshold=0.5), "baseline"),
+            ("MFI_ETH",  "ETH",  sig_mfi_extreme,        dict(lower=25, upper=75), "baseline"),
+        ]
+        div_curves = {}
+        for name, sym, fn, kw, exit_style in div_specs:
+            df = self.dfs[sym]
+            out = fn(df, **kw); le, se = out if isinstance(out, tuple) else (out, None)
+            fund = self.fund_by_sym[sym]
+            if exit_style == "V41":
+                _, rdf = fit_regime_model(df, train_frac=0.30, seed=42)
+                _, eq = simulate_with_funding(df, le, se, fund,
+                                                regime_labels=rdf["label"],
+                                                regime_exits=REGIME_EXITS_4H)
+            else:
+                _, eq = simulate_with_funding(df, le, se, fund, **EXIT_4H)
+            div_curves[name] = eq
+
+        all_idx = v41_eq.index
+        for eq in div_curves.values():
+            all_idx = all_idx.intersection(eq.index)
+        cr = v41_eq.reindex(all_idx).pct_change().fillna(0)
+        drs = {k: eq.reindex(all_idx).pct_change().fillna(0) for k, eq in div_curves.items()}
+        combined = (0.60 * cr + 0.10 * drs["MFI_SOL"] + 0.10 * drs["VP_LINK"]
+                    + 0.10 * drs["SVD_AVAX"] + 0.10 * drs["MFI_ETH"])
+        return (1 + combined).cumprod() * 10_000.0
+
+    def run_all(self):
+        self.load_inputs()
+        self.test_atr()
+        self.test_signals()
+        self.test_regime()
+        self.test_simulators()
+        self.test_v52_blend()
+
+        total = self.passed + self.failed
+        print(f"\n{'='*60}")
+        print(f"{self.passed}/{total} PASS — {'IMPLEMENTATION VALIDATED' if self.failed == 0 else 'BUGS FOUND'}")
+        if self.failed:
+            print("\nFailures:")
+            for name, msg in self.errors:
+                print(f"  - {name}: {msg}")
+        return self.failed == 0
+
+
+if __name__ == "__main__":
+    p = argparse.ArgumentParser()
+    p.add_argument("--fixture-dir", required=True)
+    args = p.parse_args()
+    fix_dir = Path(args.fixture_dir)
+    runner = TestRunner(fix_dir)
+    ok = runner.run_all()
+    sys.exit(0 if ok else 1)

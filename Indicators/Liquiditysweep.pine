@@ -1,0 +1,124 @@
+//@version=5
+strategy("Estratégia Liquidity Sweep & Swing [Automated]", overlay=true, initial_capital=1000, default_qty_type=strategy.percent_of_equity, default_qty_value=1)
+
+// ==========================================
+// 1. INPUTS & CONFIGURAÇÕES
+// ==========================================
+grp_struc = "Estrutura de Mercado (Key Levels)"
+lenLeft = input.int(5, "Swing Esq (Barras)", group=grp_struc, tooltip="Barras à esquerda para confirmar um topo/fundo")
+lenRight = input.int(5, "Swing Dir (Barras)", group=grp_struc, tooltip="Barras à direita para confirmar um topo/fundo")
+
+grp_confirm = "Confirmação de Entrada"
+use_htf = input.bool(true, "Usar Filtro HTF?", group=grp_confirm)
+htf_timeframe = input.timeframe("240", "Timeframe Superior (HTF)", group=grp_confirm)
+min_body_size = input.float(0.0, "Tamanho Mínimo do Corpo (%)", group=grp_confirm, tooltip="Filtra velas muito pequenas (Dojis)")
+
+grp_risk = "Gestão de Risco & Saídas"
+sl_offset_ticks = input.int(10, "Offset do Stop Loss (Ticks)", group=grp_risk)
+rr_tp1 = input.float(1.5, "Risco:Retorno TP1", group=grp_risk)
+rr_tp2 = input.float(3.0, "Risco:Retorno TP2", group=grp_risk)
+tp1_qty = input.float(50, "Saída Parcial no TP1 (%)", group=grp_risk)
+
+grp_time = "Filtro de Horário (Timing)"
+lunch_session = input.session("1200-1300", "Horário de Almoço (Evitar)", group=grp_time)
+// Nota: O formato de horário depende do fuso horário da exchange ou do gráfico.
+
+// ==========================================
+// 2. IDENTIFICAR KEY LEVELS (SWING POINTS)
+// ==========================================
+// Detecta pontos de pivot (Swing Highs e Lows)
+ph = ta.pivothigh(lenLeft, lenRight)
+pl = ta.pivotlow(lenLeft, lenRight)
+
+// Armazena o nível do último swing confirmado
+var float last_swing_high = na
+var float last_swing_low = na
+
+if not na(ph)
+    last_swing_high := ph
+if not na(pl)
+    last_swing_low := pl
+
+// Plota os níveis no gráfico para visualização
+plot(last_swing_high, "Swing High", color=color.red, style=plot.style_circles, offset=-lenRight)
+plot(last_swing_low, "Swing Low", color=color.green, style=plot.style_circles, offset=-lenRight)
+
+// Linhas de extensão para referência visual (opcional)
+// line.new(bar_index - lenRight, last_swing_high, bar_index, last_swing_high, color=color.new(color.red, 50))
+// line.new(bar_index - lenRight, last_swing_low, bar_index, last_swing_low, color=color.new(color.green, 50))
+
+// ==========================================
+// 3. LÓGICA DE LIQUIDITY SWEEP (VARREDURA)
+// ==========================================
+// Bullish Sweep: Preço vai abaixo do último fundo, mas fecha acima dele
+// Isso indica captura de liquidez e rejeição do preço baixo
+bullish_sweep = low < last_swing_low and close > last_swing_low and low[1] > last_swing_low
+
+// Bearish Sweep: Preço vai acima do último topo, mas fecha abaixo dele
+bearish_sweep = high > last_swing_high and close < last_swing_high and high[1] < last_swing_high
+
+// Confirmação de "Decisive Candle" (Tamanho do corpo)
+body_size_pct = math.abs(close - open) / open * 100
+is_decisive = body_size_pct >= min_body_size
+
+// ==========================================
+// 4. CONFIRMAÇÃO HTF (HIGHER TIME FRAME)
+// ==========================================
+// Usa a tendência de uma EMA 200 no Timeframe Superior como filtro simples
+htf_ema = request.security(syminfo.tickerid, htf_timeframe, ta.ema(close, 200))
+htf_trend_up = not use_htf or (close > htf_ema) // Se não usar filtro, é true
+htf_trend_down = not use_htf or (close < htf_ema)
+
+// ==========================================
+// 5. FILTRO DE HORÁRIO (LUNCH HOURS)
+// ==========================================
+// Verifica se NÃO estamos no horário de almoço
+in_lunch = not na(time(timeframe.period, lunch_session))
+can_trade = not in_lunch
+
+// ==========================================
+// 6. EXECUÇÃO DA ESTRATÉGIA
+// ==========================================
+
+// Variáveis para armazenar preço de entrada e SL para cálculos de TP
+var float entry_price = na
+var float sl_price = na
+
+// --- COMPRA (LONG) ---
+if bullish_sweep and is_decisive and htf_trend_up and can_trade and strategy.position_size == 0
+    // Define Stop Loss abaixo da mínima da vela de sweep (com um pequeno offset)
+    sl = low - syminfo.mintick * sl_offset_ticks
+    entry_price := close
+    sl_price := sl
+    
+    // Calcula distância do risco
+    risk = entry_price - sl_price
+    
+    if risk > 0
+        strategy.entry("Long Sweep", strategy.long, comment="Sweep L")
+        strategy.exit("TP1", "Long Sweep", qty_percent=tp1_qty, limit=entry_price + (risk * rr_tp1), stop=sl_price)
+        strategy.exit("TP2", "Long Sweep", limit=entry_price + (risk * rr_tp2), stop=sl_price)
+
+// --- VENDA (SHORT) ---
+if bearish_sweep and is_decisive and htf_trend_down and can_trade and strategy.position_size == 0
+    // Define Stop Loss acima da máxima da vela de sweep
+    sl = high + syminfo.mintick * sl_offset_ticks
+    entry_price := close
+    sl_price := sl
+    
+    // Calcula distância do risco
+    risk = sl_price - entry_price
+    
+    if risk > 0
+        strategy.entry("Short Sweep", strategy.short, comment="Sweep S")
+        strategy.exit("TP1", "Short Sweep", qty_percent=tp1_qty, limit=entry_price - (risk * rr_tp1), stop=sl_price)
+        strategy.exit("TP2", "Short Sweep", limit=entry_price - (risk * rr_tp2), stop=sl_price)
+
+// ==========================================
+// 7. VISUALIZAÇÃO
+// ==========================================
+// Colore o fundo quando é horário de almoço para facilitar identificação
+bgcolor(in_lunch ? color.new(color.orange, 90) : na, title="Horário de Almoço")
+
+// Plota Média HTF se filtro estiver ativo
+plot(use_htf ? htf_ema : na, "EMA HTF", color=color.purple, linewidth=2)

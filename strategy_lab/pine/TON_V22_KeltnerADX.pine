@@ -1,0 +1,134 @@
+//@version=5
+// ============================================================================
+//  TON  —  V22 Keltner+ADX Long+Short  (2h, perps, Hyperliquid-style)
+// ============================================================================
+//  Python backtest (2022-10 -> 2026-04, $10,000 start, V20 grid):
+//    CAGR (gross)        67.6 %
+//    Sharpe              1.07
+//    Max drawdown        -27.4 %
+//    Trades              ~120
+//  Caveat: TON has ~3.5 yrs of data — smaller sample than BTC/ETH/SOL.
+//  Walk-forward OOS recommended before real capital.
+// ============================================================================
+
+strategy("TON  V22 Keltner+ADX L/S",
+     overlay             = true,
+     initial_capital     = 10000,
+     currency            = currency.USD,
+     default_qty_type    = strategy.percent_of_equity,
+     default_qty_value   = 100,
+     commission_type     = strategy.commission.percent,
+     commission_value    = 0.045,
+     slippage            = 3,
+     pyramiding          = 0,
+     calc_on_order_fills = false,
+     process_orders_on_close = false,
+     close_entries_rule  = "ANY",
+     use_bar_magnifier   = false,
+     margin_long         = 33,
+     margin_short        = 33)
+
+// -------- Inputs --------
+grpSig   = "Signal (Keltner + ADX)"
+kN       = input.int(20,     "Keltner EMA/ATR length",  minval = 5,  group = grpSig)
+kMult    = input.float(1.5,  "Keltner band multiplier", step = 0.1,  group = grpSig)
+adxMin   = input.float(18.0, "ADX threshold",           step = 1.0,  group = grpSig)
+regLen   = input.int(300,    "Regime SMA length (2h)",  minval = 50, group = grpSig)
+
+grpExit  = "Exits (ATR) - balanced"
+atrLen   = input.int(14,     "ATR length",              minval = 2,  group = grpExit)
+tpAtr    = input.float(5.0,  "Take profit x ATR",       step = 0.5,  group = grpExit)
+slAtr    = input.float(2.0,  "Stop loss x ATR",         step = 0.1,  group = grpExit)
+trlAtr   = input.float(3.5,  "Trailing stop x ATR",     step = 0.5,  group = grpExit)
+maxHold  = input.int(36,     "Max hold (bars @ 2h)",    minval = 4,  group = grpExit)
+
+grpRisk  = "Sizing"
+riskPct  = input.float(3.0,  "Risk per trade (% eq.)",  step = 0.5,  group = grpRisk)
+levCap   = input.float(3.0,  "Max leverage",            step = 0.5,  group = grpRisk)
+
+grpSide  = "Sides enabled"
+useLong  = input.bool(true,  "Trade longs",             group = grpSide)
+useShort = input.bool(true,  "Trade shorts",            group = grpSide)
+
+grpDates = "Backtest window"
+useDates = input.bool(true,  "Limit to date range?",              group = grpDates)
+sd       = input.time(timestamp("2022-10-01 00:00 UTC"), "Start", group = grpDates)
+ed       = input.time(timestamp("2030-01-01 00:00 UTC"), "End",   group = grpDates)
+inWin    = not useDates or (time >= sd and time <= ed)
+
+// -------- Keltner + ADX --------
+midEma = ta.ema(close, kN)
+atrK   = ta.atr(kN)
+kelUp  = midEma + kMult * atrK
+kelLo  = midEma - kMult * atrK
+
+adxVal = ta.rma(math.abs(ta.change(close)), 14) // placeholder — use built-in
+// Use Pine's built-in DMI/ADX
+[dip, dim, adx14] = ta.dmi(14, 14)
+
+regimeSma = ta.sma(close, regLen)
+regimeUp  = close > regimeSma
+regimeDn  = close < regimeSma
+
+crossUp = close > kelUp and close[1] <= kelUp[1] and adx14 > adxMin and regimeUp
+crossDn = close < kelLo and close[1] >= kelLo[1] and adx14 > adxMin and regimeDn
+
+longSig  = useLong  and inWin and crossUp
+shortSig = useShort and inWin and crossDn
+
+// -------- ATR exits --------
+atrVal = ta.atr(atrLen)
+
+// -------- Risk-based sizing --------
+stopDist    = slAtr * atrVal
+riskDollars = strategy.equity * (riskPct / 100.0)
+qtySized    = stopDist > 0 ? math.min(riskDollars / stopDist, strategy.equity * levCap / close) : 0
+
+// -------- Entries --------
+if longSig and strategy.position_size == 0
+    strategy.entry("L", strategy.long, qty = qtySized,
+                   alert_message = '{"action":"buy","ticker":"{{ticker}}","qty":"{{strategy.order.contracts}}","price":"{{close}}"}')
+
+if shortSig and strategy.position_size == 0
+    strategy.entry("S", strategy.short, qty = qtySized,
+                   alert_message = '{"action":"sell","ticker":"{{ticker}}","qty":"{{strategy.order.contracts}}","price":"{{close}}"}')
+
+// -------- Exits --------
+var float trailStop = na
+var int   barsIn    = 0
+
+if strategy.position_size > 0
+    barsIn := barsIn + 1
+    tp   = strategy.position_avg_price + tpAtr * atrVal
+    hsl  = strategy.position_avg_price - slAtr * atrVal
+    trail = high - trlAtr * atrVal
+    trailStop := na(trailStop) ? hsl : math.max(trailStop, trail)
+    trailStop := math.max(trailStop, hsl)
+    strategy.exit("X-L", "L", limit = tp, stop = trailStop,
+                  alert_message = '{"action":"close","ticker":"{{ticker}}","price":"{{close}}"}')
+    if barsIn >= maxHold
+        strategy.close("L", comment = "maxHold",
+                       alert_message = '{"action":"close","ticker":"{{ticker}}","price":"{{close}}"}')
+
+else if strategy.position_size < 0
+    barsIn := barsIn + 1
+    tp   = strategy.position_avg_price - tpAtr * atrVal
+    hsl  = strategy.position_avg_price + slAtr * atrVal
+    trail = low + trlAtr * atrVal
+    trailStop := na(trailStop) ? hsl : math.min(trailStop, trail)
+    trailStop := math.min(trailStop, hsl)
+    strategy.exit("X-S", "S", limit = tp, stop = trailStop,
+                  alert_message = '{"action":"close","ticker":"{{ticker}}","price":"{{close}}"}')
+    if barsIn >= maxHold
+        strategy.close("S", comment = "maxHold",
+                       alert_message = '{"action":"close","ticker":"{{ticker}}","price":"{{close}}"}')
+
+else
+    trailStop := na
+    barsIn := 0
+
+// -------- Plotting --------
+plot(midEma, "Keltner mid", color = color.new(color.yellow, 0))
+plot(kelUp,  "Upper band",  color = color.new(color.lime,   40))
+plot(kelLo,  "Lower band",  color = color.new(color.red,    40))
+plot(regimeSma, "Regime SMA", color = color.new(color.aqua, 60))

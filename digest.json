@@ -1,0 +1,1934 @@
+[
+ {
+  "name": "run_v10_fade",
+  "file": "strategy_lab/run_v10_fade.py",
+  "funcs": [
+   "simulate",
+   "report",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [],
+  "features": [
+   "atr",
+   "rsi",
+   "liquidations"
+  ],
+  "depends_on_derivatives": true,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V10 \"FadeTheCrowd\" \u2014 mean-reversion 15m strategy grounded in measured alpha. Signal summary (IC-backed, all features): PRIMARY: fade recent drops (ret_4 < -threshold) \u2014 IC -0.056 CONFIRM: liquidation pulse (liq_notional_z_7d > threshold) GATE: bull regime (close > daily EMA200 AND slope positive) SELECTIVE: selling pressure easing (taker_ratio_z_7d < 0) Exits: ATR-scaled (1.5x target / 1.0x stop),",
+  "signature": "def simulate\ndef report\ndef main"
+ },
+ {
+  "name": "run_v11_ml",
+  "file": "strategy_lab/run_v11_ml.py",
+  "funcs": [
+   "triple_barrier_labels",
+   "build_dataset",
+   "train_and_eval",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [],
+  "features": [
+   "atr",
+   "funding",
+   "open_interest",
+   "liquidations",
+   "long_short_ratio",
+   "ml_classifier"
+  ],
+  "depends_on_derivatives": true,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": true,
+  "doc": "V11 \u2014 ML (gradient-boosted trees) on 15m with triple-barrier labels. Architecture follows the 2026 \"Explainable Patterns in Cryptocurrency Microstructure\" paper + Lopez de Prado's Triple Barrier method: * Labels: for every bar i, we walk forward up to H=16 bars and return +1 if price hits entry + tp_atr * ATR before -sl_atr * ATR -1 if it hits -sl_atr * ATR first 0 if neither is touched by bar i+H",
+  "signature": "def triple_barrier_labels\ndef build_dataset\ndef train_and_eval\ndef main"
+ },
+ {
+  "name": "run_v12_1h",
+  "file": "strategy_lab/run_v12_1h.py",
+  "funcs": [
+   "simulate",
+   "report",
+   "v12a_signal",
+   "run_v12a",
+   "v12b_ml"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [],
+  "features": [
+   "atr",
+   "funding",
+   "open_interest",
+   "long_short_ratio",
+   "ml_classifier",
+   "pairs"
+  ],
+  "depends_on_derivatives": true,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": true,
+  "doc": "V12 \u2014 1h strategy. Two variants: V12A \"FadePrevHour\" rule-based LONG when prev-bar return < -X% AND regime_bull AND wick pattern Takes advantage of strongest IC we have (ret_1 at 1h: -0.07) V12B \"LightGBM triple-barrier\" Same ML pipeline as V11 but 1h bars, longer horizon, more history Both tested on BTC/ETH/SOL, walk-forward IS/OOS cut at 2024-07-01. Fees Hyperliquid tier (0.015%/side, 3bps slip)",
+  "signature": "def simulate\ndef report\ndef v12a_signal\ndef run_v12a\ndef v12b_ml"
+ },
+ {
+  "name": "run_v13_trend_1h",
+  "file": "strategy_lab/run_v13_trend_1h.py",
+  "funcs": [
+   "v13_range_kalman",
+   "v13_adx_gate",
+   "v13_volume_breakout",
+   "simulate",
+   "report",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [],
+  "features": [
+   "atr",
+   "adx",
+   "rsi",
+   "donchian",
+   "kalman",
+   "ema",
+   "kalman_range"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V13 \u2014 Port our 4h trend winners to 1h. Hypothesis: mean-reversion at 1h is real (IC -0.07) but NOT tradeable at fee floor. Trend-following, which won at 4h, might scale down to 1h with parameter retuning. Test: V4C Range Kalman, V3B ADX Gate, V2B Volume Breakout \u2014 at 1h. Params scaled for 1h: lookbacks 4x larger, stops similar (ATR-scaled so self-adapts).",
+  "signature": "def v13_range_kalman\ndef v13_adx_gate\ndef v13_volume_breakout\ndef simulate\ndef report\ndef main"
+ },
+ {
+  "name": "run_v14_1h_hunt",
+  "file": "strategy_lab/run_v14_1h_hunt.py",
+  "funcs": [
+   "atr",
+   "ema",
+   "donchian_up",
+   "donchian_dn",
+   "bb",
+   "supertrend",
+   "kalman_ema",
+   "adx",
+   "simulate",
+   "report",
+   "s1_donchian_fast",
+   "s2_donchian_slow",
+   "s3_range_kalman",
+   "s3_range_kalman_short",
+   "s4_supertrend_adx",
+   "s5_momentum_mtf",
+   "s6_bb_break",
+   "s7_oi_momo",
+   "run_one",
+   "fmt",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "adx",
+   "bollinger",
+   "donchian",
+   "kalman",
+   "supertrend",
+   "ema",
+   "kalman_range",
+   "funding",
+   "open_interest"
+  ],
+  "depends_on_derivatives": true,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V14 \u2014 1h strategy hunt for >=55% CAGR net (with up to 3x leverage, max DD <=-40%). Uses the existing feature parquets under features/ and the engine conventions (next-bar-open execution, ATR stops, Hyperliquid fees). Strategies tested (long-only unless noted): S1 Donchian-fast Donchian-55 break, regime_bull, ATR stops S2 Donchian-slow Donchian-168 (1-week) break, regime_bull S3 Range-Kalman V13A b",
+  "signature": "def atr\ndef ema\ndef donchian_up\ndef donchian_dn\ndef bb\ndef supertrend\ndef kalman_ema\ndef adx\ndef simulate\ndef report\ndef s1_donchian_fast\ndef s2_donchian_slow\ndef s3_range_kalman\ndef s3_range_kalman_short\ndef s4_supertrend_adx\ndef s5_momentum_mtf\ndef s6_bb_break\ndef s7_oi_momo\ndef run_one\ndef fmt\ndef main"
+ },
+ {
+  "name": "run_v15_1h_hunt",
+  "file": "strategy_lab/run_v15_1h_hunt.py",
+  "funcs": [
+   "atr",
+   "ema",
+   "kalman_ema",
+   "supertrend",
+   "keltner",
+   "bb",
+   "simulate",
+   "report",
+   "donchian_up",
+   "donchian_dn",
+   "sig_rangekalman",
+   "sig_rangekalman_short",
+   "sig_bb_break",
+   "sig_bb_break_short",
+   "sig_donchian",
+   "sig_donchian_short",
+   "sig_supertrend_adx",
+   "sig_mtf_momentum",
+   "sig_keltner_adx",
+   "sig_macd_rsi",
+   "sig_vol_regime_momo",
+   "run_one",
+   "fmt",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "adx",
+   "rsi",
+   "macd",
+   "donchian",
+   "kalman",
+   "supertrend",
+   "ema",
+   "keltner",
+   "funding"
+  ],
+  "depends_on_derivatives": true,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V15 \u2014 1h strategy hunt, round 2. Changes vs V14: * Fixed-fractional risk sizing: each trade risks `risk_per_trade` (default 1.5%) of equity at its ATR stop. This is the standard approach on perps and gives dramatically smoother equity curves at higher leverage. * Notional cap at `leverage_cap * equity` so we never oversize a tight stop. * Added 3 new strategies (S9-S11): Keltner+ADX, MACD-RSI, Vol",
+  "signature": "def atr\ndef ema\ndef kalman_ema\ndef supertrend\ndef keltner\ndef bb\ndef simulate\ndef report\ndef donchian_up\ndef donchian_dn\ndef sig_rangekalman\ndef sig_rangekalman_short\ndef sig_bb_break\ndef sig_bb_break_short\ndef sig_donchian\ndef sig_donchian_short\ndef sig_supertrend_adx\ndef sig_mtf_momentum\ndef sig_keltner_adx\ndef sig_macd_rsi\ndef sig_vol_regime_momo\ndef run_one\ndef fmt\ndef main"
+ },
+ {
+  "name": "run_v16_1h_hunt",
+  "file": "strategy_lab/run_v16_1h_hunt.py",
+  "funcs": [
+   "atr",
+   "ema",
+   "kalman_ema",
+   "supertrend",
+   "donchian_up",
+   "donchian_dn",
+   "bb",
+   "simulate",
+   "metrics",
+   "portfolio_metrics",
+   "sig_rangekalman",
+   "sig_rangekalman_short",
+   "sig_bbbreak",
+   "sig_mtf",
+   "sig_trend_rider_long",
+   "sig_trend_rider_short",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "donchian",
+   "kalman",
+   "supertrend",
+   "ema",
+   "funding"
+  ],
+  "depends_on_derivatives": true,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V16 \u2014 1h hunt, round 3. Key additions: * Risk-per-trade sweep: {1.5%, 3%, 5%} * Fee regime sweep: {taker 0.045%, maker 0.015%} \u2014 tells us edge sensitivity * Portfolio combiner: build a 3-asset equally-weighted portfolio, report portfolio-level CAGR/Sharpe/DD (should have lower DD than any single asset). * Strategy set narrowed to the survivors from v14/v15 plus a few new angles: - RangeKalman (sta",
+  "signature": "def atr\ndef ema\ndef kalman_ema\ndef supertrend\ndef donchian_up\ndef donchian_dn\ndef bb\ndef simulate\ndef metrics\ndef portfolio_metrics\ndef sig_rangekalman\ndef sig_rangekalman_short\ndef sig_bbbreak\ndef sig_mtf\ndef sig_trend_rider_long\ndef sig_trend_rider_short\ndef main"
+ },
+ {
+  "name": "run_v17_eth_tune",
+  "file": "strategy_lab/run_v17_eth_tune.py",
+  "funcs": [
+   "run_variant",
+   "main"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "atr",
+   "kalman",
+   "funding"
+  ],
+  "depends_on_derivatives": true,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V17 \u2014 Micro-tune the V16 winner: ETH RangeKalman_LS (long+short). Goal: push net CAGR to >=55% under TAKER fees (realistic execution) while keeping DD <= -40%. Sweep: TP/SL/Trail multipliers, max_hold, risk_per_trade, params (alpha, rng_mult). Blended fee model: entries maker-likely (0.00020), exits taker (0.00045) \u2014 avg 0.000325 for a 50/50 mix. Plus a pessimistic pure-taker scenario.",
+  "signature": "def run_variant\ndef main"
+ },
+ {
+  "name": "run_v18_btc_sol_hunt",
+  "file": "strategy_lab/run_v18_btc_sol_hunt.py",
+  "funcs": [
+   "sig_donchian_long",
+   "sig_donchian_short",
+   "sig_bbbreak_short",
+   "sig_supertrend_adx",
+   "sig_keltner_adx",
+   "sig_keltner_adx_short",
+   "run_one",
+   "pass1",
+   "pass2",
+   "hunt_one_asset",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [],
+  "features": [
+   "atr",
+   "adx",
+   "donchian",
+   "kalman",
+   "supertrend",
+   "ema",
+   "keltner",
+   "grid"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V18 \u2014 BTC & SOL 1h hunt. Goal: find configs that clear 55% CAGR and DD >= -40% on BTC and SOL under realistic TAKER fees (0.045% / side), with risk-per-trade sizing and leverage cap <= 3x. Signal families tested: * RangeKalman L/S (V16 winner on ETH \u2014 tested here on BTC/SOL) * Donchian L/S (V15) * BB breakout L/S (V15) * SuperTrend-ADX (V15) * Keltner-ADX (V15) * MTF momentum (1d+4h+1h) (V15) * Tr",
+  "signature": "def sig_donchian_long\ndef sig_donchian_short\ndef sig_bbbreak_short\ndef sig_supertrend_adx\ndef sig_keltner_adx\ndef sig_keltner_adx_short\ndef run_one\ndef pass1\ndef pass2\ndef hunt_one_asset\ndef main"
+ },
+ {
+  "name": "run_v19_feature_hunt",
+  "file": "strategy_lab/run_v19_feature_hunt.py",
+  "funcs": [
+   "rolling_z",
+   "dedupe",
+   "sig_oi_breakout_long",
+   "sig_oi_breakout_short",
+   "sig_funding_fade_long",
+   "sig_funding_fade_short",
+   "sig_liq_cascade_long",
+   "sig_liq_cascade_short",
+   "sig_premium_revert_long",
+   "sig_premium_revert_short",
+   "sig_taker_momo_long",
+   "sig_taker_momo_short",
+   "sig_trend_funding_long",
+   "sig_trend_funding_short",
+   "sig_oi_div_short",
+   "sig_oi_div_long",
+   "run_one",
+   "hunt_signal",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [],
+  "features": [
+   "atr",
+   "rsi",
+   "donchian",
+   "funding",
+   "open_interest",
+   "liquidations"
+  ],
+  "depends_on_derivatives": true,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V19 \u2014 feature-driven signal hunt for BTC & SOL. Motivation: V18 classic breakouts capped at ~37% CAGR on BTC/SOL, far below the 55% target that ETH hit. The features parquets already contain funding rate, open interest, premium, liquidation, and long/short ratio data \u2014 none of which V14-V18 used. V19 mines that. Signal families tested: S1. OI-confirmed breakout L/S (Donchian + OI rising confirmati",
+  "signature": "def rolling_z\ndef dedupe\ndef sig_oi_breakout_long\ndef sig_oi_breakout_short\ndef sig_funding_fade_long\ndef sig_funding_fade_short\ndef sig_liq_cascade_long\ndef sig_liq_cascade_short\ndef sig_premium_revert_long\ndef sig_premium_revert_short\ndef sig_taker_momo_long\ndef sig_taker_momo_short\ndef sig_trend_funding_long\ndef sig_trend_funding_short\ndef sig_oi_div_short\ndef sig_oi_div_long\ndef run_one\ndef hunt_signal\ndef main"
+ },
+ {
+  "name": "run_v20_multi_tf_multi_asset",
+  "file": "strategy_lab/run_v20_multi_tf_multi_asset.py",
+  "funcs": [
+   "scaled",
+   "dedupe",
+   "sig_donchian_long",
+   "sig_donchian_short",
+   "sig_bbbreak_short",
+   "sig_keltner_adx",
+   "sig_keltner_adx_short",
+   "scale_params",
+   "run_combo",
+   "main"
+  ],
+  "symbols": [
+   "AVAXUSDT",
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "INJUSDT",
+   "LINKUSDT",
+   "SOLUSDT",
+   "SUIUSDT",
+   "TONUSDT"
+  ],
+  "tfs": [
+   "15m",
+   "1h",
+   "2h",
+   "30m",
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "adx",
+   "donchian",
+   "kalman",
+   "supertrend",
+   "ema",
+   "keltner"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V20 \u2014 Big hunt across multiple timeframes and multiple assets. Assets (9): BTC, ETH, SOL, LINK, AVAX, DOGE, INJ, SUI, TON Timeframes (5): 15m, 30m, 1h, 2h, 4h Signals: RangeKalman_LS, Donchian_LS, BBBreak_LS, Keltner_ADX_LS, TrendRider_LS Strategy: fast Pass-1 with one V17-style exit config at each TF, pick promising (asset, tf, signal) triples, then finer tune. Key insight: TF-scale signal params",
+  "signature": "def scaled\ndef dedupe\ndef sig_donchian_long\ndef sig_donchian_short\ndef sig_bbbreak_short\ndef sig_keltner_adx\ndef sig_keltner_adx_short\ndef scale_params\ndef run_combo\ndef main"
+ },
+ {
+  "name": "run_v21_btc_sol_deep",
+  "file": "strategy_lab/run_v21_btc_sol_deep.py",
+  "funcs": [
+   "scaled",
+   "dedupe",
+   "sig_donchian_long",
+   "sig_donchian_short",
+   "sig_bbbreak_short",
+   "sig_keltner_adx",
+   "sig_keltner_adx_short",
+   "scale_params",
+   "run_combo",
+   "hunt",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [
+   "12h",
+   "15m",
+   "1d",
+   "1h",
+   "2h",
+   "30m",
+   "4h",
+   "6h",
+   "8h"
+  ],
+  "features": [
+   "atr",
+   "adx",
+   "donchian",
+   "kalman",
+   "supertrend",
+   "ema",
+   "keltner"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V21 \u2014 Deep tune specifically for BTC and SOL. V20 findings for these two: BTC 4h RangeKalman V17tight: CAGR 21.5%, DD -26.8%, Sharpe 0.89, avg_lev 1.46 SOL 2h RangeKalman balanced: CAGR 29.4%, DD -29.9%, Sharpe 1.08, avg_lev 0.74 SOL 2h RangeKalman V17tight: CAGR 27.7%, DD -27.2%, Sharpe 0.85, avg_lev 0.97 Both have HEADROOM on DD (well under -40% cap) and low avg leverage (<2x). Hypothesis: push ",
+  "signature": "def scaled\ndef dedupe\ndef sig_donchian_long\ndef sig_donchian_short\ndef sig_bbbreak_short\ndef sig_keltner_adx\ndef sig_keltner_adx_short\ndef scale_params\ndef run_combo\ndef hunt\ndef main"
+ },
+ {
+  "name": "run_v22_btc_final",
+  "file": "strategy_lab/run_v22_btc_final.py",
+  "funcs": [
+   "scaled",
+   "dedupe",
+   "sig_bbbreak_short",
+   "sig_combo_long",
+   "sig_combo_short",
+   "run",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT"
+  ],
+  "tfs": [
+   "12h",
+   "1d",
+   "1h",
+   "2h",
+   "4h",
+   "6h",
+   "8h"
+  ],
+  "features": [
+   "atr",
+   "donchian",
+   "kalman",
+   "ema"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V22 \u2014 BTC-only final push to 55% CAGR. Ideas to try: * Higher risk (7%, 10%, 15%) at 3x lev cap * Long-only variant (BTC has been a 5-yr bull \u2014 shorts may drag) * Combined signals: RangeKalman OR BBBreak (more trades) * Longer TFs: 6h, 8h, 12h, 1d * Tighter regime filter (higher SMA period)",
+  "signature": "def scaled\ndef dedupe\ndef sig_bbbreak_short\ndef sig_combo_long\ndef sig_combo_short\ndef run\ndef main\nexits = [(tp, sl, tr, mh)"
+ },
+ {
+  "name": "run_v23_all_coins",
+  "file": "strategy_lab/run_v23_all_coins.py",
+  "funcs": [
+   "dedupe",
+   "scaled",
+   "sig_bbbreak_short",
+   "sig_keltner_adx",
+   "sig_keltner_adx_short",
+   "run_one",
+   "sweep_rk",
+   "sweep_bb",
+   "sweep_keltner",
+   "main"
+  ],
+  "symbols": [
+   "AVAXUSDT",
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "INJUSDT",
+   "LINKUSDT",
+   "SOLUSDT",
+   "SUIUSDT",
+   "TONUSDT"
+  ],
+  "tfs": [
+   "1h",
+   "2h",
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "adx",
+   "kalman",
+   "ema",
+   "keltner"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V23 \u2014 Run winner signal families against ALL coins (BTC, ETH, SOL, LINK, AVAX, DOGE, INJ, SUI, TON). For each coin, pick the best config from a small grid search across TFs. Save equity curves + trades + metrics so the PDF report can chart everything.",
+  "signature": "def dedupe\ndef scaled\ndef sig_bbbreak_short\ndef sig_keltner_adx\ndef sig_keltner_adx_short\ndef run_one\ndef sweep_rk\ndef sweep_bb\ndef sweep_keltner\ndef main"
+ },
+ {
+  "name": "run_v24_15m_scalp",
+  "file": "strategy_lab/run_v24_15m_scalp.py",
+  "funcs": [
+   "dedupe",
+   "sig_orb",
+   "sig_vwap_band",
+   "sig_rsi_bb",
+   "sig_st_dual",
+   "run_one",
+   "sweep_family",
+   "main"
+  ],
+  "symbols": [
+   "AVAXUSDT",
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "INJUSDT",
+   "LINKUSDT",
+   "SOLUSDT",
+   "SUIUSDT",
+   "TONUSDT"
+  ],
+  "tfs": [
+   "15m"
+  ],
+  "features": [
+   "atr",
+   "rsi",
+   "bollinger",
+   "supertrend",
+   "ema"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V24 \u2014 15-minute scalping suite. Four signal families, all L+S, targeting intraday edge on 15m bars: 1. ORB \u2014 Opening Range Breakout. First N bars after 00:00 UTC define the session range; break above/below with volume filter. 2. VWAP_BAND \u2014 Intraday VWAP \u00b1 k\u00b7std deviations. Fade extremes in low-vol/range regime, momentum in trend regime. 3. RSI_BB \u2014 RSI extremes at Bollinger tails. Short top, long",
+  "signature": "def dedupe\ndef sig_orb\ndef sig_vwap_band\ndef sig_rsi_bb\ndef sig_st_dual\ndef run_one\ndef sweep_family\ndef main\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),"
+ },
+ {
+  "name": "run_v24_regime_router",
+  "file": "strategy_lab/run_v24_regime_router.py",
+  "funcs": [
+   "scaled",
+   "dedupe",
+   "regime_label",
+   "sig_donchian_up",
+   "sig_donchian_dn",
+   "sig_bb_meanrevert_long",
+   "sig_bb_meanrevert_short",
+   "sig_regime_combined",
+   "run_one",
+   "sweep",
+   "main"
+  ],
+  "symbols": [
+   "AVAXUSDT",
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "INJUSDT",
+   "LINKUSDT",
+   "SOLUSDT",
+   "SUIUSDT",
+   "TONUSDT"
+  ],
+  "tfs": [
+   "15m",
+   "1h",
+   "2h",
+   "30m",
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "adx",
+   "rsi",
+   "donchian",
+   "ema"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V24 \u2014 Regime Router. Build a 4-regime classifier (TREND_UP, TREND_DN, RANGE, CHOP) from Hurst + ADX + SMA-trend, then route each bar to the right sub-strategy: TREND_UP \u2192 Donchian long-only breakout (ride trend) TREND_DN \u2192 Donchian short-only breakout (ride trend) RANGE \u2192 BB mean-revert long + short (fade extremes) CHOP \u2192 flat (skip \u2014 no edge) The signals for each sub-strategy are computed indepen",
+  "signature": "def scaled\ndef dedupe\ndef regime_label\ndef sig_donchian_up\ndef sig_donchian_dn\ndef sig_bb_meanrevert_long\ndef sig_bb_meanrevert_short\ndef sig_regime_combined\ndef run_one\ndef sweep\ndef main\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),"
+ },
+ {
+  "name": "run_v25_creative",
+  "file": "strategy_lab/run_v25_creative.py",
+  "funcs": [
+   "scaled",
+   "dedupe",
+   "sig_mtf_conf",
+   "sig_squeeze",
+   "sig_seasonal",
+   "sig_kelt_rsi",
+   "sig_sweep",
+   "run_one",
+   "sweep_family",
+   "main"
+  ],
+  "symbols": [
+   "AVAXUSDT",
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "INJUSDT",
+   "LINKUSDT",
+   "SOLUSDT",
+   "SUIUSDT",
+   "TONUSDT"
+  ],
+  "tfs": [
+   "15m",
+   "1h",
+   "2h",
+   "30m",
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "rsi",
+   "bollinger",
+   "donchian",
+   "ema",
+   "keltner",
+   "squeeze"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V25 \u2014 Creative round on the untested 30m and 1h timeframes. Five new signal families, all L+S, none tried in V23 or V24: 1. MTF_CONF \u2014 Multi-TF confluence: 1h/30m entry signal gated by a 4h EMA-trend filter. Long only when 4h trend up; short only when 4h trend down. Reduces fade-the-trend losses. 2. SQUEEZE \u2014 Bollinger-inside-Keltner squeeze release (TTM-style). Long when squeeze releases with pos",
+  "signature": "def scaled\ndef dedupe\ndef sig_mtf_conf\ndef sig_squeeze\ndef sig_seasonal\ndef sig_kelt_rsi\ndef sig_sweep\ndef run_one\ndef sweep_family\ndef main\nexits = EXITS_30M if tf == \"30m\" else EXITS_1H\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),"
+ },
+ {
+  "name": "run_v26_ob_rerun",
+  "file": "strategy_lab/run_v26_ob_rerun.py",
+  "funcs": [
+   "main"
+  ],
+  "symbols": [
+   "AVAXUSDT",
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "INJUSDT",
+   "LINKUSDT",
+   "SOLUSDT",
+   "SUIUSDT",
+   "TONUSDT"
+  ],
+  "tfs": [],
+  "features": [
+   "smc_ob"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V26 OB rerun with the look-ahead fix applied. Re-sweep and re-audit only the Order_Block family across all coins.",
+  "signature": "def main"
+ },
+ {
+  "name": "run_v26_priceaction",
+  "file": "strategy_lab/run_v26_priceaction.py",
+  "funcs": [
+   "scaled",
+   "dedupe",
+   "swing_pivots",
+   "sig_liq_sweep",
+   "sig_order_block",
+   "sig_msb",
+   "sig_engulf",
+   "sig_rsi_div",
+   "sig_atr_sqz",
+   "run_one",
+   "sweep_family",
+   "main"
+  ],
+  "symbols": [
+   "AVAXUSDT",
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "INJUSDT",
+   "LINKUSDT",
+   "SOLUSDT",
+   "SUIUSDT",
+   "TONUSDT"
+  ],
+  "tfs": [
+   "15m",
+   "1h",
+   "2h",
+   "30m",
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "rsi",
+   "bollinger",
+   "donchian",
+   "ema",
+   "squeeze",
+   "smc_ob"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V26 \u2014 Price-action creative round (6 families). The V25 \"Sweep_Reversal\" was implemented naively (rolling max + wick fraction). This round does it properly \u2014 at swing pivots, with volume + regime confirmation \u2014 and adds 5 more price-action signal families that V23/V24/V25 never tested. Families: 1. LIQ_SWEEP \u2014 Sweep at swing pivot highs/lows + volume + regime fade. Long: low < pivot_low AND close ",
+  "signature": "def scaled\ndef dedupe\ndef swing_pivots\ndef sig_liq_sweep\ndef sig_order_block\ndef sig_msb\ndef sig_engulf\ndef sig_rsi_div\ndef sig_atr_sqz\ndef run_one\ndef sweep_family\ndef main\nexits = EXITS_30M if tf == \"30m\" else EXITS_1H\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),"
+ },
+ {
+  "name": "run_v27_swing",
+  "file": "strategy_lab/run_v27_swing.py",
+  "funcs": [
+   "scaled",
+   "dedupe",
+   "sig_trend_pullback",
+   "sig_htf_donchian",
+   "sig_vwap_fade",
+   "sig_daily_ema_cross",
+   "run_one",
+   "sweep_family",
+   "main"
+  ],
+  "symbols": [
+   "AVAXUSDT",
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "INJUSDT",
+   "LINKUSDT",
+   "SOLUSDT",
+   "SUIUSDT",
+   "TONUSDT"
+  ],
+  "tfs": [
+   "15m",
+   "1h",
+   "2h",
+   "30m",
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "rsi",
+   "donchian",
+   "ema",
+   "funding"
+  ],
+  "depends_on_derivatives": true,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V27 \u2014 Swing/higher-TF/pullback round. Four families that V23-V26 never tested: 1. TREND_PULLBACK \u2014 Retrace entry in confirmed trend. Long: 4h EMA(50) slope up AND 1h close > 1h EMA(200) AND 1h RSI(14) dips < 40 = buy the dip. Short mirror with downtrend + RSI > 60. 2. HTF_DONCHIAN \u2014 Classic Turtle-style breakout on 4h bars. Long: close > Donch_hi(N) AND close > EMA(regime) Short: close < Donch_lo(",
+  "signature": "def scaled\ndef dedupe\ndef sig_trend_pullback\ndef sig_htf_donchian\ndef sig_vwap_fade\ndef sig_daily_ema_cross\ndef run_one\ndef sweep_family\ndef main\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),"
+ },
+ {
+  "name": "run_v28_portfolio_hunt",
+  "file": "strategy_lab/run_v28_portfolio_hunt.py",
+  "funcs": [
+   "eq_from_entry",
+   "year_cagr",
+   "fmt",
+   "norm",
+   "combine",
+   "year_cagr_blend"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "rsi",
+   "smc_ob"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V28 portfolio hunt \u2014 compact version. Preselect top candidates by per-year CAGR (2023+2024+2025 sum), then try 2-4 combos. Known-leaky families excluded.",
+  "signature": "def eq_from_entry\ndef year_cagr\ndef fmt\ndef norm\ndef combine\ndef year_cagr_blend\nentries = [strats[k] for k in combo]"
+ },
+ {
+  "name": "run_v29_portfolio",
+  "file": "strategy_lab/run_v29_portfolio.py",
+  "funcs": [
+   "year_cagr",
+   "eq_from_entry",
+   "year_cagr_blend"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "donchian"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V29 portfolio hunt \u2014 can V29 sleeves beat V28's P2 (SUI+SOL+ETH Donch)? Approach: same yearly-rebalanced-equal-weight convention as V28. Pool = V29 OOS-PASS strategies UNION V28 winners (re-load from V23/V27 pickles). Scan 2..5 combos, score by worst-year CAGR 2023-2025.",
+  "signature": "def year_cagr\ndef eq_from_entry\ndef year_cagr_blend\nentries = [strats[k] for k in combo]"
+ },
+ {
+  "name": "run_v29_regime",
+  "file": "strategy_lab/run_v29_regime.py",
+  "funcs": [
+   "scaled",
+   "dedupe",
+   "htf_bool",
+   "bbands",
+   "adx_series",
+   "sig_trend_grade",
+   "sig_lateral_bb_fade",
+   "sig_regime_switch",
+   "run_one",
+   "sweep_family",
+   "main"
+  ],
+  "symbols": [
+   "AVAXUSDT",
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "INJUSDT",
+   "LINKUSDT",
+   "SOLUSDT",
+   "SUIUSDT",
+   "TONUSDT"
+  ],
+  "tfs": [
+   "15m",
+   "1h",
+   "2h",
+   "30m",
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "adx",
+   "rsi",
+   "bollinger",
+   "donchian",
+   "ema"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "",
+  "signature": "def scaled\ndef dedupe\ndef htf_bool\ndef bbands\ndef adx_series\ndef sig_trend_grade\ndef sig_lateral_bb_fade\ndef sig_regime_switch\ndef run_one\ndef sweep_family\ndef main\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),"
+ },
+ {
+  "name": "run_v3",
+  "file": "strategy_lab/run_v3.py",
+  "funcs": [
+   "portfolio_run",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [
+   "4h"
+  ],
+  "features": [],
+  "depends_on_derivatives": false,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V3 optimization runner: * Run each V3 variant as a portfolio (same 60/25/15 allocation, 4h, same period) * Record IS/OOS metrics using the same walk-forward split as V2B * Compare against V2B baseline",
+  "signature": "def portfolio_run\ndef main\nentries=sig[\"entries\"], exits=sig[\"exits\"],\nshort_entries=sig.get(\"short_entries\"),\nshort_exits=sig.get(\"short_exits\"),\nsl_stop=sig.get(\"sl_stop\"), tsl_stop=sig.get(\"tsl_stop\"),"
+ },
+ {
+  "name": "run_v30_creative",
+  "file": "strategy_lab/run_v30_creative.py",
+  "funcs": [
+   "scaled",
+   "dedupe",
+   "bbands",
+   "kelt",
+   "adx_series",
+   "sig_ttm_squeeze",
+   "sig_vwap_zfade",
+   "sig_connors_rsi",
+   "sig_supertrend_flip",
+   "sig_cci_extreme",
+   "run_one",
+   "sweep_family",
+   "main"
+  ],
+  "symbols": [
+   "AVAXUSDT",
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "INJUSDT",
+   "LINKUSDT",
+   "SOLUSDT",
+   "SUIUSDT",
+   "TONUSDT"
+  ],
+  "tfs": [
+   "15m",
+   "1h",
+   "2h",
+   "30m",
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "adx",
+   "rsi",
+   "bollinger",
+   "donchian",
+   "supertrend",
+   "ema",
+   "keltner",
+   "squeeze"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V30 \u2014 Five brand-new families, none of which appear in V23-V29. 1. TTM_SQUEEZE_POP \u2014 Bollinger inside Keltner (squeeze on); on squeeze release, enter in direction of momentum (close vs prior N-bar midline). 2. VWAP_ZFADE \u2014 Rolling-window VWAP z-score mean reversion. Fade extremes when ADX < adx_max (range gate). z = (close - rolling_vwap) / rolling_std. 3. CONNORS_RSI \u2014 Larry Connors' CRSI = (RSI(",
+  "signature": "def scaled\ndef dedupe\ndef bbands\ndef kelt\ndef adx_series\ndef sig_ttm_squeeze\ndef sig_vwap_zfade\ndef sig_connors_rsi\ndef sig_supertrend_flip\ndef sig_cci_extreme\ndef run_one\ndef sweep_family\ndef main\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),\nexits=dict(tp=tp, sl=sl, trail=tr, mh=mh),"
+ },
+ {
+  "name": "run_v30_portfolio",
+  "file": "strategy_lab/run_v30_portfolio.py",
+  "funcs": [
+   "year_cagr",
+   "eq_from_entry",
+   "year_cagr_blend"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "rsi",
+   "donchian",
+   "supertrend",
+   "squeeze"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V30 portfolio hunt \u2014 pool = V30 OOS PASS \u222a V29 PASS \u222a V28 winners. Scan 2..5 combos, score by worst-year CAGR 2023-2025, require distinct coins.",
+  "signature": "def year_cagr\ndef eq_from_entry\ndef year_cagr_blend\nentries = [strats[k] for k in combo]"
+ },
+ {
+  "name": "run_v33_scalp_creative",
+  "file": "strategy_lab/run_v33_scalp_creative.py",
+  "funcs": [
+   "dedupe",
+   "sig_vwap_scalp",
+   "sig_keltner_pullback",
+   "sig_rsi_div",
+   "sig_atr_burst",
+   "sig_orb_break",
+   "sig_ethbtc_ratio_revert",
+   "grid_combos",
+   "run_family_coin",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "SOLUSDT",
+   "SUIUSDT"
+  ],
+  "tfs": [
+   "15m",
+   "1h",
+   "2h",
+   "30m",
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "adx",
+   "rsi",
+   "donchian",
+   "ema",
+   "keltner",
+   "grid"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V33 \u2014 Creative + Scalping Round ================================ Six new families orthogonal to V23-V30, with scalp-grade exits on 15m. 1. VWAP_Scalp_15m \u2014 15m session VWAP z-fade with RSI confirm (scalp) 2. Keltner_Pullback_LS \u2014 Pullback to KC mid-band in trend (15m/1h) 3. RSI_Div_Regular \u2014 Classic bullish/bearish divergence (1h) 4. ATR_Burst_Continue \u2014 ATR expansion > k\u00d7avg + direction momentum ",
+  "signature": "def dedupe\ndef sig_vwap_scalp\ndef sig_keltner_pullback\ndef sig_rsi_div\ndef sig_atr_burst\ndef sig_orb_break\ndef sig_ethbtc_ratio_revert\ndef grid_combos\ndef run_family_coin\ndef main\nexits=exits, risk=risk, lev=LEV, score=score)"
+ },
+ {
+  "name": "run_v34_expand",
+  "file": "strategy_lab/run_v34_expand.py",
+  "funcs": [
+   "scaled",
+   "sig_bbbreak_ls",
+   "sig_htf_donchian_ls",
+   "sig_pair_ratio_revert",
+   "sweep_family",
+   "main"
+  ],
+  "symbols": [
+   "AVAXUSDT",
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "INJUSDT",
+   "LINKUSDT",
+   "SOLUSDT",
+   "SUIUSDT",
+   "TONUSDT"
+  ],
+  "tfs": [
+   "15m",
+   "1h",
+   "2h",
+   "30m",
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "rsi",
+   "donchian",
+   "ema",
+   "pairs"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V34 \u2014 Portfolio expansion round. Three focused phases: A. BBBreak_LS on uncovered coins (LINK, AVAX, INJ, TON) \u2014 extend V23's cleanest family B. HTF_Donchian on uncovered coins (LINK, AVAX, INJ, TON, SUI) \u2014 extend V27 C. Multi-pair ratio mean-reversion (SOL/ETH, DOGE/BTC, SUI/ETH, LINK/ETH, DOGE/SOL) \u2014 denser sweep than V33's ETHBTC, targeting plateau region Small trial counts (~500 configs) so DS",
+  "signature": "def scaled\ndef sig_bbbreak_ls\ndef sig_htf_donchian_ls\ndef sig_pair_ratio_revert\ndef sweep_family\ndef main\nexits=ex, risk=risk, lev=LEV, score=score)"
+ },
+ {
+  "name": "run_v34_portfolio",
+  "file": "strategy_lab/run_v34_portfolio.py",
+  "funcs": [
+   "build_eq_v30",
+   "build_eq_v34",
+   "build_eq_core",
+   "main"
+  ],
+  "symbols": [
+   "AVAXUSDT",
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "LINKUSDT",
+   "SOLUSDT",
+   "SUIUSDT",
+   "TONUSDT"
+  ],
+  "tfs": [
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "rsi",
+   "donchian",
+   "supertrend",
+   "ema",
+   "squeeze"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V34 portfolio \u2014 correlation matrix across ALL audit-clean sleeves, plus optimal portfolio hunt with coin diversification + yearly worst-year.",
+  "signature": "def build_eq_v30\ndef build_eq_v34\ndef build_eq_core\ndef main"
+ },
+ {
+  "name": "run_v37_claude_trader",
+  "file": "strategy_lab/run_v37_claude_trader.py",
+  "funcs": [
+   "build_decision_points",
+   "decisions_from_cache",
+   "run_one_coin",
+   "main"
+  ],
+  "symbols": [
+   "AVAXUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "LINKUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [
+   "4h"
+  ],
+  "features": [
+   "atr"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": true,
+  "is_ml": false,
+  "doc": "V37 \u2014 Historical backtest runner: LLM-as-Trader. Three providers (pick with --provider): claude-cli Subprocess to your `claude` CLI. $0 if you're on Max/Pro. Sequential, paced, slow. Best for first validation. anthropic-api Official SDK + Batch API (50% off, async). Token-billed. Best for full 5-coin daily-cadence runs. openrouter OpenAI-compatible endpoint at openrouter.ai. Lets you swap to GLM-4",
+  "signature": "def build_decision_points\ndef decisions_from_cache\ndef run_one_coin\ndef main"
+ },
+ {
+  "name": "run_v38_smc",
+  "file": "strategy_lab/run_v38_smc.py",
+  "funcs": [
+   "sig_fvg_entry",
+   "sig_fvg_fill_fade",
+   "sig_ob_touch",
+   "sig_bos_continuation",
+   "sig_choch_reversal",
+   "sig_liquidity_sweep_fade",
+   "sig_smc_confluence",
+   "run_one",
+   "sweep"
+  ],
+  "symbols": [
+   "ADAUSDT",
+   "AVAXUSDT",
+   "BNBUSDT",
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "LINKUSDT",
+   "SOLUSDT",
+   "XRPUSDT"
+  ],
+  "tfs": [
+   "15m",
+   "1h",
+   "2h",
+   "30m",
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "rsi",
+   "donchian",
+   "ema",
+   "squeeze",
+   "smc_ob",
+   "ict"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V38 \u2014 Smart Money Concepts (SMC) signal library. Wraps joshyattridge/smart-money-concepts (https://github.com/joshyattridge/smart-money-concepts) so its ICT-inspired indicators (FVG, Order Blocks, BOS/CHoCH, Liquidity, Swing HL) can be used as entry signals inside the same sim harness as V23-V37. Installation: pip install smartmoneyconcepts All signals follow the lab convention: sig_xxx(df, *param",
+  "signature": "def sig_fvg_entry\ndef sig_fvg_fill_fade\ndef sig_ob_touch\ndef sig_bos_continuation\ndef sig_choch_reversal\ndef sig_liquidity_sweep_fade\ndef sig_smc_confluence\ndef run_one\ndef sweep"
+ },
+ {
+  "name": "run_v39_smc_ict_proper",
+  "file": "strategy_lab/run_v39_smc_ict_proper.py",
+  "funcs": [
+   "load",
+   "atr",
+   "ema",
+   "bbands",
+   "simulate",
+   "in_killzone",
+   "htf_bias",
+   "reindex_htf_to_ltf",
+   "liquidity_sweeps",
+   "fvg_recent",
+   "ob_zones",
+   "bos_recent",
+   "sig_mtf_bias_ob",
+   "sig_sweep_reverse",
+   "sig_silver_bullet",
+   "sig_judas_london",
+   "sig_triple_confluence",
+   "sig_killzone_bbbreak",
+   "sig_asia_range_break",
+   "walk_forward",
+   "main"
+  ],
+  "symbols": [
+   "ADAUSDT",
+   "AVAXUSDT",
+   "BNBUSDT",
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "LINKUSDT",
+   "SOLUSDT",
+   "XRPUSDT"
+  ],
+  "tfs": [
+   "15m",
+   "1h",
+   "30m",
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "bollinger",
+   "donchian",
+   "ema",
+   "smc_ob",
+   "ict"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V39 \u2014 Proper ICT/SMC strategies informed by web research (2026 best practices). Research sources (see SMC_BACKTEST_FINDINGS_V39.md for citations): - ICT Multi-TF: 4H bias + 15M entry + 5M execution - Killzones (crypto-adapted to UTC): Asia 00:00-04:00, London 07:00-10:00, NY 13:00-16:00 - Silver Bullet: 15:00-16:00 UTC (NY AM 10-11 EST) - Triple Confluence: Liquidity sweep + Order Block + FVG - Ju",
+  "signature": "def load\ndef atr\ndef ema\ndef bbands\ndef simulate\ndef in_killzone\ndef htf_bias\ndef reindex_htf_to_ltf\ndef liquidity_sweeps\ndef fvg_recent\ndef ob_zones\ndef bos_recent\ndef sig_mtf_bias_ob\ndef sig_sweep_reverse\ndef sig_silver_bullet\ndef sig_judas_london\ndef sig_triple_confluence\ndef sig_killzone_bbbreak\ndef sig_asia_range_break\ndef walk_forward\ndef main"
+ },
+ {
+  "name": "run_v6",
+  "file": "strategy_lab/run_v6.py",
+  "funcs": [
+   "run_one",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [
+   "15m",
+   "1h",
+   "5m"
+  ],
+  "features": [
+   "rsi"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V6 mean-reversion sweep: test RSI 20/65 on 5m / 15m / 1h for BTC + ETH + SOL. Each ($10k) asset is simulated independently. We report trade-level stats in one compact table.",
+  "signature": "def run_one\ndef main\nentries=sig[\"entries\"], exits=sig[\"exits\"],\nshort_entries=sig[\"short_entries\"], short_exits=sig[\"short_exits\"],\nsl_stop=sig[\"sl_stop\"], tp_stop=sig[\"tp_stop\"],"
+ },
+ {
+  "name": "run_v6_direct",
+  "file": "strategy_lab/run_v6_direct.py",
+  "funcs": [
+   "ema",
+   "rsi",
+   "stoch_k",
+   "load",
+   "simulate",
+   "metrics",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [
+   "15m",
+   "1h",
+   "5m"
+  ],
+  "features": [
+   "rsi",
+   "donchian",
+   "ema",
+   "stoch"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V6 mean-reversion \u2014 direct (numpy/pandas only) backtest. No vectorbt import. Intra-bar SL / TP using bar high/low. Logic (ported from user's Pine \"Optimized BTC Mean Reversion RSI 20/65\"): LONG : RSI(14) < 20 AND Stoch%K(14) < 25 AND close > EMA(200) * 0.9 SHORT: RSI(14) > 65 AND Stoch%K(14) > 75 AND close < EMA(200) Fixed SL 4 %, TP 6 %, Binance spot costs 0.1 % + 5 bps slippage. One position at ",
+  "signature": "def ema\ndef rsi\ndef stoch_k\ndef load\ndef simulate\ndef metrics\ndef main"
+ },
+ {
+  "name": "run_v7_cycle_aware",
+  "file": "strategy_lab/run_v7_cycle_aware.py",
+  "funcs": [
+   "ema",
+   "rma",
+   "atr",
+   "macd_hist",
+   "supertrend",
+   "load",
+   "cycle_regime",
+   "simulate",
+   "metrics",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [
+   "15m"
+  ],
+  "features": [
+   "atr",
+   "macd",
+   "supertrend",
+   "ema"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "",
+  "signature": "def ema\ndef rma\ndef atr\ndef macd_hist\ndef supertrend\ndef load\ndef cycle_regime\ndef simulate\ndef metrics\ndef main"
+ },
+ {
+  "name": "run_v8_scalp",
+  "file": "strategy_lab/run_v8_scalp.py",
+  "funcs": [
+   "ema",
+   "rma",
+   "atr",
+   "macd_hist",
+   "supertrend",
+   "daily_vwap",
+   "load",
+   "cycle_regime",
+   "simulate",
+   "metrics",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [
+   "15m"
+  ],
+  "features": [
+   "atr",
+   "macd",
+   "supertrend",
+   "ema"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "",
+  "signature": "def ema\ndef rma\ndef atr\ndef macd_hist\ndef supertrend\ndef daily_vwap\ndef load\ndef cycle_regime\ndef simulate\ndef metrics\ndef main"
+ },
+ {
+  "name": "run_v9_chimera",
+  "file": "strategy_lab/run_v9_chimera.py",
+  "funcs": [
+   "ema",
+   "rma",
+   "atr",
+   "adx",
+   "rsi",
+   "stoch_rsi",
+   "bb_pct_b",
+   "supertrend",
+   "classify_regime",
+   "build_indicators",
+   "confidence",
+   "load",
+   "simulate",
+   "metrics",
+   "max_streak",
+   "main"
+  ],
+  "symbols": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "SOLUSDT"
+  ],
+  "tfs": [
+   "15m"
+  ],
+  "features": [
+   "atr",
+   "adx",
+   "rsi",
+   "macd",
+   "donchian",
+   "supertrend",
+   "ema"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "",
+  "signature": "def ema\ndef rma\ndef atr\ndef adx\ndef rsi\ndef stoch_rsi\ndef bb_pct_b\ndef supertrend\ndef classify_regime\ndef build_indicators\ndef confidence\ndef load\ndef simulate\ndef metrics\ndef max_streak\ndef main"
+ },
+ {
+  "name": "strategies",
+  "file": "strategy_lab/strategies.py",
+  "funcs": [
+   "ema_trend_adx",
+   "donchian_breakout",
+   "rsi_mean_reversion",
+   "squeeze_breakout",
+   "macd_htf",
+   "supertrend",
+   "gaussian_channel",
+   "volume_breakout"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "atr",
+   "adx",
+   "rsi",
+   "macd",
+   "bollinger",
+   "donchian",
+   "supertrend",
+   "ema",
+   "keltner",
+   "squeeze",
+   "gaussian_channel"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "Strategy Library \u2014 8 fundamentally different architectures. Each function takes a DataFrame with OHLCV columns and returns a dict: {\"entries\": Series[bool], \"exits\": Series[bool], \"short_entries\": Series[bool] | None, \"short_exits\": Series[bool] | None} Conventions: * All indicator columns computed from close/high/low only (never open of the *same* bar \u2014 open is for execution, not for signals). * ",
+  "signature": "def ema_trend_adx\ndef donchian_breakout\ndef rsi_mean_reversion\ndef squeeze_breakout\ndef macd_htf\ndef supertrend\ndef gaussian_channel\ndef volume_breakout\nentries = _cross_over(ef, es) & (adx > adx_min)\nentries = df[\"close\"] > hi\nentries = _cross_over(rsi, pd.Series(buy_th, index=df.index)) & regime\nentries = squeeze_off & (mom > 0)\nentries = _cross_over(df[\"close\"], upper) & rising\nentries = (df[\"close\"] > hi) & vol_spike & regime\nexits = _cross_under(ef, es)\nexits = (df[\"close\"] < lo) | (df[\"close\"] < trail)\nexits = _cross_over(rsi, pd.Series(sell_th, index=df.index))\nexits = _cross_under(mom, pd.Series(0.0, index=df.index)) | _cross_under(df[\"close\"], basis)\nexits = _cross_under(df[\"close\"], fil)\nexits = (df[\"close\"] < lo) | (df[\"close\"] < (hi - 2.0 * atr))\nshort_entries=short_in, short_exits=short_out)\nshort_entries=short_in, short_exits=short_out)"
+ },
+ {
+  "name": "strategies_v10",
+  "file": "strategy_lab/strategies_v10.py",
+  "funcs": [
+   "orderflow_features",
+   "v10a_funding_fade_v3b",
+   "v10b_oi_confirm_v4c",
+   "v10c_ls_extreme_long",
+   "v10d_liq_cascade_rebound"
+  ],
+  "symbols": [],
+  "tfs": [
+   "4h"
+  ],
+  "features": [
+   "atr",
+   "adx",
+   "kalman",
+   "ema",
+   "squeeze",
+   "kalman_range",
+   "funding",
+   "open_interest",
+   "liquidations",
+   "long_short_ratio"
+  ],
+  "depends_on_derivatives": true,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "",
+  "signature": "def orderflow_features\ndef v10a_funding_fade_v3b\ndef v10b_oi_confirm_v4c\ndef v10c_ls_extreme_long\ndef v10d_liq_cascade_rebound\nentries = entries & ~entries.astype(\"boolean\").shift(1).fillna(False).astype(bool)\nentries=entries.fillna(False).astype(bool),\nentries = leg[\"entries\"] & ~skip\nentries = leg[\"entries\"] & oi_ok.fillna(False)\nentries = (ls > ls_enter) & (df[\"close\"] > ema)\nentries = fresh_spike & (df[\"close\"] > et)\nexits=exits.fillna(False).astype(bool),\nexits   = leg.get(\"exits\", pd.Series(False, index=df.index))\nexits   = leg.get(\"exits\", pd.Series(False, index=df.index))\nexits   = (ls < ls_exit)  | (df[\"close\"] < ema)\nexits   = df[\"close\"] < et"
+ },
+ {
+  "name": "strategies_v11",
+  "file": "strategy_lab/strategies_v11.py",
+  "funcs": [
+   "v11_regime_ensemble"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "atr",
+   "adx",
+   "rsi",
+   "kalman",
+   "ema",
+   "kalman_range"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V11 \u2014 Regime-switching ENSEMBLE. We've found: * V3B / V4C (trend-following) wins in bull/trending regimes * HWR1 (BB mean-reversion) wins in ranging / sideways regimes (XRP proof) * Neither is robust across ALL regimes V11 classifies each bar's regime using price + volatility state, then picks which sub-strategy to run at that time. We use: Regime classifier (price-only, so it works for ALL 6 coin",
+  "signature": "def v11_regime_ensemble\nentries = regime-aware union of V4C & HWR1 entries\nentries = (e_trend & (regime == \"BULL\")) | (e_mr & (regime == \"CHOP\"))\nentries = entries & ~entries.astype(\"boolean\").shift(1).fillna(False).astype(bool)\nentries=entries.fillna(False).astype(bool),\nexits   = original V4C exits (trend break) + HWR1 exits (mid-band)\nexits = (x_trend | x_mr).fillna(False).astype(bool)\nexits=exits,"
+ },
+ {
+  "name": "strategies_v12",
+  "file": "strategy_lab/strategies_v12.py",
+  "funcs": [
+   "v12a_pullback_trend",
+   "v12b_bb_squeeze_break",
+   "v12c_higher_lows",
+   "v12d_nr7_break"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "atr",
+   "adx",
+   "rsi",
+   "bollinger",
+   "donchian",
+   "ema",
+   "squeeze"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V12 \u2014 PULLBACK-IN-TREND + BOLLINGER-SQUEEZE entry families. These are *replacements* for the breakout entries of V3B/V4C, not filters on top of them. Known from trading literature to have structurally higher win rates than breakout entries because we buy oversold legs of up-trends (V12A) or post-compression expansions with a clean stop (V12B). All long-only, 4 h timeframe, advanced-simulator schem",
+  "signature": "def v12a_pullback_trend\ndef v12b_bb_squeeze_break\ndef v12c_higher_lows\ndef v12d_nr7_break\nentries = entries & ~entries.astype(\"boolean\").shift(1).fillna(False).astype(bool)\nentries=entries.fillna(False).astype(bool),\nentries = trend_up & dipped & rsi_ok & bullish & (close > ef)\nentries = squeezed.shift(1).fillna(False) & (close > upper) & trend_up\nentries = hl & (close > et) & (adx > adx_min) & (close > df[\"open\"])\nentries = recent_nr & (close > nr_high) & (close > et)\nexits=exits.fillna(False).astype(bool),\nexits = (close < em) | (~trend_up)\nexits = close < mid\nexits = close < ema50\nexits = close < close.ewm(span=50, adjust=False).mean()"
+ },
+ {
+  "name": "strategies_v19_grid",
+  "file": "strategy_lab/strategies_v19_grid.py",
+  "funcs": [
+   "v19a_static_grid",
+   "v19b_atr_grid_adaptive"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "atr",
+   "adx",
+   "ema",
+   "grid"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V19 \u2014 Grid trading in sideways regimes. Research basis (2026): - Grid profitability requires a RANGE-BOUND market. The killer is a range break: if price leaves the grid, you're left with inventory imbalance. - Regime classifier: ADX(14) < 20 AND price within \u00b1N\u00d7ATR of its 200-EMA. - Range sizing: center \u00b1 k \u00d7 ATR(14) with geometric spacing. - Hard stop on close beyond range. - Reset grid when cent",
+  "signature": "def v19a_static_grid\ndef v19b_atr_grid_adaptive\nentries = (close < entry_thresh) & regime\nentries = entries & ~entries.astype(\"boolean\").shift(1).fillna(False).astype(bool)\nentries=entries.fillna(False).astype(bool),\nentries = below & rebound & regime\nentries = entries & ~entries.astype(\"boolean\").shift(1).fillna(False).astype(bool)\nentries=entries.fillna(False).astype(bool),\nexits = (close >= center) | (~regime)\nexits=exits.fillna(False).astype(bool),\nexits = (close >= center) | (~regime) | above_range | below_range\nexits=exits.fillna(False).astype(bool),"
+ },
+ {
+  "name": "strategies_v2",
+  "file": "strategy_lab/strategies_v2.py",
+  "funcs": [
+   "ema_trend_adx_v2",
+   "volume_breakout_v2",
+   "donchian_v2",
+   "supertrend_v2",
+   "ensemble_trend_vol",
+   "gaussian_channel_v2"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "atr",
+   "adx",
+   "donchian",
+   "supertrend",
+   "ema",
+   "gaussian_channel"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "Strategies v2 \u2014 iteration on the v1 winners with: * ATR-based stop losses and trailing stops (via vbt's sl_stop / tsl_stop) * Regime gating on 1d HTF * Portfolio-ready: all long-only for directional bias in crypto bull era The execution engine applies sl_stop/tsl_stop at bar-level intra-bar (vbt simulates HIGH/LOW against the stop), which matches TradingView's Strategy Tester behaviour when `intra",
+  "signature": "def ema_trend_adx_v2\ndef volume_breakout_v2\ndef donchian_v2\ndef supertrend_v2\ndef ensemble_trend_vol\ndef gaussian_channel_v2\nentries = _cross_over(ef, es) & (adx > adx_min)\nentries = (df[\"close\"] > hi) & vol_spike & regime\nentries = (df[\"close\"] > hi) & regime\nentries = trend_flip & vol_spike & regime\nentries = _cross_over(df[\"close\"], upper) & rising & regime\nexits = _cross_under(ef, es)\nexits = df[\"close\"] < df[\"close\"].rolling(regime_len).mean()\nexits = df[\"close\"] < lo\nexits = _cross_under(ef, es) | (df[\"close\"] < df[\"close\"].rolling(regime_len).mean())\nexits = _cross_under(df[\"close\"], fil)\nshort_entries=None, short_exits=None,\nshort_entries=None, short_exits=None,\nshort_entries=None, short_exits=None,\nshort_entries=None, short_exits=None)\nshort_entries=None, short_exits=None,\nshort_entries=None, short_exits=None,\nsl_stop = (atr * sl_atr) / df[\"close\"]\nsl_stop=sl_stop, tsl_stop=tsl_stop)"
+ },
+ {
+  "name": "strategies_v20_trendfollow",
+  "file": "strategy_lab/strategies_v20_trendfollow.py",
+  "funcs": [
+   "v20a_heikin_supertrend",
+   "v20b_dema_ichimoku",
+   "v20c_ott",
+   "v20d_squeeze_ichimoku"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "atr",
+   "bollinger",
+   "donchian",
+   "supertrend",
+   "ichimoku",
+   "heikin_ashi",
+   "ema",
+   "keltner",
+   "squeeze"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V20 \u2014 Modern trend-following strategies from 2026 research. Sources (see WebSearch handbook): - Heikin Ashi + SuperTrend trailing stop (BTC 1h classic; tested here on 4h) - Dual-DEMA crossover with Ichimoku filter + ATR volatility guard - OTT (Optimized Trend Tracker) with DEMA smoothing All strategies: * 4h bars, Hyperliquid maker fees 0.015 % * long-only * advanced-simulator schema",
+  "signature": "def v20a_heikin_supertrend\ndef v20b_dema_ichimoku\ndef v20c_ott\ndef v20d_squeeze_ichimoku\nentries = entries & ~entries.astype(\"boolean\").shift(1).fillna(False).astype(bool)\nentries=entries.fillna(False).astype(bool),\nentries = (st_dir > 0) & (ha[\"close\"] > st_line) & (df[\"close\"] > ema200)\nentries = cross_up & bull & (close > ema50) & vol_ok\nentries = fresh_up & (close > ema200)\nentries = squeezed.shift(1).fillna(False) & break_up\nexits=exits.fillna(False).astype(bool),\nexits   = (st_dir < 0) | (ha[\"close\"] < st_line)\nexits = (fast < slow) | (close < ema50)\nexits = trend_s < 0\nexits = close < kijun"
+ },
+ {
+  "name": "strategies_v3",
+  "file": "strategy_lab/strategies_v3.py",
+  "funcs": [
+   "v3a_htf_rising",
+   "v3b_adx",
+   "v3c_slope",
+   "v3d_composite",
+   "v3e_score2of3"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "atr",
+   "adx",
+   "donchian",
+   "ema"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V3 \u2014 Volume Breakout with added TREND VALIDATORS. Base strategy (V2B) unchanged. Each V3 variant adds one of: A) Higher-timeframe 1d 200-EMA rising (uses 4h bars, simulates 1d via window) B) ADX(14) > 20 trend-strength gate C) Rising 50-SMA slope (short-term trend speed) D) Composite trend score (A + B + C must all be true) Same walk-forward params carry over from V2B: don_len=30, vol_mult=1.3, re",
+  "signature": "def v3a_htf_rising\ndef v3b_adx\ndef v3c_slope\ndef v3d_composite\ndef v3e_score2of3\nentries=entries, exits=exits,\nentries = e & rising_daily\nentries = e & (adx > adx_min)\nentries = e & rising\nentries = e & gates\nentries = e & (score >= 2)\nshort_entries=None, short_exits=None,\nsl_stop=(atr * p[\"sl_atr\"]) / df[\"close\"],"
+ },
+ {
+  "name": "strategies_v4",
+  "file": "strategy_lab/strategies_v4.py",
+  "funcs": [
+   "v4a_ott",
+   "v4b_ott_twin",
+   "v4c_range_kalman",
+   "v4d_trend_strength",
+   "v4e_ott_vol_donchian",
+   "v4f_ott_pullback",
+   "v4g_mtf_ott",
+   "v4h_vol_regime_switch"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "atr",
+   "adx",
+   "rsi",
+   "donchian",
+   "kalman",
+   "ott",
+   "ema",
+   "kalman_range"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V4 \u2014 New indicator library, each asset gets its own $10k. Adds the user's newly-contributed indicators: * OTT (Optimized Trend Tracker) \u2014 Kivanc Ozbilgic / Anil Ozeksi * OTT Twin \u2014 two OTTs with different periods * Range-Filtered Kalman trend (AlgoAlpha) * Trend-Strength composite (AlgoAlpha-style) Plus creative combos built from them. Each strategy consumes a DataFrame with OHLCV and returns the ",
+  "signature": "def v4a_ott\ndef v4b_ott_twin\ndef v4c_range_kalman\ndef v4d_trend_strength\ndef v4e_ott_vol_donchian\ndef v4f_ott_pullback\ndef v4g_mtf_ott\ndef v4h_vol_regime_switch\nentries = (df[\"close\"] > ott2) & (df[\"close\"].shift(1) <= ott2.shift(1)) & regime\nentries = (df[\"close\"] > f_ott.shift(2)) & (df[\"close\"].shift(1) <= f_ott.shift(3)) & slow_up\nentries = (df[\"close\"] > upper) & (df[\"close\"].shift(1) <= upper.shift(1)) & regime\nentries = fresh & regime\nentries = (df[\"close\"] > hi) & vol_spike & regime & ott_up\nentries = pullback & ott_up & regime\nentries = fresh_up & htf_up\nentries = regime & ((hi_vol & trend_signal) | ((~hi_vol) & mr_signal))\nexits   = (df[\"close\"] < ott2) & (df[\"close\"].shift(1) >= ott2.shift(1))\nexits   = (df[\"close\"] < f_ott.shift(2)) & (df[\"close\"].shift(1) >= f_ott.shift(3))\nexits   = (df[\"close\"] < lower) | (df[\"close\"] < df[\"close\"].rolling(regime_len).mean())\nexits   = (~strong_trend) | (df[\"close\"] < df[\"close\"].rolling(regime_len).mean())\nexits   = (~ott_up) | (df[\"close\"] < df[\"close\"].rolling(regime_len).mean())\nexits = (~ott_up) | (df[\"close\"] < df[\"close\"].rolling(regime_len).mean())\nexits = fresh_dn\nexits = df[\"close\"] < df[\"close\"].rolling(regime_len).mean()\nshort_entries=None, short_exits=None,"
+ },
+ {
+  "name": "strategies_v5",
+  "file": "strategy_lab/strategies_v5.py",
+  "funcs": [
+   "v5_volume_breakout_liqfilter"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "atr",
+   "donchian"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V5 \u2014 SOL hardened with a liquidity filter (fixes fold-2 blow-up from 2019-07 to 2021-01 when SOL had thin volume and 3 trades lost -53%). Filter: dollar-volume (close \u00d7 volume) must be in the top 60 % over a 252-bar rolling lookback (~ 42 days at 4h). This skips early-SOL weeks with anaemic flow.",
+  "signature": "def v5_volume_breakout_liqfilter\nentries = (df[\"close\"] > hi) & vol_spike & regime & liq_ok\nexits = df[\"close\"] < df[\"close\"].rolling(regime_len).mean()\nshort_entries=None, short_exits=None,"
+ },
+ {
+  "name": "strategies_v6",
+  "file": "strategy_lab/strategies_v6.py",
+  "funcs": [
+   "v6_rsi_2065"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "rsi",
+   "donchian",
+   "ema",
+   "stoch"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V6 \u2014 Fixed SL/TP mean-reversion (port of the user's \"Optimized BTC Mean Reversion RSI 20/65\" Pine strategy). Logic (long+short): LONG entry : RSI < 20 AND stochK < 25 AND close > EMA(200) * 0.9 SHORT entry: RSI > 65 AND stochK > 75 AND close < EMA(200) Exit: fixed % stop-loss (4%) or take-profit (6%) Fees 0.04% in the Pine (Binance perp maker); our engine uses 0.1% spot, so we call it out and let ",
+  "signature": "def v6_rsi_2065\nentries=long_in, exits=long_out,\nshort_entries=short_in, short_exits=short_out,\nsl_stop=sl_pct,\ntp_stop=tp_pct,"
+ },
+ {
+  "name": "strategies_v7",
+  "file": "strategy_lab/strategies_v7.py",
+  "funcs": [
+   "hwr1_bb_meanrev",
+   "hwr2_rsi_stoch_oversold",
+   "hwr3_pullback_1to1",
+   "hwr1b_bb_strict",
+   "hwr3b_pullback_asym",
+   "hwr4_keltner_bounce",
+   "hwr5_tight_tp_wide_sl"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "atr",
+   "rsi",
+   "bollinger",
+   "donchian",
+   "ema",
+   "keltner",
+   "stoch",
+   "kc_bounce"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "",
+  "signature": "def hwr1_bb_meanrev\ndef hwr2_rsi_stoch_oversold\ndef hwr3_pullback_1to1\ndef hwr1b_bb_strict\ndef hwr3b_pullback_asym\ndef hwr4_keltner_bounce\ndef hwr5_tight_tp_wide_sl\nentries = (close <= lower) & regime_ok & (close > close.shift(1).fillna(close))\nentries = entries & ~entries.astype(\"boolean\").shift(1).fillna(False).astype(bool)\nentries = (rsi < rsi_buy_below) & (stoch < stoch_below) & regime_ok\nentries = entries & ~entries.astype(\"boolean\").shift(1).fillna(False).astype(bool)\nentries = touched & trend_ok & (close > close.shift(1))\nentries = entries & ~entries.astype(\"boolean\").shift(1).fillna(False).astype(bool)\nentries = confirmed & regime_ok & (close > close.shift(1))\nentries = entries & ~entries.astype(\"boolean\").shift(1).fillna(False).astype(bool)\nentries = touched & trend_ok & (close > close.shift(1)) & (rsi > rsi_min)\nentries = entries & ~entries.astype(\"boolean\").shift(1).fillna(False).astype(bool)\nentries = (close <= lower) & regime_ok & (close > close.shift(1))\nentries = entries & ~entries.astype(\"boolean\").shift(1).fillna(False).astype(bool)\nentries = trend_ok & rsi_cross\nentries = entries & ~entries.astype(\"boolean\").shift(1).fillna(False).astype(bool)\nexits = (close >= mid) & (close.shift(1) < mid.shift(1))\nexits=exits.fillna(False).astype(bool),\nexits   = rsi > rsi_exit_above\nexits=exits.fillna(False).astype(bool),\nexits = (es < et)\nexits=exits.fillna(False).astype(bool),\nexits = (close >= mid)\nexits=exits.fillna(False).astype(bool),\nexits = es < et  # trend break\nexits=exits.fillna(False).astype(bool),\nexits = close >= mid\nexits=exits.fillna(False).astype(bool),\nexits = close < et\nexits=exits.fillna(False).astype(bool),\nshort_entries=None, short_exits=None,\nshort_entries=None, short_exits=None,\nshort_entries=None, short_exits=None,\nshort_entries=None, short_exits=None,\nshort_entries=None, short_exits=None,\nshort_entries=None, short_exits=None,\nshort_entries=None, short_exits=None,\nsl_stop=pd.Series or None,\nsl_stop=sl, tsl_stop=None, tp_stop=None)\nsl_stop=float(sl_pct), tsl_stop=None, tp_stop=None)\nsl_stop=sl, tsl_stop=None, tp_stop=tp)\nsl_stop=0.04, tsl_stop=None, tp_stop=None)\nsl_stop=sl, tsl_stop=None, tp_stop=tp)\nsl_stop=sl, tsl_stop=None, tp_stop=None)\nsl_stop=sl, tsl_stop=None, tp_stop=tp)"
+ },
+ {
+  "name": "strategies_v8",
+  "file": "strategy_lab/strategies_v8.py",
+  "funcs": [
+   "atr_pct",
+   "supertrend",
+   "hma",
+   "vol_percentile",
+   "v8a_supertrend_stack",
+   "v8b_hma_adx",
+   "v8c_vol_regime_donchian"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "atr",
+   "adx",
+   "donchian",
+   "supertrend",
+   "ema",
+   "hma"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V8 \u2014 Modern crypto swing strategies built on the advanced simulator. Features blended from the 2026 research: * Triple SuperTrend confluence (ATR 10/1, 11/2, 12/3) \u2014 entry * Chandelier Exit trailing stop (ATR-adaptive) * Multi-TP ladder (TP1/TP2/TP3 at R-multiples, with % scale-outs) * Ratcheting SL (to breakeven at TP1, to TP1 at TP2) * Hull Moving Average + ADX regime filter * Volatility percent",
+  "signature": "def atr_pct\ndef supertrend\ndef hma\ndef vol_percentile\ndef v8a_supertrend_stack\ndef v8b_hma_adx\ndef v8c_vol_regime_donchian\nentries = fresh & htf_ok\nentries=entries.fillna(False).astype(bool),\nentries = regime_ok & ~regime_ok.shift(1).fillna(False).astype(bool)\nentries=entries.fillna(False).astype(bool),\nentries = (close > hi) & trend_ok & vol_ok\nentries = entries & ~entries.shift(1).fillna(False).astype(bool)\nentries=entries.fillna(False).astype(bool),\nexits = d3 < 0\nexits=exits.fillna(False).astype(bool),\nexits = (h_slope < 0) & (close < h)\nexits=exits.fillna(False).astype(bool),\nexits = close < et\nexits=exits.fillna(False).astype(bool),"
+ },
+ {
+  "name": "strategies_v9",
+  "file": "strategy_lab/strategies_v9.py",
+  "funcs": [
+   "v9a_v3b_plus_ladder",
+   "v9b_v4c_plus_ladder",
+   "v9c_v2b_plus_ladder",
+   "v9d_hwr1_plus_ladder",
+   "v9e_v3b_aggressive_runner"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "atr",
+   "adx",
+   "rsi",
+   "kalman",
+   "kalman_range"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": true,
+  "imports_strategies": [],
+  "is_llm": false,
+  "is_ml": false,
+  "doc": "V9 \u2014 Hybrid strategies. Take the ENTRIES from our proven V3B / V4C / HWR1 winners and apply the MULTI-TP LADDER from the research synthesis. This is the minimum-change, maximum-learning experiment: we isolate whether multi-TP + ratcheting SL adds value on top of entries we already trust. Each hybrid produces the advanced-simulator schema.",
+  "signature": "def v9a_v3b_plus_ladder\ndef v9b_v4c_plus_ladder\ndef v9c_v2b_plus_ladder\ndef v9d_hwr1_plus_ladder\ndef v9e_v3b_aggressive_runner\nentries = legacy[\"entries\"]\nentries = entries & ~entries.astype(\"boolean\").shift(1).fillna(False).astype(bool)\nentries=entries.fillna(False).astype(bool),\nexits = legacy.get(\"exits\")\nexits = pd.Series(False, index=df.index)\nexits=exits.fillna(False).astype(bool),"
+ },
+ {
+  "name": "v37_claude_trader",
+  "file": "strategy_lab/v37_claude_trader.py",
+  "funcs": [
+   "build_snapshot",
+   "snapshot_hash",
+   "load_system_prompt",
+   "build_entries_from_decisions",
+   "cache_path",
+   "load_cache",
+   "save_cache",
+   "decision_to_row"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "atr",
+   "adx",
+   "rsi",
+   "donchian",
+   "ema"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": true,
+  "is_ml": false,
+  "doc": "V37 \u2014 Claude as Trader (LLM Regime Router). Claude (or any LLM, via the provider abstraction) sees recent OHLCV + indicators and emits a structured Decision that picks one of our existing tested signal families. Execution is `simulate()` from run_v16_1h_hunt.py (next-bar-open fills, ATR-based TP/SL/trail, Hyperliquid perp cost model). Design doc: strategy_lab/reports/V37_CLAUDE_TRADER_DESIGN.md Sy",
+  "signature": "def build_snapshot\ndef snapshot_hash\ndef load_system_prompt\ndef build_entries_from_decisions\ndef cache_path\ndef load_cache\ndef save_cache\ndef decision_to_row"
+ },
+ {
+  "name": "v37_providers",
+  "file": "strategy_lab/v37_providers.py",
+  "funcs": [
+   "parse_decision_or_flat",
+   "make_provider"
+  ],
+  "symbols": [],
+  "tfs": [],
+  "features": [
+   "rsi"
+  ],
+  "depends_on_derivatives": false,
+  "has_signal_logic": false,
+  "imports_strategies": [],
+  "is_llm": true,
+  "is_ml": false,
+  "doc": "V37 \u2014 Provider abstraction for the Claude-as-Trader backtest. Three call layers, one common contract. ClaudeCLIProvider \u2014 drives the `claude` CLI as a subprocess. Uses your `claude login` auth \u2192 counts against your Max / Pro / Team subscription quota, NOT against the Anthropic API token bill. Best for $0-marginal-cost validation runs. AnthropicAPIProvider \u2014 official `anthropic` SDK with prompt cac",
+  "signature": "def parse_decision_or_flat\ndef make_provider"
+ }
+]

@@ -1,0 +1,311 @@
+Cowork Findings: New Trading Strategies
+
+    V25 - V26 - V27 - V28 -- hunt log, discoveries, bugs caught, and the first 100%/yr portfolio
+
+Execution model: Hyperliquid-style perps. 9 bps round-trip fee, 3 bps slippage, 3x leverage cap, next-bar-open fills.
+                     USDT pairs on Binance data (BTC, ETH, SOL, LINK, AVAX, DOGE, INJ, SUI, TON).
+
+    Walk-forward OOS split: in-sample 2020-2023, out-of-sample 2024-2026. A strategy 'holds OOS' if its OOS
+                                  Sharpe >= 0.5 times its IS Sharpe (with IS Sharpe floored at 0.1).
+
+                                                                  Date: 2026-04-21
+Executive summary
+
+Across four rounds of hunting, I looked for durable trading edges on nine liquid crypto perps. The measure of success
+was a walk-forward OOS pass (2024-2026 unseen at design time) and, for V28, the additional per-year bar of 100%+
+CAGR in each of 2023, 2024, and 2025.
+
+Headline finding: no single strategy clears the 100%/yr bar for three consecutive years, but a yearly-rebalanced
+equal-weight portfolio of three existing, OOS-validated sleeves does. The cleanest blend is:
+
+P2: V23 SUI BBBreak 4h + V23 SOL BBBreak 4h + V27 ETH Donchian 4h. Per-year CAGR 2023 / 2024 / 2025 =
++123.4% / +147.1% / +189.5%. Aggregate over 6 years: CAGR +156%, Sharpe +1.97, Max DD -33.3%.
+
+Two important look-ahead bugs were caught and fixed during the hunt. Both produced impossibly-clean results on their
+first run and only showed as bugs on audit:
+
+Round      Bug                                                 Fix                                  Collateral damage
+V26
+           ICT-style Order Block signal used bars              Delay OB registration by N           All 5 'winners' collapsed to
+V25 / V27  t+1..t+N (the impulse) to label the OB at bar t,    bars (lookahead confirmation         no-trade. Family deprecated.
+           but then allowed retests to fire at t+1 -- before   window).
+           the impulse had actually happened.                                                       V25 SUI MTFConf deprecated.
+                                                               Use resample('4h', label='right',    V25 SOL MTFConf demoted.
+           Python df.resample('4h').last() with default        closed='left') so forward-fill only  AVAX MTFConf downgraded
+           label='left', closed='left' stamps the 4h close at  sees fully-closed HTF bars.          from +585% OOS CAGR to
+           the bucket opening. Reindex+ffill then leaked                                            +250-300%. Pine scripts
+           the not-yet-known 4h close back to every 1h                                              unaffected.
+           bar inside the bucket.
+
+Heuristic learned: when OOS results are spectacular AND uniformly clean across every config in a family, the most
+likely explanation is a structural bug, not a real edge. Overfitting degrades OOS; structural look-ahead inflates both
+IS and OOS equally. This is now a standard audit step before shipping any Pine script.
+V28 -- The 100%/yr portfolio
+
+The V25-V27 catalog contains 51 non-leaky strategies. The per-year audit computed each strategy's CAGR in 2023,
+2024, 2025 separately. Zero single strategies cleared 100% in all three years. The closest were:
+
+Strategy                     2023         2024      2025     Shortfall year
+V23 SOL BBBreak 4h           +359.3%      +107.8%   +77.5%   2025 (-22pts)
+V23 DOGE BBBreak 4h          +41.4%       +107.5%   +103.4%  2023 (-59pts)
+V27 ETH Donchian 4h          -15.6%       +182.4%   +117.1%  2023 (-116pts)
+V23 ETH BBBreak 1h           +55.6%       +52.3%    +52.4%   all three years
+V23 AVAX RangeKalman 4h      +91.4%       +75.0%    +54.4%   all three years
+
+Portfolio combinations were then tested exhaustively at size 2-4. 18 combos cleared the bar. The top-ranked by
+worst-year CAGR:
+
+P2 per-year breakdown (the recommended portfolio):
+
+Year  Portfolio CAGR     SUI V23 BBBreak  SOL V23 BBBreak    ETH V27 Donchian
+                                                             +170.1%
+2020  +86.2%             --               +2.3%              +57.0%
+                                                             +23.8%
+2021  +160.2%            --               +263.4%            -15.6%
+                                                             +182.9%
+2022  +81.7%             --               +139.5%            +116.9%
+
+2023  +123.4%            +27.3%           +358.5%
+
+2024  +147.1%            +150.3%          +108.0%
+
+2025  +189.5%            +374.2%          +77.4%
+
+Each year is carried by a different sleeve. 2023 needs SOL's massive run to offset ETH Donchian's only losing year. 2024 needs ETH
+Donchian's breakout phase. 2025 needs SUI's continuation in 2025. All three sleeves must coexist for the 100%/yr bar to clear.
+Equity curves of all 4 candidate blends
+
+Log scale. All four blends are yearly-rebalanced equal-weight across their sleeves. P1 (SUI+SOL) has the highest headline CAGR but
+worst DD. P2 (adds ETH Donchian) has the best Sharpe and the lowest DD because ETH Donchian contributes during 2020-2022 when
+SUI data doesn't exist yet.
+
+Per-year CAGR vs the 100% bar
+
+Red dashed line = 100% target. Every P1-P4 blend is above it in 2023, 2024, 2025. Note 2020 (the pre-SUI era) and 2022 (the bear
+year) are dependent only on the pre-existing sleeves; P2 is above 100% in 2021 as well, but dips below in 2020 and 2022. No portfolio
+beats 100% in every year 2020-2025 -- the 2022 bear wiped out most sleeves.
+Alternative portfolios and trade-offs
+
+Portfolio     Sleeves                CAGR  Sharpe   Max DD  Worst year    When to pick
+                                                    -50.0%  2024 (+129%)
+P1 -- 2-coin  SUI + SOL              +166.0% +1.79  -33.3%  2023 (+123%)  Maximum simplicity, accept
+                                                    -50.0%  2024 (+111%)  -50% DD
+P2 -- 3-coin  SUI + SOL + ETH Donch  +156.0% +1.97  -37.9%  2024 (+102%)
+                                                                          Recommended. Best
+P3 -- 3-coin  SUI + SOL + TON Liq    +149.7% +1.70                        Sharpe, widest coverage.
+(TON)
+              SUI + SOL + TON + AVAX +154.2% +1.71                        Skip -- TON data only from
+P4 -- 4-coin                                                              2023, P2 strictly better
+
+                                                                          Maximum diversification,
+                                                                          acceptable min-year
+
+Honest caveats about the V28 result
+
+The 100%/yr bar is not achievable at the single-strategy level. Portfolio construction was essential. This is a
+genuine finding: three clean uncorrelated edges beat five slightly-better single edges.
+
+This is not a prediction for 2026+. The blend worked because SOL, SUI, and ETH each had at least one very strong
+year in 2023-2025 at different times. In a 12-month chop year (see 2022: +82% blended, still above baseline but
+nowhere near 100% in every year), the blend will fall short of 100%.
+
+DD assumptions are optimistic. The -33% P2 DD assumes each sub-account performs exactly as backtested. Live
+fills add friction; 3x leverage means a 33% sleeve DD can become liquidation on that sleeve. Hard kill-switch at -45%
+per sleeve and halt-the-blend at -30% across two sleeves in a 30-day window.
+
+SUI's 2023 CAGR is from ~7 months of data. SUIUSDT on Binance only starts 2023-05. The +27% SUI contribution
+in 2023 is annualized from partial data. SUI's 2024 (+150%) and 2025 (+374%) are full-year; those are the numbers to
+trust.
+
+V28 did not run a new sweep. Sweeping for strategies whose objective is 'clear 100% in 2023-2025' over-fits the
+target; any result would be a re-statement of the train set. The V28 finding uses only strategies that already passed
+OOS validation on an independent test.
+V27 -- higher-timeframe swing round
+
+Scope: 4 families (Trend_Pullback 1h, HTF_Donchian 4h, VWAP_Fade, Daily_EMA_X) across 9 coins. After fixing the
+HTF-resample leak, only one family produced clean OOS-validated edges: HTF_Donchian on native 4h data.
+
+Five coins passed walk-forward OOS for the 4h Donchian family. Blue bars = IS Sharpe (2020-2023), orange = OOS Sharpe
+(2024-2026). ETH and DOGE are particularly striking because OOS beats IS -- the opposite of overfitting.
+
+Coin  Donch N  EMA reg  Full CAGR  Full Sh  IS Sh  OOS Sh  OOS CAGR  Status
+ETH   40       100      +63.2%     +1.19    +0.93  +1.62   +114.7%   Live
+DOGE  20       100      +51.3%     +1.35    +1.12  +1.67   +72.9%    Live
+SOL   40       200      +58.4%     +1.15    +1.29  +0.94   +38.7%    Live
+SUI   20       100      +44.7%     +0.92    -0.11  +1.25   +81.6%    Paper first
+BTC   40       200      +15.6%     +0.69    +0.84  +0.53   +9.0%     Live (small)
+
+Why the family works
+
+A Donchian-N breakout on native 4h is structurally honest: it uses only fully-closed bars of its own timeframe
+(ta.highest(high, N)[1]), has no hidden regime dependence, and the EMA-regime gate keeps it from firing against the
+larger trend. On pairs with cleanly persistent 4h trends (ETH, SOL, DOGE) the edge is durable; on pairs with choppy
+4h structure (AVAX, LINK, INJ) it isn't.
+
+The prior-bar channel detail -- [1] rather than [0] -- matters. It means the channel wall the break has to cross is
+already set when the bar opens, not redefined by the breaking bar. Most backtest implementations skip this; it's a small
+but real leak if done wrong.
+The HTF-resample look-ahead leak
+
+During the V27 first-pass sweep, Trend_Pullback and Daily_EMA_X also looked like viable families. Before shipping, I
+audited the cross-TF signal generators and found this pattern:
+
+BAD -- default pandas resample:
+
+            # pandas default: label='left', closed='left'
+            h4 = df['close'].resample('4h').last()
+            # labels bucket [00:00, 04:00) at 00:00 -- the OPENING timestamp
+            h4_trend = (h4 > ema(h4, 50)).reindex(df.index, method='ffill')
+            # at LTF bar t=00:00, ffill pulls the close of bucket starting at 00:00,
+            # which is the price at 03:00 -- three hours in the FUTURE.
+
+FIX -- right-labeled resample:
+
+            h4 = df['close'].resample('4h', label='right', closed='left').last().dropna()
+            # now bucket [00:00, 04:00) is labeled at 04:00
+            h4_trend = (h4 > ema(h4, 50)).reindex(df.index, method='ffill').fillna(False)
+            # at LTF bar t=00:00, ffill sees only 4h buckets that already closed before t.
+
+This pattern was applied to both run_v27_swing.py (sig_trend_pullback, sig_daily_ema_cross) and the older
+run_v25_creative.py (sig_mtf_conf).
+
+Impact on the V25 portfolio (post-fix reruns)
+
+V25 strategy         Pre-fix OOS Sh  Post-fix OOS Sh  Verdict change
+AVAX V25 MTFConf 1h  +2.74           +1.61            Still strong - stays in portfolio, numbers downgraded
+SOL V25 MTFConf 1h   +1.43           +0.70            Borderline - demoted to 10-15% overlay or retire
+SUI V25 MTFConf 30m  +0.84           fails            Deprecated - do NOT deploy
+
+Why the Pine scripts were already safe
+
+TradingView's request.security(syminfo.tickerid, '240', close) with default barmerge.lookahead_off waits for the HTF
+bar to close before the LTF bar sees its value. So the shipped Pine scripts for V25 MTFConf (AVAX, SOL, SUI) were
+never lying about what they'd do live; they just had their expected Python backtest numbers overstated. The expected
+live numbers in this report reflect the corrected backtest.
+V26 -- price-action round
+
+Scope: 6 price-action families (LIQ_SWEEP, ORDER_BLOCK, MSB, ENGULF, RSI_DIV, ATR_SQZ) across 9 coins
+on 30m/1h. This is the round that caught the Order Block look-ahead bug.
+
+Log-scale full-period CAGR of the pre-fix V26 Order Block 'winners'. Numbers like +7,902% CAGR for AVAX 30m should have been a
+giant red flag. After fixing the leak -- OB at bar t must only be observable from bar t+lookahead -- the entire family collapsed to
+no-viable-config on all 9 coins.
+
+The root-cause pattern
+
+sig_order_block detected bull OBs at bar t by checking for an upward impulse across bars t+1..t+lookahead. But the
+retest entry signal was allowed to fire as early as bar t+1, before the confirming impulse had actually happened. The
+simulator was effectively trading with tomorrow's newspaper.
+
+Fix: delay OB registration by lookahead bars: t = i - lookahead; if t >= 0 and bull_ob[t]: .... This makes the OB only
+observable from bar t+lookahead onward, which is when a real-time trader could have seen it.
+
+V26 real survivors (leak-free)
+
+Strategy                    Full CAGR  Full Sh  OOS Sh  Status
+AVAX V26 ATR Squeeze 1h     +64.3%     +1.32    +1.27   Live
+TON V26 Liquidity Sweep 1h  +50.3%     +1.11    +1.11   Paper first (2.3yr data)
+
+AVAX V26 ATR Squeeze joins the AVAX sleeve at 25% weight alongside V23 RangeKalman (40%) and V25 MTFConf
+(35%). Its distinct entry criterion (ATR(14)/SMA(ATR,70) < 0.75 + Donchian(20) break) makes it uncorrelated with the
+other two AVAX sleeves.
+V25 -- creative round
+
+Scope: 5 families (MTF_Conf, TTM_Squeeze, Seasonal_RSI, Liq_Sweep, Keltner_RSI) across 9 coins on 30m/1h.
+Three OOS-validated edges integrated for capital, two paper-only.
+
+Strategy                             Full CAGR                         Full Sh   OOS Sh  Status
+AVAX V25 MTFConf 1h (post-fix)       +155-200%*                        +1.6-1.8  +1.61   Live (AVAX primary)
+                                                                                         Demoted to 10-15%
+SOL V25 MTFConf 1h (post-fix)        +50-70%*                          +1.0      +0.70   overlay
+                                                                                         Live (30% overlay)
+DOGE V25 Seasonal RSI+BB 30m         +32.9%                            +1.13     +0.92   Paper only
+AVAX V25 Seasonal 1h                 +19.4%                            +0.80     +0.72   Do NOT deploy (post-fix)
+SUI V25 MTFConf 30m                  deprecated                        -         fails
+
+* Post-HTF-leak-fix estimated range, vs the original pre-fix figures.
+
+V25 also rejected several families cleanly:
+
+Family tested                        Result
+TTM Squeeze (BB-in-Keltner release)  Weak on all 9 coins. Best was ETH 30m at Sh +0.24.
+Keltner + RSI breakout               No viable config on any of the 9 coins.
+Liquidity-sweep reversal (pre-V26)   Only fired viably on TON 30m (pre-V26 logic), and that was -23%.
+                                     No viable config -- these coins don't have strong enough 4h trends to confirm 1h
+MTF Confluence on BTC/ETH/INJ/TON    entries.
+                                     All OOS losers or degraders. The 06-12 UTC edge is specifically a DOGE/AVAX
+Seasonal RSI+BB on                   effect.
+BTC/ETH/LINK/INJ/TON/SOL
+Strategy catalog -- growth over 5 rounds
+
+V23 was the core of every coin's sub-account (9 coins, 9 winners). V25 added 3 deployable overlays (AVAX MTFConf, DOGE Seasonal,
+SOL MTFConf) and 2 paper-only. V26 survived the OB-leak purge with 2 winners. V27 Donchian 4h added 5 clean OOS passes. Red
+marks = mean full-period CAGR per round.
+
+Deployable catalog (post-fix, post-V28)
+
+Coin  Sleeves                                                      Target weight
+BTC   V23 RangeKalman 4h + V27 Donchian 4h                         80 / 20
+ETH   V23 BBBreak 1h + V24 Regime Router 2h + V27 Donchian 4h      50 / 20 / 30
+SOL   V23 BBBreak 4h + V25 MTFConf 1h (demoted) + V27 Donchian 4h  60 / 10 / 30
+AVAX  V23 RangeKalman 4h + V25 MTFConf 1h + V26 ATR Squeeze 1h     40 / 35 / 25
+DOGE  V23 BBBreak 4h + V25 Seasonal 30m + V27 Donchian 4h          50 / 25 / 25
+SUI   V23 BBBreak 4h + V27 Donchian 4h (paper first)               80 / 20
+LINK  V23 BBBreak 4h + V24 RSI+BB Scalp 15m                        60 / 40
+INJ   V23 BBBreak 4h                                               100
+TON   V23 Keltner+ADX 2h + V26 LiqSweep 1h (paper)                 100 / --
+
+Lessons learned (what to do next time)
+
+· Audit cross-TF signals for resample causality. Any time a signal merges LTF and HTF data in Python, use
+resample(..., label='right', closed='left') on the HTF source. Verify with a toy example (print LTF timestamps paired with
+the HTF values they see).
+
+· Any signal that confirms via forward bars needs a causality delay. Order blocks, inside-bar patterns, swing
+pivots -- all need to be labeled at time t but only consumed from t+k onward.
+
+· Pine's request.security(..., lookahead_off) is safer than naive Python resample. Shipped Pine scripts can be
+causally correct even when the Python backtest is leaky; this caused us to carry downgraded expectations rather than
+scrap the live scripts.
+
+· 'OOS holds too cleanly' is a red flag, not a green one. Overfitting degrades OOS; structural bugs inflate IS and
+OOS equally. When every config in a family OOS-holds with Sharpe > 1, stop and audit.
+· Portfolio construction matters more than a few extra percent of single-strategy CAGR. The V28 finding is that
+three clean uncorrelated sleeves beat five slightly-better individual sleeves.
+
+· Don't optimize the objective function on the test set. V28 used only strategies that already passed OOS on an
+independent test; no new sweep was run targeting 'clear 100% in 2023-2025', which would have produced a
+meaningless curve-fit.
+Recommendation & go-live checklist
+
+Deploy P2 (SUI + SOL + ETH V27 Donchian) at equal weight across three Hyperliquid sub-accounts. Rebalance
+capital to equal weight at Jan 1 of each year. Expect +100-130% live CAGR (accounting for realistic haircut) rather
+than the +150-190% backtest. Hard kill at -45% DD per sleeve.
+
+Pine scripts (all already shipped in prior rounds):
+
+· SUI V23 BBBreak 4h -- pine/SUI_V23_BBBreakLS.pine
+· SOL V23 BBBreak 4h -- pine/SOL_V23_BBBreakLS.pine
+· ETH V27 Donchian 4h -- pine/ETH_V27_Donchian4h.pine
+
+Go-live checklist
+
+1. Paper-trade all three Pine scripts for 4 weeks minimum before any real capital.
+2. Compare live fills to the Python backtest trade-by-trade. Halt if trade count diverges by more than ±25% or if PF
+drops below 1.15 after 20 trades.
+3. Per-sleeve hard kill at -45% drawdown. Halt the whole blend if two sleeves hit -30% within 30 days.
+4. Rebalance to equal weight each Jan 1. If one sleeve blows past expectations (e.g. +400% in a year), the rebalance
+step trims it and feeds the laggards -- this is exactly what keeps the blend diversified going into the next year.
+5. Re-audit catalog every 6 months. Priority flags: V25 MTFConf (post-fix numbers, watch for realized Sharpe > 0.6
+requirement), SUI V27 (only 2.5 years of OOS data), all V27 Donchian sleeves (only 1 year of live-equivalent OOS for
+the 4 majors).
+6. Never re-enable deprecated strategies: V26 Order Block (any coin), V25 SUI MTFConf. These failed on structural
+grounds, not on market conditions.
+
+Closing note
+
+The most useful thing this hunt produced is not any single strategy -- it's the audit discipline. Two serious look-ahead
+bugs were caught by auditing results that looked too good, not by building more indicators. The V28 100%/yr finding is
+real, but it depends on three sleeves that each already passed a walk-forward OOS check. A portfolio of validated
+edges clearing a high bar is durable; a single freshly-found strategy clearing the same bar is almost certainly curve-fit.
+

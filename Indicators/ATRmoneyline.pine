@@ -1,0 +1,702 @@
+//@version=6
+indicator("ATR MoneyLine Bands V3", shorttitle="MoneyLine", overlay=true, max_bars_back=2000, max_labels_count=500)
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ATR MONEYLINE BANDS V3
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+// Step 1: RalisLine ribbon for regime detection + ATR envelopes off ribbon
+// midpoint for mean-reversion zones.
+// Step 2: RSI + ADX pivot-based divergence detection.
+// Step 3: Gate + Tier signal system with geometric position sizing.
+// Step 4: ATR price spacing + sell cap (sells ≤ buys per cycle).
+// Step 5: Divergence override — bypasses regime + gradient gates when
+//   divergence fires within 2 bars of band touch. Catches exhaustion
+//   reversals before ribbon confirms the regime flip.
+//
+// Signal Architecture:
+//   GATES (all must pass): Band proximity + Regime + Gradient
+//   BOOSTERS (determine tier/size): RSI div + ADX div + Wick rejection
+//   Tier 1 = gates only → base size
+//   Tier 2 = gates + 1 booster → 1.5x
+//   Tier 3 = gates + 2 boosters → 2.25x
+//   Tier 4 = gates + 3 boosters → 3.375x
+//
+// Ribbon: 4-SMMA (8/20/26/32 on HL2) with 3-state regime classification.
+//   Gold = bullish (all MAs aligned upward)
+//   Blue = bearish (all MAs aligned downward)
+//   Silver = inconclusive (MAs crossing/tangled)
+//
+// Bands: Smoothed ATR envelope anchored to ribbon midpoint (v1+v2)/2.
+//   Gradient fill intensity scales with spreadAbsRank.
+//
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// INPUTS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+string G_RIB = "═══ RIBBON ═══"
+i_src       = input.source(hl2, "Source", group=G_RIB)
+i_fastOut   = input.int(8, "Fast Outer", minval=5, maxval=50, group=G_RIB)
+i_fastIn    = input.int(20, "Fast Inner", minval=5, maxval=50, group=G_RIB)
+i_slowIn    = input.int(26, "Slow Inner", minval=10, maxval=80, group=G_RIB)
+i_slowOut   = input.int(32, "Slow Outer", minval=10, maxval=80, group=G_RIB)
+i_showRibbon = input.bool(true, "Show Ribbon", group=G_RIB)
+i_ribWidth   = input.int(1, "Line Width", minval=1, maxval=4, group=G_RIB)
+i_neutZone   = input.float(0.34, "Neutral Zone %", minval=0.0, maxval=2.0, step=0.01, group=G_RIB,
+     tooltip="When |spreadPct| is below this threshold, regime is forced to inconclusive. 0 = disabled.")
+
+string G_ENV = "═══ ATR ENVELOPE ═══"
+i_atrLen    = input.int(14, "ATR Length", minval=1, maxval=100, group=G_ENV)
+i_atrMult   = input.float(3.5, "ATR Multiplier", minval=0.1, maxval=10.0, step=0.1, group=G_ENV)
+i_showEnv   = input.bool(true, "Show Envelope", group=G_ENV)
+i_envWidth  = input.int(1, "Line Thickness", minval=1, maxval=4, group=G_ENV)
+i_envColor  = input.color(#FFFFFF, "Line Color", group=G_ENV)
+i_gradLen   = input.int(124, "Gradient Lookback", minval=30, maxval=500, group=G_ENV,
+     tooltip="Percentile ranking window for gradient fill intensity.")
+
+string G_CLR = "═══ COLORS ═══"
+i_bullColor = input.color(#FFD700, "Bull Color (Gold)", group=G_CLR)
+i_bearColor = input.color(#1E90FF, "Bear Color (Blue)", group=G_CLR)
+i_neutColor = input.color(#C0C0C0, "Neutral Color (Silver)", group=G_CLR)
+i_deadColor = input.color(#FF0000, "Neutral Zone Band Color", group=G_CLR)
+
+string G_DIV = "═══ DIVERGENCE ═══"
+i_rsiLen      = input.int(14, "RSI Length", minval=5, maxval=30, group=G_DIV)
+i_adxLen      = input.int(14, "ADX Length", minval=5, maxval=30, group=G_DIV)
+i_pivotLeft   = input.int(5, "Pivot Left Bars", minval=2, maxval=10, group=G_DIV)
+i_pivotRight  = input.int(3, "Pivot Right Bars", minval=1, maxval=5, group=G_DIV)
+i_maxPivotDist = input.int(24, "Max Pivot Distance", minval=10, maxval=100, group=G_DIV)
+i_showRsiDiv  = input.bool(true, "Show RSI Divergence", group=G_DIV)
+i_showAdxDiv  = input.bool(true, "Show ADX Divergence", group=G_DIV)
+i_divLookback = input.int(8, "Divergence Lookback", minval=2, maxval=30, group=G_DIV,
+     tooltip="A divergence counts as a booster if it fired within this many bars of the current signal.")
+
+string G_SIG = "═══ SIGNAL GATES ═══"
+i_proxPct      = input.float(1.0, "Band Proximity %", minval=0.1, maxval=5.0, step=0.1, group=G_SIG,
+     tooltip="Price must be within this % of the outer band, or touching/crossing it.")
+i_gradThresh   = input.float(0.70, "Gradient Threshold", minval=0.1, maxval=1.0, step=0.05, group=G_SIG,
+     tooltip="Minimum spreadAbsRank (0-1) required. 0.70 = moderate spread. 0.85 = wide spread.")
+i_wickThresh   = input.float(0.55, "Wick Rejection Ratio", minval=0.2, maxval=0.9, step=0.05, group=G_SIG,
+     tooltip="Minimum wick recovery ratio for rejection booster. 0.55 = candle recovered 55%+ from the extreme.")
+i_cooldown     = input.int(3, "Signal Cooldown (bars)", minval=1, maxval=20, group=G_SIG)
+i_buyAtrDrop   = input.float(50, "Buy ATR Drop %", minval=0, maxval=200, step=5, group=G_SIG,
+     tooltip="Price must drop this % of ATR below last buy before next buy fires. 0 = disabled.")
+i_sellAtrRise  = input.float(50, "Sell ATR Rise %", minval=0, maxval=200, step=5, group=G_SIG,
+     tooltip="Price must rise this % of ATR above last sell before next sell fires. 0 = disabled.")
+i_showSignals  = input.bool(true, "Show Signal Labels", group=G_SIG)
+
+string G_OVR = "═══ DIVERGENCE OVERRIDE ═══"
+i_divOverride  = input.bool(true, "Enable Divergence Override", group=G_OVR,
+     tooltip="When a divergence fires within N bars of a band touch, bypasses regime and gradient gates. ATR spacing, cooldown, and sell cap still apply.")
+i_divOvrBars   = input.int(2, "Override Window (bars)", minval=0, maxval=5, group=G_OVR,
+     tooltip="Divergence must fire within this many bars of the current bar to trigger override. 0 = same bar only.")
+
+string G_SIZE = "═══ POSITION SIZING ═══"
+i_buyBase    = input.float(100, "Buy Base Amount ($)", minval=10, maxval=100000, step=10, group=G_SIZE)
+i_buyScale   = input.float(1.5, "Buy Scale Factor", minval=1.0, maxval=3.0, step=0.1, group=G_SIZE,
+     tooltip="Geometric multiplier per tier. T1=$100, T2=$150, T3=$225, T4=$337 at 1.5x")
+i_sellPct    = input.float(10, "Sell Base Size (%)", minval=1, maxval=100, step=1, group=G_SIZE)
+i_sellScale  = input.float(1.5, "Sell Scale Factor", minval=1.0, maxval=3.0, step=0.1, group=G_SIZE)
+i_sellMax    = input.float(50, "Sell Max Size (%)", minval=10, maxval=100, step=5, group=G_SIZE)
+
+string G_BOT = "═══ BOT / WEBHOOK ═══"
+i_enableBot    = input.bool(false, "Enable Bot Alerts", group=G_BOT)
+i_leverage     = input.float(7, "Leverage", group=G_BOT, minval=1, maxval=50, step=1)
+i_passphrase   = input.string("", "Passphrase", group=G_BOT)
+i_contractType = input.string("auto", "Contract Type", options=["auto", "linear", "inverse"], group=G_BOT)
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SMMA FUNCTION — var-state for cross-asset safety
+// ═══════════════════════════════════════════════════════════════════════════════
+
+smma(float src, int length) =>
+    float s = 0.0
+    float sma = ta.sma(src, length)
+    s := na(s[1]) ? sma : (s[1] * (length - 1) + src) / length
+    s
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// 4-SMMA RIBBON
+// ═══════════════════════════════════════════════════════════════════════════════
+
+float v1 = smma(i_src, i_fastOut)   // fast outer (8)
+float m1 = smma(i_src, i_fastIn)    // fast inner (20)
+float m2 = smma(i_src, i_slowIn)    // slow inner (26)
+float v2 = smma(i_src, i_slowOut)   // slow outer (32)
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// 3-STATE REGIME LOGIC + NEUTRAL ZONE
+// ═══════════════════════════════════════════════════════════════════════════════
+
+float ribbonMid = (v1 + v2) / 2
+float ribbonSpreadPct = ribbonMid != 0 ? ((v1 - v2) / ribbonMid) * 100 : 0.0
+bool  inNeutralZone = i_neutZone > 0 and math.abs(ribbonSpreadPct) < i_neutZone
+
+bool inconclusive = inNeutralZone or (v1 < m1) != (v1 < v2) or (m2 < v2) != (v1 < v2)
+bool bearish = not inconclusive and v1 < v2
+bool bullish = not inconclusive and not bearish
+
+color trendColor = bullish ? i_bullColor : inconclusive ? i_neutColor : i_bearColor
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ATR ENVELOPE — anchored to ribbon midpoint
+// ═══════════════════════════════════════════════════════════════════════════════
+
+float atrRaw    = ta.atr(i_atrLen)
+float atrVal    = smma(atrRaw, i_atrLen)
+float envUpper  = ribbonMid + atrVal * i_atrMult
+float envLower  = ribbonMid - atrVal * i_atrMult
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// GRADIENT FILL ENGINE
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// Spread metrics for gradient intensity
+float spread       = v1 - v2
+float spreadPct    = ribbonMid != 0 ? (spread / ribbonMid) * 100 : 0.0
+bool  spreadBull   = spread > 0
+bool  spreadBear   = spread < 0
+float spreadAbsRank = ta.percentrank(math.abs(spreadPct), i_gradLen) / 100.0
+
+// Gold gradient: dim gold → bright gold → hot orange → red
+var color[] c_goldGrad = array.new_color(0)
+if barstate.isfirst
+    array.push(c_goldGrad, #4a4520)   // 0  dim
+    array.push(c_goldGrad, #6b6420)   // 1
+    array.push(c_goldGrad, #8c8320)   // 2
+    array.push(c_goldGrad, #a89a10)   // 3
+    array.push(c_goldGrad, #c4b000)   // 4
+    array.push(c_goldGrad, #d4be00)   // 5
+    array.push(c_goldGrad, #e4cc00)   // 6
+    array.push(c_goldGrad, #FFD700)   // 7  pure gold
+    array.push(c_goldGrad, #FFc600)   // 8
+    array.push(c_goldGrad, #FFb400)   // 9
+    array.push(c_goldGrad, #FFa000)   // 10
+    array.push(c_goldGrad, #FF8c00)   // 11
+    array.push(c_goldGrad, #FF7800)   // 12
+    array.push(c_goldGrad, #FF6400)   // 13
+    array.push(c_goldGrad, #FF5000)   // 14
+    array.push(c_goldGrad, #FF3c00)   // 15
+    array.push(c_goldGrad, #FF2800)   // 16
+    array.push(c_goldGrad, #FF1400)   // 17
+    array.push(c_goldGrad, #FF0a00)   // 18
+    array.push(c_goldGrad, #FF0000)   // 19 hot red
+
+// Blue gradient: dim blue → bright blue → cyan → white
+var color[] c_blueGrad = array.new_color(0)
+if barstate.isfirst
+    array.push(c_blueGrad, #1a2a40)   // 0  dim
+    array.push(c_blueGrad, #1a3a58)   // 1
+    array.push(c_blueGrad, #1a4a70)   // 2
+    array.push(c_blueGrad, #1a5a88)   // 3
+    array.push(c_blueGrad, #1a6aa0)   // 4
+    array.push(c_blueGrad, #1a7ab8)   // 5
+    array.push(c_blueGrad, #1E90FF)   // 6  pure dodger blue
+    array.push(c_blueGrad, #20a0FF)   // 7
+    array.push(c_blueGrad, #22b0FF)   // 8
+    array.push(c_blueGrad, #28c0FF)   // 9
+    array.push(c_blueGrad, #30d0FF)   // 10
+    array.push(c_blueGrad, #3ce0FF)   // 11
+    array.push(c_blueGrad, #50eaFF)   // 12
+    array.push(c_blueGrad, #68f0FF)   // 13
+    array.push(c_blueGrad, #80f4FF)   // 14
+    array.push(c_blueGrad, #98f8FF)   // 15
+    array.push(c_blueGrad, #b0faFF)   // 16
+    array.push(c_blueGrad, #c8fcFF)   // 17
+    array.push(c_blueGrad, #e0feFF)   // 18
+    array.push(c_blueGrad, #FFFFFF)   // 19 white hot
+
+f_gradColor(color[] grad, float ratio) =>
+    int maxIdx = array.size(grad) - 1
+    int idx = math.round(math.max(0, math.min(1, ratio)) * maxIdx)
+    array.get(grad, idx)
+
+color envFillColor = inNeutralZone ? color.new(color.black, 75) :
+     spreadBull ? color.new(f_gradColor(c_goldGrad, spreadAbsRank), 75) :
+     spreadBear ? color.new(f_gradColor(c_blueGrad, spreadAbsRank), 75) :
+     color.new(i_neutColor, 90)
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// RSI + ADX
+// ═══════════════════════════════════════════════════════════════════════════════
+
+float rsi = ta.rsi(close, i_rsiLen)
+[diPlus, diMinus, adxVal] = ta.dmi(i_adxLen, i_adxLen)
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PIVOT-BASED DIVERGENCE DETECTION
+// ═══════════════════════════════════════════════════════════════════════════════
+// RSI Divergence:
+//   Bullish: price lower low + RSI higher low → downtrend exhausting
+//   Bearish: price higher high + RSI lower high → uptrend fading
+//
+// ADX Divergence:
+//   Bullish: price lower low + ADX lower low → trend conviction dying
+//   Bearish: price higher high + ADX lower high → trend conviction dying
+//
+// Both use pivot highs/lows to anchor comparison points.
+
+float pivotHi = ta.pivothigh(high, i_pivotLeft, i_pivotRight)
+float pivotLo = ta.pivotlow(low, i_pivotLeft, i_pivotRight)
+
+// RSI at pivot bars (shifted by pivotRight since pivots confirm late)
+float rsiAtPivot = rsi[i_pivotRight]
+float adxAtPivot = adxVal[i_pivotRight]
+
+// ── RSI Divergence State ──
+var float rsi_prevPriceLow  = na
+var float rsi_prevRsiLow    = na
+var int   rsi_prevLowBar    = na
+var float rsi_currPriceLow  = na
+var float rsi_currRsiLow    = na
+var int   rsi_currLowBar    = na
+
+var float rsi_prevPriceHigh = na
+var float rsi_prevRsiHigh   = na
+var int   rsi_prevHighBar   = na
+var float rsi_currPriceHigh = na
+var float rsi_currRsiHigh   = na
+var int   rsi_currHighBar   = na
+
+// ── ADX Divergence State ──
+var float adx_prevPriceLow  = na
+var float adx_prevAdxLow    = na
+var int   adx_prevLowBar    = na
+var float adx_currPriceLow  = na
+var float adx_currAdxLow    = na
+var int   adx_currLowBar    = na
+
+var float adx_prevPriceHigh = na
+var float adx_prevAdxHigh   = na
+var int   adx_prevHighBar   = na
+var float adx_currPriceHigh = na
+var float adx_currAdxHigh   = na
+var int   adx_currHighBar   = na
+
+// ── Update pivot tracking on new pivots ──
+if not na(pivotLo)
+    // RSI lows
+    rsi_prevPriceLow := rsi_currPriceLow
+    rsi_prevRsiLow   := rsi_currRsiLow
+    rsi_prevLowBar   := rsi_currLowBar
+    rsi_currPriceLow := pivotLo
+    rsi_currRsiLow   := rsiAtPivot
+    rsi_currLowBar   := bar_index - i_pivotRight
+    // ADX lows
+    adx_prevPriceLow := adx_currPriceLow
+    adx_prevAdxLow   := adx_currAdxLow
+    adx_prevLowBar   := adx_currLowBar
+    adx_currPriceLow := pivotLo
+    adx_currAdxLow   := adxAtPivot
+    adx_currLowBar   := bar_index - i_pivotRight
+
+if not na(pivotHi)
+    // RSI highs
+    rsi_prevPriceHigh := rsi_currPriceHigh
+    rsi_prevRsiHigh   := rsi_currRsiHigh
+    rsi_prevHighBar   := rsi_currHighBar
+    rsi_currPriceHigh := pivotHi
+    rsi_currRsiHigh   := rsiAtPivot
+    rsi_currHighBar   := bar_index - i_pivotRight
+    // ADX highs
+    adx_prevPriceHigh := adx_currPriceHigh
+    adx_prevAdxHigh   := adx_currAdxHigh
+    adx_prevHighBar   := adx_currHighBar
+    adx_currPriceHigh := pivotHi
+    adx_currAdxHigh   := adxAtPivot
+    adx_currHighBar   := bar_index - i_pivotRight
+
+// ── RSI Divergence Signals ──
+bool rsiBullDiv = not na(pivotLo) and not na(rsi_prevPriceLow) and not na(rsi_prevRsiLow)
+     and rsi_currPriceLow < rsi_prevPriceLow
+     and rsi_currRsiLow > rsi_prevRsiLow
+     and (bar_index - i_pivotRight - rsi_prevLowBar) <= i_maxPivotDist
+
+bool rsiBearDiv = not na(pivotHi) and not na(rsi_prevPriceHigh) and not na(rsi_prevRsiHigh)
+     and rsi_currPriceHigh > rsi_prevPriceHigh
+     and rsi_currRsiHigh < rsi_prevRsiHigh
+     and (bar_index - i_pivotRight - rsi_prevHighBar) <= i_maxPivotDist
+
+// ── ADX Divergence Signals ──
+bool adxBullDiv = not na(pivotLo) and not na(adx_prevPriceLow) and not na(adx_prevAdxLow)
+     and adx_currPriceLow < adx_prevPriceLow
+     and adx_currAdxLow < adx_prevAdxLow
+     and (bar_index - i_pivotRight - adx_prevLowBar) <= i_maxPivotDist
+
+bool adxBearDiv = not na(pivotHi) and not na(adx_prevPriceHigh) and not na(adx_prevAdxHigh)
+     and adx_currPriceHigh > adx_prevPriceHigh
+     and adx_currAdxHigh < adx_prevAdxHigh
+     and (bar_index - i_pivotRight - adx_prevHighBar) <= i_maxPivotDist
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// DIVERGENCE RECENCY TRACKING
+// ═══════════════════════════════════════════════════════════════════════════════
+// Divergences fire at pivot bars (delayed by pivotRight). Track last fire bar
+// so we can check if a divergence is "recent" when a gate signal fires.
+
+var int lastRsiBullBar = 0
+var int lastRsiBearBar = 0
+var int lastAdxBullBar = 0
+var int lastAdxBearBar = 0
+
+if rsiBullDiv
+    lastRsiBullBar := bar_index
+if rsiBearDiv
+    lastRsiBearBar := bar_index
+if adxBullDiv
+    lastAdxBullBar := bar_index
+if adxBearDiv
+    lastAdxBearBar := bar_index
+
+bool recentRsiBullDiv = (bar_index - lastRsiBullBar) <= i_divLookback and lastRsiBullBar > 0
+bool recentRsiBearDiv = (bar_index - lastRsiBearBar) <= i_divLookback and lastRsiBearBar > 0
+bool recentAdxBullDiv = (bar_index - lastAdxBullBar) <= i_divLookback and lastAdxBullBar > 0
+bool recentAdxBearDiv = (bar_index - lastAdxBearBar) <= i_divLookback and lastAdxBearBar > 0
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// WICK REJECTION DETECTION
+// ═══════════════════════════════════════════════════════════════════════════════
+
+float candleRange = high - low
+float buyWickRatio  = candleRange > 0 ? (close - low) / candleRange : 0.0
+float sellWickRatio = candleRange > 0 ? (high - close) / candleRange : 0.0
+
+bool wickBuyReject  = low <= envLower and buyWickRatio >= i_wickThresh
+bool wickSellReject = high >= envUpper and sellWickRatio >= i_wickThresh
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SIGNAL GATES — all three must pass for any signal
+// ═══════════════════════════════════════════════════════════════════════════════
+// Gate 1: Band proximity (price within X% of band or touching)
+// Gate 2: Regime (buy in blue, sell in gold)
+// Gate 3: Gradient (spread wide enough)
+
+float upperDist = close != 0 ? (envUpper - close) / close * 100 : 100
+float lowerDist = close != 0 ? (close - envLower) / close * 100 : 100
+
+bool nearLower = lowerDist <= i_proxPct or low <= envLower
+bool nearUpper = upperDist <= i_proxPct or high >= envUpper
+
+bool regimeBuyOK  = bearish    // buy in blue regime
+bool regimeSellOK = bullish    // sell in gold regime
+bool gradientOK   = spreadAbsRank >= i_gradThresh
+
+bool buyGatesPass  = nearLower and regimeBuyOK and gradientOK
+bool sellGatesPass = nearUpper and regimeSellOK and gradientOK
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// DIVERGENCE OVERRIDE — bypasses regime + gradient gates
+// ═══════════════════════════════════════════════════════════════════════════════
+// When a divergence fires within N bars of a band touch, the divergence itself
+// replaces what regime and gradient gates measure. Regime asks "is the trend
+// established?" — divergence answers "the trend is exhausting." Gradient asks
+// "is there enough spread?" — divergence at the band answers "there's about to be."
+//
+// Bypasses: Regime gate, Gradient gate
+// Still requires: Band proximity, ATR spacing, cooldown, sell cap
+
+bool tightRsiBullDiv = (bar_index - lastRsiBullBar) <= i_divOvrBars and lastRsiBullBar > 0
+bool tightRsiBearDiv = (bar_index - lastRsiBearBar) <= i_divOvrBars and lastRsiBearBar > 0
+bool tightAdxBullDiv = (bar_index - lastAdxBullBar) <= i_divOvrBars and lastAdxBullBar > 0
+bool tightAdxBearDiv = (bar_index - lastAdxBearBar) <= i_divOvrBars and lastAdxBearBar > 0
+
+bool buyDivOverride  = i_divOverride and nearLower and (tightRsiBullDiv or tightAdxBullDiv)
+bool sellDivOverride = i_divOverride and nearUpper and (tightRsiBearDiv or tightAdxBearDiv)
+
+// Combined gate pass: normal gates OR divergence override
+bool buyQualified  = buyGatesPass or buyDivOverride
+bool sellQualified = sellGatesPass or sellDivOverride
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CONVICTION TIERS — boosters determine position size
+// ═══════════════════════════════════════════════════════════════════════════════
+// Tier 1: Gates pass, no boosters → base size
+// Tier 2: Gates + 1 booster → 1.5x
+// Tier 3: Gates + 2 boosters → 2.25x
+// Tier 4: Gates + 3 boosters → 3.375x
+// Boosters: RSI divergence, ADX divergence, wick rejection
+
+int buyBoosters  = (recentRsiBullDiv ? 1 : 0) + (recentAdxBullDiv ? 1 : 0) + (wickBuyReject ? 1 : 0)
+int sellBoosters = (recentRsiBearDiv ? 1 : 0) + (recentAdxBearDiv ? 1 : 0) + (wickSellReject ? 1 : 0)
+
+int buyTier  = 1 + buyBoosters    // 1-4
+int sellTier = 1 + sellBoosters   // 1-4
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// POSITION SIZING — geometric scaling by tier
+// ═══════════════════════════════════════════════════════════════════════════════
+
+float buyDollar  = i_buyBase * math.pow(i_buyScale, buyTier - 1)
+float buyQty     = close > 0 ? buyDollar * i_leverage / close : 0.0
+float sellPctNow = math.min(i_sellPct * math.pow(i_sellScale, sellTier - 1), i_sellMax)
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SIGNAL TRIGGERS — gates + cooldown + ATR spacing + sell cap
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// Cycle lot counters (declared early — needed for sell cap check)
+var int   cycleBuyLots  = 0
+var int   cycleSellLots = 0
+
+// Cooldown
+var int lastBuyBar  = 0
+var int lastSellBar = 0
+bool buyCooldownOK  = (bar_index - lastBuyBar) >= i_cooldown
+bool sellCooldownOK = (bar_index - lastSellBar) >= i_cooldown
+
+// ATR spacing — price must move X% of ATR from last signal before next fires
+var float lastBuyPrice  = na
+var float lastSellPrice = na
+float atrDropReq = atrRaw * i_buyAtrDrop / 100.0
+float atrRiseReq = atrRaw * i_sellAtrRise / 100.0
+bool buyDeepEnough  = i_buyAtrDrop == 0 or na(lastBuyPrice) or close <= (lastBuyPrice - atrDropReq)
+bool sellHighEnough = i_sellAtrRise == 0 or na(lastSellPrice) or close >= (lastSellPrice + atrRiseReq)
+
+// Sell cap — can't sell more lots than you bought in this cycle
+bool sellCapOK = cycleSellLots < cycleBuyLots
+
+// Final triggers
+bool buyTrigger  = buyQualified and buyCooldownOK and buyDeepEnough and barstate.isconfirmed
+bool sellTrigger = sellQualified and sellCooldownOK and sellHighEnough and sellCapOK and barstate.isconfirmed
+
+if buyTrigger
+    lastBuyBar   := bar_index
+    lastBuyPrice := close
+    lastSellPrice := na   // reset sell ladder on buy
+if sellTrigger
+    lastSellBar   := bar_index
+    lastSellPrice := close
+    lastBuyPrice  := na   // reset buy ladder on sell
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PERFORMANCE TRACKER — running-sums round-trip
+// ═══════════════════════════════════════════════════════════════════════════════
+
+var int   lastDir       = 0
+var float cycleBuyCost  = 0.0
+var float cycleBuyQty   = 0.0
+var float cycleSellRev  = 0.0
+var float cycleSellQty  = 0.0
+
+var int   perfTrades    = 0
+var int   perfWins      = 0
+var float perfTotalWin  = 0.0
+var float perfTotalLoss = 0.0
+var float perfRealized  = 0.0
+var int   perfBuyCount  = 0
+var int   perfSellCount = 0
+
+// Direction switch closes round-trip
+bool dirSwitchToSell = sellTrigger and lastDir == 1
+bool dirSwitchToBuy  = buyTrigger and lastDir == -1
+
+f_closeRoundTrip() =>
+    float avgEntry = cycleBuyCost / cycleBuyQty
+    float avgExit  = cycleSellRev / cycleSellQty
+    float matchQty = math.min(cycleBuyQty, cycleSellQty)
+    matchQty * (avgExit - avgEntry)
+
+if (dirSwitchToBuy or dirSwitchToSell) and cycleBuyQty > 0 and cycleSellQty > 0
+    float rtPnL = f_closeRoundTrip()
+    perfTrades  += 1
+    perfRealized += rtPnL
+    if rtPnL >= 0
+        perfWins     += 1
+        perfTotalWin += rtPnL
+    else
+        perfTotalLoss += math.abs(rtPnL)
+    cycleBuyCost  := 0.0
+    cycleBuyQty   := 0.0
+    cycleBuyLots  := 0
+    cycleSellRev  := 0.0
+    cycleSellQty  := 0.0
+    cycleSellLots := 0
+
+// Accumulate current signal
+if buyTrigger
+    cycleBuyCost += buyDollar
+    cycleBuyQty  += close > 0 ? buyDollar / close : 0.0
+    cycleBuyLots += 1
+    lastDir      := 1
+    perfBuyCount += 1
+
+if sellTrigger
+    float sellDollarNow = cycleBuyCost > 0 ? cycleBuyCost * sellPctNow / 100.0 : buyDollar
+    cycleSellRev  += sellDollarNow
+    cycleSellQty  += close > 0 ? sellDollarNow / close : 0.0
+    cycleSellLots += 1
+    lastDir       := -1
+    perfSellCount += 1
+
+// Unrealized PnL
+float unrealizedPnL = cycleBuyQty > 0 ? (cycleBuyQty * close) - cycleBuyCost : 0.0
+float totalPnL = perfRealized + unrealizedPnL
+
+// Derived metrics
+int   perfLosses   = perfTrades - perfWins
+float winRate      = perfTrades > 0 ? perfWins * 100.0 / perfTrades : 0.0
+float avgWin       = perfWins > 0 ? perfTotalWin / perfWins : 0.0
+float avgLoss      = perfLosses > 0 ? perfTotalLoss / perfLosses : 0.0
+float profitFactor = perfTotalLoss > 0 ? perfTotalWin / perfTotalLoss : perfTotalWin > 0 ? 999.0 : 0.0
+float expectancy   = perfTrades > 0 ? perfRealized / perfTrades : 0.0
+
+// Sell $ for webhook
+float actualSellDollar = sellTrigger ? (cycleBuyCost > 0 ? cycleBuyCost * sellPctNow / 100.0 : buyDollar) : 0.0
+float actualSellQty    = sellTrigger and close > 0 ? actualSellDollar * i_leverage / close : 0.0
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// WEBHOOK JSON PAYLOADS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+string cType = i_contractType == "auto" ? (str.contains(syminfo.ticker, "USD.P") ? "inverse" : "linear") : i_contractType
+
+// Booster flags for payload (O = divergence override fired)
+string buyBoosterStr  = (buyDivOverride ? "O" : "") + (recentRsiBullDiv ? "R" : "") + (recentAdxBullDiv ? "A" : "") + (wickBuyReject ? "W" : "")
+string sellBoosterStr = (sellDivOverride ? "O" : "") + (recentRsiBearDiv ? "R" : "") + (recentAdxBearDiv ? "A" : "") + (wickSellReject ? "W" : "")
+
+string buyPayload = '{"passphrase":"' + i_passphrase + '","symbol":"' + syminfo.ticker +
+     '","side":"Buy","type":"' + cType + '","leverage":' + str.tostring(i_leverage) +
+     ',"dollar":' + str.tostring(math.round(buyDollar, 2)) +
+     ',"qty":' + str.tostring(math.round(buyQty, 4)) +
+     ',"tier":' + str.tostring(buyTier) +
+     ',"boosters":"' + buyBoosterStr +
+     '","override":' + (buyDivOverride ? 'true' : 'false') +
+     ',"gradient":' + str.tostring(math.round(spreadAbsRank * 100, 1)) +
+     ',"price":' + str.tostring(close) + '}'
+
+string sellPayload = '{"passphrase":"' + i_passphrase + '","symbol":"' + syminfo.ticker +
+     '","side":"Sell","type":"' + cType + '","leverage":' + str.tostring(i_leverage) +
+     ',"dollar":' + str.tostring(math.round(actualSellDollar, 2)) +
+     ',"qty":' + str.tostring(math.round(actualSellQty, 4)) +
+     ',"tier":' + str.tostring(sellTier) +
+     ',"sellPct":' + str.tostring(math.round(sellPctNow, 1)) +
+     ',"boosters":"' + sellBoosterStr +
+     '","override":' + (sellDivOverride ? 'true' : 'false') +
+     ',"gradient":' + str.tostring(math.round(spreadAbsRank * 100, 1)) +
+     ',"price":' + str.tostring(close) + '}'
+
+if buyTrigger and i_enableBot
+    alert(buyPayload, alert.freq_once_per_bar_close)
+if sellTrigger and i_enableBot
+    alert(sellPayload, alert.freq_once_per_bar_close)
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PLOTS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// Ribbon
+color ribColor = bullish ? i_bullColor : inconclusive ? i_neutColor : i_bearColor
+p1 = plot(i_showRibbon ? v1 : na, "Fast Line", color=ribColor, linewidth=i_ribWidth)
+p2 = plot(i_showRibbon ? v2 : na, "Slow Line", color=ribColor, linewidth=i_ribWidth)
+fill(p1, p2, color=color.new(trendColor, 85), title="Ribbon Fill")
+
+// ATR Envelope
+color bandLineColor = inNeutralZone ? i_deadColor : i_envColor
+pU = plot(i_showEnv ? envUpper : na, "Envelope Upper", color=bandLineColor, linewidth=i_envWidth)
+pL = plot(i_showEnv ? envLower : na, "Envelope Lower", color=bandLineColor, linewidth=i_envWidth)
+fill(pU, pL, color=envFillColor, title="Envelope Gradient Fill")
+
+// Signal markers
+plotshape(i_showSignals and buyTrigger, "Buy Signal", shape.triangleup, location.belowbar, color.new(#00FFFF, 0), size=size.small)
+plotshape(i_showSignals and sellTrigger, "Sell Signal", shape.triangledown, location.abovebar, color.new(#FF00FF, 0), size=size.small)
+
+// RSI Divergence — diamonds
+plotshape(i_showRsiDiv and rsiBullDiv, "RSI Bull Div", shape.diamond, location.belowbar, color.new(color.lime, 0), size=size.tiny, offset=-i_pivotRight)
+plotshape(i_showRsiDiv and rsiBearDiv, "RSI Bear Div", shape.diamond, location.abovebar, color.new(color.red, 0), size=size.tiny, offset=-i_pivotRight)
+
+// ADX Divergence — crosses
+plotshape(i_showAdxDiv and adxBullDiv, "ADX Bull Div", shape.cross, location.belowbar, color.new(color.lime, 0), size=size.tiny, offset=-i_pivotRight)
+plotshape(i_showAdxDiv and adxBearDiv, "ADX Bear Div", shape.cross, location.abovebar, color.new(color.red, 0), size=size.tiny, offset=-i_pivotRight)
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PERFORMANCE TABLE
+// ═══════════════════════════════════════════════════════════════════════════════
+
+string G_TABLE = "═══ TABLE ═══"
+i_showTable  = input.bool(true, "Show Table", group=G_TABLE)
+i_tblPos     = input.string("Bottom Right", "Position", options=["Top Left", "Top Right", "Bottom Left", "Bottom Right"], group=G_TABLE)
+i_tblSize    = input.string("Small", "Size", options=["Tiny", "Small", "Normal"], group=G_TABLE)
+
+tablePos = switch i_tblPos
+    "Top Left"     => position.top_left
+    "Top Right"    => position.top_right
+    "Bottom Left"  => position.bottom_left
+    => position.bottom_right
+
+tableSize = switch i_tblSize
+    "Tiny"   => size.tiny
+    "Normal" => size.normal
+    => size.small
+
+if i_showTable and barstate.islast
+    var table perf = table.new(tablePos, 4, 10, border_width=1, border_color=#333355, frame_width=1, frame_color=#333355)
+
+    color headerBg = #1a1a2e
+    color rowBg    = #0d0d1a
+    color dimText  = #888888
+    color pnlColor = totalPnL >= 0 ? #00FF88 : #FF4444
+
+    // Row 0: Header
+    string regStr = bullish ? "GOLD" : bearish ? "BLUE" : "NEUT"
+    color regBg = bullish ? color.new(i_bullColor, 40) : bearish ? color.new(i_bearColor, 40) : color.new(i_neutColor, 40)
+    table.cell(perf, 0, 0, "MONEYLINE", text_color=color.white, bgcolor=#2a2a4a, text_size=tableSize)
+    table.cell(perf, 1, 0, "v3", text_color=dimText, bgcolor=#2a2a4a, text_size=tableSize)
+    table.cell(perf, 2, 0, syminfo.ticker, text_color=color.white, bgcolor=#2a2a4a, text_size=tableSize)
+    table.cell(perf, 3, 0, regStr, text_color=color.white, bgcolor=regBg, text_size=tableSize)
+
+    // Row 1: Total PnL + Win Rate
+    color wrCol = winRate >= 60 ? #00FF88 : winRate >= 50 ? #FFD700 : #FF4444
+    table.cell(perf, 0, 1, "Total PnL", text_color=dimText, bgcolor=headerBg, text_size=tableSize)
+    table.cell(perf, 1, 1, "$" + str.tostring(math.round(totalPnL, 2)), text_color=pnlColor, bgcolor=headerBg, text_size=tableSize)
+    table.cell(perf, 2, 1, "Win Rate", text_color=dimText, bgcolor=headerBg, text_size=tableSize)
+    table.cell(perf, 3, 1, str.tostring(math.round(winRate, 1)) + "%", text_color=wrCol, bgcolor=headerBg, text_size=tableSize)
+
+    // Row 2: Prof Factor + Expectancy
+    color pfCol = profitFactor >= 1.5 ? #00FF88 : profitFactor >= 1.0 ? #FFD700 : #FF4444
+    color expCol = expectancy >= 0 ? #00FF88 : #FF4444
+    table.cell(perf, 0, 2, "Prof Factor", text_color=dimText, bgcolor=rowBg, text_size=tableSize)
+    table.cell(perf, 1, 2, str.tostring(math.round(profitFactor, 2)), text_color=pfCol, bgcolor=rowBg, text_size=tableSize)
+    table.cell(perf, 2, 2, "Expectancy", text_color=dimText, bgcolor=rowBg, text_size=tableSize)
+    table.cell(perf, 3, 2, "$" + str.tostring(math.round(expectancy, 2)), text_color=expCol, bgcolor=rowBg, text_size=tableSize)
+
+    // Row 3: Avg Win + Avg Loss
+    table.cell(perf, 0, 3, "Avg Win", text_color=dimText, bgcolor=headerBg, text_size=tableSize)
+    table.cell(perf, 1, 3, "$" + str.tostring(math.round(avgWin, 2)), text_color=#00FF88, bgcolor=headerBg, text_size=tableSize)
+    table.cell(perf, 2, 3, "Avg Loss", text_color=dimText, bgcolor=headerBg, text_size=tableSize)
+    table.cell(perf, 3, 3, "$" + str.tostring(math.round(avgLoss, 2)), text_color=#FF4444, bgcolor=headerBg, text_size=tableSize)
+
+    // Row 4: W/L + Signals
+    table.cell(perf, 0, 4, "W / L", text_color=dimText, bgcolor=rowBg, text_size=tableSize)
+    table.cell(perf, 1, 4, str.tostring(perfWins) + " / " + str.tostring(perfLosses), text_color=color.white, bgcolor=rowBg, text_size=tableSize)
+    table.cell(perf, 2, 4, "Signals", text_color=dimText, bgcolor=rowBg, text_size=tableSize)
+    table.cell(perf, 3, 4, str.tostring(perfBuyCount) + "B " + str.tostring(perfSellCount) + "S", text_color=color.white, bgcolor=rowBg, text_size=tableSize)
+
+    // Row 5: Gradient + RSI
+    color gradCol = gradientOK ? #00FF88 : #FF4444
+    color rsiCol = rsi <= 30 ? #00FF88 : rsi >= 70 ? #FF4444 : dimText
+    table.cell(perf, 0, 5, "Gradient", text_color=dimText, bgcolor=headerBg, text_size=tableSize)
+    table.cell(perf, 1, 5, str.tostring(math.round(spreadAbsRank * 100)) + "%", text_color=gradCol, bgcolor=headerBg, text_size=tableSize)
+    table.cell(perf, 2, 5, "RSI", text_color=dimText, bgcolor=headerBg, text_size=tableSize)
+    table.cell(perf, 3, 5, str.tostring(math.round(rsi, 1)), text_color=rsiCol, bgcolor=headerBg, text_size=tableSize)
+
+    // Row 6: ADX + Cycle
+    color adxCol = adxVal < 25 ? dimText : adxVal < 40 ? #FFD700 : #FF4444
+    table.cell(perf, 0, 6, "ADX", text_color=dimText, bgcolor=rowBg, text_size=tableSize)
+    table.cell(perf, 1, 6, str.tostring(math.round(adxVal, 1)), text_color=adxCol, bgcolor=rowBg, text_size=tableSize)
+    table.cell(perf, 2, 6, "Cycle", text_color=dimText, bgcolor=rowBg, text_size=tableSize)
+    table.cell(perf, 3, 6, str.tostring(cycleBuyLots) + "B " + str.tostring(cycleSellLots) + "S", text_color=color.white, bgcolor=rowBg, text_size=tableSize)
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ALERTS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+alertcondition(buyTrigger, title="MoneyLine Buy", message="{{ticker}} MoneyLine: BUY")
+alertcondition(sellTrigger, title="MoneyLine Sell", message="{{ticker}} MoneyLine: SELL")
+
+// Data window exports
+plot(spreadAbsRank * 100, "Gradient %", color.new(color.gray, 100), display=display.data_window)
+plot(spreadPct, "Spread %", color.new(color.gray, 100), display=display.data_window)
+plot(rsi, "RSI", color.new(color.gray, 100), display=display.data_window)
+plot(adxVal, "ADX", color.new(color.gray, 100), display=display.data_window)

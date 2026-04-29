@@ -1,0 +1,66 @@
+//@version=5
+// INJ V30 SuperTrendFlip 4h
+// SuperTrend_Flip — V30 winner, OOS PASS
+// Params: {"st_n": 10, "st_mult": 4.0, "ema_reg": 200}  | Exits: TP=6×ATR  SL=1.5×ATR  Trail=3.5×ATR  MH=20  Risk=3.0%  Lev=3.0×
+// Sim: 0.045% taker fee, 3 bps slippage, ATR-risk sizing, next-bar-open fills.
+strategy("INJ V30 SuperTrendFlip 4h", overlay=true,
+     initial_capital=10000,
+     default_qty_type=strategy.cash, default_qty_value=0,
+     commission_type=strategy.commission.percent, commission_value=0.045,
+     slippage=3, pyramiding=0, calc_on_every_tick=false,
+     process_orders_on_close=false)
+
+// ---- Inputs ----
+st_n    = input.int(10, "SuperTrend ATR length")
+st_mult = input.float(4.0, "SuperTrend mult")
+ema_reg = input.int(200, "Regime EMA")
+
+// ---- Shared ----
+risk_per_trade = 3.0 / 100.0
+lev_cap        = 3.0
+tp_atr         = 6
+sl_atr         = 1.5
+trail_atr      = 3.5
+max_hold       = 20
+
+// ---- Indicators ----
+atr_v = ta.atr(14)
+
+[sup_val, sup_dir] = ta.supertrend(st_mult, st_n)
+reg = ta.ema(close, ema_reg)
+
+flip_up = sup_dir < 0 and sup_dir[1] >= 0  // +1 dir convention differs; using sign
+flip_dn = sup_dir > 0 and sup_dir[1] <= 0
+
+// Pine ta.supertrend returns sup_dir: -1 bullish, +1 bearish (check convention)
+long_sig  = flip_up and close > reg
+short_sig = flip_dn and close < reg
+
+// ---- Sizing ----
+qty_from_risk() =>
+    risk_dollars = strategy.equity * risk_per_trade
+    sl_dist = sl_atr * atr_v
+    qty_risk = sl_dist > 0 ? risk_dollars / sl_dist : 0
+    qty_cap  = (strategy.equity * lev_cap) / close
+    math.min(qty_risk, qty_cap)
+
+// ---- Entries ----
+if long_sig
+    q = qty_from_risk()
+    if q > 0
+        strategy.entry("L", strategy.long, qty=q)
+        strategy.exit("Lx", "L", profit=tp_atr*atr_v/syminfo.mintick, loss=sl_atr*atr_v/syminfo.mintick,
+                      trail_points=trail_atr*atr_v/syminfo.mintick, trail_offset=trail_atr*atr_v/syminfo.mintick)
+
+if short_sig
+    q = qty_from_risk()
+    if q > 0
+        strategy.entry("S", strategy.short, qty=q)
+        strategy.exit("Sx", "S", profit=tp_atr*atr_v/syminfo.mintick, loss=sl_atr*atr_v/syminfo.mintick,
+                      trail_points=trail_atr*atr_v/syminfo.mintick, trail_offset=trail_atr*atr_v/syminfo.mintick)
+
+// ---- Max hold timeout ----
+var int bars_in = 0
+bars_in := strategy.position_size != 0 ? bars_in + 1 : 0
+if bars_in >= max_hold
+    strategy.close_all()

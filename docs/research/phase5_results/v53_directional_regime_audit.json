@@ -1,0 +1,269 @@
+{
+  "btc_first": "2023-04-01 00:00:00+00:00",
+  "btc_last": "2026-04-25 00:00:00+00:00",
+  "btc_bars": 5181,
+  "distribution": {
+    "Sideline": 0.5011,
+    "Bear": 0.3045,
+    "Bull": 0.1944
+  },
+  "transition": {
+    "Bear": {
+      "Bear": 0.9918,
+      "Sideline": 0.0082,
+      "Bull": 0.0
+    },
+    "Sideline": {
+      "Bear": 0.005,
+      "Sideline": 0.9909,
+      "Bull": 0.0041
+    },
+    "Bull": {
+      "Bear": 0.0,
+      "Sideline": 0.0107,
+      "Bull": 0.9893
+    }
+  },
+  "run_lengths": {
+    "n_runs": 45,
+    "median_run": 57,
+    "p25_run": 26,
+    "p75_run": 156,
+    "max_run": 383,
+    "pct_bars_in_short_runs": 0.0035
+  },
+  "per_regime_returns": {
+    "Bear": {
+      "n_bars": 1468,
+      "mean_4h_pct": 0.013,
+      "vol_4h_pct": 1.1738,
+      "ann_sharpe": 0.518
+    },
+    "Sideline": {
+      "n_bars": 2416,
+      "mean_4h_pct": 0.0145,
+      "vol_4h_pct": 0.9324,
+      "ann_sharpe": 0.728
+    },
+    "Bull": {
+      "n_bars": 937,
+      "mean_4h_pct": -0.0074,
+      "vol_4h_pct": 1.055,
+      "ann_sharpe": -0.33
+    }
+  },
+  "btc_signal_fires": [
+    {
+      "signal": "cci_long_BTC",
+      "total_fires": 37,
+      "Bear": {
+        "bars": 1468,
+        "fires": 13,
+        "fires_per_1k_bars": 8.856
+      },
+      "Sideline": {
+        "bars": 2416,
+        "fires": 16,
+        "fires_per_1k_bars": 6.623
+      },
+      "Bull": {
+        "bars": 937,
+        "fires": 8,
+        "fires_per_1k_bars": 8.538
+      }
+    },
+    {
+      "signal": "cci_short_BTC",
+      "total_fires": 43,
+      "Bear": {
+        "bars": 1468,
+        "fires": 18,
+        "fires_per_1k_bars": 12.262
+      },
+      "Sideline": {
+        "bars": 2416,
+        "fires": 19,
+        "fires_per_1k_bars": 7.864
+      },
+      "Bull": {
+        "bars": 937,
+        "fires": 6,
+        "fires_per_1k_bars": 6.403
+      }
+    },
+    {
+      "signal": "stf_long_BTC",
+      "total_fires": 32,
+      "Bear": {
+        "bars": 1468,
+        "fires": 2,
+        "fires_per_1k_bars": 1.362
+      },
+      "Sideline": {
+        "bars": 2416,
+        "fires": 22,
+        "fires_per_1k_bars": 9.106
+      },
+      "Bull": {
+        "bars": 937,
+        "fires": 8,
+        "fires_per_1k_bars": 8.538
+      }
+    },
+    {
+      "signal": "stf_short_BTC",
+      "total_fires": 27,
+      "Bear": {
+        "bars": 1468,
+        "fires": 15,
+        "fires_per_1k_bars": 10.218
+      },
+      "Sideline": {
+        "bars": 2416,
+        "fires": 10,
+        "fires_per_1k_bars": 4.139
+      },
+      "Bull": {
+        "bars": 937,
+        "fires": 2,
+        "fires_per_1k_bars": 2.134
+      }
+    }
+  ],
+  "trade_stats": [
+    {
+      "signal": "cci_long_ETH",
+      "n_trades": 20,
+      "Bear": {
+        "n": 6,
+        "wr": 0.667,
+        "avg_r": 0.039,
+        "med_r": 0.0344
+      },
+      "Sideline": {
+        "n": 13,
+        "wr": 0.154,
+        "avg_r": -0.0136,
+        "med_r": -0.0309
+      },
+      "Bull": {
+        "n": 1,
+        "wr": 0.0,
+        "avg_r": -0.0306,
+        "med_r": -0.0306
+      }
+    },
+    {
+      "signal": "stf_long_ETH",
+      "n_trades": 23,
+      "Bear": {
+        "n": 0
+      },
+      "Sideline": {
+        "n": 14,
+        "wr": 0.143,
+        "avg_r": -0.0106,
+        "med_r": -0.0306
+      },
+      "Bull": {
+        "n": 9,
+        "wr": 0.222,
+        "avg_r": 0.0016,
+        "med_r": -0.031
+      }
+    },
+    {
+      "signal": "cci_long_SOL",
+      "n_trades": 25,
+      "Bear": {
+        "n": 10,
+        "wr": 0.5,
+        "avg_r": 0.0271,
+        "med_r": -0.0135
+      },
+      "Sideline": {
+        "n": 11,
+        "wr": 0.455,
+        "avg_r": 0.0163,
+        "med_r": -0.0297
+      },
+      "Bull": {
+        "n": 4,
+        "wr": 0.25,
+        "avg_r": -0.0002,
+        "med_r": -0.0308
+      }
+    },
+    {
+      "signal": "stf_long_SOL",
+      "n_trades": 22,
+      "Bear": {
+        "n": 3,
+        "wr": 0.667,
+        "avg_r": 0.0359,
+        "med_r": 0.0512
+      },
+      "Sideline": {
+        "n": 15,
+        "wr": 0.333,
+        "avg_r": 0.0181,
+        "med_r": -0.0307
+      },
+      "Bull": {
+        "n": 4,
+        "wr": 0.25,
+        "avg_r": 0.0025,
+        "med_r": -0.0305
+      }
+    },
+    {
+      "signal": "cci_long_AVAX",
+      "n_trades": 21,
+      "Bear": {
+        "n": 7,
+        "wr": 0.571,
+        "avg_r": 0.0574,
+        "med_r": 0.0962
+      },
+      "Sideline": {
+        "n": 9,
+        "wr": 0.444,
+        "avg_r": 0.0094,
+        "med_r": -0.024
+      },
+      "Bull": {
+        "n": 5,
+        "wr": 0.4,
+        "avg_r": 0.0433,
+        "med_r": -0.0211
+      }
+    },
+    {
+      "signal": "stf_long_AVAX",
+      "n_trades": 21,
+      "Bear": {
+        "n": 2,
+        "wr": 0.5,
+        "avg_r": 0.0591,
+        "med_r": 0.0591
+      },
+      "Sideline": {
+        "n": 14,
+        "wr": 0.357,
+        "avg_r": 0.0237,
+        "med_r": -0.0306
+      },
+      "Bull": {
+        "n": 5,
+        "wr": 0.2,
+        "avg_r": 0.0054,
+        "med_r": -0.0304
+      }
+    }
+  ],
+  "gates": {
+    "coverage": true,
+    "persistence": true,
+    "info_content": false
+  }
+}

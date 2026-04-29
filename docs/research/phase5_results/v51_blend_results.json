@@ -1,0 +1,112 @@
+[
+  {
+    "candidate": "SOL_MFI_75_25_V41",
+    "sleeve_sharpe": 1.319,
+    "correlation": 0.03077030072903135,
+    "best_weight": 0.2,
+    "blend_sharpe": 2.715,
+    "blend_cagr": 0.4843,
+    "blend_mdd": -0.1147,
+    "blend_calmar": 4.222,
+    "flag": "WIN"
+  },
+  {
+    "candidate": "LINK_VP_ROT_60_baseline",
+    "sleeve_sharpe": 1.106,
+    "correlation": -0.0050783630854651565,
+    "best_weight": 0.15,
+    "blend_sharpe": 2.657,
+    "blend_cagr": 0.4523,
+    "blend_mdd": -0.0878,
+    "blend_calmar": 5.149,
+    "flag": "WIN"
+  },
+  {
+    "candidate": "SOL_MFI_70_30_V41",
+    "sleeve_sharpe": 1.094,
+    "correlation": 0.07372125428125806,
+    "best_weight": 0.15,
+    "blend_sharpe": 2.583,
+    "blend_cagr": 0.4604,
+    "blend_mdd": -0.1271,
+    "blend_calmar": 3.624,
+    "flag": "SH+"
+  },
+  {
+    "candidate": "AVAX_SVD_tight_baseline",
+    "sleeve_sharpe": 1.043,
+    "correlation": 0.05761072856269117,
+    "best_weight": 0.2,
+    "blend_sharpe": 2.58,
+    "blend_cagr": 0.4141,
+    "blend_mdd": -0.0961,
+    "blend_calmar": 4.307,
+    "flag": "WIN"
+  },
+  {
+    "candidate": "ETH_VP_ROT_60_baseline",
+    "sleeve_sharpe": 0.82,
+    "correlation": 0.02079023743219193,
+    "best_weight": 0.15,
+    "blend_sharpe": 2.532,
+    "blend_cagr": 0.4303,
+    "blend_mdd": -0.1009,
+    "blend_calmar": 4.265,
+    "flag": "WIN"
+  },
+  {
+    "candidate": "ETH_VP_ROT_60_V41",
+    "sleeve_sharpe": 0.753,
+    "correlation": 0.05750597590749931,
+    "best_weight": 0.1,
+    "blend_sharpe": 2.491,
+    "blend_cagr": 0.4432,
+    "blend_mdd": -0.1061,
+    "blend_calmar": 4.177,
+    "flag": "WIN"
+  },
+  {
+    "candidate": "ETH_MFI_70_30_V41",
+    "sleeve_sharpe": 0.709,
+    "correlation": 0.09320899688149072,
+    "best_weight": 0.1,
+    "blend_sharpe": 2.456,
+    "blend_cagr": 0.4389,
+    "blend_mdd": -0.0924,
+    "blend_calmar": 4.753,
+    "flag": "WIN"
+  },
+  {
+    "candidate": "ETH_MFI_75_25_baseline",
+    "sleeve_sharpe": 0.624,
+    "correlation": -0.07459810961766752,
+    "best_weight": 0.15,
+    "blend_sharpe": 2.546,
+    "blend_cagr": 0.4138,
+    "blend_mdd": -0.0853,
+    "blend_calmar": 4.849,
+    "flag": "WIN"
+  },
+  {
+    "candidate": "BTC_SVD_tight_V41",
+    "sleeve_sharpe": 0.528,
+    "correlation": 0.015063556937493956,
+    "best_weight": 0.1,
+    "blend_sharpe": 2.465,
+    "blend_cagr": 0.4176,
+    "blend_mdd": -0.1074,
+    "blend_calmar": 3.89,
+    "flag": "WIN"
+  },
+  {
+    "candidate": "AVAX_SVD_tight_V41",
+    "sleeve_sharpe": 0.497,
+    "correlation": 0.08843762961312719,
+    "best_weight": 0.1,
+    "blend_sharpe": 2.429,
+    "blend_cagr": 0.4145,
+    "blend_mdd": -0.1045,
+    "blend_calmar": 3.967,
+    "flag": "WIN"
+  }
+]

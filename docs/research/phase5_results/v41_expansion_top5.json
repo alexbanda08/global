@@ -1,0 +1,97 @@
+{
+  "ETH_CCI_V41": {
+    "metadata": {
+      "coin": "ETH",
+      "sig": "CCI",
+      "exit": "V41",
+      "base_sh": 1.217,
+      "new_sh": 1.58,
+      "delta": 0.363,
+      "new_cagr": 0.5387,
+      "new_mdd": -0.2788,
+      "new_cal": 1.933,
+      "new_minyr": -0.1376,
+      "new_pos_yrs": 5,
+      "n": 98,
+      "new_wr": 0.408
+    },
+    "equity_final": 95766.8820531411,
+    "equity_len": 11490
+  },
+  "ETH_BBBRK_V41": {
+    "metadata": {
+      "coin": "ETH",
+      "sig": "BBBRK",
+      "exit": "V41",
+      "base_sh": 0.497,
+      "new_sh": 0.788,
+      "delta": 0.29100000000000004,
+      "new_cagr": 0.28,
+      "new_mdd": -0.6004,
+      "new_cal": 0.466,
+      "new_minyr": -0.3929,
+      "new_pos_yrs": 4,
+      "n": 220,
+      "new_wr": 0.245
+    },
+    "equity_final": 36480.65997134465,
+    "equity_len": 11490
+  },
+  "DOGE_LATBB_V47": {
+    "metadata": {
+      "coin": "DOGE",
+      "sig": "LATBB",
+      "exit": "V47",
+      "base_sh": -0.269,
+      "new_sh": -0.014,
+      "delta": 0.255,
+      "new_cagr": -0.0085,
+      "new_mdd": -0.2,
+      "new_cal": -0.043,
+      "new_minyr": -0.0429,
+      "new_pos_yrs": 3,
+      "n": 69,
+      "new_wr": 0.145
+    },
+    "equity_final": 9560.64453288642,
+    "equity_len": 11490
+  },
+  "SOL_VWZ_V47": {
+    "metadata": {
+      "coin": "SOL",
+      "sig": "VWZ",
+      "exit": "V47",
+      "base_sh": 0.197,
+      "new_sh": 0.425,
+      "delta": 0.22799999999999998,
+      "new_cagr": 0.0269,
+      "new_mdd": -0.2331,
+      "new_cal": 0.115,
+      "new_minyr": -0.0638,
+      "new_pos_yrs": 2,
+      "n": 31,
+      "new_wr": 0.129
+    },
+    "equity_final": 11494.587348757836,
+    "equity_len": 11490
+  },
+  "LINK_STF_V41": {
+    "metadata": {
+      "coin": "LINK",
+      "sig": "STF",
+      "exit": "V41",
+      "base_sh": 0.224,
+      "new_sh": 0.407,
+      "delta": 0.18299999999999997,
+      "new_cagr": 0.0831,
+      "new_mdd": -0.4496,
+      "new_cal": 0.185,
+      "new_minyr": -0.301,
+      "new_pos_yrs": 4,
+      "n": 121,
+      "new_wr": 0.273
+    },
+    "equity_final": 15193.259832809734,
+    "equity_len": 11490
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "strategy": "volume_breakout",
+  "symbol": "ETHUSDT",
+  "tf": "4h",
+  "four_test": {
+    "strategy_id": "volume_breakout",
+    "symbol": "ETHUSDT",
+    "tf": "4h",
+    "per_year": {
+      "2022": {
+        "sharpe": 0.749,
+        "return": 0.1603,
+        "max_dd": -0.1583,
+        "n_bars": 2190
+      },
+      "2023": {
+        "sharpe": 0.397,
+        "return": 0.0689,
+        "max_dd": -0.2488,
+        "n_bars": 2190
+      },
+      "2024": {
+        "sharpe": 0.776,
+        "return": 0.191,
+        "max_dd": -0.2744,
+        "n_bars": 2190
+      }
+    },
+    "permutation": {
+      "n_permutations": 40,
+      "real_sharpe": 0.645,
+      "null_mean": -0.101,
+      "null_99th": 0.825,
+      "p_value": 0.05
+    },
+    "bootstrap": {
+      "sharpe": {
+        "mean": 0.6603,
+        "ci_lo": -0.3706,
+        "ci_hi": 1.6797
+      },
+      "calmar": {
+        "mean": 0.7016,
+        "ci_lo": -0.2631,
+        "ci_hi": 2.7027
+      },
+      "max_dd": {
+        "mean": -0.2917,
+        "ci_lo": -0.496,
+        "ci_hi": -0.1592
+      }
+    },
+    "walk_forward": {
+      "n_folds": 6,
+      "avg_is_sharpe": 0.713,
+      "avg_oos_sharpe": 0.487,
+      "efficiency_ratio": 0.683,
+      "n_positive_folds": 4,
+      "worst_fold_sharpe": -1.174,
+      "folds": [
+        {
+          "fold": 1,
+          "is_sharpe": 1.385,
+          "oos_sharpe": 0.421
+        },
+        {
+          "fold": 2,
+          "is_sharpe": 0.756,
+          "oos_sharpe": 0.53
+        },
+        {
+          "fold": 3,
+          "is_sharpe": 0.683,
+          "oos_sharpe": -1.174
+        },
+        {
+          "fold": 4,
+          "is_sharpe": 0.32,
+          "oos_sharpe": 2.018
+        },
+        {
+          "fold": 5,
+          "is_sharpe": 0.725,
+          "oos_sharpe": -0.955
+        },
+        {
+          "fold": 6,
+          "is_sharpe": 0.409,
+          "oos_sharpe": 2.081
+        }
+      ]
+    },
+    "verdict": {
+      "per_year_consistency": true,
+      "permutation_p<0.01": false,
+      "bootstrap_sharpe_lowerCI>0.5": false,
+      "bootstrap_calmar_lowerCI>1.0": false,
+      "bootstrap_mdd_upperCI<30%": true,
+      "walk_forward_efficiency>0.5": true,
+      "walk_forward_pos_folds>=5": false,
+      "tests_passed": 3,
+      "tests_total": 7
+    }
+  },
+  "plateau": {
+    "baseline_sharpe": 0.645,
+    "baseline_calmar": 0.506,
+    "baseline_mdd": -0.2744,
+    "worst_25pct_sharpe_drop": 0.194,
+    "worst_50pct_sharpe_drop": 0.326,
+    "cliff_detected": false,
+    "worst_param": "don_len",
+    "params": {
+      "don_len": {
+        "baseline_value": 20.0,
+        "sweep": {
+          "-0.5": {
+            "value": 10,
+            "sharpe": 0.435,
+            "calmar": 0.287,
+            "max_dd": -0.2888
+          },
+          "-0.25": {
+            "value": 15,
+            "sharpe": 0.719,
+            "calmar": 0.592,
+            "max_dd": -0.2744
+          },
+          "0.25": {
+            "value": 25,
+            "sharpe": 0.763,
+            "calmar": 0.683,
+            "max_dd": -0.2479
+          },
+          "0.5": {
+            "value": 30,
+            "sharpe": 0.543,
+            "calmar": 0.401,
+            "max_dd": -0.2647
+          }
+        }
+      },
+      "vol_avg": {
+        "baseline_value": 20.0,
+        "sweep": {
+          "-0.5": {
+            "error": "ValueError: window must be an integer 0 or greater"
+          },
+          "-0.25": {
+            "error": "ValueError: window must be an integer 0 or greater"
+          },
+          "0.25": {
+            "error": "ValueError: window must be an integer 0 or greater"
+          },
+          "0.5": {
+            "error": "ValueError: window must be an integer 0 or greater"
+          }
+        }
+      },
+      "vol_mult": {
+        "baseline_value": 1.5,
+        "sweep": {
+          "-0.5": {
+            "value": 0.75,
+            "sharpe": 0.55,
+            "calmar": 0.42,
+            "max_dd": -0.28
+          },
+          "-0.25": {
+            "value": 1.125,
+            "sharpe": 0.534,
+            "calmar": 0.429,
+            "max_dd": -0.2589
+          },
+          "0.25": {
+            "value": 1.875,
+            "sharpe": 0.974,
+            "calmar": 1.062,
+            "max_dd": -0.2051
+          },
+          "0.5": {
+            "value": 2.25,
+            "sharpe": 0.636,
+            "calmar": 0.545,
+            "max_dd": -0.2131
+          }
+        }
+      },
+      "atr_len": {
+        "baseline_value": 14.0,
+        "sweep": {
+          "-0.5": {
+            "value": 7,
+            "sharpe": 0.764,
+            "calmar": 0.663,
+            "max_dd": -0.2708
+          },
+          "-0.25": {
+            "value": 10,
+            "sharpe": 0.813,
+            "calmar": 0.699,
+            "max_dd": -0.2716
+          },
+          "0.25": {
+            "value": 18,
+            "sharpe": 0.67,
+            "calmar": 0.526,
+            "max_dd": -0.2744
+          },
+          "0.5": {
+            "value": 21,
+            "sharpe": 0.667,
+            "calmar": 0.52,
+            "max_dd": -0.276
+          }
+        }
+      },
+      "regime_len": {
+        "baseline_value": 200.0,
+        "sweep": {
+          "-0.5": {
+            "value": 100,
+            "sharpe": 0.495,
+            "calmar": 0.376,
+            "max_dd": -0.2642
+          },
+          "-0.25": {
+            "value": 150,
+            "sharpe": 0.731,
+            "calmar": 0.625,
+            "max_dd": -0.264
+          },
+          "0.25": {
+            "value": 250,
+            "sharpe": 0.519,
+            "calmar": 0.356,
+            "max_dd": -0.2882
+          },
+          "0.5": {
+            "value": 300,
+            "sharpe": 0.443,
+            "calmar": 0.322,
+            "max_dd": -0.251
+          }
+        }
+      }
+    },
+    "passed": true
+  },
+  "full_battery_tests_passed": 4,
+  "full_battery_tests_total": 8
+}

@@ -1,0 +1,142 @@
+//@version=5
+// ============================================================================
+//  TON  —  V26 Liquidity Sweep (1h)   —  LIVE CANDIDATE
+// ============================================================================
+//  Idea: Proper "liquidity sweep" reversal — price pokes through the MOST
+//        RECENT confirmed swing pivot (high or low), but the body closes
+//        back INSIDE on elevated volume = trapped participants + reversal.
+//
+//  Pivot logic: a swing high at bar t = highest high over [t-5, t+5]; the
+//  level is only usable from bar t+5 onward. Regime gate (SMA 400) keeps
+//  the trade with the larger trend (sweep of lows = long in uptrend etc.).
+//
+//  Python backtest (TON has data from 2023-09 so this is effectively OOS-only):
+//    FULL  n=145   CAGR (net) +50.3%   Sharpe +1.11   DD -43.2%   PF 1.34
+//      OOS (2024-2026)   n=145   Sharpe +1.11   CAGR +50.3%
+//
+//  Status: LIVE CANDIDATE (PAPER FIRST — only 2.3 years of data).
+//    Role in TON sleeve: complements V23 BB-Break. Start at 25% TON sleeve
+//    weight and increase only after 3 months of paper tracking.
+// ============================================================================
+
+strategy("TON  V26 Liq Sweep 1h",
+     overlay             = true,
+     initial_capital     = 10000,
+     currency            = currency.USD,
+     default_qty_type    = strategy.percent_of_equity,
+     default_qty_value   = 100,
+     commission_type     = strategy.commission.percent,
+     commission_value    = 0.045,
+     slippage            = 3,
+     pyramiding          = 0,
+     process_orders_on_close = false,
+     close_entries_rule  = "ANY",
+     margin_long         = 33,
+     margin_short        = 33)
+
+grpSig = "Signal (swing-pivot sweep + volume)"
+pivL    = input.int(5,   "Pivot left bars",  minval = 1, group = grpSig)
+pivR    = input.int(5,   "Pivot right bars", minval = 1, group = grpSig)
+volMult = input.float(1.5,"Volume > x * SMA(vol,20)", step = 0.1, group = grpSig)
+regLen  = input.int(400, "Regime SMA length", minval = 50, group = grpSig)
+
+grpExit = "Exits (ATR)"
+atrLen  = input.int(14,    "ATR length", minval = 2, group = grpExit)
+tpAtr   = input.float(10.0,"TP x ATR",   step = 0.5, group = grpExit)
+slAtr   = input.float(2.0, "SL x ATR",   step = 0.1, group = grpExit)
+trlAtr  = input.float(5.0, "Trail x ATR",step = 0.5, group = grpExit)
+maxHold = input.int(72,    "Max hold (bars @ 1h)", minval = 4, group = grpExit)
+
+grpRisk = "Sizing"
+riskPct = input.float(3.0, "Risk per trade (% eq.)", step = 0.5, group = grpRisk)
+levCap  = input.float(3.0, "Max leverage",            step = 0.5, group = grpRisk)
+
+grpSide  = "Sides"
+useLong  = input.bool(true, "Longs",  group = grpSide)
+useShort = input.bool(true, "Shorts", group = grpSide)
+
+// ============================================================================
+//  Swing pivots — Pine's built-in ta.pivothigh/pivotlow returns a value
+//  SHIFTED by pivR bars (confirmed pivR bars after the pivot), which is
+//  exactly what we want (no look-ahead). We then forward-fill the level.
+// ============================================================================
+ph = ta.pivothigh(high, pivL, pivR)
+pl = ta.pivotlow (low,  pivL, pivR)
+
+var float lastPivHi = na
+var float lastPivLo = na
+if not na(ph)
+    lastPivHi := ph
+if not na(pl)
+    lastPivLo := pl
+
+// Volume confirmation
+volOk = volume > volMult * ta.sma(volume, 20)
+
+// Regime
+regSma   = ta.sma(close, regLen)
+regimeUp = close > regSma
+regimeDn = close < regSma
+
+// Sweep patterns
+sweptUp = not na(lastPivHi) and (high > lastPivHi) and (close < lastPivHi) and volOk
+sweptDn = not na(lastPivLo) and (low  < lastPivLo) and (close > lastPivLo) and volOk
+
+// Long = sweep of lows in uptrend, Short = sweep of highs in downtrend
+longSig  = useLong  and sweptDn and regimeUp
+shortSig = useShort and sweptUp and regimeDn
+
+// ============================================================================
+//  Sizing
+// ============================================================================
+atrVal      = ta.atr(atrLen)
+stopDist    = slAtr * atrVal
+riskDollars = strategy.equity * (riskPct / 100.0)
+qtySized    = stopDist > 0 ? math.min(riskDollars / stopDist, strategy.equity * levCap / close) : 0
+
+if longSig and strategy.position_size == 0
+    strategy.entry("L", strategy.long, qty = qtySized,
+                   alert_message = '{"action":"buy","ticker":"{{ticker}}","qty":"{{strategy.order.contracts}}","price":"{{close}}"}')
+
+if shortSig and strategy.position_size == 0
+    strategy.entry("S", strategy.short, qty = qtySized,
+                   alert_message = '{"action":"sell","ticker":"{{ticker}}","qty":"{{strategy.order.contracts}}","price":"{{close}}"}')
+
+// ============================================================================
+//  Exits
+// ============================================================================
+var float trailStop = na
+var int   barsIn    = 0
+
+if strategy.position_size > 0
+    barsIn := barsIn + 1
+    tp    = strategy.position_avg_price + tpAtr * atrVal
+    hsl   = strategy.position_avg_price - slAtr * atrVal
+    trail = high - trlAtr * atrVal
+    trailStop := na(trailStop) ? hsl : math.max(trailStop, trail)
+    trailStop := math.max(trailStop, hsl)
+    strategy.exit("X-L", "L", limit = tp, stop = trailStop)
+    if barsIn >= maxHold
+        strategy.close("L", comment = "maxHold")
+else if strategy.position_size < 0
+    barsIn := barsIn + 1
+    tp    = strategy.position_avg_price - tpAtr * atrVal
+    hsl   = strategy.position_avg_price + slAtr * atrVal
+    trail = low + trlAtr * atrVal
+    trailStop := na(trailStop) ? hsl : math.min(trailStop, trail)
+    trailStop := math.min(trailStop, hsl)
+    strategy.exit("X-S", "S", limit = tp, stop = trailStop)
+    if barsIn >= maxHold
+        strategy.close("S", comment = "maxHold")
+else
+    trailStop := na
+    barsIn := 0
+
+// ============================================================================
+//  Visuals
+// ============================================================================
+plot(lastPivHi, "Last piv HI", color = color.new(color.red,  40), style = plot.style_stepline)
+plot(lastPivLo, "Last piv LO", color = color.new(color.lime, 40), style = plot.style_stepline)
+plot(regSma,    "Regime SMA",  color = color.new(color.aqua, 50))
+plotshape(longSig,  title = "Long",  style = shape.triangleup,   location = location.belowbar, color = color.lime, size = size.tiny)
+plotshape(shortSig, title = "Short", style = shape.triangledown, location = location.abovebar, color = color.red,  size = size.tiny)

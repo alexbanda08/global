@@ -1,0 +1,52 @@
+//@version=3
+study("Pullback entry", overlay=true)
+
+//Definitions
+ma50=sma(close,50)
+ma20=sma(close,20)
+bb_top=ma20+stdev(close,20)*2
+bb_bottom=ma20-stdev(close,20)*2
+
+//MACDZ
+fastLength = input(12, minval=1)
+slowLength=input(26,minval=1)
+signalLength=input(9,minval=1)
+//Fast
+ema1= ema(close, fastLength)
+ema2 = ema(ema1,fastLength)
+differenceFast = ema1 - ema2
+zerolagEMA = ema1 + differenceFast
+demaFast = (2 * ema1) - ema2
+//Slow
+emas1= ema(close , slowLength)
+emas2 = ema(emas1 , slowLength)
+differenceSlow = emas1 - emas2
+zerolagslowMA = emas1 + differenceSlow
+demaSlow = (2 * emas1) - emas2
+//MACD LINE
+ZeroLagMACD = demaFast - demaSlow
+//SIGNAL LINE
+emasig1 = ema(ZeroLagMACD, signalLength)
+emasig2 = ema(emasig1, signalLength)
+signal = (2 * emasig1) - emasig2
+// hline(0, linewidth=1, color=#F5F5F5, linestyle=dotted) 
+macdz_hist = ZeroLagMACD -signal
+
+plot(ma50, color=red, linewidth=2, transp=0)
+plot(ma20, color=white, linewidth=1, transp=0)
+plot(bb_top, color=white, linewidth=2, transp=0)
+plot(bb_bottom, color=white, linewidth=2, transp=0)
+
+//Buy Sell Signal
+ma50_near_BB=iff(ma50>ma20+(bb_top-ma20)/2,-1,iff(ma50<ma20-(ma20-bb_bottom)/2,1,0))
+price_near_BB=iff(high>ma20+(bb_top-ma20)/2,-1,iff(low<ma20-(ma20-bb_bottom)/2,1,0))
+ma_steepness = iff((linreg(ma50,10,1)-linreg(ma50,10,0))/linreg(ma50,10,0)>0.0002,-1,iff((linreg(ma50,10,1)-linreg(ma50,10,0))/linreg(ma50,10,0)<-0.0002,1,0))
+macdz_direction = iff(macdz_hist>0,1,-1)
+// plot(ma50_near_BB, color=white, style=histogram, linewidth=2, transp=0)
+//plot((linreg(ma50,10,1)-linreg(ma50,10,0))/linreg(ma50,10,0), color=yellow, style=line, linewidth=2, transp=0)
+// plot(macdz_direction, color=teal, style=histogram, linewidth=2, transp=0)
+buy_signal = iff(ma50_near_BB>=1 and ma_steepness>=1 and macdz_direction>=1 and price_near_BB>=1,1,0)
+sell_signal = iff(ma50_near_BB<=-1 and ma_steepness<=-1 and macdz_direction<=-1 and price_near_BB<=-1,1,0)
+
+plotshape(buy_signal, style=shape.labelup, title="Buy", size=size.tiny, color=lime, offset=0, location=location.belowbar, transp=0)
+plotshape(sell_signal, style=shape.labeldown, title="Short", size=size.tiny, color=red, offset=0, location=location.abovebar, transp=0)

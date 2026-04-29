@@ -1,0 +1,106 @@
+//@version=5
+// ============================================================================
+//  SOL  —  V2B Volume Breakout  (4h, long-only)
+// ============================================================================
+//  Python / vectorbt backtest (2018-01-01 -> 2026-04-01, $10,000 start;
+//  SOL only starts 2020-08):
+//    Final equity     $566,967    (56.70x)
+//    CAGR             104.70%
+//    Sharpe           1.35
+//    Max drawdown     -51.49%
+//    Calmar           2.03
+//    Trades           94  Win-rate 33.0%
+//    OOS 2023-2026    CAGR 26%  Sharpe 0.71  DD -41%
+//
+//  CAVEATS:
+//    - SOL 2019-2021 early (fold 2 in CV) had only 3 trades due to thin
+//      liquidity.  An optional V5 variant adds a dollar-volume-percentile
+//      gate; it fixes fold 2 but pushes full-period MaxDD to -72%.
+//      We kept V2B as the winner since it matches the stated "low DD" goal
+//      better on the full history.  Size SOL position accordingly.
+//    - Expect live Sharpe in the 0.5-0.9 range vs the 1.35 backtest number.
+// ============================================================================
+
+strategy("SOL  V2B Volume Breakout",
+     overlay             = true,
+     initial_capital     = 10000,
+     currency            = currency.USD,
+     default_qty_type    = strategy.percent_of_equity,
+     default_qty_value   = 99,
+     commission_type     = strategy.commission.percent,
+     commission_value    = 0.1,
+     slippage            = 5,
+     pyramiding          = 0,
+     calc_on_order_fills = false,
+     process_orders_on_close = false,
+     close_entries_rule  = "ANY",
+     use_bar_magnifier   = false)
+
+grpCore  = "Breakout core"
+donLen   = input.int(30,    "Donchian lookback",     minval = 5,  group = grpCore)
+volAvg   = input.int(20,    "Volume SMA length",     minval = 2,  group = grpCore)
+volMult  = input.float(1.3, "Volume spike multiplier",step = 0.1, group = grpCore)
+regLen   = input.int(150,   "Regime SMA length",     minval = 20, group = grpCore)
+
+grpLiq   = "Liquidity filter (optional)"
+useLiq   = input.bool(false,"Require dollar-volume percentile?", group = grpLiq)
+liqLook  = input.int(252,   "Rolling lookback bars",             group = grpLiq)
+liqMin   = input.float(0.40,"Min dollar-vol percentile",         group = grpLiq)
+
+grpRisk  = "Risk"
+atrLen   = input.int(14,    "ATR length",            minval = 2,  group = grpRisk)
+trailAtr = input.float(4.5, "Trailing stop x ATR",   step = 0.5,  group = grpRisk)
+
+grpDates = "Backtest window"
+useDates = input.bool(true, "Limit to date range?",               group = grpDates)
+sd       = input.time(timestamp("2020-08-01 00:00 UTC"), "Start", group = grpDates)
+ed       = input.time(timestamp("2030-01-01 00:00 UTC"), "End",   group = grpDates)
+inWin    = not useDates or (time >= sd and time <= ed)
+
+donHi    = ta.highest(high, donLen)[1]
+volSma   = ta.sma(volume, volAvg)
+regSma   = ta.sma(close, regLen)
+atr      = ta.atr(atrLen)
+
+// Dollar-volume percentile rank
+dollarVol = close * volume
+// percentile rank of current value in the trailing window
+dvRank = ta.percentrank(dollarVol, liqLook) / 100.0
+liqOk  = not useLiq or dvRank > liqMin
+
+breakout = close > donHi
+volSpike = volume > volSma * volMult
+regimeUp = close > regSma
+longCond = breakout and volSpike and regimeUp and liqOk and inWin
+exitReg  = close < regSma
+
+if longCond and strategy.position_size == 0
+    strategy.entry("L", strategy.long)
+
+var float hh = na
+var float ts = na
+if strategy.position_size > 0
+    hh := na(hh) ? high : math.max(hh, high)
+    newStop = hh - atr * trailAtr
+    ts := na(ts) ? newStop : math.max(ts, newStop)
+    strategy.exit("trail", from_entry = "L", stop = ts)
+    if exitReg
+        strategy.close("L", comment = "regime")
+else
+    hh := na
+    ts := na
+
+plot(donHi,  "Donchian(30) High", color = color.new(color.yellow, 40))
+plot(regSma, "Regime SMA 150",    color = color.new(color.orange, 0))
+plot(strategy.position_size > 0 ? ts : na, "Trailing Stop",
+     color = color.new(color.red, 0), style = plot.style_linebr)
+bgcolor(regimeUp ? color.new(color.green, 93) : color.new(color.red, 94))
+
+plotshape(longCond and strategy.position_size == 0, "Entry",
+     style = shape.triangleup, location = location.belowbar,
+     color = color.lime, size = size.tiny)
+
+alertcondition(longCond, title = "SOL V2B Long",
+     message = '{"action":"open_long","symbol":"{{ticker}}","tf":"{{interval}}"}')
+alertcondition(exitReg,  title = "SOL V2B Exit",
+     message = '{"action":"close_long","symbol":"{{ticker}}","tf":"{{interval}}"}')

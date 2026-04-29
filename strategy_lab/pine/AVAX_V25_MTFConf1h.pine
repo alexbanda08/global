@@ -1,0 +1,126 @@
+//@version=5
+// ============================================================================
+//  AVAX  —  V25 MTF Confluence (1h)   —  PRIMARY V25 WINNER
+// ============================================================================
+//  Idea:  1h EMA(12)/EMA(50) crossover, gated by a 4h trend filter.
+//           LONG   when EMA12 crosses above EMA50  AND  4h close > 4h EMA(50)
+//           SHORT  when EMA12 crosses below EMA50  AND  4h close < 4h EMA(50)
+//         The 4h filter prevents fade-the-trend entries on every counter-trend
+//         1h cross — dominates because AVAX has extremely persistent 4h trends.
+//
+//  Python backtest (2020-01 -> 2026-04, $10,000 start, 9 bps fee + 3 bps slip):
+//    FULL  n=481   CAGR (net) +320.6%   Sharpe +2.19   DD -43.7%   PF 1.79
+//      IS  (2020-2023)   n=288   CAGR +197.9%   Sharpe +1.78
+//      OOS (2024-2026)   n=193   CAGR +584.6%   Sharpe +2.74   <- OOS BEATS IS
+//
+//  This is the single strongest V25 strategy and is genuinely better than the
+//  V23 AVAX RangeKalman (+77% / Sh 1.48) on both CAGR and Sharpe. The -44% DD
+//  is at the edge of tolerance — paper-trade first and halt at -45% live DD.
+//
+//  Status: PROMOTE to core AVAX allocation (replace or 50/50 with V23 AVAX).
+// ============================================================================
+
+strategy("AVAX  V25 MTF Conf 1h",
+     overlay             = true,
+     initial_capital     = 10000,
+     currency            = currency.USD,
+     default_qty_type    = strategy.percent_of_equity,
+     default_qty_value   = 100,
+     commission_type     = strategy.commission.percent,
+     commission_value    = 0.045,
+     slippage            = 3,
+     pyramiding          = 0,
+     process_orders_on_close = false,
+     close_entries_rule  = "ANY",
+     margin_long         = 33,
+     margin_short        = 33)
+
+// ---- Signal ----
+grpSig  = "Signal (MTF EMA crossover)"
+fastLen = input.int(12,  "Fast EMA length (bars @ 1h)", minval = 2, group = grpSig)
+slowLen = input.int(50,  "Slow EMA length (bars @ 1h)", minval = 5, group = grpSig)
+h4Len   = input.int(50,  "4h EMA trend filter length",  minval = 5, group = grpSig)
+
+// ---- Exits ----
+grpExit = "Exits (ATR)"
+atrLen  = input.int(14,   "ATR length", minval = 2, group = grpExit)
+tpAtr   = input.float(10.0, "TP x ATR",  step = 0.5, group = grpExit)
+slAtr   = input.float(2.0,  "SL x ATR",  step = 0.1, group = grpExit)
+trlAtr  = input.float(5.0,  "Trail x ATR", step = 0.5, group = grpExit)
+maxHold = input.int(72,    "Max hold (bars @ 1h)", minval = 4, group = grpExit)
+
+// ---- Sizing ----
+grpRisk = "Sizing"
+riskPct = input.float(5.0, "Risk per trade (% eq.)", step = 0.5, group = grpRisk)
+levCap  = input.float(3.0, "Max leverage",           step = 0.5, group = grpRisk)
+
+// ---- Sides ----
+grpSide = "Sides"
+useLong  = input.bool(true, "Longs",  group = grpSide)
+useShort = input.bool(true, "Shorts", group = grpSide)
+
+// -------- Indicators --------
+emaFast = ta.ema(close, fastLen)
+emaSlow = ta.ema(close, slowLen)
+crossUp = ta.crossover(emaFast,  emaSlow)
+crossDn = ta.crossunder(emaFast, emaSlow)
+
+// 4h trend via request.security
+h4Close  = request.security(syminfo.tickerid, "240", close)
+h4Ema    = request.security(syminfo.tickerid, "240", ta.ema(close, h4Len))
+h4TrendUp = h4Close > h4Ema
+h4TrendDn = h4Close < h4Ema
+
+// -------- Signals --------
+longSig  = useLong  and crossUp and h4TrendUp
+shortSig = useShort and crossDn and h4TrendDn
+
+// -------- Sizing --------
+atrVal      = ta.atr(atrLen)
+stopDist    = slAtr * atrVal
+riskDollars = strategy.equity * (riskPct / 100.0)
+qtySized    = stopDist > 0 ? math.min(riskDollars / stopDist, strategy.equity * levCap / close) : 0
+
+if longSig and strategy.position_size == 0
+    strategy.entry("L", strategy.long, qty = qtySized,
+                   alert_message = '{"action":"buy","ticker":"{{ticker}}","qty":"{{strategy.order.contracts}}","price":"{{close}}"}')
+
+if shortSig and strategy.position_size == 0
+    strategy.entry("S", strategy.short, qty = qtySized,
+                   alert_message = '{"action":"sell","ticker":"{{ticker}}","qty":"{{strategy.order.contracts}}","price":"{{close}}"}')
+
+// -------- Exits --------
+var float trailStop = na
+var int   barsIn    = 0
+
+if strategy.position_size > 0
+    barsIn := barsIn + 1
+    tp    = strategy.position_avg_price + tpAtr * atrVal
+    hsl   = strategy.position_avg_price - slAtr * atrVal
+    trail = high - trlAtr * atrVal
+    trailStop := na(trailStop) ? hsl : math.max(trailStop, trail)
+    trailStop := math.max(trailStop, hsl)
+    strategy.exit("X-L", "L", limit = tp, stop = trailStop)
+    if barsIn >= maxHold
+        strategy.close("L", comment = "maxHold")
+else if strategy.position_size < 0
+    barsIn := barsIn + 1
+    tp    = strategy.position_avg_price - tpAtr * atrVal
+    hsl   = strategy.position_avg_price + slAtr * atrVal
+    trail = low + trlAtr * atrVal
+    trailStop := na(trailStop) ? hsl : math.min(trailStop, trail)
+    trailStop := math.min(trailStop, hsl)
+    strategy.exit("X-S", "S", limit = tp, stop = trailStop)
+    if barsIn >= maxHold
+        strategy.close("S", comment = "maxHold")
+else
+    trailStop := na
+    barsIn := 0
+
+// -------- Plots --------
+plot(emaFast, "EMA fast", color = color.new(color.yellow, 0))
+plot(emaSlow, "EMA slow", color = color.new(color.aqua,   0))
+plot(h4Ema,   "4h EMA",   color = color.new(color.fuchsia, 30))
+bgcolor(h4TrendUp ? color.new(color.green, 92) : h4TrendDn ? color.new(color.red, 92) : na)
+plotshape(longSig,  title = "Long",  style = shape.triangleup,   location = location.belowbar, color = color.lime, size = size.tiny)
+plotshape(shortSig, title = "Short", style = shape.triangledown, location = location.abovebar, color = color.red,  size = size.tiny)

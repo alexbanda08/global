@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polymarket Alt-Strategies — Hunt Dashboard</title>
+<style>
+:root {
+  --bg: #0a0a0d; --surface: #16161b; --surface2: #1f1f26;
+  --border: #2a2a32; --text: #e4e4ec; --text-secondary: #a0a0b0; --text-dim: #6a6a78;
+  --accent: #5e8eef; --accent-2: #f08e5e;
+  --green: #4ade80; --red: #f87171; --yellow: #fbbf24;
+}
+[data-theme="light"] {
+  --bg: #f5f5f7; --surface: #ffffff; --surface2: #f0f0f2;
+  --border: #e0e0e4; --text: #1a1a2e; --text-secondary: #5a5a72; --text-dim: #a0a0b0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 0 0 80px 0; }
+.container { max-width: 1500px; margin: 0 auto; padding: 24px; }
+header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+h1 small { font-size: 13px; font-weight: 400; color: var(--text-secondary); margin-left: 8px; }
+h2 { font-size: 16px; margin: 32px 0 12px 0; font-weight: 600; }
+h3 { font-size: 13px; margin: 16px 0 8px 0; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+.theme-toggle { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; color: var(--text); cursor: pointer; font-size: 12px; }
+
+.grid { display: grid; gap: 16px; }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-2 { grid-template-columns: 1fr 1fr; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+.kpi-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+.kpi-value { font-size: 22px; font-weight: 700; margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
+.kpi-sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+.kpi-good { color: var(--green); }
+.kpi-bad { color: var(--red); }
+.kpi-warn { color: var(--yellow); }
+
+table { width: 100%; border-collapse: collapse; font-size: 12px; font-family: 'JetBrains Mono', monospace; }
+table th, table td { padding: 6px 10px; text-align: right; border-bottom: 1px solid var(--border); }
+table th { font-weight: 600; color: var(--text-secondary); background: var(--surface2); position: sticky; top: 0; cursor: pointer; user-select: none; }
+table th:first-child, table td:first-child { text-align: left; }
+table tr:hover td { background: var(--surface2); }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.tag-asset-btc { background: rgba(247, 147, 26, 0.2); color: #f7931a; }
+.tag-asset-eth { background: rgba(98, 126, 234, 0.2); color: #627eea; }
+.tag-asset-sol { background: rgba(20, 241, 149, 0.2); color: #14f195; }
+.tag-asset-ALL { background: rgba(160, 160, 176, 0.2); color: var(--text-secondary); }
+.row-baseline { background: rgba(94, 142, 239, 0.05); }
+.row-baseline td { font-weight: 600; }
+
+.section-summary { background: var(--surface2); border-left: 3px solid var(--accent); padding: 12px 16px; margin: 12px 0; border-radius: 4px; font-size: 13px; line-height: 1.5; }
+.section-summary strong { color: var(--text); }
+.section-summary code { font-family: 'JetBrains Mono', monospace; background: var(--bg); padding: 1px 5px; border-radius: 3px; font-size: 11px; }
+
+.controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.controls select, .controls input { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 6px 10px; border-radius: 6px; font-size: 12px; font-family: inherit; }
+.controls label { font-size: 11px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; }
+
+svg { display: block; }
+.line { fill: none; stroke-width: 2; }
+.line-btc { stroke: #f7931a; }
+.line-eth { stroke: #627eea; }
+.line-sol { stroke: #14f195; }
+.line-ALL { stroke: var(--text-secondary); }
+.dot { stroke-width: 2; fill: var(--surface); }
+.axis { stroke: var(--border); stroke-width: 1; }
+.axis-text { fill: var(--text-dim); font-size: 10px; font-family: 'JetBrains Mono', monospace; }
+.legend { display: flex; gap: 12px; font-size: 11px; margin-top: 8px; flex-wrap: wrap; color: var(--text-secondary); }
+.legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+
+/* heatmap */
+.heatmap-cell { stroke: var(--bg); stroke-width: 1; }
+.heat-text { fill: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 9px; pointer-events: none; }
+.heat-text-dark { fill: #0a0a0d; }
+
+.pos { color: var(--green); }
+.neg { color: var(--red); }
+.dim { color: var(--text-dim); }
+
+#stacks-table th, #alt-table th { cursor: pointer; }
+
+.bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+.bar-row .label { width: 220px; color: var(--text-secondary); }
+.bar-row .bar { flex: 1; height: 18px; background: var(--surface2); border-radius: 3px; overflow: hidden; position: relative; }
+.bar-row .bar-fill { height: 100%; background: var(--accent); }
+.bar-row .bar-fill.green { background: var(--green); }
+.bar-row .bar-fill.red { background: var(--red); }
+.bar-row .bar-fill.yellow { background: var(--yellow); }
+.bar-row .val { width: 130px; text-align: right; font-size: 11px; }
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <h1>Polymarket Alt-Strategies <small>q-tightening × time-of-day × signal variants</small></h1>
+  <button class="theme-toggle" onclick="toggleTheme()">☀ Light</button>
+</header>
+
+<!-- Headline KPIs -->
+<div class="grid grid-4">
+  <div class="card">
+    <div class="kpi-label">Locked baseline</div>
+    <div class="kpi-value">+20.23%</div>
+    <div class="kpi-sub">q20 × no filter · n=1152 · hit 73.8%</div>
+  </div>
+  <div class="card">
+    <div class="kpi-label">Best stacked (practical)</div>
+    <div class="kpi-value kpi-good">+29.40%</div>
+    <div class="kpi-sub">q10 × good hours · n=293 · hit 86.0%</div>
+  </div>
+  <div class="card">
+    <div class="kpi-label">Best stacked (precision)</div>
+    <div class="kpi-value kpi-good">+32.96%</div>
+    <div class="kpi-sub">q10 × europe · n=90 · hit 90.0%</div>
+  </div>
+  <div class="card">
+    <div class="kpi-label">Sweet spot single hour</div>
+    <div class="kpi-value kpi-good">09:00 UTC</div>
+    <div class="kpi-sub">+32.10% · 89.4% hit · n=47</div>
+  </div>
+</div>
+
+<h2>1. Alt-signal grid — different signal definitions, same exit (hedge-hold rev_bp=5)</h2>
+<div class="section-summary">
+  <strong>Tighter quintiles win across the board.</strong>
+  Locked baseline <code>sig_ret5m_q20</code> (top/bot 20% of |ret_5m|) is beaten by <code>sig_ret5m_q10</code> in every cell.
+  <code>q5</code> (top/bot 5%) goes higher still but sample sizes drop to 25-218.
+  Long-horizon variants (<code>ret_15m</code>, <code>ret_1h</code>) underperform — confirms 5m horizon is right.
+  <code>smart_minus_retail</code> alone is weak (53-60% hit) but as a co-filter (<code>combo</code>) it sometimes helps.
+</div>
+<div class="controls">
+  <label>Asset:
+    <select id="alt-asset"><option value="">all</option><option>ALL</option><option>btc</option><option>eth</option><option>sol</option></select>
+  </label>
+  <label>TF:
+    <select id="alt-tf"><option value="">all</option><option>ALL</option><option>15m</option><option>5m</option></select>
+  </label>
+  <label>Min n:
+    <input type="number" id="alt-min-n" value="0" style="width:80px"/>
+  </label>
+</div>
+<div class="card" style="overflow-x:auto">
+  <table id="alt-table">
+    <thead>
+      <tr>
+        <th data-sort="asset">Asset</th>
+        <th data-sort="timeframe">TF</th>
+        <th data-sort="signal">Signal</th>
+        <th data-sort="n">n</th>
+        <th data-sort="hit">Hit%</th>
+        <th data-sort="pnl_mean">PnL/trade</th>
+        <th data-sort="roi_pct">ROI</th>
+        <th data-sort="ci_lo">95% CI lo</th>
+        <th data-sort="ci_hi">95% CI hi</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<h2>2. Time-of-day — UTC hour stratification of the locked baseline</h2>
+<div class="section-summary">
+  Each market's <code>window_start</code> bucketed by UTC hour. The locked baseline performs very differently across sessions:
+  <strong>Asia overnight (00-08 UTC)</strong> = weakest (66% hit / +16% ROI),
+  <strong>Europe morning (08-13 UTC)</strong> = strongest (77% hit / +27% ROI).
+  Best single hour is <strong>09:00 UTC</strong> (89.4% hit / +32.10% ROI).
+  Bad hours to skip: <code>{0, 2, 4, 7, 16}</code>.
+</div>
+<div class="grid grid-2">
+  <div class="card">
+    <h3>ROI by UTC hour (★ = above baseline ROI)</h3>
+    <div id="chart-tod-hourly"></div>
+  </div>
+  <div class="card">
+    <h3>Hit rate by UTC hour</h3>
+    <div id="chart-tod-hourly-hit"></div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:16px">
+  <h3>Heatmap — ROI by asset × 4-hour UTC bin</h3>
+  <div id="chart-heatmap"></div>
+  <div class="legend">
+    <span><span class="legend-dot" style="background:#4ade80"></span>high ROI</span>
+    <span><span class="legend-dot" style="background:#fbbf24"></span>mid</span>
+    <span><span class="legend-dot" style="background:#f87171"></span>low / negative</span>
+  </div>
+</div>
+
+<div class="grid grid-2" style="margin-top:16px">
+  <div class="card">
+    <h3>By session</h3>
+    <div id="bar-session"></div>
+  </div>
+  <div class="card">
+    <h3>By day of week</h3>
+    <div id="bar-dow"></div>
+  </div>
+</div>
+
+<h2>3. Strategy stacks — q-tightening × time-of-day combinations</h2>
+<div class="section-summary">
+  <strong>Stacking IS multiplicative.</strong> q10 alone gives +4.35pp, good_hours alone gives +5.32pp,
+  combined gives <strong>+9.17pp</strong>. Best stack <code>europe_q10</code> = <strong>+12.73pp</strong> ROI lift
+  (90 trades / 90% hit / +32.96% ROI).
+  <strong>Caveat:</strong> 5-day data window — forward-walk validation needed before live deployment.
+</div>
+<div class="controls">
+  <label>Asset:
+    <select id="stk-asset"><option value="">all</option><option>ALL</option><option>btc</option><option>eth</option><option>sol</option></select>
+  </label>
+  <label>TF:
+    <select id="stk-tf"><option value="">all</option><option>ALL</option><option>15m</option><option>5m</option></select>
+  </label>
+</div>
+<div class="card" style="overflow-x:auto">
+  <table id="stacks-table">
+    <thead>
+      <tr>
+        <th data-sort="asset">Asset</th>
+        <th data-sort="tf">TF</th>
+        <th data-sort="stack">Stack</th>
+        <th data-sort="n">n</th>
+        <th data-sort="hit">Hit%</th>
+        <th data-sort="pnl_mean">PnL/trade</th>
+        <th data-sort="roi">ROI</th>
+        <th data-sort="ci_lo">95% CI lo</th>
+        <th data-sort="ci_hi">95% CI hi</th>
+        <th data-sort="vs_base">vs baseline</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<h2>4. Action recommendations</h2>
+<div class="card">
+  <h3>For live deployment — choose your trade-off</h3>
+  <div class="bar-row"><span class="label"><strong>Volume-friendly</strong> · q20 + bad-hour exclusion</span><div class="bar"><div class="bar-fill green" style="width:81%"></div></div><span class="val">81% volume / +22.83%</span></div>
+  <div class="bar-row"><span class="label"><strong>Balanced</strong> · q10 + bad-hour exclusion</span><div class="bar"><div class="bar-fill green" style="width:41%"></div></div><span class="val">41% volume / +27.00%</span></div>
+  <div class="bar-row"><span class="label"><strong>Practical sweet spot</strong> · q10 + good hours</span><div class="bar"><div class="bar-fill green" style="width:25%"></div></div><span class="val">25% volume / +29.40%</span></div>
+  <div class="bar-row"><span class="label"><strong>Max precision</strong> · q10 + europe hours</span><div class="bar"><div class="bar-fill green" style="width:8%"></div></div><span class="val">8% volume / +32.96%</span></div>
+  <div class="bar-row"><span class="label">Locked baseline (current TV plan)</span><div class="bar"><div class="bar-fill" style="width:100%"></div></div><span class="val">100% volume / +20.23%</span></div>
+
+  <h3 style="margin-top:24px">Open questions</h3>
+  <ul style="font-size:13px; line-height:1.7; color: var(--text-secondary); padding-left:24px">
+    <li><strong>Forward-walk validation</strong>: 5-day in-sample window. Time-of-day filter could be overfit. Run holdout test before shipping.</li>
+    <li><strong>Why does 16:00 UTC underperform?</strong> 90 trades / 64.4% hit / +8.6% ROI — a structural anomaly worth investigating.</li>
+    <li><strong>Does this stack with realistic fills?</strong> E1 showed BTC scales to $250 cleanly — re-run E1 on q10+good_hours stack to confirm capacity.</li>
+    <li><strong>Composite signal</strong>: <code>combo_q20</code> (ret_5m AND smart_minus_retail) hit 81.2% on BTC×15m (n=48). Stack with hours?</li>
+  </ul>
+</div>
+
+</div>
+
+<script>
+const DATA = {"alt": [{"n": 863, "pnl_total": 174.165, "pnl_mean": 0.2018134414831981, "roi_pct": 20.181344148319813, "ci_lo": 154.163825, "ci_hi": 193.3877, "hit": 0.7311703360370799, "asset": "ALL", "timeframe": "5m", "signal": "sig_ret5m_q20"}, {"n": 433, "pnl_total": 110.1274, "pnl_mean": 0.2543357967667436, "roi_pct": 25.433579676674363, "ci_lo": 97.30102, "ci_hi": 122.29636999999998, "hit": 0.812933025404157, "asset": "ALL", "timeframe": "5m", "signal": "sig_ret5m_q10"}, {"n": 218, "pnl_total": 56.958200000000005, "pnl_mean": 0.2612761467889908, "roi_pct": 26.12761467889909, "ci_lo": 48.366435, "ci_hi": 65.33525499999999, "hit": 0.8211009174311926, "asset": "ALL", "timeframe": "5m", "signal": "sig_ret5m_q5"}, {"n": 141, "pnl_total": 33.9254, "pnl_mean": 0.2406056737588652, "roi_pct": 24.06056737588652, "ci_lo": 26.49873, "ci_hi": 41.22883, "hit": 0.8085106382978723, "asset": "ALL", "timeframe": "5m", "signal": "sig_ret5m_thr25bps"}, {"n": 863, "pnl_total": 152.5226, "pnl_mean": 0.1767353418308227, "roi_pct": 17.673534183082275, "ci_lo": 132.827145, "ci_hi": 172.502055, "hit": 0.6998841251448435, "asset": "ALL", "timeframe": "5m", "signal": "sig_ret15m_q20"}, {"n": 863, "pnl_total": 106.245, "pnl_mean": 0.1231112398609501, "roi_pct": 12.311123986095016, "ci_lo": 85.316895, "ci_hi": 127.76446499999992, "hit": 0.6037079953650057, "asset": "ALL", "timeframe": "5m", "signal": "sig_ret1h_q20"}, {"n": 945, "pnl_total": 79.31817999999998, "pnl_mean": 0.0839345820105819, "roi_pct": 8.393458201058198, "ci_lo": 54.63717349999999, "ci_hi": 105.27675499999994, "hit": 0.5947089947089947, "asset": "ALL", "timeframe": "5m", "signal": "sig_smartretail_q20"}, {"n": 453, "pnl_total": 89.923, "pnl_mean": 0.1985055187637969, "roi_pct": 19.85055187637969, "ci_lo": 77.08002499999999, "ci_hi": 104.070175, "hit": 0.717439293598234, "asset": "ALL", "timeframe": "5m", "signal": "sig_combo_q20"}, {"n": 770, "pnl_total": 152.1044, "pnl_mean": 0.1975381818181818, "roi_pct": 19.75381818181818, "ci_lo": 134.03618500000002, "ci_hi": 170.91224999999997, "hit": 0.7181818181818181, "asset": "ALL", "timeframe": "5m", "signal": "sig_ret5m_q20_srfilter"}, {"n": 289, "pnl_total": 58.9134, "pnl_mean": 0.2038525951557093, "roi_pct": 20.385259515570933, "ci_lo": 50.28775, "ci_hi": 67.09752999999998, "hit": 0.7577854671280276, "asset": "ALL", "timeframe": "15m", "signal": "sig_ret5m_q20"}, {"n": 146, "pnl_total": 32.163799999999995, "pnl_mean": 0.2202999999999999, "roi_pct": 22.03, "ci_lo": 26.6426, "ci_hi": 37.73242, "hit": 0.821917808219178, "asset": "ALL", "timeframe": "15m", "signal": "sig_ret5m_q10"}, {"n": 74, "pnl_total": 17.042199999999998, "pnl_mean": 0.2302999999999999, "roi_pct": 23.03, "ci_lo": 13.682825, "ci_hi": 20.3849, "hit": 0.8648648648648649, "asset": "ALL", "timeframe": "15m", "signal": "sig_ret5m_q5"}, {"n": 40, "pnl_total": 8.678799999999999, "pnl_mean": 0.2169699999999999, "roi_pct": 21.697, "ci_lo": 5.82278, "ci_hi": 11.293205, "hit": 0.85, "asset": "ALL", "timeframe": "15m", "signal": "sig_ret5m_thr25bps"}, {"n": 289, "pnl_total": 51.5756, "pnl_mean": 0.1784622837370242, "roi_pct": 17.84622837370242, "ci_lo": 42.1324, "ci_hi": 60.63829499999999, "hit": 0.7058823529411765, "asset": "ALL", "timeframe": "15m", "signal": "sig_ret15m_q20"}, {"n": 289, "pnl_total": 36.724, "pnl_mean": 0.1270726643598616, "roi_pct": 12.707266435986158, "ci_lo": 26.832045, "ci_hi": 46.66243999999999, "hit": 0.6124567474048442, "asset": "ALL", "timeframe": "15m", "signal": "sig_ret1h_q20"}, {"n": 317, "pnl_total": 20.82, "pnl_mean": 0.0656782334384858, "roi_pct": 6.5678233438485805, "ci_lo": 7.751174999999998, "ci_hi": 33.723119999999994, "hit": 0.5331230283911672, "asset": "ALL", "timeframe": "15m", "signal": "sig_smartretail_q20"}, {"n": 153, "pnl_total": 31.3886, "pnl_mean": 0.205154248366013, "roi_pct": 20.515424836601305, "ci_lo": 25.213795, "ci_hi": 37.42129499999997, "hit": 0.7450980392156863, "asset": "ALL", "timeframe": "15m", "signal": "sig_combo_q20"}, {"n": 260, "pnl_total": 52.74819999999999, "pnl_mean": 0.2028776923076922, "roi_pct": 20.287769230769225, "ci_lo": 44.09678, "ci_hi": 61.02855999999999, "hit": 0.75, "asset": "ALL", "timeframe": "15m", "signal": "sig_ret5m_q20_srfilter"}, {"n": 1152, "pnl_total": 233.0784, "pnl_mean": 0.2023249999999999, "roi_pct": 20.2325, "ci_lo": 212.040915, "ci_hi": 254.761875, "hit": 0.7378472222222222, "asset": "ALL", "timeframe": "ALL", "signal": "sig_ret5m_q20"}, {"n": 579, "pnl_total": 142.2912, "pnl_mean": 0.2457533678756476, "roi_pct": 24.575336787564765, "ci_lo": 128.73578, "ci_hi": 154.707165, "hit": 0.8151986183074266, "asset": "ALL", "timeframe": "ALL", "signal": "sig_ret5m_q10"}, {"n": 292, "pnl_total": 74.0004, "pnl_mean": 0.2534260273972603, "roi_pct": 25.34260273972603, "ci_lo": 64.835985, "ci_hi": 82.62615, "hit": 0.8321917808219178, "asset": "ALL", "timeframe": "ALL", "signal": "sig_ret5m_q5"}, {"n": 181, "pnl_total": 42.6042, "pnl_mean": 0.2353823204419889, "roi_pct": 23.538232044198896, "ci_lo": 34.294645, "ci_hi": 49.84596999999999, "hit": 0.8176795580110497, "asset": "ALL", "timeframe": "ALL", "signal": "sig_ret5m_thr25bps"}, {"n": 1152, "pnl_total": 204.0982, "pnl_mean": 0.1771685763888889, "roi_pct": 17.71685763888889, "ci_lo": 181.796885, "ci_hi": 226.0050099999999, "hit": 0.7013888888888888, "asset": "ALL", "timeframe": "ALL", "signal": "sig_ret15m_q20"}, {"n": 1152, "pnl_total": 142.969, "pnl_mean": 0.1241050347222222, "roi_pct": 12.41050347222222, "ci_lo": 117.75505, "ci_hi": 168.23019999999997, "hit": 0.6059027777777778, "asset": "ALL", "timeframe": "ALL", "signal": "sig_ret1h_q20"}, {"n": 1262, "pnl_total": 100.13817999999998, "pnl_mean": 0.079348795562599, "roi_pct": 7.934879556259903, "ci_lo": 71.42217549999998, "ci_hi": 127.78638499999998, "hit": 0.5792393026941363, "asset": "ALL", "timeframe": "ALL", "signal": "sig_smartretail_q20"}, {"n": 606, "pnl_total": 121.3116, "pnl_mean": 0.2001841584158415, "roi_pct": 20.01841584158416, "ci_lo": 106.45042, "ci_hi": 136.24626999999998, "hit": 0.7244224422442245, "asset": "ALL", "timeframe": "ALL", "signal": "sig_combo_q20"}, {"n": 1030, "pnl_total": 204.8526, "pnl_mean": 0.1988860194174757, "roi_pct": 19.88860194174757, "ci_lo": 183.213085, "ci_hi": 224.04312, "hit": 0.7262135922330097, "asset": "ALL", "timeframe": "ALL", "signal": "sig_ret5m_q20_srfilter"}, {"n": 285, "pnl_total": 64.47, "pnl_mean": 0.2262105263157894, "roi_pct": 22.621052631578948, "ci_lo": 52.57314, "ci_hi": 74.828265, "hit": 0.7684210526315789, "asset": "btc", "timeframe": "5m", "signal": "sig_ret5m_q20"}, {"n": 143, "pnl_total": 42.3364, "pnl_mean": 0.2960587412587412, "roi_pct": 29.605874125874127, "ci_lo": 35.51506, "ci_hi": 48.72308999999999, "hit": 0.8531468531468531, "asset": "btc", "timeframe": "5m", "signal": "sig_ret5m_q10"}, {"n": 72, "pnl_total": 20.6534, "pnl_mean": 0.2868527777777777, "roi_pct": 28.68527777777777, "ci_lo": 15.493765, "ci_hi": 25.169274999999995, "hit": 0.8333333333333334, "asset": "btc", "timeframe": "5m", "signal": "sig_ret5m_q5"}, {"n": 34, "pnl_total": 8.8778, "pnl_mean": 0.2611117647058824, "roi_pct": 26.11117647058824, "ci_lo": 4.862405000000001, "ci_hi": 12.284789999999996, "hit": 0.8235294117647058, "asset": "btc", "timeframe": "5m", "signal": "sig_ret5m_thr25bps"}, {"n": 285, "pnl_total": 50.5678, "pnl_mean": 0.1774308771929824, "roi_pct": 17.743087719298245, "ci_lo": 37.959095, "ci_hi": 63.17877499999999, "hit": 0.7017543859649122, "asset": "btc", "timeframe": "5m", "signal": "sig_ret15m_q20"}, {"n": 285, "pnl_total": 28.1728, "pnl_mean": 0.0988519298245614, "roi_pct": 9.88519298245614, "ci_lo": 14.829785, "ci_hi": 41.55856499999998, "hit": 0.5754385964912281, "asset": "btc", "timeframe": "5m", "signal": "sig_ret1h_q20"}, {"n": 365, "pnl_total": 18.821, "pnl_mean": 0.0515643835616438, "roi_pct": 5.156438356164383, "ci_lo": 1.466909999999999, "ci_hi": 35.80976499999999, "hit": 0.5643835616438356, "asset": "btc", "timeframe": "5m", "signal": "sig_smartretail_q20"}, {"n": 136, "pnl_total": 31.497, "pnl_mean": 0.2315955882352941, "roi_pct": 23.15955882352941, "ci_lo": 24.12281, "ci_hi": 39.01078, "hit": 0.7794117647058824, "asset": "btc", "timeframe": "5m", "signal": "sig_combo_q20"}, {"n": 257, "pnl_total": 56.8188, "pnl_mean": 0.2210848249027237, "roi_pct": 22.10848249027237, "ci_lo": 45.675685, "ci_hi": 67.48461999999999, "hit": 0.7587548638132295, "asset": "btc", "timeframe": "5m", "signal": "sig_ret5m_q20_srfilter"}, {"n": 95, "pnl_total": 21.1342, "pnl_mean": 0.2224652631578947, "roi_pct": 22.24652631578947, "ci_lo": 15.845745, "ci_hi": 26.098095, "hit": 0.7789473684210526, "asset": "btc", "timeframe": "15m", "signal": "sig_ret5m_q20"}, {"n": 48, "pnl_total": 10.957199999999998, "pnl_mean": 0.2282749999999999, "roi_pct": 22.8275, "ci_lo": 7.417939999999999, "ci_hi": 14.2686, "hit": 0.8333333333333334, "asset": "btc", "timeframe": "15m", "signal": "sig_ret5m_q10"}, {"n": 24, "pnl_total": 5.7916, "pnl_mean": 0.2413166666666666, "roi_pct": 24.131666666666664, "ci_lo": 3.55754, "ci_hi": 7.855115, "hit": 0.8333333333333334, "asset": "btc", "timeframe": "15m", "signal": "sig_ret5m_q5"}, {"n": 8, "pnl_total": 1.7744, "pnl_mean": 0.2218, "roi_pct": 22.18, "ci_lo": 0.2663349999999997, "ci_hi": 2.9677649999999987, "hit": 0.875, "asset": "btc", "timeframe": "15m", "signal": "sig_ret5m_thr25bps"}, {"n": 95, "pnl_total": 17.4972, "pnl_mean": 0.1841810526315789, "roi_pct": 18.41810526315789, "ci_lo": 12.201219999999998, "ci_hi": 22.981109999999987, "hit": 0.7157894736842105, "asset": "btc", "timeframe": "15m", "signal": "sig_ret15m_q20"}, {"n": 95, "pnl_total": 10.957199999999997, "pnl_mean": 0.115338947368421, "roi_pct": 11.5338947368421, "ci_lo": 5.136989999999997, "ci_hi": 16.659019999999998, "hit": 0.5684210526315789, "asset": "btc", "timeframe": "15m", "signal": "sig_ret1h_q20"}, {"n": 121, "pnl_total": 2.767999999999999, "pnl_mean": 0.0228760330578512, "roi_pct": 2.2876033057851237, "ci_lo": -6.147029999999998, "ci_hi": 11.838299999999997, "hit": 0.5206611570247934, "asset": "btc", "timeframe": "15m", "signal": "sig_smartretail_q20"}, {"n": 48, "pnl_total": 12.6352, "pnl_mean": 0.2632333333333333, "roi_pct": 26.32333333333333, "ci_lo": 9.19306, "ci_hi": 15.745404999999996, "hit": 0.8125, "asset": "btc", "timeframe": "15m", "signal": "sig_combo_q20"}, {"n": 85, "pnl_total": 18.7418, "pnl_mean": 0.2204917647058823, "roi_pct": 22.049176470588232, "ci_lo": 13.890964999999998, "ci_hi": 23.661484999999995, "hit": 0.7764705882352941, "asset": "btc", "timeframe": "15m", "signal": "sig_ret5m_q20_srfilter"}, {"n": 380, "pnl_total": 85.60419999999999, "pnl_mean": 0.2252742105263157, "roi_pct": 22.527421052631578, "ci_lo": 73.09835000000001, "ci_hi": 97.43995, "hit": 0.7710526315789473, "asset": "btc", "timeframe": "ALL", "signal": "sig_ret5m_q20"}, {"n": 191, "pnl_total": 53.2936, "pnl_mean": 0.2790240837696335, "roi_pct": 27.90240837696335, "ci_lo": 45.499010000000006, "ci_hi": 60.21024499999999, "hit": 0.8481675392670157, "asset": "btc", "timeframe": "ALL", "signal": "sig_ret5m_q10"}, {"n": 96, "pnl_total": 26.445, "pnl_mean": 0.27546875, "roi_pct": 27.546875, "ci_lo": 21.106515, "ci_hi": 31.48795, "hit": 0.8333333333333334, "asset": "btc", "timeframe": "ALL", "signal": "sig_ret5m_q5"}, {"n": 42, "pnl_total": 10.6522, "pnl_mean": 0.2536238095238095, "roi_pct": 25.362380952380956, "ci_lo": 6.565569999999999, "ci_hi": 14.404129999999991, "hit": 0.8333333333333334, "asset": "btc", "timeframe": "ALL", "signal": "sig_ret5m_thr25bps"}, {"n": 380, "pnl_total": 68.065, "pnl_mean": 0.1791184210526315, "roi_pct": 17.91184210526316, "ci_lo": 55.10411999999999, "ci_hi": 81.063075, "hit": 0.7052631578947368, "asset": "btc", "timeframe": "ALL", "signal": "sig_ret15m_q20"}, {"n": 380, "pnl_total": 39.13, "pnl_mean": 0.1029736842105263, "roi_pct": 10.297368421052632, "ci_lo": 25.215285, "ci_hi": 53.04622, "hit": 0.5736842105263158, "asset": "btc", "timeframe": "ALL", "signal": "sig_ret1h_q20"}, {"n": 486, "pnl_total": 21.589, "pnl_mean": 0.0444218106995884, "roi_pct": 4.442181069958847, "ci_lo": 2.3541549999999964, "ci_hi": 40.18207, "hit": 0.5534979423868313, "asset": "btc", "timeframe": "ALL", "signal": "sig_smartretail_q20"}, {"n": 184, "pnl_total": 44.1322, "pnl_mean": 0.2398489130434782, "roi_pct": 23.984891304347823, "ci_lo": 35.90228, "ci_hi": 51.93146499999999, "hit": 0.7880434782608695, "asset": "btc", "timeframe": "ALL", "signal": "sig_combo_q20"}, {"n": 342, "pnl_total": 75.5606, "pnl_mean": 0.2209374269005847, "roi_pct": 22.09374269005848, "ci_lo": 63.40945, "ci_hi": 87.15690999999997, "hit": 0.7631578947368421, "asset": "btc", "timeframe": "ALL", "signal": "sig_ret5m_q20_srfilter"}, {"n": 289, "pnl_total": 54.41, "pnl_mean": 0.1882698961937716, "roi_pct": 18.82698961937716, "ci_lo": 43.029665, "ci_hi": 65.85054499999998, "hit": 0.7024221453287197, "asset": "eth", "timeframe": "5m", "signal": "sig_ret5m_q20"}, {"n": 145, "pnl_total": 36.3584, "pnl_mean": 0.2507475862068966, "roi_pct": 25.074758620689657, "ci_lo": 29.427655, "ci_hi": 43.78007, "hit": 0.7931034482758621, "asset": "eth", "timeframe": "5m", "signal": "sig_ret5m_q10"}, {"n": 73, "pnl_total": 18.5018, "pnl_mean": 0.2534493150684931, "roi_pct": 25.34493150684932, "ci_lo": 13.147815, "ci_hi": 23.424454999999995, "hit": 0.7945205479452054, "asset": "eth", "timeframe": "5m", "signal": "sig_ret5m_q5"}, {"n": 49, "pnl_total": 12.11, "pnl_mean": 0.2471428571428571, "roi_pct": 24.714285714285715, "ci_lo": 7.410480000000001, "ci_hi": 16.435334999999995, "hit": 0.7959183673469388, "asset": "eth", "timeframe": "5m", "signal": "sig_ret5m_thr25bps"}, {"n": 289, "pnl_total": 52.39359999999999, "pnl_mean": 0.1812927335640138, "roi_pct": 18.12927335640138, "ci_lo": 40.805445000000006, "ci_hi": 64.15840999999999, "hit": 0.6885813148788927, "asset": "eth", "timeframe": "5m", "signal": "sig_ret15m_q20"}, {"n": 289, "pnl_total": 33.8706, "pnl_mean": 0.1171993079584775, "roi_pct": 11.71993079584775, "ci_lo": 21.15901, "ci_hi": 46.162275, "hit": 0.5916955017301038, "asset": "eth", "timeframe": "5m", "signal": "sig_ret1h_q20"}, {"n": 290, "pnl_total": 24.7974, "pnl_mean": 0.0855082758620689, "roi_pct": 8.550827586206896, "ci_lo": 10.06729, "ci_hi": 38.665259999999975, "hit": 0.6, "asset": "eth", "timeframe": "5m", "signal": "sig_smartretail_q20"}, {"n": 145, "pnl_total": 23.6582, "pnl_mean": 0.16316, "roi_pct": 16.316, "ci_lo": 15.690734999999998, "ci_hi": 31.375544999999992, "hit": 0.6551724137931034, "asset": "eth", "timeframe": "5m", "signal": "sig_combo_q20"}, {"n": 255, "pnl_total": 46.7664, "pnl_mean": 0.1833976470588235, "roi_pct": 18.339764705882352, "ci_lo": 36.39372, "ci_hi": 57.47351999999998, "hit": 0.6823529411764706, "asset": "eth", "timeframe": "5m", "signal": "sig_ret5m_q20_srfilter"}, {"n": 97, "pnl_total": 20.5658, "pnl_mean": 0.2120185567010309, "roi_pct": 21.201855670103093, "ci_lo": 15.47633, "ci_hi": 25.01646, "hit": 0.7628865979381443, "asset": "eth", "timeframe": "15m", "signal": "sig_ret5m_q20"}, {"n": 49, "pnl_total": 11.9284, "pnl_mean": 0.2434367346938775, "roi_pct": 24.34367346938776, "ci_lo": 9.062295, "ci_hi": 14.816624999999997, "hit": 0.8367346938775511, "asset": "eth", "timeframe": "15m", "signal": "sig_ret5m_q10"}, {"n": 25, "pnl_total": 5.8870000000000005, "pnl_mean": 0.23548, "roi_pct": 23.548, "ci_lo": 4.1757, "ci_hi": 7.601385, "hit": 0.92, "asset": "eth", "timeframe": "15m", "signal": "sig_ret5m_q5"}, {"n": 15, "pnl_total": 3.5866, "pnl_mean": 0.2391066666666666, "roi_pct": 23.910666666666668, "ci_lo": 2.3090850000000005, "ci_hi": 4.884404999999999, "hit": 0.9333333333333332, "asset": "eth", "timeframe": "15m", "signal": "sig_ret5m_thr25bps"}, {"n": 97, "pnl_total": 18.845800000000004, "pnl_mean": 0.1942865979381443, "roi_pct": 19.42865979381444, "ci_lo": 13.679125, "ci_hi": 23.793275, "hit": 0.7319587628865979, "asset": "eth", "timeframe": "15m", "signal": "sig_ret15m_q20"}, {"n": 97, "pnl_total": 12.7518, "pnl_mean": 0.131461855670103, "roi_pct": 13.146185567010308, "ci_lo": 6.963134999999999, "ci_hi": 18.73403, "hit": 0.6494845360824743, "asset": "eth", "timeframe": "15m", "signal": "sig_ret1h_q20"}, {"n": 98, "pnl_total": 12.156, "pnl_mean": 0.1240408163265306, "roi_pct": 12.40408163265306, "ci_lo": 5.711794999999999, "ci_hi": 18.725005, "hit": 0.5918367346938775, "asset": "eth", "timeframe": "15m", "signal": "sig_smartretail_q20"}, {"n": 46, "pnl_total": 8.655799999999997, "pnl_mean": 0.1881695652173912, "roi_pct": 18.81695652173913, "ci_lo": 5.204129999999999, "ci_hi": 12.055429999999998, "hit": 0.7391304347826086, "asset": "eth", "timeframe": "15m", "signal": "sig_combo_q20"}, {"n": 87, "pnl_total": 18.0832, "pnl_mean": 0.2078528735632184, "roi_pct": 20.78528735632184, "ci_lo": 13.31283, "ci_hi": 22.36974, "hit": 0.7586206896551724, "asset": "eth", "timeframe": "15m", "signal": "sig_ret5m_q20_srfilter"}, {"n": 386, "pnl_total": 74.97579999999999, "pnl_mean": 0.1942378238341968, "roi_pct": 19.423782383419688, "ci_lo": 62.81954999999999, "ci_hi": 87.8917, "hit": 0.7176165803108808, "asset": "eth", "timeframe": "ALL", "signal": "sig_ret5m_q20"}, {"n": 194, "pnl_total": 48.2868, "pnl_mean": 0.248901030927835, "roi_pct": 24.890103092783505, "ci_lo": 40.53612, "ci_hi": 55.606865, "hit": 0.8041237113402062, "asset": "eth", "timeframe": "ALL", "signal": "sig_ret5m_q10"}, {"n": 98, "pnl_total": 24.3888, "pnl_mean": 0.2488653061224489, "roi_pct": 24.886530612244893, "ci_lo": 18.726725, "ci_hi": 29.531415, "hit": 0.826530612244898, "asset": "eth", "timeframe": "ALL", "signal": "sig_ret5m_q5"}, {"n": 64, "pnl_total": 15.6966, "pnl_mean": 0.245259375, "roi_pct": 24.5259375, "ci_lo": 10.739865, "ci_hi": 20.006384999999995, "hit": 0.828125, "asset": "eth", "timeframe": "ALL", "signal": "sig_ret5m_thr25bps"}, {"n": 386, "pnl_total": 71.2394, "pnl_mean": 0.1845580310880829, "roi_pct": 18.45580310880829, "ci_lo": 58.687735, "ci_hi": 84.081025, "hit": 0.6994818652849741, "asset": "eth", "timeframe": "ALL", "signal": "sig_ret15m_q20"}, {"n": 386, "pnl_total": 46.6224, "pnl_mean": 0.1207834196891191, "roi_pct": 12.078341968911916, "ci_lo": 32.96027000000001, "ci_hi": 60.3551, "hit": 0.6062176165803109, "asset": "eth", "timeframe": "ALL", "signal": "sig_ret1h_q20"}, {"n": 388, "pnl_total": 36.9534, "pnl_mean": 0.0952407216494845, "roi_pct": 9.524072164948452, "ci_lo": 21.25598, "ci_hi": 51.942415, "hit": 0.5979381443298969, "asset": "eth", "timeframe": "ALL", "signal": "sig_smartretail_q20"}, {"n": 191, "pnl_total": 32.31399999999999, "pnl_mean": 0.1691832460732984, "roi_pct": 16.91832460732984, "ci_lo": 23.78865, "ci_hi": 40.846775, "hit": 0.675392670157068, "asset": "eth", "timeframe": "ALL", "signal": "sig_combo_q20"}, {"n": 342, "pnl_total": 64.8496, "pnl_mean": 0.1896187134502923, "roi_pct": 18.96187134502924, "ci_lo": 52.73453, "ci_hi": 76.34805999999999, "hit": 0.7017543859649122, "asset": "eth", "timeframe": "ALL", "signal": "sig_ret5m_q20_srfilter"}, {"n": 289, "pnl_total": 55.285, "pnl_mean": 0.1912975778546712, "roi_pct": 19.129757785467127, "ci_lo": 44.572195, "ci_hi": 65.70468999999999, "hit": 0.7231833910034602, "asset": "sol", "timeframe": "5m", "signal": "sig_ret5m_q20"}, {"n": 145, "pnl_total": 31.4326, "pnl_mean": 0.2167765517241379, "roi_pct": 21.677655172413797, "ci_lo": 24.395455, "ci_hi": 38.30863999999999, "hit": 0.7931034482758621, "asset": "sol", "timeframe": "5m", "signal": "sig_ret5m_q10"}, {"n": 73, "pnl_total": 17.802999999999997, "pnl_mean": 0.2438767123287671, "roi_pct": 24.38767123287671, "ci_lo": 13.093119999999995, "ci_hi": 22.025235, "hit": 0.8356164383561644, "asset": "sol", "timeframe": "5m", "signal": "sig_ret5m_q5"}, {"n": 58, "pnl_total": 12.9376, "pnl_mean": 0.2230620689655172, "roi_pct": 22.30620689655172, "ci_lo": 8.314535, "ci_hi": 17.153204999999996, "hit": 0.8103448275862069, "asset": "sol", "timeframe": "5m", "signal": "sig_ret5m_thr25bps"}, {"n": 289, "pnl_total": 49.5612, "pnl_mean": 0.1714920415224913, "roi_pct": 17.149204152249133, "ci_lo": 37.787575, "ci_hi": 61.428445, "hit": 0.7093425605536332, "asset": "sol", "timeframe": "5m", "signal": "sig_ret15m_q20"}, {"n": 289, "pnl_total": 44.2016, "pnl_mean": 0.1529467128027681, "roi_pct": 15.294671280276816, "ci_lo": 31.793765000000004, "ci_hi": 56.91486, "hit": 0.643598615916955, "asset": "sol", "timeframe": "5m", "signal": "sig_ret1h_q20"}, {"n": 290, "pnl_total": 35.69978, "pnl_mean": 0.1231026896551724, "roi_pct": 12.31026896551724, "ci_lo": 21.8772555, "ci_hi": 49.02317549999999, "hit": 0.6275862068965518, "asset": "sol", "timeframe": "5m", "signal": "sig_smartretail_q20"}, {"n": 172, "pnl_total": 34.767799999999994, "pnl_mean": 0.2021383720930232, "roi_pct": 20.21383720930232, "ci_lo": 26.62928, "ci_hi": 43.179715, "hit": 0.7209302325581395, "asset": "sol", "timeframe": "5m", "signal": "sig_combo_q20"}, {"n": 258, "pnl_total": 48.5192, "pnl_mean": 0.1880589147286821, "roi_pct": 18.80589147286821, "ci_lo": 37.86004, "ci_hi": 58.742535, "hit": 0.7131782945736435, "asset": "sol", "timeframe": "5m", "signal": "sig_ret5m_q20_srfilter"}, {"n": 97, "pnl_total": 17.213399999999996, "pnl_mean": 0.1774577319587628, "roi_pct": 17.745773195876286, "ci_lo": 12.186089999999998, "ci_hi": 22.104454999999987, "hit": 0.7319587628865979, "asset": "sol", "timeframe": "15m", "signal": "sig_ret5m_q20"}, {"n": 49, "pnl_total": 9.278199999999996, "pnl_mean": 0.1893510204081632, "roi_pct": 18.93510204081632, "ci_lo": 5.972085, "ci_hi": 12.44383, "hit": 0.7959183673469388, "asset": "sol", "timeframe": "15m", "signal": "sig_ret5m_q10"}, {"n": 25, "pnl_total": 5.3636, "pnl_mean": 0.2145439999999999, "roi_pct": 21.4544, "ci_lo": 3.23988, "ci_hi": 7.366439999999997, "hit": 0.84, "asset": "sol", "timeframe": "15m", "signal": "sig_ret5m_q5"}, {"n": 17, "pnl_total": 3.3178, "pnl_mean": 0.1951647058823529, "roi_pct": 19.516470588235293, "ci_lo": 1.3787, "ci_hi": 5.007289999999999, "hit": 0.7647058823529411, "asset": "sol", "timeframe": "15m", "signal": "sig_ret5m_thr25bps"}, {"n": 97, "pnl_total": 15.2326, "pnl_mean": 0.1570371134020618, "roi_pct": 15.703711340206189, "ci_lo": 9.51156, "ci_hi": 21.037909999999997, "hit": 0.6701030927835051, "asset": "sol", "timeframe": "15m", "signal": "sig_ret15m_q20"}, {"n": 97, "pnl_total": 13.015, "pnl_mean": 0.1341752577319587, "roi_pct": 13.417525773195877, "ci_lo": 7.209254999999997, "ci_hi": 18.811464999999995, "hit": 0.6185567010309279, "asset": "sol", "timeframe": "15m", "signal": "sig_ret1h_q20"}, {"n": 98, "pnl_total": 5.895999999999998, "pnl_mean": 0.0601632653061224, "roi_pct": 6.016326530612242, "ci_lo": -0.4698100000000002, "ci_hi": 12.838274999999982, "hit": 0.4897959183673469, "asset": "sol", "timeframe": "15m", "signal": "sig_smartretail_q20"}, {"n": 59, "pnl_total": 10.097599999999998, "pnl_mean": 0.1711457627118643, "roi_pct": 17.114576271186436, "ci_lo": 5.952764999999999, "ci_hi": 13.973505, "hit": 0.6949152542372882, "asset": "sol", "timeframe": "15m", "signal": "sig_combo_q20"}, {"n": 88, "pnl_total": 15.9232, "pnl_mean": 0.1809454545454545, "roi_pct": 18.09454545454545, "ci_lo": 10.754155, "ci_hi": 20.46082, "hit": 0.7159090909090909, "asset": "sol", "timeframe": "15m", "signal": "sig_ret5m_q20_srfilter"}, {"n": 386, "pnl_total": 72.4984, "pnl_mean": 0.187819689119171, "roi_pct": 18.781968911917097, "ci_lo": 60.15075, "ci_hi": 84.16747, "hit": 0.7253886010362695, "asset": "sol", "timeframe": "ALL", "signal": "sig_ret5m_q20"}, {"n": 194, "pnl_total": 40.71079999999999, "pnl_mean": 0.2098494845360824, "roi_pct": 20.984948453608244, "ci_lo": 32.553355, "ci_hi": 48.34288, "hit": 0.7938144329896907, "asset": "sol", "timeframe": "ALL", "signal": "sig_ret5m_q10"}, {"n": 98, "pnl_total": 23.1666, "pnl_mean": 0.2363938775510204, "roi_pct": 23.63938775510204, "ci_lo": 18.28176, "ci_hi": 28.33272999999999, "hit": 0.8367346938775511, "asset": "sol", "timeframe": "ALL", "signal": "sig_ret5m_q5"}, {"n": 75, "pnl_total": 16.2554, "pnl_mean": 0.2167386666666667, "roi_pct": 21.67386666666667, "ci_lo": 11.34966, "ci_hi": 20.87624, "hit": 0.8, "asset": "sol", "timeframe": "ALL", "signal": "sig_ret5m_thr25bps"}, {"n": 386, "pnl_total": 64.7938, "pnl_mean": 0.167859585492228, "roi_pct": 16.785958549222798, "ci_lo": 52.078405, "ci_hi": 77.43781499999997, "hit": 0.6994818652849741, "asset": "sol", "timeframe": "ALL", "signal": "sig_ret15m_q20"}, {"n": 386, "pnl_total": 57.21659999999999, "pnl_mean": 0.1482295336787564, "roi_pct": 14.822953367875646, "ci_lo": 42.802145, "ci_hi": 70.03684, "hit": 0.6373056994818653, "asset": "sol", "timeframe": "ALL", "signal": "sig_ret1h_q20"}, {"n": 388, "pnl_total": 41.59577999999999, "pnl_mean": 0.107205618556701, "roi_pct": 10.7205618556701, "ci_lo": 26.7153305, "ci_hi": 56.1453705, "hit": 0.5927835051546392, "asset": "sol", "timeframe": "ALL", "signal": "sig_smartretail_q20"}, {"n": 231, "pnl_total": 44.8654, "pnl_mean": 0.1942225108225108, "roi_pct": 19.422251082251083, "ci_lo": 35.46479, "ci_hi": 53.918890000000005, "hit": 0.7142857142857143, "asset": "sol", "timeframe": "ALL", "signal": "sig_combo_q20"}, {"n": 346, "pnl_total": 64.44239999999999, "pnl_mean": 0.1862497109826589, "roi_pct": 18.624971098265892, "ci_lo": 53.398235, "ci_hi": 75.869705, "hit": 0.7138728323699421, "asset": "sol", "timeframe": "ALL", "signal": "sig_ret5m_q20_srfilter"}], "stacks": [{"n": 863, "pnl_total": 174.165, "pnl_mean": 0.2018134414831981, "roi": 20.181344148319813, "hit": 0.7311703360370799, "ci_lo": 154.163825, "ci_hi": 193.3877, "asset": "ALL", "tf": "5m", "stack": "baseline_q20"}, {"n": 433, "pnl_total": 110.1274, "pnl_mean": 0.2543357967667436, "roi": 25.433579676674363, "hit": 0.812933025404157, "ci_lo": 97.30102, "ci_hi": 122.29636999999998, "asset": "ALL", "tf": "5m", "stack": "q10"}, {"n": 218, "pnl_total": 56.958200000000005, "pnl_mean": 0.2612761467889908, "roi": 26.12761467889909, "hit": 0.8211009174311926, "ci_lo": 48.366435, "ci_hi": 65.33525499999999, "asset": "ALL", "tf": "5m", "stack": "q5"}, {"n": 422, "pnl_total": 108.9102, "pnl_mean": 0.2580810426540284, "roi": 25.808104265402843, "hit": 0.7938388625592417, "ci_lo": 96.00616, "ci_hi": 121.741855, "asset": "ALL", "tf": "5m", "stack": "good_hours_q20"}, {"n": 218, "pnl_total": 65.3284, "pnl_mean": 0.2996715596330275, "roi": 29.967155963302755, "hit": 0.8532110091743119, "ci_lo": 57.200565, "ci_hi": 73.429245, "asset": "ALL", "tf": "5m", "stack": "good_hours_q10"}, {"n": 100, "pnl_total": 30.0902, "pnl_mean": 0.3009019999999999, "roi": 30.0902, "hit": 0.88, "ci_lo": 24.33011, "ci_hi": 35.241519999999994, "asset": "ALL", "tf": "5m", "stack": "good_hours_q5"}, {"n": 697, "pnl_total": 159.1706, "pnl_mean": 0.2283652797704447, "roi": 22.83652797704448, "hit": 0.7618364418938307, "ci_lo": 142.20314000000002, "ci_hi": 176.69636, "asset": "ALL", "tf": "5m", "stack": "bad_excl_q20"}, {"n": 350, "pnl_total": 97.1338, "pnl_mean": 0.2775251428571428, "roi": 27.752514285714287, "hit": 0.8342857142857143, "ci_lo": 86.62002500000001, "ci_hi": 107.16257, "asset": "ALL", "tf": "5m", "stack": "bad_excl_q10"}, {"n": 138, "pnl_total": 39.796, "pnl_mean": 0.2883768115942029, "roi": 28.83768115942029, "hit": 0.7753623188405797, "ci_lo": 32.7576, "ci_hi": 46.96428499999999, "asset": "ALL", "tf": "5m", "stack": "europe_q20"}, {"n": 66, "pnl_total": 22.881, "pnl_mean": 0.3466818181818182, "roi": 34.66818181818182, "hit": 0.8939393939393939, "ci_lo": 18.82949, "ci_hi": 26.803295, "asset": "ALL", "tf": "5m", "stack": "europe_q10"}, {"n": 289, "pnl_total": 58.9134, "pnl_mean": 0.2038525951557093, "roi": 20.385259515570933, "hit": 0.7577854671280276, "ci_lo": 50.12319, "ci_hi": 67.765875, "asset": "ALL", "tf": "15m", "stack": "baseline_q20"}, {"n": 146, "pnl_total": 32.163799999999995, "pnl_mean": 0.2202999999999999, "roi": 22.03, "hit": 0.821917808219178, "ci_lo": 26.798025, "ci_hi": 38.107545, "asset": "ALL", "tf": "15m", "stack": "q10"}, {"n": 74, "pnl_total": 17.042199999999998, "pnl_mean": 0.2302999999999999, "roi": 23.03, "hit": 0.8648648648648649, "ci_lo": 13.405705, "ci_hi": 20.36775, "asset": "ALL", "tf": "15m", "stack": "q5"}, {"n": 149, "pnl_total": 36.98799999999999, "pnl_mean": 0.248241610738255, "roi": 24.824161073825497, "hit": 0.8187919463087249, "ci_lo": 30.865514999999995, "ci_hi": 43.24979, "asset": "ALL", "tf": "15m", "stack": "good_hours_q20"}, {"n": 75, "pnl_total": 20.8122, "pnl_mean": 0.2774959999999999, "roi": 27.7496, "hit": 0.88, "ci_lo": 16.956354999999995, "ci_hi": 24.746809999999996, "asset": "ALL", "tf": "15m", "stack": "good_hours_q10"}, {"n": 32, "pnl_total": 8.3042, "pnl_mean": 0.25950625, "roi": 25.950625, "hit": 0.90625, "ci_lo": 5.819165000000001, "ci_hi": 10.5217, "asset": "ALL", "tf": "15m", "stack": "good_hours_q5"}, {"n": 234, "pnl_total": 53.3496, "pnl_mean": 0.2279897435897435, "roi": 22.79897435897436, "hit": 0.7991452991452992, "ci_lo": 45.60472, "ci_hi": 61.05448499999999, "asset": "ALL", "tf": "15m", "stack": "bad_excl_q20"}, {"n": 119, "pnl_total": 29.4884, "pnl_mean": 0.2478016806722689, "roi": 24.78016806722689, "hit": 0.865546218487395, "ci_lo": 24.402065, "ci_hi": 34.528739999999985, "asset": "ALL", "tf": "15m", "stack": "bad_excl_q10"}, {"n": 45, "pnl_total": 9.460399999999998, "pnl_mean": 0.210231111111111, "roi": 21.023111111111103, "hit": 0.7555555555555555, "ci_lo": 5.472915, "ci_hi": 13.166069999999998, "asset": "ALL", "tf": "15m", "stack": "europe_q20"}, {"n": 24, "pnl_total": 6.7804, "pnl_mean": 0.2825166666666667, "roi": 28.25166666666667, "hit": 0.9166666666666666, "ci_lo": 4.66195, "ci_hi": 8.826355, "asset": "ALL", "tf": "15m", "stack": "europe_q10"}, {"n": 1152, "pnl_total": 233.0784, "pnl_mean": 0.2023249999999999, "roi": 20.2325, "hit": 0.7378472222222222, "ci_lo": 211.51748, "ci_hi": 254.415605, "asset": "ALL", "tf": "ALL", "stack": "baseline_q20"}, {"n": 579, "pnl_total": 142.2912, "pnl_mean": 0.2457533678756476, "roi": 24.575336787564765, "hit": 0.8151986183074266, "ci_lo": 129.12998499999998, "ci_hi": 155.43391499999998, "asset": "ALL", "tf": "ALL", "stack": "q10"}, {"n": 292, "pnl_total": 74.0004, "pnl_mean": 0.2534260273972603, "roi": 25.34260273972603, "hit": 0.8321917808219178, "ci_lo": 64.85067000000001, "ci_hi": 83.08748, "asset": "ALL", "tf": "ALL", "stack": "q5"}, {"n": 571, "pnl_total": 145.89819999999995, "pnl_mean": 0.2555134851138353, "roi": 25.55134851138353, "hit": 0.8003502626970228, "ci_lo": 132.712915, "ci_hi": 159.526855, "asset": "ALL", "tf": "ALL", "stack": "good_hours_q20"}, {"n": 293, "pnl_total": 86.1406, "pnl_mean": 0.2939952218430034, "roi": 29.39952218430034, "hit": 0.8600682593856656, "ci_lo": 77.06020499999998, "ci_hi": 95.285825, "asset": "ALL", "tf": "ALL", "stack": "good_hours_q10"}, {"n": 132, "pnl_total": 38.3944, "pnl_mean": 0.2908666666666666, "roi": 29.086666666666662, "hit": 0.8863636363636364, "ci_lo": 32.358775, "ci_hi": 44.23134, "asset": "ALL", "tf": "ALL", "stack": "good_hours_q5"}, {"n": 931, "pnl_total": 212.5202, "pnl_mean": 0.2282708915145005, "roi": 22.827089151450053, "hit": 0.7712137486573577, "ci_lo": 193.48943, "ci_hi": 231.28487, "asset": "ALL", "tf": "ALL", "stack": "bad_excl_q20"}, {"n": 469, "pnl_total": 126.6222, "pnl_mean": 0.269983368869936, "roi": 26.9983368869936, "hit": 0.8422174840085288, "ci_lo": 115.14547, "ci_hi": 137.898285, "asset": "ALL", "tf": "ALL", "stack": "bad_excl_q10"}, {"n": 183, "pnl_total": 49.25639999999999, "pnl_mean": 0.2691606557377048, "roi": 26.91606557377048, "hit": 0.7704918032786885, "ci_lo": 41.37107999999999, "ci_hi": 57.16191999999999, "asset": "ALL", "tf": "ALL", "stack": "europe_q20"}, {"n": 90, "pnl_total": 29.6614, "pnl_mean": 0.3295711111111111, "roi": 32.95711111111111, "hit": 0.9, "ci_lo": 24.94442500000001, "ci_hi": 34.26823, "asset": "ALL", "tf": "ALL", "stack": "europe_q10"}, {"n": 285, "pnl_total": 64.47, "pnl_mean": 0.2262105263157894, "roi": 22.621052631578948, "hit": 0.7684210526315789, "ci_lo": 53.489865, "ci_hi": 75.667805, "asset": "btc", "tf": "5m", "stack": "baseline_q20"}, {"n": 143, "pnl_total": 42.3364, "pnl_mean": 0.2960587412587412, "roi": 29.605874125874127, "hit": 0.8531468531468531, "ci_lo": 35.904155, "ci_hi": 49.24834999999999, "asset": "btc", "tf": "5m", "stack": "q10"}, {"n": 72, "pnl_total": 20.6534, "pnl_mean": 0.2868527777777777, "roi": 28.68527777777777, "hit": 0.8333333333333334, "ci_lo": 15.971825, "ci_hi": 25.313165, "asset": "btc", "tf": "5m", "stack": "q5"}, {"n": 145, "pnl_total": 42.3306, "pnl_mean": 0.2919351724137931, "roi": 29.193517241379315, "hit": 0.8413793103448276, "ci_lo": 35.08427, "ci_hi": 49.49228499999999, "asset": "btc", "tf": "5m", "stack": "good_hours_q20"}, {"n": 77, "pnl_total": 25.6246, "pnl_mean": 0.3327870129870129, "roi": 33.27870129870129, "hit": 0.8831168831168831, "ci_lo": 20.53565, "ci_hi": 30.25236499999999, "asset": "btc", "tf": "5m", "stack": "good_hours_q10"}, {"n": 33, "pnl_total": 10.101, "pnl_mean": 0.3060909090909091, "roi": 30.60909090909091, "hit": 0.8787878787878788, "ci_lo": 6.68508, "ci_hi": 13.225414999999998, "asset": "btc", "tf": "5m", "stack": "good_hours_q5"}, {"n": 227, "pnl_total": 59.1652, "pnl_mean": 0.2606396475770925, "roi": 26.06396475770925, "hit": 0.8061674008810573, "ci_lo": 49.16765999999999, "ci_hi": 68.607155, "asset": "btc", "tf": "5m", "stack": "bad_excl_q20"}, {"n": 116, "pnl_total": 37.363400000000006, "pnl_mean": 0.322098275862069, "roi": 32.2098275862069, "hit": 0.8620689655172413, "ci_lo": 31.357050000000005, "ci_hi": 42.96882, "asset": "btc", "tf": "5m", "stack": "bad_excl_q10"}, {"n": 50, "pnl_total": 19.1448, "pnl_mean": 0.3828959999999999, "roi": 38.28959999999999, "hit": 0.9, "ci_lo": 15.414514999999998, "ci_hi": 22.304135, "asset": "btc", "tf": "5m", "stack": "europe_q20"}, {"n": 25, "pnl_total": 10.4112, "pnl_mean": 0.416448, "roi": 41.6448, "hit": 0.96, "ci_lo": 8.113624999999999, "ci_hi": 12.13428, "asset": "btc", "tf": "5m", "stack": "europe_q10"}, {"n": 95, "pnl_total": 21.1342, "pnl_mean": 0.2224652631578947, "roi": 22.24652631578947, "hit": 0.7789473684210526, "ci_lo": 16.02925, "ci_hi": 26.21192999999999, "asset": "btc", "tf": "15m", "stack": "baseline_q20"}, {"n": 48, "pnl_total": 10.957199999999998, "pnl_mean": 0.2282749999999999, "roi": 22.8275, "hit": 0.8333333333333334, "ci_lo": 7.499559999999999, "ci_hi": 14.31756, "asset": "btc", "tf": "15m", "stack": "q10"}, {"n": 24, "pnl_total": 5.7916, "pnl_mean": 0.2413166666666666, "roi": 24.131666666666664, "hit": 0.8333333333333334, "ci_lo": 3.5056700000000003, "ci_hi": 7.731144999999998, "asset": "btc", "tf": "15m", "stack": "q5"}, {"n": 48, "pnl_total": 13.1418, "pnl_mean": 0.2737875, "roi": 27.37875, "hit": 0.8541666666666666, "ci_lo": 9.318725, "ci_hi": 16.51851, "asset": "btc", "tf": "15m", "stack": "good_hours_q20"}, {"n": 26, "pnl_total": 7.476400000000001, "pnl_mean": 0.2875538461538461, "roi": 28.755384615384617, "hit": 0.8846153846153846, "ci_lo": 5.0196700000000005, "ci_hi": 9.672549999999998, "asset": "btc", "tf": "15m", "stack": "good_hours_q10"}, {"n": 10, "pnl_total": 2.1772, "pnl_mean": 0.21772, "roi": 21.772, "hit": 0.8, "ci_lo": 0.4177450000000001, "ci_hi": 3.76842, "asset": "btc", "tf": "15m", "stack": "good_hours_q5"}, {"n": 75, "pnl_total": 19.6044, "pnl_mean": 0.2613919999999999, "roi": 26.139199999999995, "hit": 0.84, "ci_lo": 15.314959999999996, "ci_hi": 23.64892, "asset": "btc", "tf": "15m", "stack": "bad_excl_q20"}, {"n": 39, "pnl_total": 10.589399999999998, "pnl_mean": 0.2715230769230768, "roi": 27.152307692307687, "hit": 0.8717948717948718, "ci_lo": 7.72364, "ci_hi": 13.24041, "asset": "btc", "tf": "15m", "stack": "bad_excl_q10"}, {"n": 16, "pnl_total": 4.6884, "pnl_mean": 0.293025, "roi": 29.3025, "hit": 0.875, "ci_lo": 2.40397, "ci_hi": 6.493905, "asset": "btc", "tf": "15m", "stack": "europe_q20"}, {"n": 9, "pnl_total": 2.9890000000000003, "pnl_mean": 0.3321111111111111, "roi": 33.21111111111112, "hit": 1.0, "ci_lo": 2.042895, "ci_hi": 3.922675, "asset": "btc", "tf": "15m", "stack": "europe_q10"}, {"n": 380, "pnl_total": 85.60419999999999, "pnl_mean": 0.2252742105263157, "roi": 22.527421052631578, "hit": 0.7710526315789473, "ci_lo": 73.31895499999999, "ci_hi": 97.83491999999995, "asset": "btc", "tf": "ALL", "stack": "baseline_q20"}, {"n": 191, "pnl_total": 53.2936, "pnl_mean": 0.2790240837696335, "roi": 27.90240837696335, "hit": 0.8481675392670157, "ci_lo": 45.88688499999999, "ci_hi": 60.91574499999999, "asset": "btc", "tf": "ALL", "stack": "q10"}, {"n": 96, "pnl_total": 26.445, "pnl_mean": 0.27546875, "roi": 27.546875, "hit": 0.8333333333333334, "ci_lo": 21.252685, "ci_hi": 31.474115, "asset": "btc", "tf": "ALL", "stack": "q5"}, {"n": 193, "pnl_total": 55.47239999999999, "pnl_mean": 0.287421761658031, "roi": 28.74217616580311, "hit": 0.844559585492228, "ci_lo": 47.36173, "ci_hi": 63.17304499999999, "asset": "btc", "tf": "ALL", "stack": "good_hours_q20"}, {"n": 103, "pnl_total": 33.101, "pnl_mean": 0.3213689320388349, "roi": 32.136893203883496, "hit": 0.883495145631068, "ci_lo": 27.32218, "ci_hi": 38.17525499999999, "asset": "btc", "tf": "ALL", "stack": "good_hours_q10"}, {"n": 43, "pnl_total": 12.278199999999998, "pnl_mean": 0.2855395348837209, "roi": 28.55395348837209, "hit": 0.8604651162790697, "ci_lo": 8.403734999999998, "ci_hi": 15.735664999999996, "asset": "btc", "tf": "ALL", "stack": "good_hours_q5"}, {"n": 302, "pnl_total": 78.7696, "pnl_mean": 0.2608264900662251, "roi": 26.08264900662252, "hit": 0.8145695364238411, "ci_lo": 68.118825, "ci_hi": 89.31288499999998, "asset": "btc", "tf": "ALL", "stack": "bad_excl_q20"}, {"n": 155, "pnl_total": 47.9528, "pnl_mean": 0.3093729032258064, "roi": 30.93729032258064, "hit": 0.864516129032258, "ci_lo": 41.29959, "ci_hi": 54.10741499999999, "asset": "btc", "tf": "ALL", "stack": "bad_excl_q10"}, {"n": 66, "pnl_total": 23.8332, "pnl_mean": 0.3611090909090909, "roi": 36.11090909090909, "hit": 0.8939393939393939, "ci_lo": 19.621050000000004, "ci_hi": 27.44052, "asset": "btc", "tf": "ALL", "stack": "europe_q20"}, {"n": 34, "pnl_total": 13.4002, "pnl_mean": 0.3941235294117647, "roi": 39.41235294117647, "hit": 0.9705882352941176, "ci_lo": 10.79854, "ci_hi": 15.495629999999998, "asset": "btc", "tf": "ALL", "stack": "europe_q10"}, {"n": 289, "pnl_total": 54.41, "pnl_mean": 0.1882698961937716, "roi": 18.82698961937716, "hit": 0.7024221453287197, "ci_lo": 42.708015, "ci_hi": 65.42465499999999, "asset": "eth", "tf": "5m", "stack": "baseline_q20"}, {"n": 145, "pnl_total": 36.3584, "pnl_mean": 0.2507475862068966, "roi": 25.074758620689657, "hit": 0.7931034482758621, "ci_lo": 28.855020000000003, "ci_hi": 43.37429, "asset": "eth", "tf": "5m", "stack": "q10"}, {"n": 73, "pnl_total": 18.5018, "pnl_mean": 0.2534493150684931, "roi": 25.34493150684932, "hit": 0.7945205479452054, "ci_lo": 13.283725, "ci_hi": 23.14916, "asset": "eth", "tf": "5m", "stack": "q5"}, {"n": 136, "pnl_total": 32.7516, "pnl_mean": 0.2408205882352941, "roi": 24.08205882352941, "hit": 0.75, "ci_lo": 25.44262, "ci_hi": 39.811980000000005, "asset": "eth", "tf": "5m", "stack": "good_hours_q20"}, {"n": 73, "pnl_total": 21.218399999999995, "pnl_mean": 0.29066301369863, "roi": 29.066301369863005, "hit": 0.8082191780821918, "ci_lo": 16.378455, "ci_hi": 25.697505, "asset": "eth", "tf": "5m", "stack": "good_hours_q10"}, {"n": 33, "pnl_total": 10.7858, "pnl_mean": 0.3268424242424242, "roi": 32.68424242424243, "hit": 0.8484848484848485, "ci_lo": 7.788794999999999, "ci_hi": 13.520284999999998, "asset": "eth", "tf": "5m", "stack": "good_hours_q5"}, {"n": 237, "pnl_total": 49.3222, "pnl_mean": 0.2081105485232067, "roi": 20.811054852320677, "hit": 0.7172995780590717, "ci_lo": 39.030775000000006, "ci_hi": 58.864425, "asset": "eth", "tf": "5m", "stack": "bad_excl_q20"}, {"n": 115, "pnl_total": 31.223599999999998, "pnl_mean": 0.2715095652173913, "roi": 27.15095652173913, "hit": 0.808695652173913, "ci_lo": 25.463815, "ci_hi": 37.114685, "asset": "eth", "tf": "5m", "stack": "bad_excl_q10"}, {"n": 43, "pnl_total": 9.891800000000002, "pnl_mean": 0.2300418604651163, "roi": 23.00418604651163, "hit": 0.6744186046511628, "ci_lo": 5.590879999999999, "ci_hi": 14.015204999999996, "asset": "eth", "tf": "5m", "stack": "europe_q20"}, {"n": 23, "pnl_total": 7.465399999999999, "pnl_mean": 0.3245826086956521, "roi": 32.458260869565216, "hit": 0.8260869565217391, "ci_lo": 4.748194999999999, "ci_hi": 9.729794999999994, "asset": "eth", "tf": "5m", "stack": "europe_q10"}, {"n": 97, "pnl_total": 20.5658, "pnl_mean": 0.2120185567010309, "roi": 21.201855670103093, "hit": 0.7628865979381443, "ci_lo": 15.441745, "ci_hi": 25.392155, "asset": "eth", "tf": "15m", "stack": "baseline_q20"}, {"n": 49, "pnl_total": 11.9284, "pnl_mean": 0.2434367346938775, "roi": 24.34367346938776, "hit": 0.8367346938775511, "ci_lo": 9.031365, "ci_hi": 14.826154999999998, "asset": "eth", "tf": "15m", "stack": "q10"}, {"n": 25, "pnl_total": 5.8870000000000005, "pnl_mean": 0.23548, "roi": 23.548, "hit": 0.92, "ci_lo": 4.16737, "ci_hi": 7.590289999999999, "asset": "eth", "tf": "15m", "stack": "q5"}, {"n": 52, "pnl_total": 12.9272, "pnl_mean": 0.2486, "roi": 24.860000000000003, "hit": 0.8269230769230769, "ci_lo": 9.313954999999996, "ci_hi": 16.509529999999998, "asset": "eth", "tf": "15m", "stack": "good_hours_q20"}, {"n": 25, "pnl_total": 7.445399999999999, "pnl_mean": 0.2978159999999999, "roi": 29.7816, "hit": 0.88, "ci_lo": 5.370064999999999, "ci_hi": 9.487885, "asset": "eth", "tf": "15m", "stack": "good_hours_q10"}, {"n": 10, "pnl_total": 3.0716, "pnl_mean": 0.30716, "roi": 30.716, "hit": 1.0, "ci_lo": 2.0231900000000005, "ci_hi": 4.141525, "asset": "eth", "tf": "15m", "stack": "good_hours_q5"}, {"n": 83, "pnl_total": 18.5282, "pnl_mean": 0.2232313253012048, "roi": 22.323132530120485, "hit": 0.7951807228915663, "ci_lo": 13.97399, "ci_hi": 22.89524, "asset": "eth", "tf": "15m", "stack": "bad_excl_q20"}, {"n": 39, "pnl_total": 10.3436, "pnl_mean": 0.2652205128205128, "roi": 26.522051282051283, "hit": 0.8974358974358975, "ci_lo": 7.69566, "ci_hi": 12.870234999999996, "asset": "eth", "tf": "15m", "stack": "bad_excl_q10"}, {"n": 13, "pnl_total": 2.1171999999999995, "pnl_mean": 0.1628615384615384, "roi": 16.28615384615384, "hit": 0.6923076923076923, "ci_lo": -0.1390450000000006, "ci_hi": 4.216994999999998, "asset": "eth", "tf": "15m", "stack": "europe_q20"}, {"n": 8, "pnl_total": 1.9828, "pnl_mean": 0.24785, "roi": 24.785, "hit": 0.875, "ci_lo": 0.6957499999999999, "ci_hi": 3.2206, "asset": "eth", "tf": "15m", "stack": "europe_q10"}, {"n": 386, "pnl_total": 74.97579999999999, "pnl_mean": 0.1942378238341968, "roi": 19.423782383419688, "hit": 0.7176165803108808, "ci_lo": 62.329060000000005, "ci_hi": 86.80114999999998, "asset": "eth", "tf": "ALL", "stack": "baseline_q20"}, {"n": 194, "pnl_total": 48.2868, "pnl_mean": 0.248901030927835, "roi": 24.890103092783505, "hit": 0.8041237113402062, "ci_lo": 40.772085, "ci_hi": 55.956285, "asset": "eth", "tf": "ALL", "stack": "q10"}, {"n": 98, "pnl_total": 24.3888, "pnl_mean": 0.2488653061224489, "roi": 24.886530612244893, "hit": 0.826530612244898, "ci_lo": 18.693825, "ci_hi": 29.741279999999996, "asset": "eth", "tf": "ALL", "stack": "q5"}, {"n": 188, "pnl_total": 45.6788, "pnl_mean": 0.2429723404255319, "roi": 24.29723404255319, "hit": 0.7712765957446809, "ci_lo": 37.624185, "ci_hi": 53.893995, "asset": "eth", "tf": "ALL", "stack": "good_hours_q20"}, {"n": 98, "pnl_total": 28.6638, "pnl_mean": 0.2924877551020408, "roi": 29.248775510204084, "hit": 0.826530612244898, "ci_lo": 23.128395, "ci_hi": 33.53706, "asset": "eth", "tf": "ALL", "stack": "good_hours_q10"}, {"n": 43, "pnl_total": 13.8574, "pnl_mean": 0.3222651162790698, "roi": 32.22651162790698, "hit": 0.8837209302325582, "ci_lo": 10.738755, "ci_hi": 16.66767, "asset": "eth", "tf": "ALL", "stack": "good_hours_q5"}, {"n": 320, "pnl_total": 67.8504, "pnl_mean": 0.2120324999999999, "roi": 21.20325, "hit": 0.7375, "ci_lo": 56.394445000000005, "ci_hi": 78.30457499999999, "asset": "eth", "tf": "ALL", "stack": "bad_excl_q20"}, {"n": 154, "pnl_total": 41.5672, "pnl_mean": 0.2699168831168831, "roi": 26.99168831168831, "hit": 0.8311688311688312, "ci_lo": 35.12289, "ci_hi": 47.853935, "asset": "eth", "tf": "ALL", "stack": "bad_excl_q10"}, {"n": 56, "pnl_total": 12.009, "pnl_mean": 0.2144464285714285, "roi": 21.444642857142856, "hit": 0.6785714285714286, "ci_lo": 7.298829999999999, "ci_hi": 16.369724999999995, "asset": "eth", "tf": "ALL", "stack": "europe_q20"}, {"n": 31, "pnl_total": 9.4482, "pnl_mean": 0.3047806451612903, "roi": 30.478064516129034, "hit": 0.8387096774193549, "ci_lo": 6.458819999999997, "ci_hi": 12.254849999999998, "asset": "eth", "tf": "ALL", "stack": "europe_q10"}, {"n": 289, "pnl_total": 55.285, "pnl_mean": 0.1912975778546712, "roi": 19.129757785467127, "hit": 0.7231833910034602, "ci_lo": 45.03813, "ci_hi": 65.443885, "asset": "sol", "tf": "5m", "stack": "baseline_q20"}, {"n": 145, "pnl_total": 31.4326, "pnl_mean": 0.2167765517241379, "roi": 21.677655172413797, "hit": 0.7931034482758621, "ci_lo": 24.200485000000004, "ci_hi": 38.048715, "asset": "sol", "tf": "5m", "stack": "q10"}, {"n": 73, "pnl_total": 17.802999999999997, "pnl_mean": 0.2438767123287671, "roi": 24.38767123287671, "hit": 0.8356164383561644, "ci_lo": 12.948595, "ci_hi": 22.1215, "asset": "sol", "tf": "5m", "stack": "q5"}, {"n": 141, "pnl_total": 33.828, "pnl_mean": 0.2399148936170212, "roi": 23.99148936170213, "hit": 0.7872340425531915, "ci_lo": 26.906460000000003, "ci_hi": 40.557055, "asset": "sol", "tf": "5m", "stack": "good_hours_q20"}, {"n": 68, "pnl_total": 18.4854, "pnl_mean": 0.2718441176470588, "roi": 27.18441176470588, "hit": 0.8676470588235294, "ci_lo": 13.683040000000004, "ci_hi": 22.68086999999998, "asset": "sol", "tf": "5m", "stack": "good_hours_q10"}, {"n": 34, "pnl_total": 9.203399999999998, "pnl_mean": 0.2706882352941176, "roi": 27.068823529411763, "hit": 0.9117647058823528, "ci_lo": 6.045795000000001, "ci_hi": 12.074909999999996, "asset": "sol", "tf": "5m", "stack": "good_hours_q5"}, {"n": 233, "pnl_total": 50.6832, "pnl_mean": 0.2175244635193133, "roi": 21.752446351931333, "hit": 0.7639484978540773, "ci_lo": 40.85532, "ci_hi": 59.69677, "asset": "sol", "tf": "5m", "stack": "bad_excl_q20"}, {"n": 119, "pnl_total": 28.5468, "pnl_mean": 0.239889075630252, "roi": 23.988907563025208, "hit": 0.8319327731092437, "ci_lo": 21.919329999999995, "ci_hi": 34.23610500000001, "asset": "sol", "tf": "5m", "stack": "bad_excl_q10"}, {"n": 45, "pnl_total": 10.7594, "pnl_mean": 0.2390977777777777, "roi": 23.909777777777776, "hit": 0.7333333333333333, "ci_lo": 6.822584999999998, "ci_hi": 14.716775, "asset": "sol", "tf": "5m", "stack": "europe_q20"}, {"n": 18, "pnl_total": 5.0044, "pnl_mean": 0.2780222222222222, "roi": 27.802222222222223, "hit": 0.8888888888888888, "ci_lo": 2.456195, "ci_hi": 7.00307, "asset": "sol", "tf": "5m", "stack": "europe_q10"}, {"n": 97, "pnl_total": 17.213399999999996, "pnl_mean": 0.1774577319587628, "roi": 17.745773195876286, "hit": 0.7319587628865979, "ci_lo": 12.198534999999998, "ci_hi": 22.048715, "asset": "sol", "tf": "15m", "stack": "baseline_q20"}, {"n": 49, "pnl_total": 9.278199999999996, "pnl_mean": 0.1893510204081632, "roi": 18.93510204081632, "hit": 0.7959183673469388, "ci_lo": 6.008739999999998, "ci_hi": 12.399839999999998, "asset": "sol", "tf": "15m", "stack": "q10"}, {"n": 25, "pnl_total": 5.3636, "pnl_mean": 0.2145439999999999, "roi": 21.4544, "hit": 0.84, "ci_lo": 3.316725, "ci_hi": 7.405349999999998, "asset": "sol", "tf": "15m", "stack": "q5"}, {"n": 49, "pnl_total": 10.919, "pnl_mean": 0.2228367346938775, "roi": 22.28367346938775, "hit": 0.7755102040816326, "ci_lo": 7.489075, "ci_hi": 14.317119999999996, "asset": "sol", "tf": "15m", "stack": "good_hours_q20"}, {"n": 24, "pnl_total": 5.8904, "pnl_mean": 0.2454333333333333, "roi": 24.54333333333333, "hit": 0.875, "ci_lo": 3.651574999999999, "ci_hi": 7.883464999999998, "asset": "sol", "tf": "15m", "stack": "good_hours_q10"}, {"n": 12, "pnl_total": 3.0554, "pnl_mean": 0.2546166666666666, "roi": 25.461666666666662, "hit": 0.9166666666666666, "ci_lo": 1.5059299999999998, "ci_hi": 4.34313, "asset": "sol", "tf": "15m", "stack": "good_hours_q5"}, {"n": 76, "pnl_total": 15.216999999999995, "pnl_mean": 0.2002236842105262, "roi": 20.022368421052622, "hit": 0.7631578947368421, "ci_lo": 10.745414999999998, "ci_hi": 19.390205, "asset": "sol", "tf": "15m", "stack": "bad_excl_q20"}, {"n": 41, "pnl_total": 8.555399999999999, "pnl_mean": 0.2086682926829268, "roi": 20.86682926829268, "hit": 0.8292682926829268, "ci_lo": 5.326724999999999, "ci_hi": 11.516015, "asset": "sol", "tf": "15m", "stack": "bad_excl_q10"}, {"n": 16, "pnl_total": 2.6548, "pnl_mean": 0.165925, "roi": 16.592499999999998, "hit": 0.6875, "ci_lo": 0.2727499999999995, "ci_hi": 4.910584999999998, "asset": "sol", "tf": "15m", "stack": "europe_q20"}, {"n": 7, "pnl_total": 1.8086, "pnl_mean": 0.2583714285714285, "roi": 25.83714285714285, "hit": 0.8571428571428571, "ci_lo": 0.3982049999999998, "ci_hi": 2.9113999999999995, "asset": "sol", "tf": "15m", "stack": "europe_q10"}, {"n": 386, "pnl_total": 72.4984, "pnl_mean": 0.187819689119171, "roi": 18.781968911917097, "hit": 0.7253886010362695, "ci_lo": 60.9886, "ci_hi": 83.94704999999999, "asset": "sol", "tf": "ALL", "stack": "baseline_q20"}, {"n": 194, "pnl_total": 40.71079999999999, "pnl_mean": 0.2098494845360824, "roi": 20.984948453608244, "hit": 0.7938144329896907, "ci_lo": 32.533955, "ci_hi": 48.438115, "asset": "sol", "tf": "ALL", "stack": "q10"}, {"n": 98, "pnl_total": 23.1666, "pnl_mean": 0.2363938775510204, "roi": 23.63938775510204, "hit": 0.8367346938775511, "ci_lo": 18.009975, "ci_hi": 28.03822, "asset": "sol", "tf": "ALL", "stack": "q5"}, {"n": 190, "pnl_total": 44.74699999999999, "pnl_mean": 0.2355105263157894, "roi": 23.551052631578944, "hit": 0.7842105263157895, "ci_lo": 36.739755, "ci_hi": 52.46724999999999, "asset": "sol", "tf": "ALL", "stack": "good_hours_q20"}, {"n": 92, "pnl_total": 24.375799999999995, "pnl_mean": 0.2649543478260869, "roi": 26.49543478260869, "hit": 0.8695652173913043, "ci_lo": 19.343095, "ci_hi": 29.055, "asset": "sol", "tf": "ALL", "stack": "good_hours_q10"}, {"n": 46, "pnl_total": 12.2588, "pnl_mean": 0.2664956521739131, "roi": 26.64956521739131, "hit": 0.9130434782608696, "ci_lo": 8.434875, "ci_hi": 15.39723, "asset": "sol", "tf": "ALL", "stack": "good_hours_q5"}, {"n": 309, "pnl_total": 65.9002, "pnl_mean": 0.2132692556634304, "roi": 21.326925566343043, "hit": 0.7637540453074434, "ci_lo": 55.837215, "ci_hi": 76.144875, "asset": "sol", "tf": "ALL", "stack": "bad_excl_q20"}, {"n": 160, "pnl_total": 37.1022, "pnl_mean": 0.2318887499999999, "roi": 23.188875, "hit": 0.83125, "ci_lo": 30.26937, "ci_hi": 43.96395999999999, "asset": "sol", "tf": "ALL", "stack": "bad_excl_q10"}, {"n": 61, "pnl_total": 13.4142, "pnl_mean": 0.2199049180327868, "roi": 21.990491803278687, "hit": 0.7213114754098361, "ci_lo": 8.632240000000003, "ci_hi": 17.73591, "asset": "sol", "tf": "ALL", "stack": "europe_q20"}, {"n": 25, "pnl_total": 6.813000000000001, "pnl_mean": 0.27252, "roi": 27.252, "hit": 0.88, "ci_lo": 3.941015, "ci_hi": 9.287159999999998, "asset": "sol", "tf": "ALL", "stack": "europe_q10"}], "tod_hour": [{"n": 39, "pnl_total": 4.07, "pnl_mean": 0.1043589743589743, "roi": 10.435897435897438, "hit": 0.5897435897435898, "ci_lo": -0.0312900000000006, "ci_hi": 8.266239999999994, "hour_utc": 0}, {"n": 31, "pnl_total": 5.506399999999999, "pnl_mean": 0.1776258064516128, "roi": 17.76258064516129, "hit": 0.7419354838709677, "ci_lo": 2.1165950000000007, "ci_hi": 8.609039999999997, "hour_utc": 1}, {"n": 45, "pnl_total": 3.7906, "pnl_mean": 0.0842355555555555, "roi": 8.423555555555556, "hit": 0.5333333333333333, "ci_lo": -0.4018450000000006, "ci_hi": 7.653129999999999, "hour_utc": 2}, {"n": 38, "pnl_total": 10.201999999999998, "pnl_mean": 0.2684736842105262, "roi": 26.847368421052625, "hit": 0.7631578947368421, "ci_lo": 6.202204999999999, "ci_hi": 13.970065, "hour_utc": 3}, {"n": 24, "pnl_total": 1.6692000000000002, "pnl_mean": 0.06955, "roi": 6.955000000000002, "hit": 0.5, "ci_lo": -2.04064, "ci_hi": 5.226614999999996, "hour_utc": 4}, {"n": 53, "pnl_total": 12.0336, "pnl_mean": 0.2270490566037735, "roi": 22.70490566037736, "hit": 0.7924528301886793, "ci_lo": 7.780489999999999, "ci_hi": 16.178369999999994, "hour_utc": 5}, {"n": 29, "pnl_total": 4.7586, "pnl_mean": 0.1640896551724137, "roi": 16.408965517241377, "hit": 0.6206896551724138, "ci_lo": 1.0356099999999997, "ci_hi": 8.262314999999996, "hour_utc": 6}, {"n": 23, "pnl_total": 3.291, "pnl_mean": 0.1430869565217391, "roi": 14.308695652173911, "hit": 0.6521739130434783, "ci_lo": -1.00039, "ci_hi": 7.226944999999996, "hour_utc": 7}, {"n": 40, "pnl_total": 10.2534, "pnl_mean": 0.256335, "roi": 25.6335, "hit": 0.725, "ci_lo": 5.885774999999999, "ci_hi": 14.064734999999995, "hour_utc": 8}, {"n": 47, "pnl_total": 15.0864, "pnl_mean": 0.3209872340425532, "roi": 32.09872340425532, "hit": 0.8936170212765957, "ci_lo": 11.60254, "ci_hi": 18.229135, "hour_utc": 9}, {"n": 28, "pnl_total": 6.1416, "pnl_mean": 0.2193428571428571, "roi": 21.934285714285718, "hit": 0.7142857142857143, "ci_lo": 2.31201, "ci_hi": 9.551430000000002, "hour_utc": 10}, {"n": 30, "pnl_total": 8.924, "pnl_mean": 0.2974666666666666, "roi": 29.746666666666663, "hit": 0.8, "ci_lo": 5.659204999999999, "ci_hi": 12.029005, "hour_utc": 11}, {"n": 38, "pnl_total": 8.851, "pnl_mean": 0.2329210526315789, "roi": 23.292105263157897, "hit": 0.6842105263157895, "ci_lo": 5.019789999999999, "ci_hi": 12.624599999999994, "hour_utc": 12}, {"n": 44, "pnl_total": 11.833599999999995, "pnl_mean": 0.2689454545454545, "roi": 26.894545454545447, "hit": 0.8636363636363636, "ci_lo": 8.730690000000001, "ci_hi": 15.080154999999998, "hour_utc": 13}, {"n": 52, "pnl_total": 14.4186, "pnl_mean": 0.2772807692307692, "roi": 27.728076923076923, "hit": 0.8653846153846154, "ci_lo": 10.767765, "ci_hi": 17.950135, "hour_utc": 14}, {"n": 64, "pnl_total": 12.9226, "pnl_mean": 0.201915625, "roi": 20.1915625, "hit": 0.703125, "ci_lo": 8.201039999999999, "ci_hi": 17.921049999999997, "hour_utc": 15}, {"n": 90, "pnl_total": 7.737399999999999, "pnl_mean": 0.0859711111111111, "roi": 8.59711111111111, "hit": 0.6444444444444445, "ci_lo": 2.80248, "ci_hi": 12.781164999999994, "hour_utc": 16}, {"n": 81, "pnl_total": 17.4112, "pnl_mean": 0.2149530864197531, "roi": 21.49530864197531, "hit": 0.7654320987654321, "ci_lo": 12.51259, "ci_hi": 22.26473999999999, "hour_utc": 17}, {"n": 75, "pnl_total": 13.703399999999998, "pnl_mean": 0.1827119999999999, "roi": 18.2712, "hit": 0.7733333333333333, "ci_lo": 8.51447, "ci_hi": 18.435765, "hour_utc": 18}, {"n": 74, "pnl_total": 20.9942, "pnl_mean": 0.2837054054054053, "roi": 28.37054054054053, "hit": 0.8378378378378378, "ci_lo": 15.699294999999998, "ci_hi": 25.960605, "hour_utc": 19}, {"n": 42, "pnl_total": 7.354400000000001, "pnl_mean": 0.1751047619047619, "roi": 17.510476190476194, "hit": 0.7142857142857143, "ci_lo": 2.7158150000000005, "ci_hi": 11.838249999999997, "hour_utc": 20}, {"n": 46, "pnl_total": 9.7486, "pnl_mean": 0.2119260869565217, "roi": 21.19260869565217, "hit": 0.8260869565217391, "ci_lo": 5.369130000000002, "ci_hi": 13.917314999999991, "hour_utc": 21}, {"n": 72, "pnl_total": 13.3968, "pnl_mean": 0.1860666666666666, "roi": 18.606666666666666, "hit": 0.7222222222222222, "ci_lo": 8.210679999999998, "ci_hi": 17.828439999999993, "hour_utc": 22}, {"n": 47, "pnl_total": 8.979800000000001, "pnl_mean": 0.1910595744680851, "roi": 19.105957446808517, "hit": 0.7446808510638298, "ci_lo": 4.62831, "ci_hi": 13.258845000000004, "hour_utc": 23}], "tod_sess": [{"n": 282, "pnl_total": 45.3214, "pnl_mean": 0.1607141843971631, "roi": 16.07141843971631, "hit": 0.6595744680851063, "ci_lo": 33.71594499999999, "ci_hi": 55.993425, "session": "asia"}, {"n": 183, "pnl_total": 49.25639999999999, "pnl_mean": 0.2691606557377048, "roi": 26.91606557377048, "hit": 0.7704918032786885, "ci_lo": 40.96184, "ci_hi": 57.43002999999999, "session": "europe"}, {"n": 331, "pnl_total": 64.32339999999999, "pnl_mean": 0.1943305135951661, "roi": 19.43305135951661, "hit": 0.7492447129909365, "ci_lo": 54.5734, "ci_hi": 74.423075, "session": "us_morning"}, {"n": 237, "pnl_total": 51.8006, "pnl_mean": 0.2185679324894515, "roi": 21.85679324894515, "hit": 0.7932489451476793, "ci_lo": 41.92299500000001, "ci_hi": 62.14376999999999, "session": "us_afternoon"}, {"n": 119, "pnl_total": 22.3766, "pnl_mean": 0.1880386554621848, "roi": 18.80386554621849, "hit": 0.7310924369747899, "ci_lo": 15.80161, "ci_hi": 28.66590499999999, "session": "off"}], "tod_dow": [{"n": 0, "pnl_total": 0.0, "pnl_mean": 0.0, "roi": 0.0, "hit": 0.0, "ci_lo": 0.0, "ci_hi": 0.0, "dow": 0, "dow_name": "Mon"}, {"n": 0, "pnl_total": 0.0, "pnl_mean": 0.0, "roi": 0.0, "hit": 0.0, "ci_lo": 0.0, "ci_hi": 0.0, "dow": 1, "dow_name": "Tue"}, {"n": 132, "pnl_total": 22.9788, "pnl_mean": 0.1740818181818181, "roi": 17.408181818181816, "hit": 0.75, "ci_lo": 16.280755, "ci_hi": 29.65993, "dow": 2, "dow_name": "Wed"}, {"n": 424, "pnl_total": 84.42920000000001, "pnl_mean": 0.1991254716981132, "roi": 19.91254716981132, "hit": 0.7099056603773585, "ci_lo": 70.96562999999999, "ci_hi": 96.23027499999998, "dow": 3, "dow_name": "Thu"}, {"n": 309, "pnl_total": 63.7304, "pnl_mean": 0.2062472491909385, "roi": 20.62472491909385, "hit": 0.7669902912621359, "ci_lo": 52.748885, "ci_hi": 74.21283500000001, "dow": 4, "dow_name": "Fri"}, {"n": 76, "pnl_total": 12.7794, "pnl_mean": 0.16815, "roi": 16.815, "hit": 0.6052631578947368, "ci_lo": 6.265419999999999, "ci_hi": 18.96938499999999, "dow": 5, "dow_name": "Sat"}, {"n": 211, "pnl_total": 49.1606, "pnl_mean": 0.232988625592417, "roi": 23.298862559241705, "hit": 0.7914691943127962, "ci_lo": 40.26316, "ci_hi": 57.973435, "dow": 6, "dow_name": "Sun"}], "tod_ahb": [{"n": 55, "pnl_total": 11.0742, "pnl_mean": 0.2013490909090909, "roi": 20.13490909090909, "hit": 0.7090909090909091, "ci_lo": 6.115244999999998, "ci_hi": 15.666954999999996, "asset": "btc", "hour_bin": "00-04"}, {"n": 42, "pnl_total": 5.1518, "pnl_mean": 0.1226619047619047, "roi": 12.266190476190475, "hit": 0.6428571428571429, "ci_lo": 0.0938500000000001, "ci_hi": 10.090729999999995, "asset": "btc", "hour_bin": "04-08"}, {"n": 53, "pnl_total": 19.813, "pnl_mean": 0.3738301886792453, "roi": 37.38301886792453, "hit": 0.9056603773584906, "ci_lo": 16.113355000000002, "ci_hi": 22.974695, "asset": "btc", "hour_bin": "08-12"}, {"n": 63, "pnl_total": 16.1818, "pnl_mean": 0.2568539682539682, "roi": 25.685396825396825, "hit": 0.7936507936507936, "ci_lo": 11.527974999999996, "ci_hi": 20.898245000000003, "asset": "btc", "hour_bin": "12-16"}, {"n": 107, "pnl_total": 19.9402, "pnl_mean": 0.1863570093457943, "roi": 18.63570093457944, "hit": 0.7757009345794392, "ci_lo": 13.762114999999998, "ci_hi": 25.91012, "asset": "btc", "hour_bin": "16-20"}, {"n": 60, "pnl_total": 13.4432, "pnl_mean": 0.2240533333333333, "roi": 22.40533333333333, "hit": 0.7666666666666667, "ci_lo": 8.35093, "ci_hi": 18.103215, "asset": "btc", "hour_bin": "20-24"}, {"n": 51, "pnl_total": 7.1004000000000005, "pnl_mean": 0.1392235294117647, "roi": 13.922352941176472, "hit": 0.6274509803921569, "ci_lo": 2.6367850000000006, "ci_hi": 11.388644999999997, "asset": "eth", "hour_bin": "00-04"}, {"n": 41, "pnl_total": 9.489, "pnl_mean": 0.2314390243902438, "roi": 23.143902439024387, "hit": 0.7073170731707317, "ci_lo": 5.713735, "ci_hi": 13.22706, "asset": "eth", "hour_bin": "04-08"}, {"n": 45, "pnl_total": 10.056, "pnl_mean": 0.2234666666666666, "roi": 22.346666666666664, "hit": 0.7111111111111111, "ci_lo": 5.647905, "ci_hi": 14.275259999999998, "asset": "eth", "hour_bin": "08-12"}, {"n": 66, "pnl_total": 16.0646, "pnl_mean": 0.2434030303030303, "roi": 24.34030303030303, "hit": 0.7727272727272727, "ci_lo": 11.506695, "ci_hi": 20.12896, "asset": "eth", "hour_bin": "12-16"}, {"n": 107, "pnl_total": 20.6506, "pnl_mean": 0.1929962616822429, "roi": 19.299626168224297, "hit": 0.7476635514018691, "ci_lo": 14.3217, "ci_hi": 26.67019999999999, "asset": "eth", "hour_bin": "16-20"}, {"n": 76, "pnl_total": 11.6152, "pnl_mean": 0.1528315789473684, "roi": 15.283157894736842, "hit": 0.6973684210526315, "ci_lo": 5.45975, "ci_hi": 17.859209999999997, "asset": "eth", "hour_bin": "20-24"}, {"n": 47, "pnl_total": 5.394399999999999, "pnl_mean": 0.1147744680851063, "roi": 11.477446808510637, "hit": 0.5957446808510638, "ci_lo": 1.3007899999999992, "ci_hi": 9.63539, "asset": "sol", "hour_bin": "00-04"}, {"n": 46, "pnl_total": 7.1116, "pnl_mean": 0.1546, "roi": 15.46, "hit": 0.6739130434782609, "ci_lo": 2.094425, "ci_hi": 11.755135, "asset": "sol", "hour_bin": "04-08"}, {"n": 47, "pnl_total": 10.5364, "pnl_mean": 0.2241787234042553, "roi": 22.41787234042553, "hit": 0.7446808510638298, "ci_lo": 6.266039999999999, "ci_hi": 14.354339999999992, "asset": "sol", "hour_bin": "08-12"}, {"n": 69, "pnl_total": 15.7794, "pnl_mean": 0.2286869565217391, "roi": 22.868695652173912, "hit": 0.7681159420289855, "ci_lo": 10.932410000000004, "ci_hi": 20.002415, "asset": "sol", "hour_bin": "12-16"}, {"n": 106, "pnl_total": 19.2554, "pnl_mean": 0.181654716981132, "roi": 18.165471698113205, "hit": 0.7264150943396226, "ci_lo": 13.14924, "ci_hi": 25.263015, "asset": "sol", "hour_bin": "16-20"}, {"n": 71, "pnl_total": 14.421200000000002, "pnl_mean": 0.2031154929577465, "roi": 20.31154929577465, "hit": 0.7887323943661971, "ci_lo": 9.462314999999998, "ci_hi": 19.115634999999997, "asset": "sol", "hour_bin": "20-24"}]};
+
+function toggleTheme() {
+  const t = document.documentElement;
+  const cur = t.getAttribute('data-theme');
+  const nxt = cur === 'dark' ? 'light' : 'dark';
+  t.setAttribute('data-theme', nxt);
+  document.querySelector('.theme-toggle').textContent = nxt === 'dark' ? '☀ Light' : '🌙 Dark';
+}
+
+function fmt(v, d=4) {
+  if (v === null || v === undefined || (typeof v === 'number' && !isFinite(v))) return '—';
+  if (typeof v === 'number') return v.toFixed(d);
+  return v;
+}
+function fmtMoney(v) {
+  if (v === null || !isFinite(v)) return '—';
+  const sign = v >= 0 ? '+' : '';
+  if (Math.abs(v) >= 1) return '$'+sign+v.toFixed(2);
+  return '$'+sign+v.toFixed(4);
+}
+function pncolor(v) { return v > 0 ? 'pos' : (v < 0 ? 'neg' : 'dim'); }
+
+// ===== Alt-signal table =====
+let altSort = {col: 'roi_pct', dir: -1};
+function buildAltTable() {
+  const a = document.getElementById('alt-asset').value;
+  const tf = document.getElementById('alt-tf').value;
+  const minN = parseInt(document.getElementById('alt-min-n').value || 0);
+  let rows = DATA.alt.filter(r =>
+    (!a || r.asset === a) && (!tf || r.timeframe === tf) && r.n >= minN
+  );
+  rows.sort((x, y) => {
+    const va = x[altSort.col], vb = y[altSort.col];
+    if (typeof va === 'string') return va.localeCompare(vb) * altSort.dir;
+    return ((va || 0) - (vb || 0)) * altSort.dir;
+  });
+  const tb = document.querySelector('#alt-table tbody');
+  tb.innerHTML = rows.map(r => `
+    <tr class="${r.signal === 'sig_ret5m_q20' ? 'row-baseline' : ''}">
+      <td><span class="tag tag-asset-${r.asset}">${r.asset}</span></td>
+      <td>${r.timeframe}</td>
+      <td>${r.signal}${r.signal==='sig_ret5m_q20'?' ★':''}</td>
+      <td>${r.n}</td>
+      <td>${(r.hit*100).toFixed(1)}%</td>
+      <td>${fmtMoney(r.pnl_mean)}</td>
+      <td class="${r.roi_pct > 20.23 ? 'pos' : 'dim'}">${r.roi_pct.toFixed(2)}%</td>
+      <td>${fmtMoney(r.ci_lo)}</td>
+      <td>${fmtMoney(r.ci_hi)}</td>
+    </tr>
+  `).join('');
+}
+
+// ===== Stacks table =====
+let stkSort = {col: 'roi', dir: -1};
+function buildStacksTable() {
+  const a = document.getElementById('stk-asset').value;
+  const tf = document.getElementById('stk-tf').value;
+  let rows = DATA.stacks.filter(r => (!a || r.asset === a) && (!tf || r.tf === tf));
+  // compute baseline per cell for delta
+  const base = {};
+  DATA.stacks.forEach(r => {
+    if (r.stack === 'baseline_q20') base[`${r.asset}/${r.tf}`] = r.roi;
+  });
+  rows = rows.map(r => ({...r, vs_base: r.roi - (base[`${r.asset}/${r.tf}`] || 0)}));
+  rows.sort((x, y) => {
+    const va = x[stkSort.col], vb = y[stkSort.col];
+    if (typeof va === 'string') return va.localeCompare(vb) * stkSort.dir;
+    return ((va || 0) - (vb || 0)) * stkSort.dir;
+  });
+  const tb = document.querySelector('#stacks-table tbody');
+  tb.innerHTML = rows.map(r => `
+    <tr class="${r.stack === 'baseline_q20' ? 'row-baseline' : ''}">
+      <td><span class="tag tag-asset-${r.asset}">${r.asset}</span></td>
+      <td>${r.tf}</td>
+      <td>${r.stack}${r.stack==='baseline_q20'?' ★':''}</td>
+      <td>${r.n}</td>
+      <td>${r.n > 0 ? (r.hit*100).toFixed(1)+'%' : '—'}</td>
+      <td>${fmtMoney(r.pnl_mean)}</td>
+      <td class="${r.roi > 20.23 ? 'pos' : 'dim'}">${r.roi.toFixed(2)}%</td>
+      <td>${fmtMoney(r.ci_lo)}</td>
+      <td>${fmtMoney(r.ci_hi)}</td>
+      <td class="${r.vs_base > 0 ? 'pos' : (r.vs_base < 0 ? 'neg' : 'dim')}">${r.vs_base > 0 ? '+' : ''}${r.vs_base.toFixed(2)}pp</td>
+    </tr>
+  `).join('');
+}
+
+// ===== TOD hourly chart =====
+function todHourlyChart() {
+  const W = 600, H = 240, M = {t:10, r:10, b:30, l:50};
+  const data = DATA.tod_hour;
+  const overall = 20.23;
+  const ymax = Math.max(40, ...data.map(d => d.roi));
+  const ymin = Math.min(0, ...data.map(d => d.roi));
+  const xScale = i => M.l + (i / 23) * (W - M.l - M.r);
+  const yScale = v => H - M.b - ((v - ymin) / (ymax - ymin)) * (H - M.t - M.b);
+
+  let svg = `<svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}">`;
+  svg += `<line x1="${M.l}" y1="${H-M.b}" x2="${W-M.r}" y2="${H-M.b}" class="axis"/>`;
+  svg += `<line x1="${M.l}" y1="${M.t}" x2="${M.l}" y2="${H-M.b}" class="axis"/>`;
+  // baseline reference line
+  const yBase = yScale(overall);
+  svg += `<line x1="${M.l}" y1="${yBase}" x2="${W-M.r}" y2="${yBase}" stroke="var(--text-dim)" stroke-dasharray="3,3"/>`;
+  svg += `<text x="${W-M.r-4}" y="${yBase-3}" text-anchor="end" class="axis-text">baseline ${overall}%</text>`;
+  // bars
+  data.forEach((d, i) => {
+    const x = xScale(i) - 10;
+    const y = yScale(Math.max(d.roi, 0));
+    const h = Math.abs(yScale(d.roi) - yScale(0));
+    const color = d.roi >= overall ? 'var(--green)' : (d.roi >= overall - 5 ? 'var(--yellow)' : 'var(--red)');
+    svg += `<rect x="${x}" y="${d.roi >= 0 ? y : yScale(0)}" width="20" height="${h}" fill="${color}" opacity="0.8"/>`;
+    if (i % 3 === 0) {
+      svg += `<text x="${xScale(i)}" y="${H-M.b+14}" text-anchor="middle" class="axis-text">${i.toString().padStart(2, '0')}</text>`;
+    }
+  });
+  // y ticks
+  for (let i = 0; i <= 4; i++) {
+    const y = M.t + i * (H - M.t - M.b) / 4;
+    const v = ymax - i * (ymax - ymin) / 4;
+    svg += `<text x="${M.l-6}" y="${y+3}" text-anchor="end" class="axis-text">${v.toFixed(0)}%</text>`;
+  }
+  svg += '</svg>';
+  document.getElementById('chart-tod-hourly').innerHTML = svg;
+}
+
+function todHourlyHitChart() {
+  const W = 600, H = 240, M = {t:10, r:10, b:30, l:50};
+  const data = DATA.tod_hour;
+  const overall = 73.8;
+  const xScale = i => M.l + (i / 23) * (W - M.l - M.r);
+  const yScale = v => H - M.b - ((v - 40) / 60) * (H - M.t - M.b);
+  let svg = `<svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}">`;
+  svg += `<line x1="${M.l}" y1="${H-M.b}" x2="${W-M.r}" y2="${H-M.b}" class="axis"/>`;
+  svg += `<line x1="${M.l}" y1="${M.t}" x2="${M.l}" y2="${H-M.b}" class="axis"/>`;
+  const yBase = yScale(overall);
+  svg += `<line x1="${M.l}" y1="${yBase}" x2="${W-M.r}" y2="${yBase}" stroke="var(--text-dim)" stroke-dasharray="3,3"/>`;
+  svg += `<text x="${W-M.r-4}" y="${yBase-3}" text-anchor="end" class="axis-text">baseline ${overall}%</text>`;
+  data.forEach((d, i) => {
+    const x = xScale(i) - 10;
+    const hitPct = d.hit * 100;
+    const y = yScale(hitPct);
+    const h = Math.max(0, yScale(40) - y);
+    const color = hitPct >= overall + 5 ? 'var(--green)' : (hitPct >= overall - 5 ? 'var(--yellow)' : 'var(--red)');
+    svg += `<rect x="${x}" y="${y}" width="20" height="${h}" fill="${color}" opacity="0.8"/>`;
+    if (i % 3 === 0) {
+      svg += `<text x="${xScale(i)}" y="${H-M.b+14}" text-anchor="middle" class="axis-text">${i.toString().padStart(2, '0')}</text>`;
+    }
+  });
+  for (let i = 0; i <= 4; i++) {
+    const y = M.t + i * (H - M.t - M.b) / 4;
+    const v = 100 - i * 60 / 4;
+    svg += `<text x="${M.l-6}" y="${y+3}" text-anchor="end" class="axis-text">${v.toFixed(0)}%</text>`;
+  }
+  svg += '</svg>';
+  document.getElementById('chart-tod-hourly-hit').innerHTML = svg;
+}
+
+// ===== Heatmap asset × hour bin =====
+function heatmap() {
+  const data = DATA.tod_ahb;
+  const assets = ['btc', 'eth', 'sol'];
+  const bins = ['00-04', '04-08', '08-12', '12-16', '16-20', '20-24'];
+  const W = 1000, H = 220, M = {t:30, r:20, b:30, l:60};
+  const cw = (W - M.l - M.r) / bins.length;
+  const ch = (H - M.t - M.b) / assets.length;
+  const allRois = data.map(d => d.roi);
+  const rmin = Math.min(...allRois), rmax = Math.max(...allRois);
+  function color(v) {
+    const norm = (v - rmin) / (rmax - rmin);
+    if (norm > 0.66) return '#4ade80';
+    if (norm > 0.33) return '#fbbf24';
+    return '#f87171';
+  }
+  let svg = `<svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}">`;
+  // x labels
+  bins.forEach((b, i) => {
+    svg += `<text x="${M.l + cw*i + cw/2}" y="${M.t-8}" text-anchor="middle" class="axis-text">${b}</text>`;
+  });
+  // y labels + cells
+  assets.forEach((a, ai) => {
+    svg += `<text x="${M.l-8}" y="${M.t + ch*ai + ch/2 + 4}" text-anchor="end" class="axis-text">${a}</text>`;
+    bins.forEach((b, bi) => {
+      const r = data.find(d => d.asset === a && d.hour_bin === b);
+      if (!r) return;
+      const x = M.l + cw*bi;
+      const y = M.t + ch*ai;
+      svg += `<rect x="${x}" y="${y}" width="${cw}" height="${ch}" fill="${color(r.roi)}" class="heatmap-cell"/>`;
+      svg += `<text x="${x+cw/2}" y="${y+ch/2}" text-anchor="middle" class="heat-text-dark" style="font-weight:600">${r.roi.toFixed(1)}%</text>`;
+      svg += `<text x="${x+cw/2}" y="${y+ch/2+12}" text-anchor="middle" class="heat-text-dark" style="font-size:8px">${(r.hit*100).toFixed(0)}% n=${r.n}</text>`;
+    });
+  });
+  svg += '</svg>';
+  document.getElementById('chart-heatmap').innerHTML = svg;
+}
+
+// ===== Bar charts for session/dow =====
+function barChart(containerId, data, labelKey, vKey, baseline) {
+  const max = Math.max(...data.map(d => d[vKey]));
+  let html = '';
+  data.forEach(d => {
+    const pct = (d[vKey] / max) * 100;
+    const color = d[vKey] > baseline ? 'green' : (d[vKey] >= baseline - 5 ? 'yellow' : 'red');
+    html += `<div class="bar-row"><span class="label">${d[labelKey]}</span><div class="bar"><div class="bar-fill ${color}" style="width:${pct}%"></div></div><span class="val">${d[vKey].toFixed(2)}% · n=${d.n} · ${(d.hit*100).toFixed(1)}%</span></div>`;
+  });
+  document.getElementById(containerId).innerHTML = html;
+}
+
+function setupSorts() {
+  document.querySelectorAll('#alt-table th').forEach(th => {
+    th.addEventListener('click', () => {
+      const col = th.dataset.sort;
+      if (altSort.col === col) altSort.dir = -altSort.dir;
+      else { altSort.col = col; altSort.dir = -1; }
+      buildAltTable();
+    });
+  });
+  document.querySelectorAll('#stacks-table th').forEach(th => {
+    th.addEventListener('click', () => {
+      const col = th.dataset.sort;
+      if (stkSort.col === col) stkSort.dir = -stkSort.dir;
+      else { stkSort.col = col; stkSort.dir = -1; }
+      buildStacksTable();
+    });
+  });
+  ['alt-asset','alt-tf','alt-min-n'].forEach(id =>
+    document.getElementById(id).addEventListener('change', buildAltTable)
+  );
+  ['alt-min-n'].forEach(id =>
+    document.getElementById(id).addEventListener('input', buildAltTable)
+  );
+  ['stk-asset','stk-tf'].forEach(id =>
+    document.getElementById(id).addEventListener('change', buildStacksTable)
+  );
+}
+
+setupSorts();
+buildAltTable();
+buildStacksTable();
+todHourlyChart();
+todHourlyHitChart();
+heatmap();
+barChart('bar-session', DATA.tod_sess, 'session', 'roi', 20.23);
+barChart('bar-dow', DATA.tod_dow.filter(d => d.n > 0), 'dow_name', 'roi', 20.23);
+</script>
+</body>
+</html>

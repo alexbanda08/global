@@ -1,0 +1,133 @@
+{
+  "elapsed_s": 8.4,
+  "config": {
+    "lambda": 0.5,
+    "w_lo": 0.0625,
+    "w_hi": 0.25,
+    "is_bars": 2160,
+    "oos_bars": 540,
+    "n_sleeves": 8
+  },
+  "equal_weight": {
+    "label": "equal_weight",
+    "sharpe": 2.362,
+    "cagr": 0.3089,
+    "mdd": -0.059,
+    "calmar": 5.238,
+    "n_bars": 5001
+  },
+  "v52_current": {
+    "label": "v52_current",
+    "sharpe": 2.52,
+    "cagr": 0.3145,
+    "mdd": -0.058,
+    "calmar": 5.418,
+    "n_bars": 5001
+  },
+  "v68_opt": {
+    "label": "v68_wf_opt",
+    "sharpe": 2.446,
+    "cagr": 0.3523,
+    "mdd": -0.0662,
+    "calmar": 5.32,
+    "n_bars": 2700
+  },
+  "v68_x_v67_L1.75": {
+    "label": "v68_x_v67_L1.75",
+    "sharpe": 2.446,
+    "cagr": 0.6783,
+    "mdd": -0.114,
+    "calmar": 5.949,
+    "n_bars": 2700
+  },
+  "verdict_vs_v52": "NO_LIFT",
+  "delta_sharpe_vs_v52": -0.074,
+  "delta_cagr_pp_vs_v52": 3.78,
+  "folds": [
+    {
+      "is_start": "2024-01-12 16:00:00+00:00",
+      "is_end": "2025-01-06 12:00:00+00:00",
+      "oos_start": "2025-01-06 16:00:00+00:00",
+      "oos_end": "2025-04-06 12:00:00+00:00",
+      "weights": {
+        "CCI_ETH_4h": 0.2021,
+        "STF_SOL_4h": 0.0625,
+        "STF_AVAX_4h": 0.1905,
+        "LATBB_AVAX_4h": 0.25,
+        "MFI_SOL": 0.0625,
+        "VP_LINK": 0.1031,
+        "SVD_AVAX": 0.0668,
+        "MFI_ETH": 0.0625
+      },
+      "oos_total_return": 0.0869
+    },
+    {
+      "is_start": "2024-04-11 16:00:00+00:00",
+      "is_end": "2025-04-06 12:00:00+00:00",
+      "oos_start": "2025-04-06 16:00:00+00:00",
+      "oos_end": "2025-07-05 12:00:00+00:00",
+      "weights": {
+        "CCI_ETH_4h": 0.2004,
+        "STF_SOL_4h": 0.0625,
+        "STF_AVAX_4h": 0.2373,
+        "LATBB_AVAX_4h": 0.17,
+        "MFI_SOL": 0.0625,
+        "VP_LINK": 0.1168,
+        "SVD_AVAX": 0.088,
+        "MFI_ETH": 0.0625
+      },
+      "oos_total_return": 0.0806
+    },
+    {
+      "is_start": "2024-07-10 16:00:00+00:00",
+      "is_end": "2025-07-05 12:00:00+00:00",
+      "oos_start": "2025-07-05 16:00:00+00:00",
+      "oos_end": "2025-10-03 12:00:00+00:00",
+      "weights": {
+        "CCI_ETH_4h": 0.0625,
+        "STF_SOL_4h": 0.1654,
+        "STF_AVAX_4h": 0.1951,
+        "LATBB_AVAX_4h": 0.1947,
+        "MFI_SOL": 0.0625,
+        "VP_LINK": 0.17,
+        "SVD_AVAX": 0.0874,
+        "MFI_ETH": 0.0625
+      },
+      "oos_total_return": 0.045
+    },
+    {
+      "is_start": "2024-10-08 16:00:00+00:00",
+      "is_end": "2025-10-03 12:00:00+00:00",
+      "oos_start": "2025-10-03 16:00:00+00:00",
+      "oos_end": "2026-01-01 12:00:00+00:00",
+      "weights": {
+        "CCI_ETH_4h": 0.0625,
+        "STF_SOL_4h": 0.2345,
+        "STF_AVAX_4h": 0.2397,
+        "LATBB_AVAX_4h": 0.2133,
+        "MFI_SOL": 0.0625,
+        "VP_LINK": 0.0625,
+        "SVD_AVAX": 0.0625,
+        "MFI_ETH": 0.0625
+      },
+      "oos_total_return": 0.1242
+    },
+    {
+      "is_start": "2025-01-06 16:00:00+00:00",
+      "is_end": "2026-01-01 12:00:00+00:00",
+      "oos_start": "2026-01-01 16:00:00+00:00",
+      "oos_end": "2026-04-01 12:00:00+00:00",
+      "weights": {
+        "CCI_ETH_4h": 0.1496,
+        "STF_SOL_4h": 0.25,
+        "STF_AVAX_4h": 0.2374,
+        "LATBB_AVAX_4h": 0.0625,
+        "MFI_SOL": 0.0625,
+        "VP_LINK": 0.1129,
+        "SVD_AVAX": 0.0625,
+        "MFI_ETH": 0.0625
+      },
+      "oos_total_return": 0.0503
+    }
+  ]
+}

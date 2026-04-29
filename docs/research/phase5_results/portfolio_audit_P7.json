@@ -1,0 +1,195 @@
+{
+  "portfolio": "P7",
+  "sleeves": [
+    "BB_AVAX_4h",
+    "CCI_ETH_4h",
+    "STF_SOL_4h"
+  ],
+  "baseline_metrics": {
+    "sharpe": 2.03,
+    "cagr": 0.4291,
+    "max_dd": -0.1517,
+    "calmar": 2.828
+  },
+  "per_year": {
+    "2021": {
+      "sharpe": 3.173,
+      "return": 0.715,
+      "max_dd": -0.1042,
+      "n_bars": 2190
+    },
+    "2022": {
+      "sharpe": 1.978,
+      "return": 0.3981,
+      "max_dd": -0.1,
+      "n_bars": 2190
+    },
+    "2023": {
+      "sharpe": 1.549,
+      "return": 0.291,
+      "max_dd": -0.0991,
+      "n_bars": 2190
+    },
+    "2024": {
+      "sharpe": 0.709,
+      "return": 0.1278,
+      "max_dd": -0.1517,
+      "n_bars": 2196
+    },
+    "2025": {
+      "sharpe": 2.684,
+      "return": 0.6549,
+      "max_dd": -0.0826,
+      "n_bars": 2190
+    },
+    "2026": {
+      "sharpe": 2.719,
+      "return": 0.1296,
+      "max_dd": -0.0957,
+      "n_bars": 540
+    }
+  },
+  "bootstrap": {
+    "sharpe": {
+      "mean": 2.0039,
+      "ci_lo": 1.0976,
+      "ci_hi": 2.8151
+    },
+    "calmar": {
+      "mean": 2.623,
+      "ci_lo": 0.8984,
+      "ci_hi": 5.2253
+    },
+    "max_dd": {
+      "mean": -0.1763,
+      "ci_lo": -0.2742,
+      "ci_hi": -0.1162
+    }
+  },
+  "walk_forward": {
+    "n_folds": 6,
+    "avg_is_sharpe": 2.517,
+    "avg_oos_sharpe": 1.754,
+    "efficiency_ratio": 0.697,
+    "n_positive_folds": 5,
+    "worst_fold_sharpe": -0.76,
+    "folds": [
+      {
+        "fold": 1,
+        "is_sharpe": 3.535,
+        "oos_sharpe": 3.252
+      },
+      {
+        "fold": 2,
+        "is_sharpe": 3.396,
+        "oos_sharpe": -0.76
+      },
+      {
+        "fold": 3,
+        "is_sharpe": 2.131,
+        "oos_sharpe": 2.506
+      },
+      {
+        "fold": 4,
+        "is_sharpe": 2.232,
+        "oos_sharpe": 0.567
+      },
+      {
+        "fold": 5,
+        "is_sharpe": 1.861,
+        "oos_sharpe": 2.414
+      },
+      {
+        "fold": 6,
+        "is_sharpe": 1.949,
+        "oos_sharpe": 2.544
+      }
+    ]
+  },
+  "permutation": {
+    "n_permutations": 15,
+    "real_sharpe": 2.03,
+    "null_mean": -0.34972312810872414,
+    "null_99th": 0.3752923719870884,
+    "p_value": 0.0
+  },
+  "plateau": {
+    "passed": true,
+    "worst_25pct_drop": 0.193,
+    "worst_50pct_drop": 0.207,
+    "cliff": false,
+    "per_sleeve": {
+      "BB_AVAX_4h": {
+        "baseline": {},
+        "sweep": {
+          "n@-50%": "ERR:window must be an integer 0 or greater",
+          "n@-25%": "ERR:window must be an integer 0 or greater",
+          "n@+25%": "ERR:window must be an integer 0 or greater",
+          "n@+50%": "ERR:window must be an integer 0 or greater",
+          "k@-50%": 2.266,
+          "k@-25%": 1.796,
+          "k@+25%": 2.219,
+          "k@+50%": 2.227,
+          "regime_len@-50%": 2.205,
+          "regime_len@-25%": 2.066,
+          "regime_len@+25%": 2.074,
+          "regime_len@+50%": 1.908
+        }
+      },
+      "CCI_ETH_4h": {
+        "baseline": {},
+        "sweep": {
+          "cci_n@-50%": 1.807,
+          "cci_n@-25%": 1.638,
+          "cci_n@+25%": 2.029,
+          "cci_n@+50%": 1.907,
+          "cci_lo@-50%": 1.692,
+          "cci_lo@-25%": 1.868,
+          "cci_lo@+25%": 1.82,
+          "cci_lo@+50%": 1.869,
+          "cci_hi@-50%": 1.712,
+          "cci_hi@-25%": 1.666,
+          "cci_hi@+25%": 1.854,
+          "cci_hi@+50%": 1.768,
+          "adx_max@-50%": 1.727,
+          "adx_max@-25%": 1.788,
+          "adx_max@+25%": 1.854,
+          "adx_max@+50%": 1.611,
+          "adx_n@-50%": 1.721,
+          "adx_n@-25%": 1.806,
+          "adx_n@+25%": 1.727,
+          "adx_n@+50%": 1.856
+        }
+      },
+      "STF_SOL_4h": {
+        "baseline": {},
+        "sweep": {
+          "st_n@-50%": 1.885,
+          "st_n@-25%": 1.989,
+          "st_n@+25%": 1.987,
+          "st_n@+50%": 2.006,
+          "st_mult@-50%": 1.87,
+          "st_mult@-25%": 1.898,
+          "st_mult@+25%": 1.708,
+          "st_mult@+50%": 1.851,
+          "ema_reg@-50%": 1.923,
+          "ema_reg@-25%": 1.976,
+          "ema_reg@+25%": 2.077,
+          "ema_reg@+50%": 2.113
+        }
+      }
+    }
+  },
+  "verdict": {
+    "per_year_>=70pct": true,
+    "permutation_p<0.01": true,
+    "bootstrap_sharpe_lowerCI>0.5": true,
+    "bootstrap_calmar_lowerCI>1.0": false,
+    "bootstrap_mdd_upperCI<30%": true,
+    "walk_forward_efficiency>0.5": true,
+    "walk_forward_pos_folds>=5": true,
+    "plateau_passed": true
+  },
+  "tests_passed": 7,
+  "tests_total": 8
+}

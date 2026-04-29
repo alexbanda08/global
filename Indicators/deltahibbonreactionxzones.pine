@@ -1,0 +1,524 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © BOSWaves
+ 
+//@version=6
+indicator("Delta Reaction Zones [BOSWaves]", overlay=true, max_boxes_count=500, max_lines_count=500)
+
+// ┌───────────────────────────── BOSWaves ─ Constants ───────────────────────────────┐
+// └──────────────────────────────────────────────────────────────────────────────────┘
+const string group_delta       = "Delta Settings"
+const string group_zones       = "Zone Construction"
+const string group_visual      = "Visualization"
+const color  border_color      = #787b86
+color        GREEN             = #00ff00
+color        RED               = #ff0000
+const int    HARD_SEG_CAP_BARS = 300
+
+const string tt1  = "Exponential Moving Average smoothing applied to raw delta. Higher values reduce noise but add lag. Set to 1 to disable smoothing."
+const string tt2  = "Number of bars used on both the left and right side to confirm a pivot. Higher values produce fewer but more significant zones."
+const string tt3  = "Data series used for pivot detection. Cumulative Delta uses the running delta total. Cumulative Delta RoC uses the rate of change of cumulative delta to highlight flow acceleration."
+const string tt4  = "Lookback length for the rate-of-change calculation when Cumulative Delta RoC is selected as the pivot source."
+const string tt5  = "ATR period used to adapt zone thickness to current market volatility."
+const string tt6  = "Multiplier applied to ATR to define the half-width of each zone around its anchor price. For lower timeframes please lower this setting, as zones can appear very large"
+const string tt8  = "Maximum number of zones allowed on the chart at once. Oldest zones are removed first. Broken zones are removed automatically."
+const string tt9  = "When enabled, overlapping zones of the same type are merged into a single broader zone."
+const string tt10 = "Additional merge tolerance in ticks. A value of 0 merges only true overlaps. Higher values allow merging zones that are close but not overlapping."
+const string tt11 = "Lookback window used to compute impulse statistics including net delta and positive versus negative flow percentages."
+const string tt12 = "Color used for support zones created from lower delta pivots."
+const string tt13 = "Color used for resistance zones created from upper delta pivots."
+const string tt14 = "Displays filled zone boxes. If disabled, only the dashed midline is shown for a cleaner view."
+const string tt15 = "Show reclaim/re-enter markers when price crosses back through a zone midline. Disable for a clean chart while keeping zones active."
+const string tt16 = "Extends the main zone box and pushes the stats boxes out by the same amount."
+const string tt17 = "Number of bars used to render the stats boxes to the right of the zone end."
+
+// ┌──────────────────────────── BOSWaves ─ User Inputs ──────────────────────────────┐
+// └──────────────────────────────────────────────────────────────────────────────────┘
+int     delta_smooth     = input.int(3, "Delta Smoothing Length (EMA)", minval=1, group=group_delta, tooltip=tt1)
+int     pivot_length     = input.int(12, "Pivot Length (Left/Right)", minval=2, group=group_delta, tooltip=tt2)
+string  pivot_source     = input.string("Cumulative Delta", "Pivot Source", options=["Cumulative Delta", "Cumulative Delta RoC"], group=group_delta, tooltip=tt3)
+int     roc_length       = input.int(12, "RoC Length (if RoC selected)", minval=2, group=group_delta, tooltip=tt4)
+int     impulse_window   = input.int(100, "Impulse Window Length", minval=5, group=group_delta, tooltip=tt11)
+
+int     atr_length       = input.int(14, "ATR Length", minval=1, group=group_zones, tooltip=tt5)
+float   atr_multiplier   = input.float(0.35, "ATR Multiplier", minval=0.01, step=0.05, group=group_zones, tooltip=tt6)
+int     maximum_zones    = input.int(8, "Maximum Zones Displayed", minval=5, maxval=200, group=group_zones, tooltip=tt8)
+
+bool    merge_zones      = input.bool(true, "Merge Overlapping Zones", group=group_zones, tooltip=tt9)
+float   merge_gap_ticks  = input.float(20, "Merge Gap (in ticks)", minval=0.0, step=10, group=group_zones, tooltip=tt10)
+
+color   lower_zone_color = input.color(GREEN, "Support Color", group=group_visual, tooltip=tt12)
+color   upper_zone_color = input.color(RED, "Resistance Color", group=group_visual, tooltip=tt13)
+bool    show_zone_boxes  = input.bool(true, "Show Zone Boxes", group=group_visual, tooltip=tt14)
+bool    show_signals     = input.bool(true, "Show Signals", group=group_visual, tooltip=tt15)
+int     extend_bars      = input.int(65, "Extend Zone (bars)", minval=0, maxval=600, group=group_zones, tooltip=tt16)
+int     stats_box_bars   = input.int(30, "Stats Box Width (bars)", minval=1, maxval=50, group=group_visual, tooltip=tt16)
+
+// ┌────────────────────────── BOSWaves ─ Helper Functions ───────────────────────────┐
+// └──────────────────────────────────────────────────────────────────────────────────┘ 
+clamp_value(value, min_val, max_val) =>
+    math.max(min_val, math.min(value, max_val))
+
+tf_seconds      = timeframe.in_seconds("")
+tf_milliseconds = int(math.round(tf_seconds * 1000.0))
+
+fmt2(v) =>
+    str.tostring(math.round(v * 100.0) / 100.0, "#.00")
+
+delta_text(target_box, pos_pct, neg_pct) =>
+    string txt =
+         pos_pct >= 60 ? "SELL FLOW" :
+         neg_pct >= 60 ? "BUY FLOW" :
+         "MIXED"
+    target_box.set_text(txt)
+    target_box.set_text_halign(text.align_right)
+    target_box.set_text_valign(text.align_center)
+    target_box.set_text_color(chart.fg_color)
+    target_box.set_text_size(size.auto)
+
+percent_box(target_box, pct_value) =>
+    target_box.set_text(str.tostring(math.round(pct_value, 1)) + "%")
+    target_box.set_text_halign(text.align_center)
+    target_box.set_text_valign(text.align_center)
+    target_box.set_text_color(chart.fg_color)
+    target_box.set_text_size(size.auto)
+
+stats_total_text(target_box, total_val) =>
+    target_box.set_text("Δ " + fmt2(total_val))
+    target_box.set_text_halign(text.align_center)
+    target_box.set_text_valign(text.align_center)
+    target_box.set_text_color(chart.fg_color)
+    target_box.set_text_size(size.auto)
+
+seg_cap_bars_50_box(int left_time, int body_right, int hardCapBars) =>
+    int zone_ms   = math.max(body_right - left_time, 0)
+    int zone_bars = tf_milliseconds > 0 ? int(math.floor(zone_ms / tf_milliseconds)) : 0
+    int halfBars  = int(math.floor(zone_bars * 0.5))
+    int cap       = math.min(halfBars, hardCapBars)
+    math.max(cap, 1)
+
+seg_right_time(int left_time, int body_right, int width_bars) =>
+    int r = left_time + width_bars * tf_milliseconds
+    math.min(r, body_right)
+
+// ┌──────────────────── BOSWaves ─ Delta and Cumulative Delta ───────────────────────┐
+// └──────────────────────────────────────────────────────────────────────────────────┘
+
+signed_position = math.sign(close - open)
+signed_position := clamp_value(signed_position, -1.0, 1.0)
+
+raw_delta      = signed_position * nz(volume, 0.0)
+smoothed_delta = delta_smooth > 1 ? ta.ema(raw_delta, delta_smooth) : raw_delta
+
+var float cumulative_delta = na
+cumulative_delta := na(cumulative_delta[1]) ? smoothed_delta : (cumulative_delta[1] + smoothed_delta)
+
+// ┌────────────────────── BOSWaves ─ Pivot Source and Pivots ────────────────────────┐
+// └──────────────────────────────────────────────────────────────────────────────────┘
+
+delta_roc          = cumulative_delta - cumulative_delta[roc_length]
+pivot_input_series = pivot_source == "Cumulative Delta RoC" ? delta_roc : cumulative_delta
+
+pivot_high_value = ta.pivothigh(pivot_input_series, pivot_length, pivot_length)
+pivot_low_value  = ta.pivotlow(pivot_input_series, pivot_length, pivot_length)
+new_upper_pivot  = not na(pivot_high_value)
+new_lower_pivot  = not na(pivot_low_value)
+
+// ┌──────────────────────────── BOSWaves ─ Zone Width ───────────────────────────────┐
+// └──────────────────────────────────────────────────────────────────────────────────┘
+
+current_zone_half_width = ta.atr(atr_length) * atr_multiplier
+
+// ┌───────────────────────── BOSWaves ─ Impulse Window Stats ────────────────────────┐
+// └──────────────────────────────────────────────────────────────────────────────────┘
+
+positive_flow = math.max(smoothed_delta, 0.0)
+negative_flow = math.max(-smoothed_delta, 0.0)
+
+sum_positive = math.sum(positive_flow, impulse_window)
+sum_negative = math.sum(negative_flow, impulse_window)
+total_flow   = sum_positive + sum_negative
+
+positive_percentage = total_flow > 0 ? (sum_positive / total_flow) * 100.0 : 50.0
+negative_percentage = 100.0 - positive_percentage
+net_impulse         = math.sum(smoothed_delta, impulse_window)
+
+// ┌────────────────────────── BOSWaves ─ Zone Structure ─────────────────────────────┐
+// └──────────────────────────────────────────────────────────────────────────────────┘
+
+type VolumeZone
+    box    zone_body
+    box    positive_segment
+    box    negative_segment
+    box    stats_pos_box
+    box    stats_neg_box
+    box    stats_total_box
+    line   zone_midline
+    bool   is_lower
+    float  zone_top
+    float  zone_bottom
+    float  zone_mid
+    float  positive_pct
+    float  negative_pct
+    float  net_impulse_value
+    int    creation_time
+    int    last_touch_time
+
+var VolumeZone[] active_zones = array.new<VolumeZone>()
+
+// ┌────────────────────────── BOSWaves ─ Creating Zones ─────────────────────────────┐
+// └──────────────────────────────────────────────────────────────────────────────────┘
+create_zone(is_lower_zone, anchor_price, half_width, pos_pct, neg_pct, impulse_val, creation_timestamp) =>
+    float top_price    = anchor_price + half_width
+    float bottom_price = anchor_price - half_width
+    float mid_price    = math.avg(top_price, bottom_price)
+
+    color base_color = is_lower_zone ? lower_zone_color : upper_zone_color
+    color fill_color = color.new(base_color, 75)
+
+    int left_time  = creation_timestamp
+    int right_time = creation_timestamp + extend_bars * tf_milliseconds
+
+    int stats_left    = right_time + 10 * tf_milliseconds
+    int stats_right_2 = stats_left + stats_box_bars * tf_milliseconds
+
+    box zone_body_box = na
+    box positive_segment_box = na
+    box negative_segment_box = na
+    box stats_pos = na
+    box stats_neg = na
+    box stats_total = na
+
+    if show_zone_boxes
+        zone_body_box := box.new(left_time, top_price, right_time, bottom_price, xloc=xloc.bar_time,
+            bgcolor=fill_color, border_color=border_color, border_width=1, border_style=line.style_dotted)
+
+        int body_right = right_time
+        int cap_bars   = seg_cap_bars_50_box(left_time, body_right, HARD_SEG_CAP_BARS)
+
+        int positive_width = int(math.round(cap_bars * (pos_pct * 0.01)))
+        int negative_width = int(math.round(cap_bars * (neg_pct * 0.01)))
+        positive_width := positive_width < 1 and pos_pct > 0 ? 1 : positive_width
+        negative_width := negative_width < 1 and neg_pct > 0 ? 1 : negative_width
+
+        int positive_right = seg_right_time(left_time, body_right, positive_width)
+        int negative_right = seg_right_time(left_time, body_right, negative_width)
+
+        negative_segment_box := box.new(left_time, top_price, negative_right, mid_price, xloc=xloc.bar_time,
+            bgcolor=color.new(upper_zone_color, 40), border_color=chart.bg_color)
+
+        positive_segment_box := box.new(left_time, mid_price, positive_right, bottom_price, xloc=xloc.bar_time,
+            bgcolor=color.new(lower_zone_color, 40), border_color=chart.bg_color)
+
+        stats_neg := box.new(right_time, top_price, stats_left, mid_price, xloc=xloc.bar_time,
+            bgcolor=color.new(upper_zone_color, 40), border_color=chart.bg_color)
+
+        stats_pos := box.new(right_time, mid_price, stats_left, bottom_price, xloc=xloc.bar_time,
+            bgcolor=color.new(lower_zone_color, 40), border_color=chart.bg_color)
+
+        stats_total := box.new(stats_left, top_price, stats_right_2, bottom_price, xloc=xloc.bar_time,
+            bgcolor=color.new(base_color, 82), border_color=border_color, border_width=1, border_style=line.style_dotted)
+
+        percent_box(stats_pos, pos_pct)
+        percent_box(stats_neg, neg_pct)
+        stats_total_text(stats_total, impulse_val)
+        delta_text(zone_body_box, pos_pct, neg_pct)
+
+    line midline_line = line.new(left_time, mid_price, right_time, mid_price, xloc=xloc.bar_time,
+        color=border_color, width=1, style=line.style_dashed)
+
+    VolumeZone.new(
+        zone_body_box,
+        positive_segment_box,
+        negative_segment_box,
+        stats_pos,
+        stats_neg,
+        stats_total,
+        midline_line,
+        is_lower_zone,
+        top_price,
+        bottom_price,
+        mid_price,
+        pos_pct,
+        neg_pct,
+        impulse_val,
+        creation_timestamp,
+        creation_timestamp
+    )
+
+// ┌──────────────────────── BOSWaves ─ Merging Zones Logic ──────────────────────────┐
+// └──────────────────────────────────────────────────────────────────────────────────┘
+
+zones_overlap_or_near(top_a, bot_a, top_b, bot_b, gap_price) =>
+    float expanded_top_a = top_a + gap_price
+    float expanded_bot_a = bot_a - gap_price
+    float expanded_top_b = top_b + gap_price
+    float expanded_bot_b = bot_b - gap_price
+    (expanded_bot_a <= expanded_top_b) and (expanded_top_a >= expanded_bot_b)
+
+merge_zone_into_existing(new_zone) =>
+    bool merged = false
+    if merge_zones and active_zones.size() > 0
+        float price_gap = merge_gap_ticks * syminfo.mintick
+        for i = active_zones.size() - 1 to 0
+            VolumeZone existing = active_zones.get(i)
+            if existing.is_lower == new_zone.is_lower
+                if zones_overlap_or_near(existing.zone_top, existing.zone_bottom, new_zone.zone_top, new_zone.zone_bottom, price_gap)
+                    existing.zone_top    := math.max(existing.zone_top, new_zone.zone_top)
+                    existing.zone_bottom := math.min(existing.zone_bottom, new_zone.zone_bottom)
+                    existing.zone_mid    := math.avg(existing.zone_top, existing.zone_bottom)
+
+                    float weight_existing = math.max(math.abs(existing.net_impulse_value), 1.0)
+                    float weight_new      = math.max(math.abs(new_zone.net_impulse_value), 1.0)
+                    existing.positive_pct := (existing.positive_pct * weight_existing + new_zone.positive_pct * weight_new) / (weight_existing + weight_new)
+                    existing.negative_pct := 100.0 - existing.positive_pct
+                    existing.net_impulse_value := existing.net_impulse_value + new_zone.net_impulse_value
+
+                    existing.creation_time   := math.min(existing.creation_time, new_zone.creation_time)
+                    existing.last_touch_time := math.max(existing.last_touch_time, new_zone.last_touch_time)
+    
+                    int left_time  = box.get_left(existing.zone_body)
+                    int body_right = time + extend_bars * tf_milliseconds
+
+                    if show_zone_boxes and not na(existing.zone_body)
+                        box.set_top(existing.zone_body, existing.zone_top)
+                        box.set_bottom(existing.zone_body, existing.zone_bottom)
+
+                        box.set_right(existing.zone_body, body_right)
+
+                        int cap_bars = seg_cap_bars_50_box(left_time, body_right, HARD_SEG_CAP_BARS)
+
+                        int positive_width = int(math.round(cap_bars * (existing.positive_pct * 0.01)))
+                        int negative_width = int(math.round(cap_bars * (existing.negative_pct * 0.01)))
+                        positive_width := positive_width < 1 and existing.positive_pct > 0 ? 1 : positive_width
+                        negative_width := negative_width < 1 and existing.negative_pct > 0 ? 1 : negative_width
+
+                        int pos_right = seg_right_time(left_time, body_right, positive_width)
+                        int neg_right = seg_right_time(left_time, body_right, negative_width)
+
+                        box.set_left(existing.positive_segment, left_time)
+                        box.set_right(existing.positive_segment, pos_right)
+                        box.set_left(existing.negative_segment, left_time)
+                        box.set_right(existing.negative_segment, neg_right)
+
+                        box.set_top(existing.negative_segment, existing.zone_top)
+                        box.set_bottom(existing.negative_segment, existing.zone_mid)
+                        box.set_top(existing.positive_segment, existing.zone_mid)
+                        box.set_bottom(existing.positive_segment, existing.zone_bottom)
+
+                        int stats_left    = body_right + 10 * tf_milliseconds
+                        int stats_right_2 = stats_left + stats_box_bars * tf_milliseconds
+
+                        box.set_left(existing.stats_neg_box, body_right)
+                        box.set_right(existing.stats_neg_box, stats_left)
+                        box.set_top(existing.stats_neg_box, existing.zone_top)
+                        box.set_bottom(existing.stats_neg_box, existing.zone_mid)
+
+                        box.set_left(existing.stats_pos_box, body_right)
+                        box.set_right(existing.stats_pos_box, stats_left)
+                        box.set_top(existing.stats_pos_box, existing.zone_mid)
+                        box.set_bottom(existing.stats_pos_box, existing.zone_bottom)
+
+                        percent_box(existing.stats_pos_box, existing.positive_pct)
+                        percent_box(existing.stats_neg_box, existing.negative_pct)
+
+                        box.set_left(existing.stats_total_box, stats_left)
+                        box.set_right(existing.stats_total_box, stats_right_2)
+                        box.set_top(existing.stats_total_box, existing.zone_top)
+                        box.set_bottom(existing.stats_total_box, existing.zone_bottom)
+
+                        stats_total_text(existing.stats_total_box, existing.net_impulse_value)
+                        delta_text(existing.zone_body, existing.positive_pct, existing.negative_pct)
+
+                    line.set_y1(existing.zone_midline, existing.zone_mid)
+                    line.set_y2(existing.zone_midline, existing.zone_mid)
+                    line.set_x1(existing.zone_midline, box.get_left(existing.zone_body))
+                    line.set_x2(existing.zone_midline, body_right)
+
+                    if not na(new_zone.zone_body)
+                        box.delete(new_zone.zone_body)
+                    if not na(new_zone.positive_segment)
+                        box.delete(new_zone.positive_segment)
+                    if not na(new_zone.negative_segment)
+                        box.delete(new_zone.negative_segment)
+                    if not na(new_zone.stats_pos_box)
+                        box.delete(new_zone.stats_pos_box)
+                    if not na(new_zone.stats_neg_box)
+                        box.delete(new_zone.stats_neg_box)
+                    if not na(new_zone.stats_total_box)
+                        box.delete(new_zone.stats_total_box)
+
+                    line.delete(new_zone.zone_midline)
+
+                    active_zones.set(i, existing)
+                    merged := true
+                    break
+    merged
+
+// ┌────────────────────── BOSWaves ─ Zone Creation on Pivots ────────────────────────┐
+// └──────────────────────────────────────────────────────────────────────────────────┘
+
+// Upper Pivots
+if new_upper_pivot
+    float anchor_price = high[pivot_length]
+    float half_width   = current_zone_half_width[pivot_length]
+    float pos_pct      = positive_percentage[pivot_length]
+    float neg_pct      = negative_percentage[pivot_length]
+    float impulse_val  = net_impulse[pivot_length]
+    int creation_timestamp = time[pivot_length]
+    VolumeZone new_zone = create_zone(false, anchor_price, half_width, pos_pct, neg_pct, impulse_val, creation_timestamp)
+    bool merged = merge_zone_into_existing(new_zone)
+    if not merged
+        active_zones.push(new_zone)
+
+// Lower Pivots 
+if new_lower_pivot
+    float anchor_price = low[pivot_length]
+    float half_width   = current_zone_half_width[pivot_length]
+    float pos_pct      = positive_percentage[pivot_length]
+    float neg_pct      = negative_percentage[pivot_length]
+    float impulse_val  = net_impulse[pivot_length]
+    int creation_timestamp = time[pivot_length]
+    VolumeZone new_zone = create_zone(true, anchor_price, half_width, pos_pct, neg_pct, impulse_val, creation_timestamp)
+    bool merged = merge_zone_into_existing(new_zone)
+    if not merged
+        active_zones.push(new_zone)
+
+// Clean up zones 
+while active_zones.size() > maximum_zones
+    VolumeZone oldest = active_zones.shift()
+    if not na(oldest.zone_body)
+        box.delete(oldest.zone_body)
+    if not na(oldest.positive_segment)
+        box.delete(oldest.positive_segment)
+    if not na(oldest.negative_segment)
+        box.delete(oldest.negative_segment)
+    if not na(oldest.stats_pos_box)
+        box.delete(oldest.stats_pos_box)
+    if not na(oldest.stats_neg_box)
+        box.delete(oldest.stats_neg_box)
+    if not na(oldest.stats_total_box)
+        box.delete(oldest.stats_total_box)
+    line.delete(oldest.zone_midline)
+
+// ┌───────────────── BOSWaves ─ Zone Updates and Break Detection ────────────────────┐
+// └──────────────────────────────────────────────────────────────────────────────────┘
+
+int zone_index = active_zones.size() - 1
+while zone_index >= 0
+    VolumeZone zone = active_zones.get(zone_index)
+
+    int left_time  = not na(zone.zone_body) ? box.get_left(zone.zone_body) : zone.creation_time
+    int right_time = time + extend_bars * tf_milliseconds
+    int stats_left = right_time + 10 * tf_milliseconds
+    int stats_right_2 = stats_left + stats_box_bars * tf_milliseconds
+
+    if show_zone_boxes and not na(zone.zone_body)
+        box.set_right(zone.zone_body, right_time)
+
+        int body_right = box.get_right(zone.zone_body)
+        int cap_bars   = seg_cap_bars_50_box(left_time, body_right, HARD_SEG_CAP_BARS)
+
+        int positive_width = int(math.round(cap_bars * (zone.positive_pct * 0.01)))
+        int negative_width = int(math.round(cap_bars * (zone.negative_pct * 0.01)))
+        positive_width := positive_width < 1 and zone.positive_pct > 0 ? 1 : positive_width
+        negative_width := negative_width < 1 and zone.negative_pct > 0 ? 1 : negative_width
+
+        int pos_right = seg_right_time(left_time, body_right, positive_width)
+        int neg_right = seg_right_time(left_time, body_right, negative_width)
+
+        box.set_left(zone.positive_segment, left_time)
+        box.set_right(zone.positive_segment, pos_right)
+        box.set_left(zone.negative_segment, left_time)
+        box.set_right(zone.negative_segment, neg_right)
+
+        box.set_top(zone.negative_segment, zone.zone_top)
+        box.set_bottom(zone.negative_segment, zone.zone_mid)
+        box.set_top(zone.positive_segment, zone.zone_mid)
+        box.set_bottom(zone.positive_segment, zone.zone_bottom)
+
+        box.set_left(zone.stats_neg_box, right_time)
+        box.set_right(zone.stats_neg_box, stats_left)
+        box.set_top(zone.stats_neg_box, zone.zone_top)
+        box.set_bottom(zone.stats_neg_box, zone.zone_mid)
+
+        box.set_left(zone.stats_pos_box, right_time)
+        box.set_right(zone.stats_pos_box, stats_left)
+        box.set_top(zone.stats_pos_box, zone.zone_mid)
+        box.set_bottom(zone.stats_pos_box, zone.zone_bottom)
+
+        percent_box(zone.stats_pos_box, zone.positive_pct)
+        percent_box(zone.stats_neg_box, zone.negative_pct)
+
+        box.set_left(zone.stats_total_box, stats_left)
+        box.set_right(zone.stats_total_box, stats_right_2)
+        box.set_top(zone.stats_total_box, zone.zone_top)
+        box.set_bottom(zone.stats_total_box, zone.zone_bottom)
+
+        stats_total_text(zone.stats_total_box, zone.net_impulse_value)
+        delta_text(zone.zone_body, zone.positive_pct, zone.negative_pct)
+
+    line.set_x1(zone.zone_midline, left_time)
+    line.set_x2(zone.zone_midline, right_time)
+    line.set_y1(zone.zone_midline, zone.zone_mid)
+    line.set_y2(zone.zone_midline, zone.zone_mid)
+
+    bool price_touch = high >= zone.zone_bottom and low <= zone.zone_top
+    if price_touch
+        zone.last_touch_time := time
+
+    bool zone_breached = zone.is_lower ? (close < zone.zone_bottom) : (close > zone.zone_top)
+
+    if zone_breached
+        if not na(zone.zone_body)
+            box.delete(zone.zone_body)
+        if not na(zone.positive_segment)
+            box.delete(zone.positive_segment)
+        if not na(zone.negative_segment)
+            box.delete(zone.negative_segment)
+        if not na(zone.stats_pos_box)
+            box.delete(zone.stats_pos_box)
+        if not na(zone.stats_neg_box)
+            box.delete(zone.stats_neg_box)
+        if not na(zone.stats_total_box)
+            box.delete(zone.stats_total_box)
+        line.delete(zone.zone_midline)
+        active_zones.remove(zone_index)
+    else
+        active_zones.set(zone_index, zone)
+
+    zone_index -= 1
+
+// ┌──────────────────── BOSWaves ─ Alerts and Signal Shapes ─────────────────────────┐
+// └──────────────────────────────────────────────────────────────────────────────────┘
+
+// Re-entry signals
+var bool supReclaim = false
+var bool resReenter = false
+supReclaim := false
+resReenter := false
+
+if active_zones.size() > 0
+    for i = 0 to active_zones.size() - 1
+        VolumeZone z = active_zones.get(i)
+
+        if z.is_lower
+            bool wasBelow = close[1] < z.zone_mid
+            bool nowCrossUp = ta.crossover(close, z.zone_mid)
+            supReclaim := supReclaim or (wasBelow and nowCrossUp)
+
+        if not z.is_lower
+            bool wasAbove = close[1] > z.zone_mid
+            bool nowCrossDown = ta.crossunder(close, z.zone_mid)
+            resReenter := resReenter or (wasAbove and nowCrossDown)
+
+// Plot signals
+plotshape(show_signals and supReclaim, title="Support reclaim", style=shape.labelup, location=location.belowbar,
+     color=color.new(lower_zone_color, 50), text="𝐑𝐂", size=size.small, textcolor=chart.fg_color)
+
+plotshape(show_signals and resReenter, title="Resistance re-enter", style=shape.labeldown, location=location.abovebar,
+     color=color.new(upper_zone_color, 50), text="𝐑𝐄", size=size.small, textcolor=chart.fg_color)
+
+// Alerts
+alertcondition((new_upper_pivot or new_lower_pivot), title="New Delta Reaction Zone", message="New Delta Reaction Zone| {{exchange}}:{{ticker}}")
+alertcondition(supReclaim, title="Support Reclaim", message="Support Reclaim | {{exchange}}:{{ticker}}")
+alertcondition(resReenter, title="Resistance Re-enter", message="Resistance Re-enter | {{exchange}}:{{ticker}}")

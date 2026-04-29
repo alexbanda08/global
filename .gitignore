@@ -1,0 +1,54 @@
+# === Heavy data (1.9 GB+) ===
+/data/
+/strategy_lab/data/
+/strategy_lab/results/
+/strategy_lab/features/
+/strategy_lab/kronos_ft/
+/strategy_lab/logs/
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.ipynb_checkpoints/
+.mypy_cache/
+.ruff_cache/
+
+# === Vendored external repos (have their own .git) ===
+/external/
+
+# === Generated artifacts (large, regenerable) ===
+*.parquet
+*.zip
+*.pkl
+*.h5
+
+# === Editor / OS ===
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# === Secrets / local config (defence in depth) ===
+.env
+.env.*
+secrets.*
+credentials.*
+*.pem
+*.key
+config.local.*
+
+# === Allow specific large reports to be tracked (already version-controlled artifacts) ===
+!*.pdf
+
+# === Allow text reports / digests ===
+!cf.txt
+!sr.txt
+!v24.txt
+!all_coins.txt
+!digest.txt
+!digest.json

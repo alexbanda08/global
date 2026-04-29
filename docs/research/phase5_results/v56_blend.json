@@ -1,0 +1,58 @@
+{
+  "v52_baseline": {
+    "label": "V52_baseline",
+    "sharpe": 2.519,
+    "cagr": 31.45,
+    "mdd": -5.8,
+    "calmar": 5.418
+  },
+  "sleeves": [
+    {
+      "label": "ibb_both_BTC_Dstacked",
+      "sharpe": 1.125,
+      "cagr": 32.25,
+      "mdd": -28.87,
+      "calmar": 1.117
+    },
+    {
+      "label": "ibb_long_SOL_Cdir",
+      "sharpe": 1.011,
+      "cagr": 24.13,
+      "mdd": -31.9,
+      "calmar": 0.756
+    },
+    {
+      "label": "ibb_both_ETH_canon",
+      "sharpe": 1.247,
+      "cagr": 38.17,
+      "mdd": -34.53,
+      "calmar": 1.105
+    }
+  ],
+  "correlations_vs_v52": {
+    "ibb_both_BTC_Dstacked": 0.011,
+    "ibb_long_SOL_Cdir": 0.082,
+    "ibb_both_ETH_canon": 0.211
+  },
+  "blend_A_85_5_5_5": {
+    "label": "blend_85_5_5_5",
+    "sharpe": 2.651,
+    "cagr": 31.84,
+    "mdd": -6.77,
+    "calmar": 4.701
+  },
+  "blend_B_85_invvol15": {
+    "label": "blend_85_invvol15",
+    "sharpe": 2.635,
+    "cagr": 31.36,
+    "mdd": -6.54,
+    "calmar": 4.798
+  },
+  "blend_C_90_invvol10": {
+    "label": "blend_90_invvol10",
+    "sharpe": 2.63,
+    "cagr": 31.41,
+    "mdd": -5.99,
+    "calmar": 5.243
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "elapsed_s": 7.7,
+  "v69_baseline_levered": {
+    "sharpe": 2.614,
+    "cagr": 0.6111,
+    "mdd": -0.1242,
+    "calmar": 4.92
+  },
+  "lev_config": {
+    "size_mult": 1.75,
+    "leverage_cap": 5.25
+  },
+  "variants": [
+    {
+      "label": "V69_baseline_keep_all_4",
+      "keep_divs": [
+        "MFI_SOL",
+        "VP_LINK",
+        "SVD_AVAX",
+        "MFI_ETH"
+      ],
+      "alpha": 0.75,
+      "standalone": {
+        "sharpe": 2.639,
+        "cagr": 0.3329,
+        "mdd": -0.0731,
+        "calmar": 4.552,
+        "wr_daily": 50.43
+      },
+      "levered_pos": {
+        "sharpe": 2.614,
+        "cagr": 0.6111,
+        "mdd": -0.1242,
+        "calmar": 4.92,
+        "wr_daily": 50.18
+      }
+    },
+    {
+      "label": "drop_SVD_AVAX",
+      "keep_divs": [
+        "MFI_SOL",
+        "VP_LINK",
+        "MFI_ETH"
+      ],
+      "alpha": 0.8125,
+      "standalone": {
+        "sharpe": 2.608,
+        "cagr": 0.3517,
+        "mdd": -0.0913,
+        "calmar": 3.852,
+        "wr_daily": 50.92
+      },
+      "levered_pos": {
+        "sharpe": 2.583,
+        "cagr": 0.6483,
+        "mdd": -0.1538,
+        "calmar": 4.214,
+        "wr_daily": 50.79
+      }
+    },
+    {
+      "label": "drop_MFI_ETH",
+      "keep_divs": [
+        "MFI_SOL",
+        "VP_LINK",
+        "SVD_AVAX"
+      ],
+      "alpha": 0.8125,
+      "standalone": {
+        "sharpe": 2.675,
+        "cagr": 0.3516,
+        "mdd": -0.0849,
+        "calmar": 4.143,
+        "wr_daily": 51.66
+      },
+      "levered_pos": {
+        "sharpe": 2.65,
+        "cagr": 0.6492,
+        "mdd": -0.1432,
+        "calmar": 4.533,
+        "wr_daily": 51.41
+      }
+    },
+    {
+      "label": "drop_both",
+      "keep_divs": [
+        "MFI_SOL",
+        "VP_LINK"
+      ],
+      "alpha": 0.875,
+      "standalone": {
+        "sharpe": 2.633,
+        "cagr": 0.3704,
+        "mdd": -0.103,
+        "calmar": 3.598,
+        "wr_daily": 51.67
+      },
+      "levered_pos": {
+        "sharpe": 2.608,
+        "cagr": 0.6869,
+        "mdd": -0.1725,
+        "calmar": 3.982,
+        "wr_daily": 51.6
+      }
+    },
+    {
+      "label": "pure_V41_only",
+      "keep_divs": [],
+      "alpha": 1.0,
+      "standalone": {
+        "sharpe": 2.395,
+        "cagr": 0.3609,
+        "mdd": -0.1078,
+        "calmar": 3.349,
+        "wr_daily": 50.17
+      },
+      "levered_pos": {
+        "sharpe": 2.366,
+        "cagr": 0.6635,
+        "mdd": -0.181,
+        "calmar": 3.666,
+        "wr_daily": 50.17
+      }
+    }
+  ],
+  "grades": {
+    "V69_baseline_keep_all_4": {
+      "delta_sharpe": 0.0,
+      "delta_cagr_pp": 0.0,
+      "delta_mdd_pp": 0.0,
+      "passes_target": true,
+      "promote": true
+    },
+    "drop_SVD_AVAX": {
+      "delta_sharpe": -0.031,
+      "delta_cagr_pp": 3.72,
+      "delta_mdd_pp": -2.96,
+      "passes_target": true,
+      "promote": false
+    },
+    "drop_MFI_ETH": {
+      "delta_sharpe": 0.036,
+      "delta_cagr_pp": 3.81,
+      "delta_mdd_pp": -1.9,
+      "passes_target": true,
+      "promote": false
+    },
+    "drop_both": {
+      "delta_sharpe": -0.006,
+      "delta_cagr_pp": 7.58,
+      "delta_mdd_pp": -4.83,
+      "passes_target": true,
+      "promote": false
+    },
+    "pure_V41_only": {
+      "delta_sharpe": -0.248,
+      "delta_cagr_pp": 5.24,
+      "delta_mdd_pp": -5.68,
+      "passes_target": true,
+      "promote": false
+    }
+  },
+  "recommended": null
+}

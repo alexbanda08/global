@@ -1,0 +1,121 @@
+//@version=5
+// ============================================================================
+//  AVAX  —  V25 Seasonal RSI+BB (1h)   —  PAPER-ONLY CANDIDATE
+// ============================================================================
+//  Seasonal RSI+BB restricted to 06:00-12:00 UTC window, 1h bars.
+//
+//  Python backtest (2020-01 -> 2026-04, $10,000 start, 9 bps fee + 3 bps slip):
+//    FULL  n=53    CAGR (net) +19.4%   Sharpe +0.80   DD -30.7%   PF 1.83
+//      IS  (2020-2023)   n=32    CAGR +20.8%   Sharpe +0.86
+//      OOS (2024-2026)   n=21    CAGR +17.5%   Sharpe +0.72   <- OOS holds
+//
+//  Status: PAPER-ONLY. CAGR too low (+19%) to justify capital on its own.
+//    Tracks the same seasonal edge as DOGE V25 but weaker. AVAX V25 MTF
+//    Conf (above) is the real AVAX V25 allocation — this is a nice
+//    confirmation that the 06-12 UTC window has edge on multiple alts.
+// ============================================================================
+
+strategy("AVAX  V25 Seasonal 1h",
+     overlay             = true,
+     initial_capital     = 10000,
+     currency            = currency.USD,
+     default_qty_type    = strategy.percent_of_equity,
+     default_qty_value   = 100,
+     commission_type     = strategy.commission.percent,
+     commission_value    = 0.045,
+     slippage            = 3,
+     pyramiding          = 0,
+     process_orders_on_close = false,
+     close_entries_rule  = "ANY",
+     margin_long         = 33,
+     margin_short        = 33)
+
+grpSig = "Signal (RSI + BB, seasonal window)"
+rsiN   = input.int(14,   "RSI length",               minval = 2,  group = grpSig)
+rsiLo  = input.float(30, "RSI long threshold (<)",   step = 1,    group = grpSig)
+rsiHi  = input.float(70, "RSI short threshold (>)",  step = 1,    group = grpSig)
+bbN    = input.int(40,   "BB length (bars @ 1h)",    minval = 10, group = grpSig)
+bbK    = input.float(2.0,"BB std-dev multiplier",    step = 0.1,  group = grpSig)
+regLen = input.int(400,  "Regime SMA length (bars @ 1h)", minval = 50, group = grpSig)
+hStart = input.int(6,    "Window start (UTC hour)",   minval = 0, maxval = 23, group = grpSig)
+hSpan  = input.int(6,    "Window length (hours)",     minval = 1, maxval = 24, group = grpSig)
+
+grpExit = "Exits (ATR)"
+atrLen  = input.int(14,    "ATR length", minval = 2, group = grpExit)
+tpAtr   = input.float(10.0, "TP x ATR",  step = 0.5, group = grpExit)
+slAtr   = input.float(2.0,  "SL x ATR",  step = 0.1, group = grpExit)
+trlAtr  = input.float(5.0,  "Trail x ATR", step = 0.5, group = grpExit)
+maxHold = input.int(72,    "Max hold (bars @ 1h)", minval = 4, group = grpExit)
+
+grpRisk = "Sizing"
+riskPct = input.float(5.0, "Risk per trade (% eq.)", step = 0.5, group = grpRisk)
+levCap  = input.float(3.0, "Max leverage",           step = 0.5, group = grpRisk)
+
+grpSide  = "Sides"
+useLong  = input.bool(true, "Longs",  group = grpSide)
+useShort = input.bool(true, "Shorts", group = grpSide)
+
+rsiVal = ta.rsi(close, rsiN)
+basis  = ta.sma(close, bbN)
+dev    = ta.stdev(close, bbN)
+upper  = basis + bbK * dev
+lower  = basis - bbK * dev
+regSma = ta.sma(close, regLen)
+
+regimeUp = close > regSma
+regimeDn = close < regSma
+
+hNow = hour(time, "UTC")
+hEnd = (hStart + hSpan) % 24
+inWindow = hStart < hEnd ? (hNow >= hStart and hNow < hEnd) : (hNow >= hStart or hNow < hEnd)
+
+longSig  = useLong  and (rsiVal < rsiLo) and (close < lower) and regimeUp and inWindow
+shortSig = useShort and (rsiVal > rsiHi) and (close > upper) and regimeDn and inWindow
+
+atrVal      = ta.atr(atrLen)
+stopDist    = slAtr * atrVal
+riskDollars = strategy.equity * (riskPct / 100.0)
+qtySized    = stopDist > 0 ? math.min(riskDollars / stopDist, strategy.equity * levCap / close) : 0
+
+if longSig and strategy.position_size == 0
+    strategy.entry("L", strategy.long, qty = qtySized,
+                   alert_message = '{"action":"buy","ticker":"{{ticker}}","qty":"{{strategy.order.contracts}}","price":"{{close}}"}')
+
+if shortSig and strategy.position_size == 0
+    strategy.entry("S", strategy.short, qty = qtySized,
+                   alert_message = '{"action":"sell","ticker":"{{ticker}}","qty":"{{strategy.order.contracts}}","price":"{{close}}"}')
+
+var float trailStop = na
+var int   barsIn    = 0
+
+if strategy.position_size > 0
+    barsIn := barsIn + 1
+    tp    = strategy.position_avg_price + tpAtr * atrVal
+    hsl   = strategy.position_avg_price - slAtr * atrVal
+    trail = high - trlAtr * atrVal
+    trailStop := na(trailStop) ? hsl : math.max(trailStop, trail)
+    trailStop := math.max(trailStop, hsl)
+    strategy.exit("X-L", "L", limit = tp, stop = trailStop)
+    if barsIn >= maxHold
+        strategy.close("L", comment = "maxHold")
+else if strategy.position_size < 0
+    barsIn := barsIn + 1
+    tp    = strategy.position_avg_price - tpAtr * atrVal
+    hsl   = strategy.position_avg_price + slAtr * atrVal
+    trail = low + trlAtr * atrVal
+    trailStop := na(trailStop) ? hsl : math.min(trailStop, trail)
+    trailStop := math.min(trailStop, hsl)
+    strategy.exit("X-S", "S", limit = tp, stop = trailStop)
+    if barsIn >= maxHold
+        strategy.close("S", comment = "maxHold")
+else
+    trailStop := na
+    barsIn := 0
+
+plot(basis,  "BB mid",     color = color.new(color.yellow, 0))
+plot(upper,  "BB upper",   color = color.new(color.red,    40))
+plot(lower,  "BB lower",   color = color.new(color.lime,   40))
+plot(regSma, "Regime SMA", color = color.new(color.aqua,   50))
+bgcolor(inWindow ? color.new(color.purple, 92) : na)
+plotshape(longSig,  title = "Long",  style = shape.triangleup,   location = location.belowbar, color = color.lime, size = size.tiny)
+plotshape(shortSig, title = "Short", style = shape.triangledown, location = location.abovebar, color = color.red,  size = size.tiny)

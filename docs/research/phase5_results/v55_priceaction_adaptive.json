@@ -1,0 +1,257 @@
+{
+  "rows": [
+    {
+      "sleeve": "ibb_both_ETH",
+      "config": "A_canonical",
+      "n": 141,
+      "sharpe": 1.294,
+      "cagr": 40.17,
+      "mdd": -34.24,
+      "calmar": 1.173
+    },
+    {
+      "sleeve": "ibb_both_ETH",
+      "config": "B_vol_hmm",
+      "n": 141,
+      "sharpe": 0.892,
+      "cagr": 28.45,
+      "mdd": -55.79,
+      "calmar": 0.51
+    },
+    {
+      "sleeve": "ibb_both_ETH",
+      "config": "C_dir",
+      "n": 164,
+      "sharpe": 0.532,
+      "cagr": 10.59,
+      "mdd": -39.35,
+      "calmar": 0.269
+    },
+    {
+      "sleeve": "ibb_both_ETH",
+      "config": "D_stacked",
+      "n": 155,
+      "sharpe": 1.082,
+      "cagr": 29.9,
+      "mdd": -37.77,
+      "calmar": 0.792
+    },
+    {
+      "sleeve": "ibb_both_BTC",
+      "config": "A_canonical",
+      "n": 132,
+      "sharpe": 1.003,
+      "cagr": 28.4,
+      "mdd": -44.25,
+      "calmar": 0.642
+    },
+    {
+      "sleeve": "ibb_both_BTC",
+      "config": "B_vol_hmm",
+      "n": 132,
+      "sharpe": 0.075,
+      "cagr": -6.45,
+      "mdd": -66.54,
+      "calmar": -0.097
+    },
+    {
+      "sleeve": "ibb_both_BTC",
+      "config": "C_dir",
+      "n": 166,
+      "sharpe": 0.712,
+      "cagr": 16.37,
+      "mdd": -54.3,
+      "calmar": 0.301
+    },
+    {
+      "sleeve": "ibb_both_BTC",
+      "config": "D_stacked",
+      "n": 148,
+      "sharpe": 1.208,
+      "cagr": 35.62,
+      "mdd": -29.64,
+      "calmar": 1.202
+    },
+    {
+      "sleeve": "ibb_long_SOL",
+      "config": "A_canonical",
+      "n": 107,
+      "sharpe": 1.001,
+      "cagr": 25.44,
+      "mdd": -37.82,
+      "calmar": 0.672
+    },
+    {
+      "sleeve": "ibb_long_SOL",
+      "config": "B_vol_hmm",
+      "n": 107,
+      "sharpe": 0.909,
+      "cagr": 26.62,
+      "mdd": -41.09,
+      "calmar": 0.648
+    },
+    {
+      "sleeve": "ibb_long_SOL",
+      "config": "C_dir",
+      "n": 125,
+      "sharpe": 1.177,
+      "cagr": 29.48,
+      "mdd": -31.77,
+      "calmar": 0.928
+    },
+    {
+      "sleeve": "ibb_long_SOL",
+      "config": "D_stacked",
+      "n": 130,
+      "sharpe": 1.073,
+      "cagr": 26.1,
+      "mdd": -31.77,
+      "calmar": 0.821
+    },
+    {
+      "sleeve": "ibb_short_ETH",
+      "config": "A_canonical",
+      "n": 119,
+      "sharpe": 0.733,
+      "cagr": 16.24,
+      "mdd": -27.76,
+      "calmar": 0.585
+    },
+    {
+      "sleeve": "ibb_short_ETH",
+      "config": "B_vol_hmm",
+      "n": 118,
+      "sharpe": 0.655,
+      "cagr": 16.2,
+      "mdd": -35.34,
+      "calmar": 0.458
+    },
+    {
+      "sleeve": "ibb_short_ETH",
+      "config": "C_dir",
+      "n": 124,
+      "sharpe": 0.582,
+      "cagr": 11.32,
+      "mdd": -30.22,
+      "calmar": 0.375
+    },
+    {
+      "sleeve": "ibb_short_ETH",
+      "config": "D_stacked",
+      "n": 126,
+      "sharpe": 0.627,
+      "cagr": 12.46,
+      "mdd": -28.38,
+      "calmar": 0.439
+    },
+    {
+      "sleeve": "ibb_short_AVAX",
+      "config": "A_canonical",
+      "n": 116,
+      "sharpe": 0.646,
+      "cagr": 13.55,
+      "mdd": -33.62,
+      "calmar": 0.403
+    },
+    {
+      "sleeve": "ibb_short_AVAX",
+      "config": "B_vol_hmm",
+      "n": 112,
+      "sharpe": 0.389,
+      "cagr": 6.01,
+      "mdd": -44.43,
+      "calmar": 0.135
+    },
+    {
+      "sleeve": "ibb_short_AVAX",
+      "config": "C_dir",
+      "n": 121,
+      "sharpe": 0.604,
+      "cagr": 12.05,
+      "mdd": -26.29,
+      "calmar": 0.459
+    },
+    {
+      "sleeve": "ibb_short_AVAX",
+      "config": "D_stacked",
+      "n": 122,
+      "sharpe": 0.629,
+      "cagr": 12.76,
+      "mdd": -26.29,
+      "calmar": 0.485
+    }
+  ],
+  "best_per_sleeve": [
+    {
+      "sleeve": "ibb_both_ETH",
+      "best": {
+        "sleeve": "ibb_both_ETH",
+        "config": "A_canonical",
+        "n": 141,
+        "sharpe": 1.294,
+        "cagr": 40.17,
+        "mdd": -34.24,
+        "calmar": 1.173
+      },
+      "vs_baseline_mdd_pp": 0.0,
+      "vs_baseline_sh": 0.0
+    },
+    {
+      "sleeve": "ibb_both_BTC",
+      "best": {
+        "sleeve": "ibb_both_BTC",
+        "config": "D_stacked",
+        "n": 148,
+        "sharpe": 1.208,
+        "cagr": 35.62,
+        "mdd": -29.64,
+        "calmar": 1.202
+      },
+      "vs_baseline_mdd_pp": 14.61,
+      "vs_baseline_sh": 0.20500000000000007
+    },
+    {
+      "sleeve": "ibb_long_SOL",
+      "best": {
+        "sleeve": "ibb_long_SOL",
+        "config": "C_dir",
+        "n": 125,
+        "sharpe": 1.177,
+        "cagr": 29.48,
+        "mdd": -31.77,
+        "calmar": 0.928
+      },
+      "vs_baseline_mdd_pp": 6.050000000000001,
+      "vs_baseline_sh": 0.17600000000000016
+    },
+    {
+      "sleeve": "ibb_short_ETH",
+      "best": {
+        "sleeve": "ibb_short_ETH",
+        "config": "A_canonical",
+        "n": 119,
+        "sharpe": 0.733,
+        "cagr": 16.24,
+        "mdd": -27.76,
+        "calmar": 0.585
+      },
+      "vs_baseline_mdd_pp": 0.0,
+      "vs_baseline_sh": 0.0
+    },
+    {
+      "sleeve": "ibb_short_AVAX",
+      "best": {
+        "sleeve": "ibb_short_AVAX",
+        "config": "D_stacked",
+        "n": 122,
+        "sharpe": 0.629,
+        "cagr": 12.76,
+        "mdd": -26.29,
+        "calmar": 0.485
+      },
+      "vs_baseline_mdd_pp": 7.329999999999998,
+      "vs_baseline_sh": -0.017000000000000015
+    }
+  ],
+  "promo": []
+}

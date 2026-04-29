@@ -1,0 +1,121 @@
+//@version=5
+// ============================================================================
+//  BTC  —  V29 Regime-Switch (4h)   —  LIVE CANDIDATE
+// ============================================================================
+//  One strategy, two modes. ADX decides which one is live.
+//    ADX > 25 AND close > EMA(200)  →  Donchian(20) break-up long
+//    ADX > 25 AND close < EMA(200)  →  Donchian(20) break-dn short
+//    ADX < 15                             →  BB(20,2) fade toward mid
+//    Between — stay flat (regime ambiguous).
+//
+//  Python backtest (2020-01 -> 2026-04, $10k, 9 bps fee + 3 bps slip, 3x cap):
+//    FULL  n=205  CAGR +21.3%  Sh +0.89  DD -32.4%  PF 1.47
+//      IS  n=129  Sh +0.98  CAGR +24.1%
+//      OOS n=76  Sh +0.75  CAGR +16.7%
+//    Verdict: LIVE CANDIDATE — IS +0.98 / OOS +0.75 (mild degradation); useful fee-safe BTC sleeve
+// ============================================================================
+
+strategy("BTC  V29 Regime-Switch 4h",
+     overlay             = true,
+     initial_capital     = 10000,
+     currency            = currency.USD,
+     default_qty_type    = strategy.percent_of_equity,
+     default_qty_value   = 100,
+     commission_type     = strategy.commission.percent,
+     commission_value    = 0.045,
+     slippage            = 3,
+     pyramiding          = 0,
+     process_orders_on_close = false,
+     close_entries_rule  = "ANY",
+     margin_long         = 33,
+     margin_short        = 33)
+
+grpSig = "Regime thresholds"
+adxLo  = input.int(15, "Range-ADX max",  minval = 5,  group = grpSig)
+adxHi  = input.int(25, "Trend-ADX min",  minval = 10, group = grpSig)
+donchN = input.int(20, "Donchian length", minval = 5,  group = grpSig)
+emaReg = input.int(200, "Regime EMA",      minval = 20, group = grpSig)
+bbN    = input.int(20, "BB length",              minval = 5,  group = grpSig)
+bbK    = input.float(2.0, "BB k",                step = 0.1,  group = grpSig)
+
+grpExit = "Exits (ATR)"
+atrLen  = input.int(14, "ATR length",     minval = 2, group = grpExit)
+tpAtr   = input.float(6.0, "TP x ATR", step = 0.5, group = grpExit)
+slAtr   = input.float(1.5, "SL x ATR",   step = 0.1, group = grpExit)
+trlAtr  = input.float(3.5, "Trail x ATR",step = 0.5, group = grpExit)
+maxHold = input.int(20, "Max hold",     minval = 4, group = grpExit)
+
+grpRisk = "Sizing"
+riskPct = input.float(3.0, "Risk/trade (% eq.)", step = 0.5, group = grpRisk)
+levCap  = input.float(3.0, "Max leverage",          step = 0.5, group = grpRisk)
+
+// --- Indicators ---
+[_, _, adxV] = ta.dmi(14, 14)
+emaR  = ta.ema(close, emaReg)
+regUp = close > emaR
+regDn = close < emaR
+
+dHi = ta.highest(high, donchN)[1]
+dLo = ta.lowest (low,  donchN)[1]
+trendLong  = (adxV > adxHi) and (close > dHi) and (close[1] <= dHi[1]) and regUp
+trendShort = (adxV > adxHi) and (close < dLo) and (close[1] >= dLo[1]) and regDn
+
+bbMid = ta.sma(close, bbN)
+bbStd = ta.stdev(close, bbN)
+bbUp  = bbMid + bbK * bbStd
+bbDn  = bbMid - bbK * bbStd
+rangeLong  = (adxV < adxLo) and (close > bbDn) and (close[1] <= bbDn[1])
+rangeShort = (adxV < adxLo) and (close < bbUp) and (close[1] >= bbUp[1])
+
+longSig  = trendLong or rangeLong
+shortSig = trendShort or rangeShort
+
+// --- Sizing ---
+atrVal = ta.atr(atrLen)
+stopDist = slAtr * atrVal
+riskDollars = strategy.equity * (riskPct / 100.0)
+qtySized = stopDist > 0 ? math.min(riskDollars / stopDist, strategy.equity * levCap / close) : 0
+
+if longSig and strategy.position_size == 0
+    strategy.entry("L", strategy.long, qty = qtySized,
+                   alert_message = '{"action":"buy","ticker":"{{ticker}}","qty":"{{strategy.order.contracts}}","price":"{{close}}"}')
+if shortSig and strategy.position_size == 0
+    strategy.entry("S", strategy.short, qty = qtySized,
+                   alert_message = '{"action":"sell","ticker":"{{ticker}}","qty":"{{strategy.order.contracts}}","price":"{{close}}"}')
+
+// --- Exits ---
+var float trailStop = na
+var int   barsIn    = 0
+
+if strategy.position_size > 0
+    barsIn := barsIn + 1
+    tp    = strategy.position_avg_price + tpAtr * atrVal
+    hsl   = strategy.position_avg_price - slAtr * atrVal
+    trail = high - trlAtr * atrVal
+    trailStop := na(trailStop) ? hsl : math.max(trailStop, trail)
+    trailStop := math.max(trailStop, hsl)
+    strategy.exit("X-L", "L", limit = tp, stop = trailStop)
+    if barsIn >= maxHold
+        strategy.close("L", comment = "maxHold")
+else if strategy.position_size < 0
+    barsIn := barsIn + 1
+    tp    = strategy.position_avg_price - tpAtr * atrVal
+    hsl   = strategy.position_avg_price + slAtr * atrVal
+    trail = low + trlAtr * atrVal
+    trailStop := na(trailStop) ? hsl : math.min(trailStop, trail)
+    trailStop := math.min(trailStop, hsl)
+    strategy.exit("X-S", "S", limit = tp, stop = trailStop)
+    if barsIn >= maxHold
+        strategy.close("S", comment = "maxHold")
+else
+    trailStop := na
+    barsIn := 0
+
+plot(emaR, "Regime EMA", color = color.new(color.aqua, 40))
+plot(dHi,  "Donch hi",   color = color.new(color.red, 50))
+plot(dLo,  "Donch lo",   color = color.new(color.lime, 50))
+plot(bbUp, "BB up",      color = color.new(color.orange, 60))
+plot(bbDn, "BB dn",      color = color.new(color.orange, 60))
+bgcolor(adxV > adxHi ? color.new(color.green, 92) : (adxV < adxLo ? color.new(color.yellow, 92) : na))
+plotshape(longSig,  title = "Long",  style = shape.triangleup,   location = location.belowbar, color = color.lime, size = size.tiny)
+plotshape(shortSig, title = "Short", style = shape.triangledown, location = location.abovebar, color = color.red,  size = size.tiny)

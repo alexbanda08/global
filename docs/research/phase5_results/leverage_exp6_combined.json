@@ -1,0 +1,120 @@
+{
+  "best_per_sleeve": {
+    "CCI_ETH_4h": {
+      "name": "regime",
+      "sharpe": 1.39,
+      "cfg": {
+        "variant": "trend_x_vol",
+        "mode": "regime"
+      }
+    },
+    "STF_SOL_4h": {
+      "name": "static",
+      "sharpe": 0.65,
+      "cfg": {
+        "risk": 0.02,
+        "cap": 3.0,
+        "mode": "static"
+      }
+    },
+    "STF_AVAX_4h": {
+      "name": "conf",
+      "sharpe": 0.95,
+      "cfg": {
+        "variant": "strong",
+        "mode": "conf"
+      }
+    },
+    "STF_DOGE_4h": {
+      "name": "conf",
+      "sharpe": 0.67,
+      "cfg": {
+        "variant": "strong",
+        "mode": "conf"
+      }
+    },
+    "VWZ_INJ_4h": {
+      "name": "static",
+      "sharpe": 0.6,
+      "cfg": {
+        "risk": 0.08,
+        "cap": 5.0,
+        "mode": "static"
+      }
+    },
+    "LATBB_AVAX_4h": {
+      "name": "regime",
+      "sharpe": 0.61,
+      "cfg": {
+        "variant": "defensive",
+        "mode": "regime"
+      }
+    },
+    "BB_AVAX_4h": {
+      "name": "conf",
+      "sharpe": 1.37,
+      "cfg": {
+        "variant": "strong",
+        "mode": "conf"
+      }
+    }
+  },
+  "blended": {
+    "P3_LEV": {
+      "label": "P3_LEV",
+      "sharpe": 1.62,
+      "cagr": 0.326,
+      "mdd": -0.205,
+      "calmar": 1.59,
+      "min_yr": 0.039,
+      "pos_yrs": 6
+    },
+    "P5_LEV": {
+      "label": "P5_LEV",
+      "sharpe": 1.61,
+      "cagr": 0.213,
+      "mdd": -0.15,
+      "calmar": 1.42,
+      "min_yr": 0.066,
+      "pos_yrs": 6
+    },
+    "P7_LEV": {
+      "label": "P7_LEV",
+      "sharpe": 1.85,
+      "cagr": 0.558,
+      "mdd": -0.209,
+      "calmar": 2.67,
+      "min_yr": 0.188,
+      "pos_yrs": 6
+    },
+    "TOP3_LEV": {
+      "label": "TOP3_LEV",
+      "sharpe": 1.79,
+      "cagr": 0.686,
+      "mdd": -0.259,
+      "calmar": 2.65,
+      "min_yr": 0.178,
+      "pos_yrs": 6
+    },
+    "TOP4_LEV": {
+      "label": "TOP4_LEV",
+      "sharpe": 1.82,
+      "cagr": 0.577,
+      "mdd": -0.232,
+      "calmar": 2.48,
+      "min_yr": 0.144,
+      "pos_yrs": 6
+    }
+  },
+  "top3_members": [
+    "CCI_ETH_4h",
+    "BB_AVAX_4h",
+    "STF_AVAX_4h"
+  ],
+  "top4_members": [
+    "CCI_ETH_4h",
+    "BB_AVAX_4h",
+    "STF_AVAX_4h",
+    "STF_DOGE_4h"
+  ]
+}

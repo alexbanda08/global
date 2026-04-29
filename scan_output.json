@@ -1,0 +1,4730 @@
+{
+ "total_py": 144,
+ "files": [
+  {
+   "file": "strategy_lab/__init__.py",
+   "name": "__init__",
+   "funcs": [],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [],
+   "size": 0,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/advanced_simulator.py",
+   "name": "advanced_simulator",
+   "funcs": [
+    "simulate_advanced"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr"
+   ],
+   "size": 8531,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/alpha_analysis.py",
+   "name": "alpha_analysis",
+   "funcs": [
+    "ic_row",
+    "analyze",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "atr",
+    "funding",
+    "open_interest",
+    "long_short_ratio"
+   ],
+   "size": 5256,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/analyze.py",
+   "name": "analyze",
+   "funcs": [
+    "composite_score",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [],
+   "size": 2288,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_alpha_handbook.py",
+   "name": "build_alpha_handbook",
+   "funcs": [
+    "page_cover",
+    "page_pareto",
+    "page_v7_hwr",
+    "page_v8_v9",
+    "page_v10",
+    "page_v11",
+    "page_v12",
+    "page_v14",
+    "page_v15",
+    "page_v16",
+    "page_v17",
+    "page_v18",
+    "page_combined_equity",
+    "page_deploy",
+    "page_caveats",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "bollinger",
+    "donchian",
+    "kalman",
+    "supertrend",
+    "ema",
+    "hma",
+    "squeeze",
+    "kalman_range",
+    "stoch",
+    "funding",
+    "open_interest",
+    "liquidations",
+    "pairs"
+   ],
+   "size": 26503,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_consolidated_pdf.py",
+   "name": "build_consolidated_pdf",
+   "funcs": [
+    "cover",
+    "asset_page",
+    "combined_page",
+    "robustness_page",
+    "per_year_page",
+    "logic_page",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "kalman",
+    "ema",
+    "kalman_range",
+    "pairs"
+   ],
+   "size": 23380,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_coworkfindings_pdf.py",
+   "name": "build_coworkfindings_pdf",
+   "funcs": [
+    "tbl",
+    "img"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "donchian",
+    "kalman",
+    "ema",
+    "keltner",
+    "squeeze",
+    "liquidations",
+    "smc_ob",
+    "ict",
+    "pairs"
+   ],
+   "size": 28962,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_cross_ref_pdf.py",
+   "name": "build_cross_ref_pdf",
+   "funcs": [
+    "cover",
+    "equity_curves_page",
+    "correlation_page",
+    "final_spec_page",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "rsi",
+    "donchian"
+   ],
+   "size": 13275,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_deploy_guide.py",
+   "name": "build_deploy_guide",
+   "funcs": [
+    "read_equity",
+    "read_trades",
+    "metrics",
+    "year_stats",
+    "cover_page",
+    "small_capital_page",
+    "leverage_page",
+    "strategy_deep_dive",
+    "combined_portfolio_page",
+    "checklist_page",
+    "risk_page",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "BTCUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "donchian",
+    "kalman",
+    "supertrend",
+    "hma",
+    "funding",
+    "open_interest",
+    "liquidations",
+    "pairs"
+   ],
+   "size": 38331,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_leverage_verdict.py",
+   "name": "build_leverage_verdict",
+   "funcs": [
+    "cover",
+    "v19_v20_results_page",
+    "v21_leverage_page",
+    "v21_split_page",
+    "kelly_analysis_page",
+    "final_spec_page",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "supertrend",
+    "ichimoku",
+    "heikin_ashi",
+    "squeeze"
+   ],
+   "size": 20928,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_low_dd_verdict.py",
+   "name": "build_low_dd_verdict",
+   "funcs": [
+    "cover",
+    "results_table_page",
+    "frontier_page",
+    "winners_detail_page",
+    "new_spec_page",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [],
+   "size": 19658,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_overfitting_pdf.py",
+   "name": "build_overfitting_pdf",
+   "funcs": [
+    "cover",
+    "test1_page",
+    "test2_page",
+    "test3_page",
+    "test4_page",
+    "test5_page",
+    "final_verdict_page",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "rsi"
+   ],
+   "size": 24882,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_pdf.py",
+   "name": "build_pdf",
+   "funcs": [
+    "fmt_pct",
+    "fmt_usd",
+    "fmt_ratio",
+    "cover_page",
+    "equity_page",
+    "drawdown_page",
+    "per_year_page",
+    "sensitivity_page",
+    "rolling_sharpe_page",
+    "logic_page",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "donchian",
+    "ema"
+   ],
+   "size": 17029,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_pdf_per_asset.py",
+   "name": "build_pdf_per_asset",
+   "funcs": [
+    "cover",
+    "equity_page",
+    "drawdown_page",
+    "per_year_page",
+    "robustness_page",
+    "combined_page",
+    "logic_page",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "kalman",
+    "ema",
+    "kalman_range"
+   ],
+   "size": 18672,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_pdf_v3.py",
+   "name": "build_pdf_v3",
+   "funcs": [
+    "fmt_pct",
+    "fmt_usd",
+    "fmt_ratio",
+    "cover_page",
+    "equity_page",
+    "drawdown_page",
+    "per_year_page",
+    "variant_table_page",
+    "rolling_sharpe_page",
+    "logic_page",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "ema"
+   ],
+   "size": 18290,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_pine_scripts.py",
+   "name": "build_pine_scripts",
+   "funcs": [
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "bollinger",
+    "kalman",
+    "ema",
+    "keltner"
+   ],
+   "size": 15370,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_portfolio_pdf.py",
+   "name": "build_portfolio_pdf",
+   "funcs": [
+    "page_cover",
+    "page_combined_equity",
+    "page_grid_heatmap",
+    "page_per_coin",
+    "page_checklist",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "AVAXUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "grid"
+   ],
+   "size": 16621,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_strategy_catalog.py",
+   "name": "build_strategy_catalog",
+   "funcs": [
+    "best_row",
+    "cover_page",
+    "summary_table_page",
+    "verdict_page",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [
+    "1h",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "bollinger",
+    "donchian",
+    "kalman",
+    "supertrend",
+    "ema",
+    "hma",
+    "keltner",
+    "squeeze",
+    "kalman_range",
+    "stoch",
+    "funding",
+    "open_interest",
+    "liquidations",
+    "long_short_ratio",
+    "pairs"
+   ],
+   "size": 53081,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_v23_report.py",
+   "name": "build_v23_report",
+   "funcs": [
+    "load",
+    "make_charts",
+    "make_portfolio_chart",
+    "compute_portfolio_stats",
+    "build_overview_table",
+    "build_per_coin_kv_table",
+    "page_cover",
+    "page_per_coin",
+    "page_methodology",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "bollinger",
+    "kalman",
+    "ema",
+    "keltner",
+    "funding"
+   ],
+   "size": 26193,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_v24_v25_appendix.py",
+   "name": "build_v24_v25_appendix",
+   "funcs": [
+    "make_overlay_chart",
+    "build_pdf"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ETHUSDT",
+    "LINKUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "rsi",
+    "kalman",
+    "ema"
+   ],
+   "size": 16517,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/build_v28_charts.py",
+   "name": "build_v28_charts",
+   "funcs": [],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "rsi",
+    "donchian",
+    "smc_ob"
+   ],
+   "size": 6010,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/dashboard_user_sleeves.py",
+   "name": "dashboard_user_sleeves",
+   "funcs": [
+    "load_user_5sleeve_with_trades"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "donchian"
+   ],
+   "size": 6245,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/detailed_metrics.py",
+   "name": "detailed_metrics",
+   "funcs": [
+    "extract",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "adx",
+    "rsi",
+    "kalman",
+    "kalman_range"
+   ],
+   "size": 8156,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/edge_hunt.py",
+   "name": "edge_hunt",
+   "funcs": [
+    "run_4h",
+    "run_atr",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "AVAXUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "donchian",
+    "kalman",
+    "kalman_range",
+    "pairs"
+   ],
+   "size": 6965,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/engine.py",
+   "name": "engine",
+   "funcs": [
+    "load",
+    "run_backtest",
+    "extract_metrics",
+    "combined_equity",
+    "portfolio_metrics",
+    "walk_forward_splits"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "1d"
+   ],
+   "features": [
+    "rsi",
+    "pairs"
+   ],
+   "size": 11784,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/features_15m.py",
+   "name": "features_15m",
+   "funcs": [
+    "load_ohlcv_15m",
+    "load_metrics",
+    "load_funding",
+    "load_premium_1h",
+    "load_liquidations",
+    "build",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "1h"
+   ],
+   "features": [
+    "atr",
+    "ema",
+    "funding",
+    "open_interest",
+    "liquidations",
+    "long_short_ratio"
+   ],
+   "size": 9302,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/features_1h.py",
+   "name": "features_1h",
+   "funcs": [
+    "load_ohlcv_1h",
+    "load_metrics",
+    "load_funding",
+    "load_premium",
+    "load_liquidations",
+    "build",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "1h"
+   ],
+   "features": [
+    "atr",
+    "ema",
+    "funding",
+    "open_interest",
+    "liquidations",
+    "long_short_ratio"
+   ],
+   "size": 6613,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/fetch_multi_tf.py",
+   "name": "fetch_multi_tf",
+   "funcs": [
+    "fetch_binance",
+    "resample_ohlcv",
+    "pandas_tf_alias",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "INJUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "SUIUSDT",
+    "TONUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "2h",
+    "30m",
+    "4h"
+   ],
+   "features": [],
+   "size": 4380,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/final_report.py",
+   "name": "final_report",
+   "funcs": [
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "donchian"
+   ],
+   "size": 4522,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/final_report_v3.py",
+   "name": "final_report_v3",
+   "funcs": [
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "donchian",
+    "ema"
+   ],
+   "size": 4934,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/hwr_hunt.py",
+   "name": "hwr_hunt",
+   "funcs": [
+    "year_stats",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "BTCUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [],
+   "size": 5862,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/iaf_multi_compare.py",
+   "name": "iaf_multi_compare",
+   "funcs": [
+    "prep_csvs",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "adx",
+    "rsi",
+    "donchian",
+    "ema"
+   ],
+   "size": 9655,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/kronos_ft_dashboard.py",
+   "name": "kronos_ft_dashboard",
+   "funcs": [
+    "list_experiments",
+    "parse_log",
+    "tail_lines",
+    "build_status",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "kronos"
+   ],
+   "size": 12662,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": true
+  },
+  {
+   "file": "strategy_lab/kronos_ft_sniff_5m.py",
+   "name": "kronos_ft_sniff_5m",
+   "funcs": [
+    "load_config",
+    "slice_test",
+    "evaluate_horizon",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [
+    "15m",
+    "30m",
+    "5m"
+   ],
+   "features": [
+    "rsi",
+    "kronos"
+   ],
+   "size": 8838,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": true
+  },
+  {
+   "file": "strategy_lab/kronos_gpu_smoke.py",
+   "name": "kronos_gpu_smoke",
+   "funcs": [
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "rsi",
+    "kronos"
+   ],
+   "size": 2808,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": true
+  },
+  {
+   "file": "strategy_lab/kronos_sniff_test.py",
+   "name": "kronos_sniff_test",
+   "funcs": [
+    "prepare_df",
+    "run_sniff",
+    "summary",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "stoch",
+    "kronos"
+   ],
+   "size": 8317,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": true
+  },
+  {
+   "file": "strategy_lab/kronos_sniff_test_base.py",
+   "name": "kronos_sniff_test_base",
+   "funcs": [
+    "prepare_df",
+    "run_sniff",
+    "summary",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "kronos"
+   ],
+   "size": 8586,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": true
+  },
+  {
+   "file": "strategy_lab/live_forward.py",
+   "name": "live_forward",
+   "funcs": [
+    "load_state",
+    "save_state",
+    "fetch_klines",
+    "load_parquet_tail",
+    "latest_signal",
+    "mark_to_market",
+    "open_position",
+    "close_position",
+    "log_signal",
+    "log_trade",
+    "log_equity",
+    "process_symbol",
+    "run_once",
+    "daemon",
+    "backfill",
+    "status",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "BTCUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "adx",
+    "rsi",
+    "kalman",
+    "kalman_range",
+    "taker_delta"
+   ],
+   "size": 19085,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/native_to_iaf.py",
+   "name": "native_to_iaf",
+   "funcs": [
+    "native_to_backtest",
+    "render_native_dashboard"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr"
+   ],
+   "size": 16423,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/per_asset_report.py",
+   "name": "per_asset_report",
+   "funcs": [
+    "backtest",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "adx",
+    "kalman",
+    "kalman_range"
+   ],
+   "size": 5850,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/portfolio.py",
+   "name": "portfolio",
+   "funcs": [
+    "run_combined"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "rsi"
+   ],
+   "size": 3582,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/portfolio_audit.py",
+   "name": "portfolio_audit",
+   "funcs": [
+    "load_ohlcv",
+    "simulate",
+    "metrics_from_equity",
+    "phase1_per_coin",
+    "portfolio_equity",
+    "phase2_grid",
+    "phase3_recommend",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "BTCUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "kalman",
+    "kalman_range"
+   ],
+   "size": 18883,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/robust_validate.py",
+   "name": "robust_validate",
+   "funcs": [
+    "cross_asset",
+    "mc_shuffle",
+    "random_windows",
+    "kfold",
+    "param_epsilon",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "donchian",
+    "kalman",
+    "kalman_range"
+   ],
+   "size": 13682,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/robust_validate_v13a.py",
+   "name": "robust_validate_v13a",
+   "funcs": [
+    "cross_asset",
+    "mc_shuffle",
+    "random_windows",
+    "kfold",
+    "param_epsilon",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "1h"
+   ],
+   "features": [
+    "atr",
+    "kalman",
+    "kalman_range"
+   ],
+   "size": 11233,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/robust_validate_v17.py",
+   "name": "robust_validate_v17",
+   "funcs": [
+    "cross_asset",
+    "mc_shuffle",
+    "random_windows",
+    "kfold",
+    "param_eps",
+    "walk_forward",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "atr",
+    "kalman"
+   ],
+   "size": 10253,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_alt_tests.py",
+   "name": "run_alt_tests",
+   "funcs": [
+    "simulate_signal",
+    "summarize",
+    "test_cross_asset",
+    "test_funding_fade",
+    "test_time_of_day",
+    "test_vol_regime",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "atr",
+    "rsi",
+    "squeeze",
+    "funding"
+   ],
+   "size": 12664,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_dashboard.py",
+   "name": "run_dashboard",
+   "funcs": [
+    "show",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "long_short_ratio"
+   ],
+   "size": 4488,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_per_asset.py",
+   "name": "run_per_asset",
+   "funcs": [
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1d",
+    "1h",
+    "4h"
+   ],
+   "features": [],
+   "size": 4043,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_sweep.py",
+   "name": "run_sweep",
+   "funcs": [
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1d",
+    "1h",
+    "4h"
+   ],
+   "features": [],
+   "size": 2396,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_sweep_v2.py",
+   "name": "run_sweep_v2",
+   "funcs": [
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "1d",
+    "1h",
+    "4h"
+   ],
+   "features": [],
+   "size": 2303,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v10_fade.py",
+   "name": "run_v10_fade",
+   "funcs": [
+    "simulate",
+    "report",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "atr",
+    "rsi",
+    "liquidations"
+   ],
+   "size": 7852,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v11_ml.py",
+   "name": "run_v11_ml",
+   "funcs": [
+    "triple_barrier_labels",
+    "build_dataset",
+    "train_and_eval",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "atr",
+    "funding",
+    "open_interest",
+    "liquidations",
+    "long_short_ratio",
+    "ml_classifier"
+   ],
+   "size": 8705,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": true
+  },
+  {
+   "file": "strategy_lab/run_v12_1h.py",
+   "name": "run_v12_1h",
+   "funcs": [
+    "simulate",
+    "report",
+    "v12a_signal",
+    "run_v12a",
+    "v12b_ml"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "atr",
+    "funding",
+    "open_interest",
+    "long_short_ratio",
+    "ml_classifier",
+    "pairs"
+   ],
+   "size": 9327,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": true
+  },
+  {
+   "file": "strategy_lab/run_v13_trend_1h.py",
+   "name": "run_v13_trend_1h",
+   "funcs": [
+    "v13_range_kalman",
+    "v13_adx_gate",
+    "v13_volume_breakout",
+    "simulate",
+    "report",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "donchian",
+    "kalman",
+    "ema",
+    "kalman_range"
+   ],
+   "size": 7481,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v14_1h_hunt.py",
+   "name": "run_v14_1h_hunt",
+   "funcs": [
+    "atr",
+    "ema",
+    "donchian_up",
+    "donchian_dn",
+    "bb",
+    "supertrend",
+    "kalman_ema",
+    "adx",
+    "simulate",
+    "report",
+    "s1_donchian_fast",
+    "s2_donchian_slow",
+    "s3_range_kalman",
+    "s3_range_kalman_short",
+    "s4_supertrend_adx",
+    "s5_momentum_mtf",
+    "s6_bb_break",
+    "s7_oi_momo",
+    "run_one",
+    "fmt",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "bollinger",
+    "donchian",
+    "kalman",
+    "supertrend",
+    "ema",
+    "kalman_range",
+    "funding",
+    "open_interest"
+   ],
+   "size": 20138,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v15_1h_hunt.py",
+   "name": "run_v15_1h_hunt",
+   "funcs": [
+    "atr",
+    "ema",
+    "kalman_ema",
+    "supertrend",
+    "keltner",
+    "bb",
+    "simulate",
+    "report",
+    "donchian_up",
+    "donchian_dn",
+    "sig_rangekalman",
+    "sig_rangekalman_short",
+    "sig_bb_break",
+    "sig_bb_break_short",
+    "sig_donchian",
+    "sig_donchian_short",
+    "sig_supertrend_adx",
+    "sig_mtf_momentum",
+    "sig_keltner_adx",
+    "sig_macd_rsi",
+    "sig_vol_regime_momo",
+    "run_one",
+    "fmt",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "macd",
+    "donchian",
+    "kalman",
+    "supertrend",
+    "ema",
+    "keltner",
+    "funding"
+   ],
+   "size": 19827,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v16_1h_hunt.py",
+   "name": "run_v16_1h_hunt",
+   "funcs": [
+    "atr",
+    "ema",
+    "kalman_ema",
+    "supertrend",
+    "donchian_up",
+    "donchian_dn",
+    "bb",
+    "simulate",
+    "metrics",
+    "portfolio_metrics",
+    "sig_rangekalman",
+    "sig_rangekalman_short",
+    "sig_bbbreak",
+    "sig_mtf",
+    "sig_trend_rider_long",
+    "sig_trend_rider_short",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "donchian",
+    "kalman",
+    "supertrend",
+    "ema",
+    "funding"
+   ],
+   "size": 16191,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v17_eth_tune.py",
+   "name": "run_v17_eth_tune",
+   "funcs": [
+    "run_variant",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "kalman",
+    "funding"
+   ],
+   "size": 6095,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v18_btc_sol_hunt.py",
+   "name": "run_v18_btc_sol_hunt",
+   "funcs": [
+    "sig_donchian_long",
+    "sig_donchian_short",
+    "sig_bbbreak_short",
+    "sig_supertrend_adx",
+    "sig_keltner_adx",
+    "sig_keltner_adx_short",
+    "run_one",
+    "pass1",
+    "pass2",
+    "hunt_one_asset",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "donchian",
+    "kalman",
+    "supertrend",
+    "ema",
+    "keltner",
+    "grid"
+   ],
+   "size": 12298,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v19_feature_hunt.py",
+   "name": "run_v19_feature_hunt",
+   "funcs": [
+    "rolling_z",
+    "dedupe",
+    "sig_oi_breakout_long",
+    "sig_oi_breakout_short",
+    "sig_funding_fade_long",
+    "sig_funding_fade_short",
+    "sig_liq_cascade_long",
+    "sig_liq_cascade_short",
+    "sig_premium_revert_long",
+    "sig_premium_revert_short",
+    "sig_taker_momo_long",
+    "sig_taker_momo_short",
+    "sig_trend_funding_long",
+    "sig_trend_funding_short",
+    "sig_oi_div_short",
+    "sig_oi_div_long",
+    "run_one",
+    "hunt_signal",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "atr",
+    "rsi",
+    "donchian",
+    "funding",
+    "open_interest",
+    "liquidations"
+   ],
+   "size": 20108,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v20_multi_tf_multi_asset.py",
+   "name": "run_v20_multi_tf_multi_asset",
+   "funcs": [
+    "scaled",
+    "dedupe",
+    "sig_donchian_long",
+    "sig_donchian_short",
+    "sig_bbbreak_short",
+    "sig_keltner_adx",
+    "sig_keltner_adx_short",
+    "scale_params",
+    "run_combo",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "INJUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "SUIUSDT",
+    "TONUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "2h",
+    "30m",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "donchian",
+    "kalman",
+    "supertrend",
+    "ema",
+    "keltner"
+   ],
+   "size": 8344,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v21_btc_sol_deep.py",
+   "name": "run_v21_btc_sol_deep",
+   "funcs": [
+    "scaled",
+    "dedupe",
+    "sig_donchian_long",
+    "sig_donchian_short",
+    "sig_bbbreak_short",
+    "sig_keltner_adx",
+    "sig_keltner_adx_short",
+    "scale_params",
+    "run_combo",
+    "hunt",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "12h",
+    "15m",
+    "1d",
+    "1h",
+    "2h",
+    "30m",
+    "4h",
+    "6h",
+    "8h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "donchian",
+    "kalman",
+    "supertrend",
+    "ema",
+    "keltner"
+   ],
+   "size": 8150,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v21b_fast.py",
+   "name": "run_v21b_fast",
+   "funcs": [
+    "scaled",
+    "dedupe",
+    "sig_bbbreak_short",
+    "scale_params",
+    "one_run",
+    "hunt",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "1h",
+    "2h",
+    "4h",
+    "6h",
+    "8h"
+   ],
+   "features": [
+    "atr",
+    "donchian",
+    "kalman",
+    "supertrend",
+    "ema"
+   ],
+   "size": 7508,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v22_btc_final.py",
+   "name": "run_v22_btc_final",
+   "funcs": [
+    "scaled",
+    "dedupe",
+    "sig_bbbreak_short",
+    "sig_combo_long",
+    "sig_combo_short",
+    "run",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT"
+   ],
+   "tfs": [
+    "12h",
+    "1d",
+    "1h",
+    "2h",
+    "4h",
+    "6h",
+    "8h"
+   ],
+   "features": [
+    "atr",
+    "donchian",
+    "kalman",
+    "ema"
+   ],
+   "size": 7492,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v22_oos_audit.py",
+   "name": "run_v22_oos_audit",
+   "funcs": [
+    "dedupe",
+    "run",
+    "audit",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "2h"
+   ],
+   "features": [
+    "atr",
+    "kalman"
+   ],
+   "size": 3563,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v22b_surgical.py",
+   "name": "run_v22b_surgical",
+   "funcs": [
+    "dedupe",
+    "sig_bbbreak_short",
+    "run",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT"
+   ],
+   "tfs": [
+    "2h",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "kalman"
+   ],
+   "size": 7085,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v23_all_coins.py",
+   "name": "run_v23_all_coins",
+   "funcs": [
+    "dedupe",
+    "scaled",
+    "sig_bbbreak_short",
+    "sig_keltner_adx",
+    "sig_keltner_adx_short",
+    "run_one",
+    "sweep_rk",
+    "sweep_bb",
+    "sweep_keltner",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "INJUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "SUIUSDT",
+    "TONUSDT"
+   ],
+   "tfs": [
+    "1h",
+    "2h",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "kalman",
+    "ema",
+    "keltner"
+   ],
+   "size": 10646,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v23_oos_all.py",
+   "name": "run_v23_oos_all",
+   "funcs": [
+    "dedupe",
+    "sig_bbbreak_short",
+    "sig_keltner_adx",
+    "sig_keltner_adx_short",
+    "run_slice",
+    "verdict",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "kalman",
+    "ema",
+    "keltner"
+   ],
+   "size": 6292,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v24_15m_scalp.py",
+   "name": "run_v24_15m_scalp",
+   "funcs": [
+    "dedupe",
+    "sig_orb",
+    "sig_vwap_band",
+    "sig_rsi_bb",
+    "sig_st_dual",
+    "run_one",
+    "sweep_family",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "INJUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "SUIUSDT",
+    "TONUSDT"
+   ],
+   "tfs": [
+    "15m"
+   ],
+   "features": [
+    "atr",
+    "rsi",
+    "bollinger",
+    "supertrend",
+    "ema"
+   ],
+   "size": 14503,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v24_oos.py",
+   "name": "run_v24_oos",
+   "funcs": [
+    "run_slice",
+    "verdict",
+    "audit",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "rsi"
+   ],
+   "size": 4615,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v24_regime_router.py",
+   "name": "run_v24_regime_router",
+   "funcs": [
+    "scaled",
+    "dedupe",
+    "regime_label",
+    "sig_donchian_up",
+    "sig_donchian_dn",
+    "sig_bb_meanrevert_long",
+    "sig_bb_meanrevert_short",
+    "sig_regime_combined",
+    "run_one",
+    "sweep",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "INJUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "SUIUSDT",
+    "TONUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "2h",
+    "30m",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "donchian",
+    "ema"
+   ],
+   "size": 8459,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v25_creative.py",
+   "name": "run_v25_creative",
+   "funcs": [
+    "scaled",
+    "dedupe",
+    "sig_mtf_conf",
+    "sig_squeeze",
+    "sig_seasonal",
+    "sig_kelt_rsi",
+    "sig_sweep",
+    "run_one",
+    "sweep_family",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "INJUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "SUIUSDT",
+    "TONUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "2h",
+    "30m",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "rsi",
+    "bollinger",
+    "donchian",
+    "ema",
+    "keltner",
+    "squeeze"
+   ],
+   "size": 18882,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v25_oos.py",
+   "name": "run_v25_oos",
+   "funcs": [
+    "run_slice",
+    "verdict",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "rsi",
+    "keltner",
+    "squeeze"
+   ],
+   "size": 4756,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v26_ob_rerun.py",
+   "name": "run_v26_ob_rerun",
+   "funcs": [
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "INJUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "SUIUSDT",
+    "TONUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "smc_ob"
+   ],
+   "size": 1680,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v26_oos.py",
+   "name": "run_v26_oos",
+   "funcs": [
+    "run_slice",
+    "verdict",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "rsi",
+    "squeeze",
+    "smc_ob"
+   ],
+   "size": 5593,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v26_priceaction.py",
+   "name": "run_v26_priceaction",
+   "funcs": [
+    "scaled",
+    "dedupe",
+    "swing_pivots",
+    "sig_liq_sweep",
+    "sig_order_block",
+    "sig_msb",
+    "sig_engulf",
+    "sig_rsi_div",
+    "sig_atr_sqz",
+    "run_one",
+    "sweep_family",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "INJUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "SUIUSDT",
+    "TONUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "2h",
+    "30m",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "rsi",
+    "bollinger",
+    "donchian",
+    "ema",
+    "squeeze",
+    "smc_ob"
+   ],
+   "size": 24320,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v27_oos.py",
+   "name": "run_v27_oos",
+   "funcs": [
+    "run_slice",
+    "verdict",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "rsi",
+    "donchian"
+   ],
+   "size": 4467,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v27_swing.py",
+   "name": "run_v27_swing",
+   "funcs": [
+    "scaled",
+    "dedupe",
+    "sig_trend_pullback",
+    "sig_htf_donchian",
+    "sig_vwap_fade",
+    "sig_daily_ema_cross",
+    "run_one",
+    "sweep_family",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "INJUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "SUIUSDT",
+    "TONUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "2h",
+    "30m",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "rsi",
+    "donchian",
+    "ema",
+    "funding"
+   ],
+   "size": 15633,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v28_peryear_audit.py",
+   "name": "run_v28_peryear_audit",
+   "funcs": [
+    "eq_from_entry",
+    "cagr_slice",
+    "year_range",
+    "clears_100"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [],
+   "size": 3065,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v28_portfolio_hunt.py",
+   "name": "run_v28_portfolio_hunt",
+   "funcs": [
+    "eq_from_entry",
+    "year_cagr",
+    "fmt",
+    "norm",
+    "combine",
+    "year_cagr_blend"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "rsi",
+    "smc_ob"
+   ],
+   "size": 4970,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v28_validate_winner.py",
+   "name": "run_v28_validate_winner",
+   "funcs": [
+    "load_eq",
+    "blend"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "SOLUSDT",
+    "SUIUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "donchian",
+    "kalman"
+   ],
+   "size": 5635,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v29_oos.py",
+   "name": "run_v29_oos",
+   "funcs": [
+    "slice_metrics",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [
+    "15m",
+    "1h",
+    "2h",
+    "30m",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "rsi"
+   ],
+   "size": 4508,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v29_portfolio.py",
+   "name": "run_v29_portfolio",
+   "funcs": [
+    "year_cagr",
+    "eq_from_entry",
+    "year_cagr_blend"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "donchian"
+   ],
+   "size": 5146,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v29_regime.py",
+   "name": "run_v29_regime",
+   "funcs": [
+    "scaled",
+    "dedupe",
+    "htf_bool",
+    "bbands",
+    "adx_series",
+    "sig_trend_grade",
+    "sig_lateral_bb_fade",
+    "sig_regime_switch",
+    "run_one",
+    "sweep_family",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "INJUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "SUIUSDT",
+    "TONUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "2h",
+    "30m",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "bollinger",
+    "donchian",
+    "ema"
+   ],
+   "size": 15408,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v3.py",
+   "name": "run_v3",
+   "funcs": [
+    "portfolio_run",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [],
+   "size": 3339,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v30_creative.py",
+   "name": "run_v30_creative",
+   "funcs": [
+    "scaled",
+    "dedupe",
+    "bbands",
+    "kelt",
+    "adx_series",
+    "sig_ttm_squeeze",
+    "sig_vwap_zfade",
+    "sig_connors_rsi",
+    "sig_supertrend_flip",
+    "sig_cci_extreme",
+    "run_one",
+    "sweep_family",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "INJUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "SUIUSDT",
+    "TONUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "2h",
+    "30m",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "bollinger",
+    "donchian",
+    "supertrend",
+    "ema",
+    "keltner",
+    "squeeze"
+   ],
+   "size": 19321,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v30_oos.py",
+   "name": "run_v30_oos",
+   "funcs": [
+    "slice_metrics",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "supertrend",
+    "squeeze"
+   ],
+   "size": 4670,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v30_portfolio.py",
+   "name": "run_v30_portfolio",
+   "funcs": [
+    "year_cagr",
+    "eq_from_entry",
+    "year_cagr_blend"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "rsi",
+    "donchian",
+    "supertrend",
+    "squeeze"
+   ],
+   "size": 5148,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v31_overfit_audit.py",
+   "name": "run_v31_overfit_audit",
+   "funcs": [
+    "build_signal",
+    "run_sim",
+    "per_year_breakdown",
+    "neighbors",
+    "plateau_test",
+    "random_entry_null",
+    "mc_bootstrap_monthly",
+    "deflated_sharpe",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "SOLUSDT",
+    "SUIUSDT",
+    "TONUSDT"
+   ],
+   "tfs": [
+    "1h",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "supertrend",
+    "squeeze"
+   ],
+   "size": 15911,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v32_core_audit.py",
+   "name": "run_v32_core_audit",
+   "funcs": [
+    "build_signal",
+    "run_sim",
+    "per_year_breakdown",
+    "neighbors",
+    "plateau_test",
+    "random_entry_null",
+    "mc_bootstrap_monthly",
+    "deflated_sharpe",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "SOLUSDT",
+    "SUIUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "donchian",
+    "ema"
+   ],
+   "size": 11195,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v33_audit.py",
+   "name": "run_v33_audit",
+   "funcs": [
+    "slice_metrics",
+    "build_signal",
+    "per_year_breakdown",
+    "neighbors",
+    "plateau_test",
+    "random_entry_null",
+    "mc_bootstrap",
+    "norm_cdf",
+    "norm_ppf",
+    "deflated_sharpe",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "SOLUSDT",
+    "SUIUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "keltner"
+   ],
+   "size": 12940,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v33_scalp_creative.py",
+   "name": "run_v33_scalp_creative",
+   "funcs": [
+    "dedupe",
+    "sig_vwap_scalp",
+    "sig_keltner_pullback",
+    "sig_rsi_div",
+    "sig_atr_burst",
+    "sig_orb_break",
+    "sig_ethbtc_ratio_revert",
+    "grid_combos",
+    "run_family_coin",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "SOLUSDT",
+    "SUIUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "2h",
+    "30m",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "donchian",
+    "ema",
+    "keltner",
+    "grid"
+   ],
+   "size": 13709,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v34_audit.py",
+   "name": "run_v34_audit",
+   "funcs": [
+    "build_signal",
+    "slice_metrics",
+    "per_year_breakdown",
+    "neighbors",
+    "plateau_test",
+    "random_entry_null",
+    "mc_bootstrap",
+    "deflated_sharpe",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "atr",
+    "donchian"
+   ],
+   "size": 12069,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v34_expand.py",
+   "name": "run_v34_expand",
+   "funcs": [
+    "scaled",
+    "sig_bbbreak_ls",
+    "sig_htf_donchian_ls",
+    "sig_pair_ratio_revert",
+    "sweep_family",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "INJUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "SUIUSDT",
+    "TONUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "2h",
+    "30m",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "rsi",
+    "donchian",
+    "ema",
+    "pairs"
+   ],
+   "size": 7743,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v34_portfolio.py",
+   "name": "run_v34_portfolio",
+   "funcs": [
+    "build_eq_v30",
+    "build_eq_v34",
+    "build_eq_core",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "SUIUSDT",
+    "TONUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "rsi",
+    "donchian",
+    "supertrend",
+    "ema",
+    "squeeze"
+   ],
+   "size": 10603,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v37_claude_trader.py",
+   "name": "run_v37_claude_trader",
+   "funcs": [
+    "build_decision_points",
+    "decisions_from_cache",
+    "run_one_coin",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "AVAXUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr"
+   ],
+   "size": 10366,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": true,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v38_smc.py",
+   "name": "run_v38_smc",
+   "funcs": [
+    "sig_fvg_entry",
+    "sig_fvg_fill_fade",
+    "sig_ob_touch",
+    "sig_bos_continuation",
+    "sig_choch_reversal",
+    "sig_liquidity_sweep_fade",
+    "sig_smc_confluence",
+    "run_one",
+    "sweep"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "AVAXUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "2h",
+    "30m",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "rsi",
+    "donchian",
+    "ema",
+    "squeeze",
+    "smc_ob",
+    "ict"
+   ],
+   "size": 14609,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v38_smc_sweep.py",
+   "name": "run_v38_smc_sweep",
+   "funcs": [
+    "load",
+    "atr",
+    "simulate",
+    "metrics",
+    "sig_fvg",
+    "sig_fvg_fade",
+    "sig_ob",
+    "sig_bos",
+    "sig_choch",
+    "sig_liquidity",
+    "sig_confluence_ob_bos",
+    "btc_regime_filter",
+    "walk_forward",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "AVAXUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "2h",
+    "30m",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "donchian",
+    "smc_ob",
+    "ict"
+   ],
+   "size": 20003,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v38b_smc_mixes.py",
+   "name": "run_v38b_smc_mixes",
+   "funcs": [
+    "load",
+    "atr",
+    "sma",
+    "ema",
+    "bbands",
+    "simulate",
+    "smc_bos_series",
+    "smc_ob_touch_zone",
+    "sig_bbbreak",
+    "sig_donchian",
+    "mix_bbbreak_bos",
+    "mix_bbbreak_ob",
+    "mix_donchian_bos",
+    "mix_donchian_choch_reverse",
+    "walk_forward",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "AVAXUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [
+    "1h",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "bollinger",
+    "donchian",
+    "ema",
+    "smc_ob",
+    "ict"
+   ],
+   "size": 16294,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v38c_smc_xsm_breadth.py",
+   "name": "run_v38c_smc_xsm_breadth",
+   "funcs": [
+    "load",
+    "compute_bos_series",
+    "build_panel",
+    "xsm_backtest",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "AVAXUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "donchian",
+    "smc_ob"
+   ],
+   "size": 9337,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v39_smc_ict_proper.py",
+   "name": "run_v39_smc_ict_proper",
+   "funcs": [
+    "load",
+    "atr",
+    "ema",
+    "bbands",
+    "simulate",
+    "in_killzone",
+    "htf_bias",
+    "reindex_htf_to_ltf",
+    "liquidity_sweeps",
+    "fvg_recent",
+    "ob_zones",
+    "bos_recent",
+    "sig_mtf_bias_ob",
+    "sig_sweep_reverse",
+    "sig_silver_bullet",
+    "sig_judas_london",
+    "sig_triple_confluence",
+    "sig_killzone_bbbreak",
+    "sig_asia_range_break",
+    "walk_forward",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "AVAXUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "30m",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "bollinger",
+    "donchian",
+    "ema",
+    "smc_ob",
+    "ict"
+   ],
+   "size": 20685,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v6.py",
+   "name": "run_v6",
+   "funcs": [
+    "run_one",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "5m"
+   ],
+   "features": [
+    "rsi"
+   ],
+   "size": 3571,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v6_direct.py",
+   "name": "run_v6_direct",
+   "funcs": [
+    "ema",
+    "rsi",
+    "stoch_k",
+    "load",
+    "simulate",
+    "metrics",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "15m",
+    "1h",
+    "5m"
+   ],
+   "features": [
+    "rsi",
+    "donchian",
+    "ema",
+    "stoch"
+   ],
+   "size": 8604,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v7_cycle_aware.py",
+   "name": "run_v7_cycle_aware",
+   "funcs": [
+    "ema",
+    "rma",
+    "atr",
+    "macd_hist",
+    "supertrend",
+    "load",
+    "cycle_regime",
+    "simulate",
+    "metrics",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "15m"
+   ],
+   "features": [
+    "atr",
+    "macd",
+    "supertrend",
+    "ema"
+   ],
+   "size": 12304,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v8_scalp.py",
+   "name": "run_v8_scalp",
+   "funcs": [
+    "ema",
+    "rma",
+    "atr",
+    "macd_hist",
+    "supertrend",
+    "daily_vwap",
+    "load",
+    "cycle_regime",
+    "simulate",
+    "metrics",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "15m"
+   ],
+   "features": [
+    "atr",
+    "macd",
+    "supertrend",
+    "ema"
+   ],
+   "size": 11130,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/run_v9_chimera.py",
+   "name": "run_v9_chimera",
+   "funcs": [
+    "ema",
+    "rma",
+    "atr",
+    "adx",
+    "rsi",
+    "stoch_rsi",
+    "bb_pct_b",
+    "supertrend",
+    "classify_regime",
+    "build_indicators",
+    "confidence",
+    "load",
+    "simulate",
+    "metrics",
+    "max_streak",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "15m"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "macd",
+    "donchian",
+    "supertrend",
+    "ema"
+   ],
+   "size": 18969,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/smoke_v37.py",
+   "name": "smoke_v37",
+   "funcs": [
+    "log",
+    "load_parquet",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [],
+   "size": 4616,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": true,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/strategies.py",
+   "name": "strategies",
+   "funcs": [
+    "ema_trend_adx",
+    "donchian_breakout",
+    "rsi_mean_reversion",
+    "squeeze_breakout",
+    "macd_htf",
+    "supertrend",
+    "gaussian_channel",
+    "volume_breakout"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "macd",
+    "bollinger",
+    "donchian",
+    "supertrend",
+    "ema",
+    "keltner",
+    "squeeze",
+    "gaussian_channel"
+   ],
+   "size": 10272,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/strategies_v10.py",
+   "name": "strategies_v10",
+   "funcs": [
+    "orderflow_features",
+    "v10a_funding_fade_v3b",
+    "v10b_oi_confirm_v4c",
+    "v10c_ls_extreme_long",
+    "v10d_liq_cascade_rebound"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "kalman",
+    "ema",
+    "squeeze",
+    "kalman_range",
+    "funding",
+    "open_interest",
+    "liquidations",
+    "long_short_ratio"
+   ],
+   "size": 9595,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/strategies_v11.py",
+   "name": "strategies_v11",
+   "funcs": [
+    "v11_regime_ensemble"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "kalman",
+    "ema",
+    "kalman_range"
+   ],
+   "size": 4966,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/strategies_v12.py",
+   "name": "strategies_v12",
+   "funcs": [
+    "v12a_pullback_trend",
+    "v12b_bb_squeeze_break",
+    "v12c_higher_lows",
+    "v12d_nr7_break"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "bollinger",
+    "donchian",
+    "ema",
+    "squeeze"
+   ],
+   "size": 6836,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/strategies_v19_grid.py",
+   "name": "strategies_v19_grid",
+   "funcs": [
+    "v19a_static_grid",
+    "v19b_atr_grid_adaptive"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "ema",
+    "grid"
+   ],
+   "size": 5655,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/strategies_v2.py",
+   "name": "strategies_v2",
+   "funcs": [
+    "ema_trend_adx_v2",
+    "volume_breakout_v2",
+    "donchian_v2",
+    "supertrend_v2",
+    "ensemble_trend_vol",
+    "gaussian_channel_v2"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "donchian",
+    "supertrend",
+    "ema",
+    "gaussian_channel"
+   ],
+   "size": 8270,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/strategies_v20_trendfollow.py",
+   "name": "strategies_v20_trendfollow",
+   "funcs": [
+    "v20a_heikin_supertrend",
+    "v20b_dema_ichimoku",
+    "v20c_ott",
+    "v20d_squeeze_ichimoku"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "bollinger",
+    "donchian",
+    "supertrend",
+    "ichimoku",
+    "heikin_ashi",
+    "ema",
+    "keltner",
+    "squeeze"
+   ],
+   "size": 8158,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/strategies_v3.py",
+   "name": "strategies_v3",
+   "funcs": [
+    "v3a_htf_rising",
+    "v3b_adx",
+    "v3c_slope",
+    "v3d_composite",
+    "v3e_score2of3"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "donchian",
+    "ema"
+   ],
+   "size": 6092,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/strategies_v4.py",
+   "name": "strategies_v4",
+   "funcs": [
+    "v4a_ott",
+    "v4b_ott_twin",
+    "v4c_range_kalman",
+    "v4d_trend_strength",
+    "v4e_ott_vol_donchian",
+    "v4f_ott_pullback",
+    "v4g_mtf_ott",
+    "v4h_vol_regime_switch"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "donchian",
+    "kalman",
+    "ott",
+    "ema",
+    "kalman_range"
+   ],
+   "size": 11930,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/strategies_v5.py",
+   "name": "strategies_v5",
+   "funcs": [
+    "v5_volume_breakout_liqfilter"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "donchian"
+   ],
+   "size": 1814,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/strategies_v6.py",
+   "name": "strategies_v6",
+   "funcs": [
+    "v6_rsi_2065"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "rsi",
+    "donchian",
+    "ema",
+    "stoch"
+   ],
+   "size": 1990,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/strategies_v7.py",
+   "name": "strategies_v7",
+   "funcs": [
+    "hwr1_bb_meanrev",
+    "hwr2_rsi_stoch_oversold",
+    "hwr3_pullback_1to1",
+    "hwr1b_bb_strict",
+    "hwr3b_pullback_asym",
+    "hwr4_keltner_bounce",
+    "hwr5_tight_tp_wide_sl"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "rsi",
+    "bollinger",
+    "donchian",
+    "ema",
+    "keltner",
+    "stoch",
+    "kc_bounce"
+   ],
+   "size": 12414,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/strategies_v8.py",
+   "name": "strategies_v8",
+   "funcs": [
+    "atr_pct",
+    "supertrend",
+    "hma",
+    "vol_percentile",
+    "v8a_supertrend_stack",
+    "v8b_hma_adx",
+    "v8c_vol_regime_donchian"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "donchian",
+    "supertrend",
+    "ema",
+    "hma"
+   ],
+   "size": 9415,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/strategies_v9.py",
+   "name": "strategies_v9",
+   "funcs": [
+    "v9a_v3b_plus_ladder",
+    "v9b_v4c_plus_ladder",
+    "v9c_v2b_plus_ladder",
+    "v9d_hwr1_plus_ladder",
+    "v9e_v3b_aggressive_runner"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "kalman",
+    "kalman_range"
+   ],
+   "size": 4123,
+   "is_harness": false,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/test_combos.py",
+   "name": "test_combos",
+   "funcs": [
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "1d",
+    "1h",
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "adx",
+    "donchian",
+    "supertrend",
+    "gaussian_channel"
+   ],
+   "size": 3464,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/tiny_v37_check.py",
+   "name": "tiny_v37_check",
+   "funcs": [
+    "log",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "rsi"
+   ],
+   "size": 2919,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": true,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v10_hunt.py",
+   "name": "v10_hunt",
+   "funcs": [
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "funding",
+    "liquidations"
+   ],
+   "size": 5272,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v11_hunt.py",
+   "name": "v11_hunt",
+   "funcs": [
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "BTCUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [],
+   "features": [],
+   "size": 4643,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v12_hunt.py",
+   "name": "v12_hunt",
+   "funcs": [
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "BTCUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "squeeze"
+   ],
+   "size": 3824,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v14_cross_sectional.py",
+   "name": "v14_cross_sectional",
+   "funcs": [
+    "load_all_4h",
+    "xsm_backtest",
+    "per_year_stats",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "AVAXUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "atr",
+    "rsi"
+   ],
+   "size": 12746,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v15_xsm_variants.py",
+   "name": "v15_xsm_variants",
+   "funcs": [
+    "load_all_4h",
+    "build_panel",
+    "compute_score",
+    "xsm_generic",
+    "mx",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "AVAXUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [],
+   "features": [],
+   "size": 12372,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v16_ml_rank.py",
+   "name": "v16_ml_rank",
+   "funcs": [
+    "load_all",
+    "build_features",
+    "v16_ml_rank",
+    "mx",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "AVAXUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "adx",
+    "rsi",
+    "ml_classifier",
+    "pairs"
+   ],
+   "size": 9640,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": true
+  },
+  {
+   "file": "strategy_lab/v17_pairs_trading.py",
+   "name": "v17_pairs_trading",
+   "funcs": [
+    "pairs_backtest",
+    "mx",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "AVAXUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "pairs"
+   ],
+   "size": 7388,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v18_robustness.py",
+   "name": "v18_robustness",
+   "funcs": [
+    "random_windows",
+    "param_epsilon",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [],
+   "size": 3848,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v19_20_hunt.py",
+   "name": "v19_20_hunt",
+   "funcs": [
+    "mx",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "BTCUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [],
+   "features": [],
+   "size": 4052,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v21_leverage_sweep.py",
+   "name": "v21_leverage_sweep",
+   "funcs": [
+    "metrics",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [],
+   "size": 5173,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v23_low_dd_xsm.py",
+   "name": "v23_low_dd_xsm",
+   "funcs": [
+    "load_all",
+    "build_panel",
+    "low_dd_xsm",
+    "metrics",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "AVAXUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "long_short_ratio"
+   ],
+   "size": 15468,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v29_long_short_deep.py",
+   "name": "v29_long_short_deep",
+   "funcs": [
+    "long_short_backtest",
+    "period_split",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "long_short_ratio"
+   ],
+   "size": 12452,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v30_overfitting_audit.py",
+   "name": "v30_overfitting_audit",
+   "funcs": [
+    "metrics",
+    "run_strategy",
+    "test1_yearly",
+    "test2_param_plateau",
+    "test3_random_null",
+    "test4_mc_bootstrap",
+    "test5_deflated_sharpe",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "AVAXUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "long_short_ratio"
+   ],
+   "size": 16836,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v35_cross_reference.py",
+   "name": "v35_cross_reference",
+   "funcs": [
+    "metrics",
+    "load_user_live_five",
+    "combine_sleeves",
+    "load_my_xsm",
+    "align_all",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "donchian",
+    "long_short_ratio"
+   ],
+   "size": 9861,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": true,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v36_hybrid_leverage.py",
+   "name": "v36_hybrid_leverage",
+   "funcs": [
+    "metrics",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [],
+   "size": 7969,
+   "is_harness": true,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v37_claude_trader.py",
+   "name": "v37_claude_trader",
+   "funcs": [
+    "build_snapshot",
+    "snapshot_hash",
+    "load_system_prompt",
+    "build_entries_from_decisions",
+    "cache_path",
+    "load_cache",
+    "save_cache",
+    "decision_to_row"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "atr",
+    "adx",
+    "rsi",
+    "donchian",
+    "ema"
+   ],
+   "size": 11287,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": true,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v37_providers.py",
+   "name": "v37_providers",
+   "funcs": [
+    "parse_decision_or_flat",
+    "make_provider"
+   ],
+   "imports_strategies": [],
+   "symbols": [],
+   "tfs": [],
+   "features": [
+    "rsi"
+   ],
+   "size": 15815,
+   "is_harness": false,
+   "has_signal_logic": false,
+   "depends_on_derivatives": false,
+   "is_llm": true,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/v8_hunt.py",
+   "name": "v8_hunt",
+   "funcs": [
+    "per_year_win_rate",
+    "tp_hit_stats",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ADAUSDT",
+    "BTCUSDT",
+    "ETHUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ],
+   "tfs": [],
+   "features": [
+    "donchian",
+    "supertrend",
+    "hma"
+   ],
+   "size": 5862,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/validate.py",
+   "name": "validate",
+   "funcs": [
+    "per_year_report",
+    "parameter_sensitivity",
+    "rolling_year_sharpe"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "donchian"
+   ],
+   "size": 5910,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/validate_alternatives.py",
+   "name": "validate_alternatives",
+   "funcs": [
+    "bt",
+    "full_metrics",
+    "five_fold",
+    "random_windows",
+    "run",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "adx"
+   ],
+   "size": 6116,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  },
+  {
+   "file": "strategy_lab/walk_forward.py",
+   "name": "walk_forward",
+   "funcs": [
+    "portfolio_run",
+    "main"
+   ],
+   "imports_strategies": [],
+   "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "tfs": [
+    "4h"
+   ],
+   "features": [
+    "atr",
+    "donchian"
+   ],
+   "size": 4052,
+   "is_harness": true,
+   "has_signal_logic": true,
+   "depends_on_derivatives": false,
+   "is_llm": false,
+   "is_ml": false
+  }
+ ],
+ "readme_size": 3216,
+ "reports": [
+  {
+   "file": "building_cyclops_style_bot.md",
+   "size": 43930
+  },
+  {
+   "file": "CONTEXT_SNAPSHOT_2026_04_22.md",
+   "size": 6725
+  },
+  {
+   "file": "DEPLOYMENT_BLUEPRINT.md",
+   "size": 36952
+  },
+  {
+   "file": "EDGE_HUNT_VERDICT.md",
+   "size": 3296
+  },
+  {
+   "file": "FINAL_SUMMARY.md",
+   "size": 5539
+  },
+  {
+   "file": "KRONOS_ANALYSIS.md",
+   "size": 7017
+  },
+  {
+   "file": "KRONOS_SNIFF_TEST.md",
+   "size": 720
+  },
+  {
+   "file": "KRONOS_SNIFF_TEST_BASE.md",
+   "size": 663
+  },
+  {
+   "file": "ROBUSTNESS_VERDICT.md",
+   "size": 5351
+  },
+  {
+   "file": "SESSION_CONTEXT.md",
+   "size": 13050
+  },
+  {
+   "file": "V10_V11_VERDICT.md",
+   "size": 4844
+  },
+  {
+   "file": "V13A_ROBUSTNESS_VERDICT.md",
+   "size": 1879
+  },
+  {
+   "file": "V14_MOMENTUM_BREAKTHROUGH.md",
+   "size": 5197
+  },
+  {
+   "file": "V17_ROBUSTNESS_VERDICT.md",
+   "size": 4819
+  },
+  {
+   "file": "V22_FINAL_WINNERS.md",
+   "size": 6825
+  },
+  {
+   "file": "V23_FINAL_WINNERS.md",
+   "size": 6151
+  },
+  {
+   "file": "V24_FINAL_PORTFOLIO.md",
+   "size": 10213
+  },
+  {
+   "file": "V24_FINDINGS.md",
+   "size": 7559
+  },
+  {
+   "file": "V25_FINAL_PORTFOLIO.md",
+   "size": 15802
+  },
+  {
+   "file": "V26_FINAL_PORTFOLIO.md",
+   "size": 5617
+  },
+  {
+   "file": "V27_FINAL_PORTFOLIO.md",
+   "size": 14106
+  },
+  {
+   "file": "V28_100PCT_STRATEGY.md",
+   "size": 9083
+  },
+  {
+   "file": "V29_FINAL_REGIME.md",
+   "size": 13717
+  },
+  {
+   "file": "V30_FINAL_CREATIVE.md",
+   "size": 8940
+  },
+  {
+   "file": "V31_OVERFIT_AUDIT.md",
+   "size": 9813
+  },
+  {
+   "file": "V32_CORE_AUDIT.md",
+   "size": 6616
+  },
+  {
+   "file": "V33_SCALP_CREATIVE.md",
+   "size": 8117
+  },
+  {
+   "file": "V34_PORTFOLIO_EXPANSION.md",
+   "size": 14533
+  },
+  {
+   "file": "V37_CLAUDE_TRADER_DESIGN.md",
+   "size": 7187
+  },
+  {
+   "file": "V8_V9_VERDICT.md",
+   "size": 4643
+  }
+ ]
+}

@@ -1,0 +1,402 @@
+[
+  {
+    "strategy_id": "c1_meta_labeled_donchian",
+    "symbol": "ETHUSDT",
+    "tf": "4h",
+    "per_year": {
+      "2022": {
+        "sharpe": 0.0,
+        "return": 0.0,
+        "max_dd": 0.0,
+        "n_bars": 2190
+      },
+      "2023": {
+        "sharpe": 0.0,
+        "return": 0.0,
+        "max_dd": 0.0,
+        "n_bars": 2190
+      },
+      "2024": {
+        "sharpe": 1.097,
+        "return": 0.0695,
+        "max_dd": -0.042,
+        "n_bars": 2190
+      }
+    },
+    "permutation": {
+      "n_permutations": 30,
+      "real_sharpe": 0.633,
+      "null_mean": -0.465,
+      "null_99th": 0.781,
+      "p_value": 0.0667
+    },
+    "bootstrap": {
+      "sharpe": {
+        "mean": 0.6079,
+        "ci_lo": -0.6588,
+        "ci_hi": 1.721
+      },
+      "calmar": {
+        "mean": 0.7824,
+        "ci_lo": -0.2547,
+        "ci_hi": 3.2059
+      },
+      "max_dd": {
+        "mean": -0.0454,
+        "ci_lo": -0.097,
+        "ci_hi": -0.017
+      }
+    },
+    "walk_forward": {
+      "n_folds": 6,
+      "avg_is_sharpe": 0.083,
+      "avg_oos_sharpe": 0.504,
+      "efficiency_ratio": 6.061,
+      "n_positive_folds": 3,
+      "worst_fold_sharpe": 0.0,
+      "folds": [
+        {
+          "fold": 1,
+          "is_sharpe": 0.0,
+          "oos_sharpe": 0.0
+        },
+        {
+          "fold": 2,
+          "is_sharpe": 0.0,
+          "oos_sharpe": 0.0
+        },
+        {
+          "fold": 3,
+          "is_sharpe": 0.0,
+          "oos_sharpe": 0.0
+        },
+        {
+          "fold": 4,
+          "is_sharpe": 0.0,
+          "oos_sharpe": 0.434
+        },
+        {
+          "fold": 5,
+          "is_sharpe": 0.194,
+          "oos_sharpe": 0.787
+        },
+        {
+          "fold": 6,
+          "is_sharpe": 0.305,
+          "oos_sharpe": 1.805
+        }
+      ]
+    },
+    "verdict": {
+      "per_year_consistency": false,
+      "permutation_p<0.01": false,
+      "bootstrap_sharpe_lowerCI>0.5": false,
+      "bootstrap_calmar_lowerCI>1.0": false,
+      "bootstrap_mdd_upperCI<30%": true,
+      "walk_forward_efficiency>0.5": true,
+      "walk_forward_pos_folds>=5": false,
+      "tests_passed": 2,
+      "tests_total": 7
+    }
+  },
+  {
+    "strategy_id": "c1_meta_labeled_donchian",
+    "symbol": "BTCUSDT",
+    "tf": "4h",
+    "per_year": {
+      "2022": {
+        "sharpe": 0.0,
+        "return": 0.0,
+        "max_dd": 0.0,
+        "n_bars": 2190
+      },
+      "2023": {
+        "sharpe": 0.0,
+        "return": 0.0,
+        "max_dd": 0.0,
+        "n_bars": 2190
+      },
+      "2024": {
+        "sharpe": 1.102,
+        "return": 0.0923,
+        "max_dd": -0.0987,
+        "n_bars": 2190
+      }
+    },
+    "permutation": {
+      "n_permutations": 30,
+      "real_sharpe": 0.636,
+      "null_mean": -0.585,
+      "null_99th": 0.642,
+      "p_value": 0.0333
+    },
+    "bootstrap": {
+      "sharpe": {
+        "mean": 0.5683,
+        "ci_lo": -0.7431,
+        "ci_hi": 1.8379
+      },
+      "calmar": {
+        "mean": 0.7003,
+        "ci_lo": -0.288,
+        "ci_hi": 3.1726
+      },
+      "max_dd": {
+        "mean": -0.0643,
+        "ci_lo": -0.1304,
+        "ci_hi": -0.0279
+      }
+    },
+    "walk_forward": {
+      "n_folds": 6,
+      "avg_is_sharpe": 0.293,
+      "avg_oos_sharpe": 0.626,
+      "efficiency_ratio": 2.138,
+      "n_positive_folds": 3,
+      "worst_fold_sharpe": 0.0,
+      "folds": [
+        {
+          "fold": 1,
+          "is_sharpe": 0.0,
+          "oos_sharpe": 0.0
+        },
+        {
+          "fold": 2,
+          "is_sharpe": 0.0,
+          "oos_sharpe": 0.0
+        },
+        {
+          "fold": 3,
+          "is_sharpe": 0.0,
+          "oos_sharpe": 0.0
+        },
+        {
+          "fold": 4,
+          "is_sharpe": 0.0,
+          "oos_sharpe": 2.682
+        },
+        {
+          "fold": 5,
+          "is_sharpe": 1.198,
+          "oos_sharpe": 0.036
+        },
+        {
+          "fold": 6,
+          "is_sharpe": 0.558,
+          "oos_sharpe": 1.035
+        }
+      ]
+    },
+    "verdict": {
+      "per_year_consistency": false,
+      "permutation_p<0.01": false,
+      "bootstrap_sharpe_lowerCI>0.5": false,
+      "bootstrap_calmar_lowerCI>1.0": false,
+      "bootstrap_mdd_upperCI<30%": true,
+      "walk_forward_efficiency>0.5": true,
+      "walk_forward_pos_folds>=5": false,
+      "tests_passed": 2,
+      "tests_total": 7
+    }
+  },
+  {
+    "strategy_id": "gaussian_channel_v2",
+    "symbol": "BTCUSDT",
+    "tf": "4h",
+    "per_year": {
+      "2022": {
+        "sharpe": -1.8,
+        "return": -0.0542,
+        "max_dd": -0.0554,
+        "n_bars": 2190
+      },
+      "2023": {
+        "sharpe": -0.712,
+        "return": -0.1472,
+        "max_dd": -0.194,
+        "n_bars": 2190
+      },
+      "2024": {
+        "sharpe": 2.427,
+        "return": 0.7583,
+        "max_dd": -0.1378,
+        "n_bars": 2190
+      }
+    },
+    "permutation": {
+      "n_permutations": 30,
+      "real_sharpe": 0.731,
+      "null_mean": 0.269,
+      "null_99th": 1.201,
+      "p_value": 0.1667
+    },
+    "bootstrap": {
+      "sharpe": {
+        "mean": 0.7355,
+        "ci_lo": -0.5134,
+        "ci_hi": 1.9177
+      },
+      "calmar": {
+        "mean": 0.7476,
+        "ci_lo": -0.2753,
+        "ci_hi": 2.8987
+      },
+      "max_dd": {
+        "mean": -0.2386,
+        "ci_lo": -0.4177,
+        "ci_hi": -0.118
+      }
+    },
+    "walk_forward": {
+      "n_folds": 6,
+      "avg_is_sharpe": -0.882,
+      "avg_oos_sharpe": 0.443,
+      "efficiency_ratio": -0.502,
+      "n_positive_folds": 4,
+      "worst_fold_sharpe": -3.553,
+      "folds": [
+        {
+          "fold": 1,
+          "is_sharpe": -2.752,
+          "oos_sharpe": 0.0
+        },
+        {
+          "fold": 2,
+          "is_sharpe": -1.945,
+          "oos_sharpe": 0.542
+        },
+        {
+          "fold": 3,
+          "is_sharpe": 0.024,
+          "oos_sharpe": -3.553
+        },
+        {
+          "fold": 4,
+          "is_sharpe": -0.643,
+          "oos_sharpe": 1.101
+        },
+        {
+          "fold": 5,
+          "is_sharpe": -0.235,
+          "oos_sharpe": 1.674
+        },
+        {
+          "fold": 6,
+          "is_sharpe": 0.256,
+          "oos_sharpe": 2.892
+        }
+      ]
+    },
+    "verdict": {
+      "per_year_consistency": false,
+      "permutation_p<0.01": false,
+      "bootstrap_sharpe_lowerCI>0.5": false,
+      "bootstrap_calmar_lowerCI>1.0": false,
+      "bootstrap_mdd_upperCI<30%": true,
+      "walk_forward_efficiency>0.5": false,
+      "walk_forward_pos_folds>=5": false,
+      "tests_passed": 1,
+      "tests_total": 7
+    }
+  },
+  {
+    "strategy_id": "gaussian_channel_v2",
+    "symbol": "ETHUSDT",
+    "tf": "4h",
+    "per_year": {
+      "2022": {
+        "sharpe": -1.113,
+        "return": -0.1035,
+        "max_dd": -0.1035,
+        "n_bars": 2190
+      },
+      "2023": {
+        "sharpe": -0.231,
+        "return": -0.0787,
+        "max_dd": -0.2462,
+        "n_bars": 2190
+      },
+      "2024": {
+        "sharpe": 1.34,
+        "return": 0.3286,
+        "max_dd": -0.1151,
+        "n_bars": 2190
+      }
+    },
+    "permutation": {
+      "n_permutations": 30,
+      "real_sharpe": 0.255,
+      "null_mean": -0.067,
+      "null_99th": 0.748,
+      "p_value": 0.2333
+    },
+    "bootstrap": {
+      "sharpe": {
+        "mean": 0.2228,
+        "ci_lo": -0.874,
+        "ci_hi": 1.2766
+      },
+      "calmar": {
+        "mean": 0.2232,
+        "ci_lo": -0.3568,
+        "ci_hi": 1.5176
+      },
+      "max_dd": {
+        "mean": -0.2962,
+        "ci_lo": -0.5112,
+        "ci_hi": -0.1463
+      }
+    },
+    "walk_forward": {
+      "n_folds": 6,
+      "avg_is_sharpe": -0.342,
+      "avg_oos_sharpe": -0.038,
+      "efficiency_ratio": 0.11,
+      "n_positive_folds": 4,
+      "worst_fold_sharpe": -2.25,
+      "folds": [
+        {
+          "fold": 1,
+          "is_sharpe": 0.0,
+          "oos_sharpe": -1.702
+        },
+        {
+          "fold": 2,
+          "is_sharpe": -1.203,
+          "oos_sharpe": 0.727
+        },
+        {
+          "fold": 3,
+          "is_sharpe": -0.064,
+          "oos_sharpe": -2.25
+        },
+        {
+          "fold": 4,
+          "is_sharpe": -0.515,
+          "oos_sharpe": 0.836
+        },
+        {
+          "fold": 5,
+          "is_sharpe": -0.167,
+          "oos_sharpe": 0.225
+        },
+        {
+          "fold": 6,
+          "is_sharpe": -0.103,
+          "oos_sharpe": 1.939
+        }
+      ]
+    },
+    "verdict": {
+      "per_year_consistency": false,
+      "permutation_p<0.01": false,
+      "bootstrap_sharpe_lowerCI>0.5": false,
+      "bootstrap_calmar_lowerCI>1.0": false,
+      "bootstrap_mdd_upperCI<30%": true,
+      "walk_forward_efficiency>0.5": false,
+      "walk_forward_pos_folds>=5": false,
+      "tests_passed": 1,
+      "tests_total": 7
+    }
+  }
+]

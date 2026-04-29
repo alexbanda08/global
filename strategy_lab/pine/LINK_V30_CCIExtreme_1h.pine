@@ -1,0 +1,65 @@
+//@version=5
+// LINK V30 CCIExtreme 1h
+// CCI_Extreme_Rev — V30 winner, OOS PASS
+// Params: {"cci_n": 30, "cci_thr": 150, "adx_max": 18}  | Exits: TP=10×ATR  SL=2.0×ATR  Trail=5.0×ATR  MH=72  Risk=3.0%  Lev=3.0×
+// Sim: 0.045% taker fee, 3 bps slippage, ATR-risk sizing, next-bar-open fills.
+strategy("LINK V30 CCIExtreme 1h", overlay=true,
+     initial_capital=10000,
+     default_qty_type=strategy.cash, default_qty_value=0,
+     commission_type=strategy.commission.percent, commission_value=0.045,
+     slippage=3, pyramiding=0, calc_on_every_tick=false,
+     process_orders_on_close=false)
+
+// ---- Inputs ----
+cci_n   = input.int(30, "CCI length")
+cci_thr = input.float(150, "CCI threshold")
+adx_max = input.int(18, "ADX max for range gate")
+
+// ---- Shared ----
+risk_per_trade = 3.0 / 100.0
+lev_cap        = 3.0
+tp_atr         = 10
+sl_atr         = 2.0
+trail_atr      = 5.0
+max_hold       = 72
+
+// ---- Indicators ----
+atr_v = ta.atr(14)
+
+cci = ta.cci(close, cci_n)
+[_dp, _dm, adx_v3] = ta.dmi(14, 14)
+range_ok = adx_v3 < adx_max
+
+long_edge  = cci > -cci_thr and cci[1] <= -cci_thr and close > open
+short_edge = cci <  cci_thr and cci[1] >=  cci_thr and close < open
+long_sig   = range_ok and long_edge
+short_sig  = range_ok and short_edge
+
+// ---- Sizing ----
+qty_from_risk() =>
+    risk_dollars = strategy.equity * risk_per_trade
+    sl_dist = sl_atr * atr_v
+    qty_risk = sl_dist > 0 ? risk_dollars / sl_dist : 0
+    qty_cap  = (strategy.equity * lev_cap) / close
+    math.min(qty_risk, qty_cap)
+
+// ---- Entries ----
+if long_sig
+    q = qty_from_risk()
+    if q > 0
+        strategy.entry("L", strategy.long, qty=q)
+        strategy.exit("Lx", "L", profit=tp_atr*atr_v/syminfo.mintick, loss=sl_atr*atr_v/syminfo.mintick,
+                      trail_points=trail_atr*atr_v/syminfo.mintick, trail_offset=trail_atr*atr_v/syminfo.mintick)
+
+if short_sig
+    q = qty_from_risk()
+    if q > 0
+        strategy.entry("S", strategy.short, qty=q)
+        strategy.exit("Sx", "S", profit=tp_atr*atr_v/syminfo.mintick, loss=sl_atr*atr_v/syminfo.mintick,
+                      trail_points=trail_atr*atr_v/syminfo.mintick, trail_offset=trail_atr*atr_v/syminfo.mintick)
+
+// ---- Max hold timeout ----
+var int bars_in = 0
+bars_in := strategy.position_size != 0 ? bars_in + 1 : 0
+if bars_in >= max_hold
+    strategy.close_all()

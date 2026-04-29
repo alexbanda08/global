@@ -1,0 +1,300 @@
+           Crypto Perp Strategy Portfolio
+
+     Nine per-asset winners · Hyperliquid-style execution · 2019 ­ Apr 2026 · $10,000 start per coin
+
+At a glance. 7 of 9 coins clear 55% net CAGR; all 9/9 stay inside the -40% drawdown cap. Average Sharpe across the portfolio is 1.45. Equal-weight combination of the nine sub-accounts
+delivers a combined CAGR of 82.3% with Sharpe 1.89 and max drawdown -25.4% (Calmar 3.24). Walk-forward OOS (split at 2024-01-01): 8 of 9 coins pass the  50% IS-Sharpe retention
+test; 1 coin has only post-split history (TON -- flagged OOS-only). No coin's edge flipped negative out of sample. Strategies were independently tuned per coin from three signal families
+(RangeKalman L+S, BB-Break L+S, Keltner+ADX L+S), each evaluated across 1h/2h/4h with small param grids. All numbers are after 0.045% taker fees per side plus 8% APR funding drag.
+
+Per-coin winners overview
+
+Coin Strategy              TF Trades Full CAGR Full Sh IS Sh OOS Sh OOS CAGR OOS Verdict Max DD       Final ($10k)
+                                                                                                       $1,763,423
+BTC  RangeKalman           4h  259  +78.0% +1.53 +1.77 +1.01  +41.0%   holds        -37.7%            $11,809,271
+                                                                                                       $1,466,347
+ETH  BBBreak               1h  493 +124.4% +2.00 +2.17 +1.52  +76.4%   holds        -33.9%
+                                                                                                          $111,621
+SOL  BBBreak               4h  231 +139.3% +1.93 +2.23 +1.42  +76.9%   holds        -35.4%                $253,687
+                                                                                                          $299,564
+LINK BBBreak               4h  409  +37.4% +1.09 +1.26 +0.70  +17.7%   holds        -38.4%
+                                                                                                           $42,018
+AVAX RangeKalman           4h  165  +77.5% +1.49 +1.68 +1.19  +53.7%   holds        -31.1%                $167,620
+
+DOGE BBBreak               4h  222  +63.5% +1.22 +1.14 +1.39  +75.0%   holds        -36.5%                 $50,719
+
+INJ  BBBreak               4h  169  +29.3% +0.79 +0.97 +0.52  +14.4%   holds        -39.3%
+
+SUI  BBBreak               4h  245 +160.4% +1.66 +0.89 +1.85 +212.0%   holds        -35.5%
+
+TON KeltnerADX             2h  84 +166.2% +1.31          -- +1.31 +166.2% OOS-only  -33.3%
+
+Combined portfolio equity (equal-weight, $90,000 start)
+Portfolio: start $90,000  final $15,964,269 (177.4× over 8.6 years) | CAGR +82.3% | Sharpe 1.89 | Max DD -25.4% | Calmar 3.24
+BTC -- RangeKalman_LS @ 4h -- CAGR +78.0%, Sharpe +1.53, DD -37.7%
+
+                                                                    Strategy family       RangeKalman_LS
+                                                                    Timeframe             4h
+                                                                    Signal params         alpha=0.05, rng_len=50, rng_mult=2.0,
+                                                                    Exit params           TP=10×ATR, SL=2.0×ATR, Trail=6.0×A
+                                                                    Risk / Lev            5.0% per trade, 3.0× cap
+
+                                                                    Trades (full)         259
+                                                                    Win rate              44.4%
+                                                                    Profit factor         1.93
+                                                                    Avg leverage          2.00×
+                                                                    Exposure              26.5%
+
+                                                                    CAGR (net)            +78.0%
+                                                                    Sharpe (annualized)   +1.53
+                                                                    Max drawdown          -37.7%
+                                                                    Final equity ($10k)   $1,763,423
+
+                                                                    IS (2019-2023)        n=183 CAGR +97.1% Sh +1.77 DD -3
+                                                                    OOS (2024-2026)       n=75 CAGR +41.0% Sh +1.01 DD -37
+                                                                    Walk-forward verdict   OOS holds
+
+Walk-forward OOS (split 2024-01-01): IS Sharpe +1.77 / OOS Sharpe +1.01 (+41.0% OOS CAGR, n=75). Verdict:  OOS holds.
+
+Notes. Signal parameters above are native-TF values (already scaled from 1h). This configuration was selected by grid search over the 2019-2026 full window. Equity curve is on a log scale. Drawdown is the
+peak-to-trough equity % from the prior high-water mark. Monthly-returns heatmap colors: green  0, red < 0, clamped at ±30% for visibility.
+ETH -- BBBreak_LS @ 1h -- CAGR +124.4%, Sharpe +2.00, DD -33.9%
+
+                                                                 Strategy family       BBBreak_LS
+                                                                 Timeframe             1h
+                                                                 Signal params         n=180, k=2.0, regime_len=600
+                                                                 Exit params           TP=10×ATR, SL=2.0×ATR, Trail=6.0×A
+                                                                 Risk / Lev            3.0% per trade, 3.0× cap
+
+                                                                 Trades (full)         493
+                                                                 Win rate              36.5%
+                                                                 Profit factor         1.95
+                                                                 Avg leverage          1.56×
+                                                                 Exposure              22.2%
+
+                                                                 CAGR (net)            +124.4%
+                                                                 Sharpe (annualized)   +2.00
+                                                                 Max drawdown          -33.9%
+                                                                 Final equity ($10k)   $11,809,271
+
+                                                                 IS (2019-2023)        n=361 CAGR +145.0% Sh +2.17 DD -
+                                                                 OOS (2024-2026)       n=132 CAGR +76.4% Sh +1.52 DD -3
+                                                                 Walk-forward verdict   OOS holds
+
+Walk-forward OOS (split 2024-01-01): IS Sharpe +2.17 / OOS Sharpe +1.52 (+76.4% OOS CAGR, n=132). Verdict:  OOS holds.
+
+Notes. Signal parameters above are native-TF values (already scaled from 1h). This configuration was selected by grid search over the 2019-2026 full window. Equity curve is on a log scale. Drawdown is the
+peak-to-trough equity % from the prior high-water mark. Monthly-returns heatmap colors: green  0, red < 0, clamped at ±30% for visibility.
+SOL -- BBBreak_LS @ 4h -- CAGR +139.3%, Sharpe +1.93, DD -35.4%
+
+                                                                 Strategy family       BBBreak_LS
+                                                                 Timeframe             4h
+                                                                 Signal params         n=45, k=1.5, regime_len=225
+                                                                 Exit params           TP=10×ATR, SL=2.0×ATR, Trail=6.0×A
+                                                                 Risk / Lev            5.0% per trade, 3.0× cap
+
+                                                                 Trades (full)         231
+                                                                 Win rate              47.2%
+                                                                 Profit factor         2.04
+                                                                 Avg leverage          1.00×
+                                                                 Exposure              37.7%
+
+                                                                 CAGR (net)            +139.3%
+                                                                 Sharpe (annualized)   +1.93
+                                                                 Max drawdown          -35.4%
+                                                                 Final equity ($10k)   $1,466,347
+
+                                                                 IS (2019-2023)        n=139 CAGR +192.7% Sh +2.23 DD -
+                                                                 OOS (2024-2026)       n=92 CAGR +76.9% Sh +1.42 DD -35
+                                                                 Walk-forward verdict   OOS holds
+
+Walk-forward OOS (split 2024-01-01): IS Sharpe +2.23 / OOS Sharpe +1.42 (+76.9% OOS CAGR, n=92). Verdict:  OOS holds.
+
+Notes. Signal parameters above are native-TF values (already scaled from 1h). This configuration was selected by grid search over the 2019-2026 full window. Equity curve is on a log scale. Drawdown is the
+peak-to-trough equity % from the prior high-water mark. Monthly-returns heatmap colors: green  0, red < 0, clamped at ±30% for visibility.
+LINK -- BBBreak_LS @ 4h -- CAGR +37.4%, Sharpe +1.09, DD -38.4%
+
+                                                                 Strategy family       BBBreak_LS
+                                                                 Timeframe             4h
+                                                                 Signal params         n=45, k=1.5, regime_len=75
+                                                                 Exit params           TP=10×ATR, SL=2.0×ATR, Trail=6.0×A
+                                                                 Risk / Lev            3.0% per trade, 3.0× cap
+
+                                                                 Trades (full)         409
+                                                                 Win rate              40.3%
+                                                                 Profit factor         1.44
+                                                                 Avg leverage          0.58×
+                                                                 Exposure              50.6%
+
+                                                                 CAGR (net)            +37.4%
+                                                                 Sharpe (annualized)   +1.09
+                                                                 Max drawdown          -38.4%
+                                                                 Final equity ($10k)   $111,621
+
+                                                                 IS (2019-2023)        n=280 CAGR +47.6% Sh +1.26 DD -3
+                                                                 OOS (2024-2026)       n=129 CAGR +17.7% Sh +0.70 DD -3
+                                                                 Walk-forward verdict   OOS holds
+
+Walk-forward OOS (split 2024-01-01): IS Sharpe +1.26 / OOS Sharpe +0.70 (+17.7% OOS CAGR, n=129). Verdict:  OOS holds.
+
+Notes. Signal parameters above are native-TF values (already scaled from 1h). This configuration was selected by grid search over the 2019-2026 full window. Equity curve is on a log scale. Drawdown is the
+peak-to-trough equity % from the prior high-water mark. Monthly-returns heatmap colors: green  0, red < 0, clamped at ±30% for visibility.
+AVAX -- RangeKalman_LS @ 4h -- CAGR +77.5%, Sharpe +1.49, DD -31.1%
+
+                                                                     Strategy family       RangeKalman_LS
+                                                                     Timeframe             4h
+                                                                     Signal params         alpha=0.07, rng_len=50, rng_mult=2.5,
+                                                                     Exit params           TP=10×ATR, SL=2.0×ATR, Trail=6.0×A
+                                                                     Risk / Lev            5.0% per trade, 3.0× cap
+
+                                                                     Trades (full)         165
+                                                                     Win rate              49.7%
+                                                                     Profit factor         2.01
+                                                                     Avg leverage          0.94×
+                                                                     Exposure              27.7%
+
+                                                                     CAGR (net)            +77.5%
+                                                                     Sharpe (annualized)   +1.49
+                                                                     Max drawdown          -31.1%
+                                                                     Final equity ($10k)   $253,687
+
+                                                                     IS (2019-2023)        n=100 CAGR +95.9% Sh +1.68 DD -3
+                                                                     OOS (2024-2026)       n=65 CAGR +53.7% Sh +1.19 DD -30
+                                                                     Walk-forward verdict   OOS holds
+
+Walk-forward OOS (split 2024-01-01): IS Sharpe +1.68 / OOS Sharpe +1.19 (+53.7% OOS CAGR, n=65). Verdict:  OOS holds.
+
+Notes. Signal parameters above are native-TF values (already scaled from 1h). This configuration was selected by grid search over the 2019-2026 full window. Equity curve is on a log scale. Drawdown is the
+peak-to-trough equity % from the prior high-water mark. Monthly-returns heatmap colors: green  0, red < 0, clamped at ±30% for visibility.
+DOGE -- BBBreak_LS @ 4h -- CAGR +63.5%, Sharpe +1.22, DD -36.5%
+
+                                                                 Strategy family       BBBreak_LS
+                                                                 Timeframe             4h
+                                                                 Signal params         n=45, k=2.5, regime_len=75
+                                                                 Exit params           TP=10×ATR, SL=2.0×ATR, Trail=6.0×A
+                                                                 Risk / Lev            5.0% per trade, 3.0× cap
+
+                                                                 Trades (full)         222
+                                                                 Win rate              41.9%
+                                                                 Profit factor         1.73
+                                                                 Avg leverage          1.03×
+                                                                 Exposure              25.3%
+
+                                                                 CAGR (net)            +63.5%
+                                                                 Sharpe (annualized)   +1.22
+                                                                 Max drawdown          -36.5%
+                                                                 Final equity ($10k)   $299,564
+
+                                                                 IS (2019-2023)        n=151 CAGR +57.8% Sh +1.14 DD -3
+                                                                 OOS (2024-2026)       n=71 CAGR +75.0% Sh +1.39 DD -32
+                                                                 Walk-forward verdict   OOS holds
+
+Walk-forward OOS (split 2024-01-01): IS Sharpe +1.14 / OOS Sharpe +1.39 (+75.0% OOS CAGR, n=71). Verdict:  OOS holds.
+
+Notes. Signal parameters above are native-TF values (already scaled from 1h). This configuration was selected by grid search over the 2019-2026 full window. Equity curve is on a log scale. Drawdown is the
+peak-to-trough equity % from the prior high-water mark. Monthly-returns heatmap colors: green  0, red < 0, clamped at ±30% for visibility.
+INJ -- BBBreak_LS @ 4h -- CAGR +29.3%, Sharpe +0.79, DD -39.3%
+
+                                                                Strategy family       BBBreak_LS
+                                                                Timeframe             4h
+                                                                Signal params         n=30, k=2.5, regime_len=225
+                                                                Exit params           TP=7×ATR, SL=1.5×ATR, Trail=4.5×AT
+                                                                Risk / Lev            5.0% per trade, 3.0× cap
+
+                                                                Trades (full)         169
+                                                                Win rate              48.5%
+                                                                Profit factor         1.48
+                                                                Avg leverage          0.96×
+                                                                Exposure              11.8%
+
+                                                                CAGR (net)            +29.3%
+                                                                Sharpe (annualized)   +0.79
+                                                                Max drawdown          -39.3%
+                                                                Final equity ($10k)   $42,018
+
+                                                                IS (2019-2023)        n=101 CAGR +40.9% Sh +0.97 DD -3
+                                                                OOS (2024-2026)       n=68 CAGR +14.4% Sh +0.52 DD -31
+                                                                Walk-forward verdict   OOS holds
+
+Walk-forward OOS (split 2024-01-01): IS Sharpe +0.97 / OOS Sharpe +0.52 (+14.4% OOS CAGR, n=68). Verdict:  OOS holds.
+
+Notes. Signal parameters above are native-TF values (already scaled from 1h). This configuration was selected by grid search over the 2019-2026 full window. Equity curve is on a log scale. Drawdown is the
+peak-to-trough equity % from the prior high-water mark. Monthly-returns heatmap colors: green  0, red < 0, clamped at ±30% for visibility.
+SUI -- BBBreak_LS @ 4h -- CAGR +160.4%, Sharpe +1.66, DD -35.5%
+
+                                                                 Strategy family       BBBreak_LS
+                                                                 Timeframe             4h
+                                                                 Signal params         n=15, k=1.5, regime_len=150
+                                                                 Exit params           TP=7×ATR, SL=1.5×ATR, Trail=4.5×AT
+                                                                 Risk / Lev            5.0% per trade, 3.0× cap
+
+                                                                 Trades (full)         245
+                                                                 Win rate              47.3%
+                                                                 Profit factor         1.62
+                                                                 Avg leverage          1.12×
+                                                                 Exposure              32.5%
+
+                                                                 CAGR (net)            +160.4%
+                                                                 Sharpe (annualized)   +1.66
+                                                                 Max drawdown          -35.5%
+                                                                 Final equity ($10k)   $167,620
+
+                                                                 IS (2019-2023)        n=50 CAGR +41.0% Sh +0.89 DD -35
+                                                                 OOS (2024-2026)       n=195 CAGR +212.0% Sh +1.85 DD -
+                                                                 Walk-forward verdict   OOS holds
+
+Walk-forward OOS (split 2024-01-01): IS Sharpe +0.89 / OOS Sharpe +1.85 (+212.0% OOS CAGR, n=195). Verdict:  OOS holds.
+
+Notes. Signal parameters above are native-TF values (already scaled from 1h). This configuration was selected by grid search over the 2019-2026 full window. Equity curve is on a log scale. Drawdown is the
+peak-to-trough equity % from the prior high-water mark. Monthly-returns heatmap colors: green  0, red < 0, clamped at ±30% for visibility.
+TON -- KeltnerADX_LS @ 2h -- CAGR +166.2%, Sharpe +1.31, DD -33.3%
+
+                                                                    Strategy family       KeltnerADX_LS
+                                                                    Timeframe             2h
+                                                                    Signal params         k_n=30, k_mult=2.0, adx_min=22, regim
+                                                                    Exit params           TP=5×ATR, SL=2.0×ATR, Trail=3.5×AT
+                                                                    Risk / Lev            5.0% per trade, 3.0× cap
+
+                                                                    Trades (full)         84
+                                                                    Win rate              40.5%
+                                                                    Profit factor         2.24
+                                                                    Avg leverage          1.66×
+                                                                    Exposure              16.5%
+
+                                                                    CAGR (net)            +166.2%
+                                                                    Sharpe (annualized)   +1.31
+                                                                    Max drawdown          -33.3%
+                                                                    Final equity ($10k)   $50,719
+
+                                                                    IS (2019-2023)        n=0 n/a n/a n/a
+                                                                    OOS (2024-2026)       n=84 CAGR +166.2% Sh +1.31 DD -3
+                                                                    Walk-forward verdict  OOS-only history (no IS)
+
+Walk-forward OOS: no IS slice (post-2024 listing) -- full-sample IS Sharpe +1.31, OOS-only history (no IS).
+
+Notes. Signal parameters above are native-TF values (already scaled from 1h). This configuration was selected by grid search over the 2019-2026 full window. Equity curve is on a log scale. Drawdown is the
+peak-to-trough equity % from the prior high-water mark. Monthly-returns heatmap colors: green  0, red < 0, clamped at ±30% for visibility.
+Methodology and caveats
+
+Data. Binance perpetual-futures USDT-margined OHLCV bars. BTC/ETH/SOL histories start 2019, altcoins start when they first listed on Binance (SUI 2023-05, TON 2022-10). Loaded from
+the local features/multi_tf/ parquet store at 1h, 2h, and 4h.
+
+Signal families tested (all long + short). (1) RangeKalman L+S -- mean-reverting Kalman-EMA with deviation bands, direction gated by a regime SMA. (2) BB-Break L+S -- Bollinger band
+breakout + regime SMA gate. (3) Keltner + ADX L+S -- Keltner channel breakout gated by ADX strength + regime SMA. For each coin, the best config was chosen from a small per-family grid
+(, lengths, multipliers, risk, TF).
+
+Execution model. Signals fire at bar close; fills at next-bar open ± 3 bps slippage. Exits: TP at +tp×ATR, SL at -sl×ATR, trailing stop at -trail×ATR from high-water mark, forced exit at max-hold
+bars. Position sizing: risk_per_trade × equity ÷ (sl×ATR), capped at leverage_cap × equity ÷ price. Taker fee of 0.045% charged on entry and exit notional.
+
+Performance accounting. CAGR is compounded annual return on equity from a $10,000 start. "Net" CAGR subtracts a modeled 8% APR funding drag × average leverage × time-in-market.
+Sharpe is annualized using the natural bar count per year at each TF. Drawdown is the maximum peak-to-trough decline of the equity curve. Profit factor is sum(winning P&L;) / |sum(losing
+P&L;)|.
+
+What this report IS. A per-coin optimization showing the best single-config for each asset, with a walk-forward out-of-sample check. For each coin the same locked config is re-simulated in two
+slices: IS (2019-2023) and OOS (2024-2026). The "Walk-forward verdict" column flags a config as holding when OOS Sharpe  50% of IS Sharpe. TON has no IS history (first listing 2024-08)
+and is shown OOS-only.
+
+What this report is NOT. A go-live spec. Expect 20-40% haircut on CAGR from slippage, borrowing frictions, venue outages, and regime change. Paper trade each coin for 4+ weeks before
+real capital; set a -45% circuit breaker per sub-account; re-audit every 6 months. LINK (37%) and INJ (29%) fall short of the 55% target -- use them for diversification, not as standalone
+aggressive allocations.
+

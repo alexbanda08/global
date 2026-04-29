@@ -1,0 +1,170 @@
+{
+  "CCI_ETH_4h": {
+    "sharpe_opt": {
+      "label": "CCI_ETH_4h",
+      "n": 100,
+      "sharpe": 1.22,
+      "cagr": 0.466,
+      "mdd": -0.448,
+      "calmar": 1.04,
+      "win": 0.42,
+      "min_yr": -0.249,
+      "risk": 0.05
+    },
+    "calmar_opt": {
+      "label": "CCI_ETH_4h",
+      "n": 100,
+      "sharpe": 1.22,
+      "cagr": 0.555,
+      "mdd": -0.51,
+      "calmar": 1.09,
+      "win": 0.42,
+      "min_yr": -0.291,
+      "risk": 0.06
+    }
+  },
+  "STF_SOL_4h": {
+    "sharpe_opt": {
+      "label": "STF_SOL_4h",
+      "n": 115,
+      "sharpe": 1.72,
+      "cagr": 0.316,
+      "mdd": -0.168,
+      "calmar": 1.88,
+      "win": 0.38,
+      "min_yr": 0.008,
+      "risk": 0.02
+    },
+    "calmar_opt": {
+      "label": "STF_SOL_4h",
+      "n": 115,
+      "sharpe": 1.67,
+      "cagr": 1.002,
+      "mdd": -0.435,
+      "calmar": 2.3,
+      "win": 0.38,
+      "min_yr": -0.008,
+      "risk": 0.06
+    }
+  },
+  "STF_AVAX_4h": {
+    "sharpe_opt": {
+      "label": "STF_AVAX_4h",
+      "n": 106,
+      "sharpe": 1.33,
+      "cagr": 0.221,
+      "mdd": -0.169,
+      "calmar": 1.31,
+      "win": 0.42,
+      "min_yr": 0.001,
+      "risk": 0.02
+    },
+    "calmar_opt": {
+      "label": "STF_AVAX_4h",
+      "n": 106,
+      "sharpe": 1.31,
+      "cagr": 0.642,
+      "mdd": -0.445,
+      "calmar": 1.44,
+      "win": 0.42,
+      "min_yr": -0.052,
+      "risk": 0.06
+    }
+  },
+  "STF_DOGE_4h": {
+    "sharpe_opt": {
+      "label": "STF_DOGE_4h",
+      "n": 106,
+      "sharpe": 1.3,
+      "cagr": 0.343,
+      "mdd": -0.331,
+      "calmar": 1.04,
+      "win": 0.42,
+      "min_yr": -0.158,
+      "risk": 0.03
+    },
+    "calmar_opt": {
+      "label": "STF_DOGE_4h",
+      "n": 106,
+      "sharpe": 1.3,
+      "cagr": 0.681,
+      "mdd": -0.571,
+      "calmar": 1.19,
+      "win": 0.42,
+      "min_yr": -0.318,
+      "risk": 0.06
+    }
+  },
+  "VWZ_INJ_4h": {
+    "sharpe_opt": {
+      "label": "VWZ_INJ_4h",
+      "n": 23,
+      "sharpe": 0.29,
+      "cagr": 0.029,
+      "mdd": -0.188,
+      "calmar": 0.15,
+      "win": 0.43,
+      "min_yr": -0.138,
+      "risk": 0.04
+    },
+    "calmar_opt": {
+      "label": "VWZ_INJ_4h",
+      "n": 23,
+      "sharpe": 0.28,
+      "cagr": 0.016,
+      "mdd": -0.1,
+      "calmar": 0.16,
+      "win": 0.43,
+      "min_yr": -0.07,
+      "risk": 0.02
+    }
+  },
+  "LATBB_AVAX_4h": {
+    "sharpe_opt": {
+      "label": "LATBB_AVAX_4h",
+      "n": 52,
+      "sharpe": 0.98,
+      "cagr": 0.103,
+      "mdd": -0.212,
+      "calmar": 0.49,
+      "win": 0.33,
+      "min_yr": -0.109,
+      "risk": 0.02
+    },
+    "calmar_opt": {
+      "label": "LATBB_AVAX_4h",
+      "n": 52,
+      "sharpe": 0.95,
+      "cagr": 0.235,
+      "mdd": -0.454,
+      "calmar": 0.52,
+      "win": 0.33,
+      "min_yr": -0.268,
+      "risk": 0.05
+    }
+  },
+  "BB_AVAX_4h": {
+    "sharpe_opt": {
+      "label": "BB_AVAX_4h",
+      "n": 203,
+      "sharpe": 1.19,
+      "cagr": 0.691,
+      "mdd": -0.578,
+      "calmar": 1.2,
+      "win": 0.36,
+      "min_yr": -0.391,
+      "risk": 0.05
+    },
+    "calmar_opt": {
+      "label": "BB_AVAX_4h",
+      "n": 203,
+      "sharpe": 1.19,
+      "cagr": 0.802,
+      "mdd": -0.655,
+      "calmar": 1.22,
+      "win": 0.36,
+      "min_yr": -0.463,
+      "risk": 0.06
+    }
+  }
+}

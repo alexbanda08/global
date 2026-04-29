@@ -1,0 +1,118 @@
+{
+  "window_start": "2024-01-12",
+  "window_end": "2026-04-24",
+  "v52_results": {
+    "Binance V52": {
+      "label": "Binance V52",
+      "sharpe": 3.215,
+      "cagr": 0.4723,
+      "mdd": -0.0791,
+      "calmar": 5.973,
+      "yearly": {
+        "2024": 0.3693,
+        "2025": 0.488,
+        "2026": 0.1571
+      }
+    },
+    "Hyperliquid V52 (no funding)": {
+      "label": "HL V52 no funding",
+      "sharpe": 2.668,
+      "cagr": 0.3611,
+      "mdd": -0.0567,
+      "calmar": 6.363,
+      "yearly": {
+        "2024": 0.4253,
+        "2025": 0.352,
+        "2026": 0.0484
+      }
+    },
+    "Hyperliquid V52 (w/ funding)": {
+      "label": "HL V52 w/ funding",
+      "sharpe": 2.645,
+      "cagr": 0.3573,
+      "mdd": -0.0568,
+      "calmar": 6.29,
+      "yearly": {
+        "2024": 0.4211,
+        "2025": 0.3484,
+        "2026": 0.0477
+      }
+    }
+  },
+  "v41_results": {
+    "Binance V41": {
+      "label": "Binance V41",
+      "sharpe": 2.88,
+      "cagr": 0.5135,
+      "mdd": -0.083,
+      "calmar": 6.183,
+      "yearly": {
+        "2024": 0.3891,
+        "2025": 0.5072,
+        "2026": 0.1965
+      }
+    },
+    "Hyperliquid V41 (no funding)": {
+      "label": "HL V41 no funding",
+      "sharpe": 2.602,
+      "cagr": 0.4488,
+      "mdd": -0.0926,
+      "calmar": 4.847,
+      "yearly": {
+        "2024": 0.4632,
+        "2025": 0.5158,
+        "2026": 0.0489
+      }
+    },
+    "Hyperliquid V41 (w/ funding)": {
+      "label": "HL V41 w/ funding",
+      "sharpe": 2.537,
+      "cagr": 0.4351,
+      "mdd": -0.0933,
+      "calmar": 4.666,
+      "yearly": {
+        "2024": 0.4419,
+        "2025": 0.5073,
+        "2026": 0.0475
+      }
+    }
+  },
+  "correlations": [
+    {
+      "sleeve": "CCI_ETH_4h",
+      "symbol": "ETH",
+      "common_bars": 4856,
+      "corr_close": 1.0,
+      "corr_returns": 0.9997,
+      "corr_volume": 0.7418,
+      "binance_volume_x_hl": 1.1
+    },
+    {
+      "sleeve": "STF_SOL_4h",
+      "symbol": "SOL",
+      "common_bars": 4856,
+      "corr_close": 1.0,
+      "corr_returns": 0.9996,
+      "corr_volume": 0.5175,
+      "binance_volume_x_hl": 1.5
+    },
+    {
+      "sleeve": "STF_AVAX_4h",
+      "symbol": "AVAX",
+      "common_bars": 4856,
+      "corr_close": 1.0,
+      "corr_returns": 0.9992,
+      "corr_volume": 0.6629,
+      "binance_volume_x_hl": 4.8
+    },
+    {
+      "sleeve": "LATBB_AVAX_4h",
+      "symbol": "AVAX",
+      "common_bars": 4856,
+      "corr_close": 1.0,
+      "corr_returns": 0.9992,
+      "corr_volume": 0.6629,
+      "binance_volume_x_hl": 4.8
+    }
+  ]
+}

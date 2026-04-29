@@ -1,0 +1,195 @@
+{
+  "portfolio": "P6",
+  "sleeves": [
+    "CCI_ETH_4h",
+    "STF_DOGE_4h",
+    "STF_SOL_4h"
+  ],
+  "baseline_metrics": {
+    "sharpe": 2.121,
+    "cagr": 0.39,
+    "max_dd": -0.1538,
+    "calmar": 2.536
+  },
+  "per_year": {
+    "2021": {
+      "sharpe": 2.209,
+      "return": 0.36,
+      "max_dd": -0.0753,
+      "n_bars": 2190
+    },
+    "2022": {
+      "sharpe": 1.848,
+      "return": 0.3099,
+      "max_dd": -0.1338,
+      "n_bars": 2190
+    },
+    "2023": {
+      "sharpe": 0.452,
+      "return": 0.0574,
+      "max_dd": -0.1133,
+      "n_bars": 2190
+    },
+    "2024": {
+      "sharpe": 2.595,
+      "return": 0.5685,
+      "max_dd": -0.0999,
+      "n_bars": 2196
+    },
+    "2025": {
+      "sharpe": 3.285,
+      "return": 0.7312,
+      "max_dd": -0.0832,
+      "n_bars": 2190
+    },
+    "2026": {
+      "sharpe": 2.253,
+      "return": 0.1077,
+      "max_dd": -0.088,
+      "n_bars": 540
+    }
+  },
+  "bootstrap": {
+    "sharpe": {
+      "mean": 2.0999,
+      "ci_lo": 1.1737,
+      "ci_hi": 2.9869
+    },
+    "calmar": {
+      "mean": 2.7546,
+      "ci_lo": 0.9124,
+      "ci_hi": 5.399
+    },
+    "max_dd": {
+      "mean": -0.1531,
+      "ci_lo": -0.2451,
+      "ci_hi": -0.0989
+    }
+  },
+  "walk_forward": {
+    "n_folds": 6,
+    "avg_is_sharpe": 2.071,
+    "avg_oos_sharpe": 1.932,
+    "efficiency_ratio": 0.933,
+    "n_positive_folds": 5,
+    "worst_fold_sharpe": -1.338,
+    "folds": [
+      {
+        "fold": 1,
+        "is_sharpe": 2.43,
+        "oos_sharpe": 3.415
+      },
+      {
+        "fold": 2,
+        "is_sharpe": 2.971,
+        "oos_sharpe": -1.338
+      },
+      {
+        "fold": 3,
+        "is_sharpe": 1.705,
+        "oos_sharpe": 0.916
+      },
+      {
+        "fold": 4,
+        "is_sharpe": 1.495,
+        "oos_sharpe": 2.506
+      },
+      {
+        "fold": 5,
+        "is_sharpe": 1.724,
+        "oos_sharpe": 3.814
+      },
+      {
+        "fold": 6,
+        "is_sharpe": 2.101,
+        "oos_sharpe": 2.282
+      }
+    ]
+  },
+  "permutation": {
+    "n_permutations": 15,
+    "real_sharpe": 2.121,
+    "null_mean": -0.38121498622957745,
+    "null_99th": 0.24482299807044997,
+    "p_value": 0.0
+  },
+  "plateau": {
+    "passed": true,
+    "worst_25pct_drop": 0.205,
+    "worst_50pct_drop": 0.25,
+    "cliff": false,
+    "per_sleeve": {
+      "CCI_ETH_4h": {
+        "baseline": {},
+        "sweep": {
+          "cci_n@-50%": 1.891,
+          "cci_n@-25%": 1.687,
+          "cci_n@+25%": 2.115,
+          "cci_n@+50%": 1.985,
+          "cci_lo@-50%": 1.781,
+          "cci_lo@-25%": 1.967,
+          "cci_lo@+25%": 1.876,
+          "cci_lo@+50%": 1.932,
+          "cci_hi@-50%": 1.771,
+          "cci_hi@-25%": 1.705,
+          "cci_hi@+25%": 1.939,
+          "cci_hi@+50%": 1.83,
+          "adx_max@-50%": 1.854,
+          "adx_max@-25%": 1.927,
+          "adx_max@+25%": 1.919,
+          "adx_max@+50%": 1.637,
+          "adx_n@-50%": 1.857,
+          "adx_n@-25%": 1.945,
+          "adx_n@+25%": 1.761,
+          "adx_n@+50%": 1.89
+        }
+      },
+      "STF_DOGE_4h": {
+        "baseline": {},
+        "sweep": {
+          "st_n@-50%": 2.138,
+          "st_n@-25%": 2.069,
+          "st_n@+25%": 2.139,
+          "st_n@+50%": 2.159,
+          "st_mult@-50%": 1.59,
+          "st_mult@-25%": 1.994,
+          "st_mult@+25%": 2.165,
+          "st_mult@+50%": 2.013,
+          "ema_reg@-50%": 2.085,
+          "ema_reg@-25%": 2.136,
+          "ema_reg@+25%": 2.092,
+          "ema_reg@+50%": 2.041
+        }
+      },
+      "STF_SOL_4h": {
+        "baseline": {},
+        "sweep": {
+          "st_n@-50%": 1.974,
+          "st_n@-25%": 2.087,
+          "st_n@+25%": 2.078,
+          "st_n@+50%": 2.098,
+          "st_mult@-50%": 1.921,
+          "st_mult@-25%": 1.953,
+          "st_mult@+25%": 1.764,
+          "st_mult@+50%": 1.955,
+          "ema_reg@-50%": 2.068,
+          "ema_reg@-25%": 2.089,
+          "ema_reg@+25%": 2.167,
+          "ema_reg@+50%": 2.204
+        }
+      }
+    }
+  },
+  "verdict": {
+    "per_year_>=70pct": true,
+    "permutation_p<0.01": true,
+    "bootstrap_sharpe_lowerCI>0.5": true,
+    "bootstrap_calmar_lowerCI>1.0": false,
+    "bootstrap_mdd_upperCI<30%": true,
+    "walk_forward_efficiency>0.5": true,
+    "walk_forward_pos_folds>=5": true,
+    "plateau_passed": true
+  },
+  "tests_passed": 7,
+  "tests_total": 8
+}

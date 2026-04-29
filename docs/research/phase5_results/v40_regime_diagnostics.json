@@ -1,0 +1,187 @@
+{
+  "ETHUSDT:4h": {
+    "best_k": 5,
+    "bic_table": {
+      "3": 27371.118792653153,
+      "4": 26369.031687686114,
+      "5": 25981.248308090057
+    },
+    "verification": {
+      "train_end_date": "2022-08-05 08:00:00+00:00",
+      "oos_start_date": "2022-08-05 12:00:00+00:00",
+      "train_bars": 3429,
+      "oos_bars": 8001,
+      "no_leak_assertion": true
+    },
+    "regime_vol_scores": {
+      "0": 0.017863951682413084,
+      "1": 0.017998606375911014,
+      "2": 0.021685735211254803,
+      "3": 0.022818834556337295,
+      "4": 0.0310556045824511
+    },
+    "regime_distribution": {
+      "LowVol": 8571,
+      "MedLowVol": 968,
+      "MedHighVol": 833,
+      "MedVol": 656,
+      "HighVol": 400,
+      "Warming": 2
+    }
+  },
+  "AVAXUSDT:4h": {
+    "best_k": 5,
+    "bic_table": {
+      "3": 28220.251341325853,
+      "4": 28019.278826724876,
+      "5": 27374.955433703297
+    },
+    "verification": {
+      "train_end_date": "2022-08-05 08:00:00+00:00",
+      "oos_start_date": "2022-08-05 12:00:00+00:00",
+      "train_bars": 3429,
+      "oos_bars": 8001,
+      "no_leak_assertion": true
+    },
+    "regime_vol_scores": {
+      "0": 0.02535473517116359,
+      "1": 0.026593354702029545,
+      "2": 0.03887871707397602,
+      "3": 0.03977861488365808,
+      "4": 0.04551199389636728
+    },
+    "regime_distribution": {
+      "MedLowVol": 8007,
+      "LowVol": 1985,
+      "HighVol": 972,
+      "MedVol": 303,
+      "MedHighVol": 154,
+      "Warming": 7,
+      "Uncertain": 2
+    }
+  },
+  "SOLUSDT:4h": {
+    "best_k": 5,
+    "bic_table": {
+      "3": 27617.589951688606,
+      "4": 26573.052355573305,
+      "5": 25996.385063715243
+    },
+    "verification": {
+      "train_end_date": "2022-08-05 08:00:00+00:00",
+      "oos_start_date": "2022-08-05 12:00:00+00:00",
+      "train_bars": 3429,
+      "oos_bars": 8001,
+      "no_leak_assertion": true
+    },
+    "regime_vol_scores": {
+      "0": 0.023091978617764252,
+      "1": 0.03403116507491009,
+      "2": 0.03430301368211193,
+      "3": 0.03455013726600854,
+      "4": 0.03757941706431871
+    },
+    "regime_distribution": {
+      "LowVol": 7050,
+      "HighVol": 2105,
+      "MedHighVol": 1269,
+      "MedLowVol": 586,
+      "MedVol": 416,
+      "Warming": 2,
+      "Uncertain": 2
+    }
+  },
+  "DOGEUSDT:4h": {
+    "best_k": 5,
+    "bic_table": {
+      "3": 15305.495391162764,
+      "4": 13353.263833985287,
+      "5": 12800.357746505719
+    },
+    "verification": {
+      "train_end_date": "2022-08-05 08:00:00+00:00",
+      "oos_start_date": "2022-08-05 12:00:00+00:00",
+      "train_bars": 3429,
+      "oos_bars": 8001,
+      "no_leak_assertion": true
+    },
+    "regime_vol_scores": {
+      "0": 0.023730458038297788,
+      "1": 0.02456891935318425,
+      "2": 0.05071059776877161,
+      "3": 0.06145534441513579,
+      "4": 0.09064079244893489
+    },
+    "regime_distribution": {
+      "MedLowVol": 8179,
+      "LowVol": 2469,
+      "MedHighVol": 360,
+      "HighVol": 253,
+      "MedVol": 159,
+      "Uncertain": 8,
+      "Warming": 2
+    }
+  },
+  "AVAXUSDT:1h": {
+    "best_k": 5,
+    "bic_table": {
+      "3": 105916.68889441973,
+      "4": 101279.73515309038,
+      "5": 98608.83350107602
+    },
+    "verification": {
+      "train_end_date": "2022-07-31 13:00:00+00:00",
+      "oos_start_date": "2022-07-31 14:00:00+00:00",
+      "train_bars": 13765,
+      "oos_bars": 32121,
+      "no_leak_assertion": true
+    },
+    "regime_vol_scores": {
+      "0": 0.0132027932453966,
+      "1": 0.01553943884365243,
+      "2": 0.016115389704273116,
+      "3": 0.026445671725976706,
+      "4": 0.027495859412756264
+    },
+    "regime_distribution": {
+      "LowVol": 37678,
+      "MedLowVol": 3111,
+      "HighVol": 2819,
+      "MedVol": 1338,
+      "MedHighVol": 911,
+      "Uncertain": 16,
+      "Warming": 13
+    }
+  },
+  "SOLUSDT:1h": {
+    "best_k": 5,
+    "bic_table": {
+      "3": 101449.20397153901,
+      "4": 101140.17276022148,
+      "5": 94943.03553654201
+    },
+    "verification": {
+      "train_end_date": "2022-07-31 13:00:00+00:00",
+      "oos_start_date": "2022-07-31 14:00:00+00:00",
+      "train_bars": 13765,
+      "oos_bars": 32121,
+      "no_leak_assertion": true
+    },
+    "regime_vol_scores": {
+      "0": 0.012345576196816224,
+      "1": 0.012595800223223392,
+      "2": 0.01400370749339217,
+      "3": 0.023397813127395993,
+      "4": 0.026848435606417677
+    },
+    "regime_distribution": {
+      "LowVol": 33924,
+      "MedLowVol": 4803,
+      "MedVol": 2962,
+      "HighVol": 2492,
+      "MedHighVol": 1685,
+      "Uncertain": 12,
+      "Warming": 8
+    }
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "headline": {
+    "sharpe": 2.497,
+    "cagr_pct": 57.35,
+    "mdd_pct": -9.86,
+    "calmar": 5.819,
+    "vol_ann_pct": 18.86,
+    "skew": 1.23,
+    "kurtosis": 13.396,
+    "total_ret_pct": 181.31
+  },
+  "trade_frequency": {
+    "n_total": 546,
+    "per_year": 239.3,
+    "per_month": 19.94,
+    "per_week": 4.59,
+    "per_day": 0.655,
+    "long_n": 260,
+    "short_n": 286
+  },
+  "trade_quality": {
+    "win_rate": 0.3516,
+    "avg_win_pct": 13.8829,
+    "avg_loss_pct": -4.9252,
+    "profit_factor": 1.529,
+    "expectancy_pct": 1.6886,
+    "max_win_streak": 7,
+    "max_loss_streak": 12,
+    "best_trade_pct": 41.819,
+    "worst_trade_pct": -5.643
+  },
+  "holding_period_bars": {
+    "mean": 26.3,
+    "median": 19,
+    "p10": 2,
+    "p90": 60,
+    "max": 80
+  },
+  "exit_reasons": {
+    "SL": 400,
+    "TIME": 93,
+    "TP": 53
+  },
+  "per_sleeve": [
+    {
+      "sleeve": "CCI_ETH_4h",
+      "coin": "ETH",
+      "n": 48,
+      "per_yr": 21.0384,
+      "per_wk": 0.40318896128784976,
+      "wr": 0.3958333333333333,
+      "avg_r": 0.02166495803574056,
+      "avg_bars": 21.291666666666668,
+      "med_bars": 20.0
+    },
+    {
+      "sleeve": "STF_SOL_4h",
+      "coin": "SOL",
+      "n": 52,
+      "per_yr": 22.7916,
+      "per_wk": 0.4367880413951706,
+      "wr": 0.34615384615384615,
+      "avg_r": 0.022417200192467308,
+      "avg_bars": 26.903846153846153,
+      "med_bars": 15.5
+    },
+    {
+      "sleeve": "STF_AVAX_4h",
+      "coin": "AVAX",
+      "n": 39,
+      "per_yr": 17.093700000000002,
+      "per_wk": 0.32759103104637793,
+      "wr": 0.38461538461538464,
+      "avg_r": 0.05947917519046362,
+      "avg_bars": 21.846153846153847,
+      "med_bars": 12.0
+    },
+    {
+      "sleeve": "LATBB_AVAX_4h",
+      "coin": "AVAX",
+      "n": 24,
+      "per_yr": 10.5192,
+      "per_wk": 0.20159448064392488,
+      "wr": 0.4583333333333333,
+      "avg_r": 0.04691907214505248,
+      "avg_bars": 29.291666666666668,
+      "med_bars": 26.5
+    },
+    {
+      "sleeve": "MFI_SOL",
+      "coin": "SOL",
+      "n": 106,
+      "per_yr": 46.4598,
+      "per_wk": 0.8903756228440015,
+      "wr": 0.3018867924528302,
+      "avg_r": 0.007834881406512385,
+      "avg_bars": 27.245283018867923,
+      "med_bars": 15.5
+    },
+    {
+      "sleeve": "VP_LINK",
+      "coin": "LINK",
+      "n": 111,
+      "per_yr": 48.6513,
+      "per_wk": 0.9323744729781526,
+      "wr": 0.3963963963963964,
+      "avg_r": 0.01822727399284669,
+      "avg_bars": 27.81081081081081,
+      "med_bars": 23.0
+    },
+    {
+      "sleeve": "SVD_AVAX",
+      "coin": "AVAX",
+      "n": 61,
+      "per_yr": 26.7363,
+      "per_wk": 0.5123859716366423,
+      "wr": 0.3114754098360656,
+      "avg_r": 0.005470538204838234,
+      "avg_bars": 24.80327868852459,
+      "med_bars": 19.0
+    },
+    {
+      "sleeve": "MFI_ETH",
+      "coin": "ETH",
+      "n": 105,
+      "per_yr": 46.0215,
+      "per_wk": 0.8819758528171713,
+      "wr": 0.3238095238095238,
+      "avg_r": 0.003630754078082476,
+      "avg_bars": 27.590476190476192,
+      "med_bars": 25.0
+    }
+  ],
+  "yearly": {
+    "2024": {
+      "ret_pct": 75.85115702077161,
+      "n_trades": 222,
+      "wr": 0.4009009009009009,
+      "mdd_pct": -7.909552403388986
+    },
+    "2025": {
+      "ret_pct": 56.90780783768987,
+      "n_trades": 236,
+      "wr": 0.3432203389830508,
+      "mdd_pct": -8.279469525173266
+    },
+    "2026": {
+      "ret_pct": 2.1884256661667045,
+      "n_trades": 88,
+      "wr": 0.25,
+      "mdd_pct": -9.857037460356288
+    }
+  },
+  "drawdowns_top5": [
+    {
+      "start": "2026-04-02",
+      "trough": "2026-04-21",
+      "recovery": "2026-04-25",
+      "depth_pct": -9.86,
+      "total_days": 22.5
+    },
+    {
+      "start": "2024-12-10",
+      "trough": "2025-01-22",
+      "recovery": "2025-03-28",
+      "depth_pct": -9.33,
+      "total_days": 107.8
+    },
+    {
+      "start": "2025-05-23",
+      "trough": "2025-06-21",
+      "recovery": "2025-07-10",
+      "depth_pct": -8.28,
+      "total_days": 48.7
+    },
+    {
+      "start": "2024-07-25",
+      "trough": "2024-08-16",
+      "recovery": "2024-08-27",
+      "depth_pct": -7.91,
+      "total_days": 33.0
+    },
+    {
+      "start": "2025-11-11",
+      "trough": "2026-01-16",
+      "recovery": "2026-01-20",
+      "depth_pct": -7.36,
+      "total_days": 70.3
+    }
+  ]
+}

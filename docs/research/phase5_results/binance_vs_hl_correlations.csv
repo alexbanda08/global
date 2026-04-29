@@ -1,0 +1,5 @@
+sleeve,symbol,common_bars,corr_close,corr_returns,corr_volume,binance_volume_x_hl
+CCI_ETH_4h,ETH,4856,1.0,0.9997,0.7418,1.1
+STF_SOL_4h,SOL,4856,1.0,0.9996,0.5175,1.5
+STF_AVAX_4h,AVAX,4856,1.0,0.9992,0.6629,4.8
+LATBB_AVAX_4h,AVAX,4856,1.0,0.9992,0.6629,4.8

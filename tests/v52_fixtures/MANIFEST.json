@@ -1,0 +1,41 @@
+{
+  "fixture_version": "1.0",
+  "generated_utc": "2026-04-25T02:30:07.147759+00:00",
+  "data_source": "Hyperliquid candleSnapshot + fundingHistory",
+  "n_bars_per_symbol": 2000,
+  "symbols": [
+    "ETH",
+    "AVAX",
+    "SOL",
+    "LINK"
+  ],
+  "files": {
+    "input_klines.parquet": "Multi-symbol OHLCV input (the only data engine should consume)",
+    "input_funding.parquet": "Per-symbol per-4h-bar summed hourly funding rates",
+    "expected_indicators.json": "ATR(14) reference values at 50 sample bars",
+    "expected_signals.json": "6 signal functions: long/short entry indices",
+    "expected_regime.json": "GMM fit results: K*, BIC table, label distribution",
+    "expected_trades.json": "Trade lists from canonical, V41, and funding-aware simulators on CCI_ETH",
+    "expected_equity.json": "Equity curve sample points from each simulator",
+    "expected_v52_blend.json": "End-to-end V52 blend headline metrics + 100 equity samples"
+  },
+  "tolerances": {
+    "indicators (ATR)": "rtol=1e-9",
+    "signals (booleans)": "exact match",
+    "regime (best_k, distribution)": "exact (given seed=42)",
+    "trade indices/sides": "exact match",
+    "trade prices": "rtol=1e-6",
+    "equity samples": "rtol=1e-5",
+    "v52 final equity / headline metrics": "rtol=1e-4 / rtol=5e-3"
+  },
+  "test_order": [
+    "1. ATR \u2014 proves indicator math correct",
+    "2. CCI/ST/BB signals \u2014 proves signal logic correct",
+    "3. New signals (MFI/VP/SVD) \u2014 proves new signal logic correct",
+    "4. Regime \u2014 proves classifier deterministic with seed=42",
+    "5. Canonical simulator trades \u2014 proves engine semantics correct",
+    "6. V41 simulator trades \u2014 proves regime-adaptive exits correct",
+    "7. Funding simulator trades \u2014 proves funding accrual correct",
+    "8. V52 final equity \u2014 proves end-to-end integration correct"
+  ]
+}

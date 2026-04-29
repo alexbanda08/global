@@ -1,0 +1,50 @@
+{
+  "elapsed_s": 1.4,
+  "n_cells": 45,
+  "n_promote": 0,
+  "n_is_only": 0,
+  "n_oos_decent": 2,
+  "promoted": [],
+  "oos_decent": [
+    {
+      "coin": "BTC",
+      "z_long": -1.5,
+      "z_short": 1.5,
+      "atr_stretch": 1.5,
+      "n_signals": 112,
+      "n_long": 30,
+      "n_short": 82,
+      "is_sharpe": -0.514,
+      "is_cagr": -0.095,
+      "is_mdd": -0.2244,
+      "is_wr": 32.0,
+      "is_n_trades": 25,
+      "oos_sharpe": 1.779,
+      "oos_cagr": 0.3535,
+      "oos_mdd": -0.0939,
+      "oos_wr": 60.87,
+      "oos_n_trades": 23,
+      "verdict": "OOS_decent"
+    },
+    {
+      "coin": "BTC",
+      "z_long": -1.0,
+      "z_short": 1.0,
+      "atr_stretch": 1.5,
+      "n_signals": 176,
+      "n_long": 64,
+      "n_short": 112,
+      "is_sharpe": 0.771,
+      "is_cagr": 0.1622,
+      "is_mdd": -0.2164,
+      "is_wr": 40.0,
+      "is_n_trades": 40,
+      "oos_sharpe": 1.708,
+      "oos_cagr": 0.3892,
+      "oos_mdd": -0.1293,
+      "oos_wr": 59.38,
+      "oos_n_trades": 32,
+      "verdict": "OOS_decent"
+    }
+  ]
+}

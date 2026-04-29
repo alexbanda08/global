@@ -1,0 +1,102 @@
+//@version=5
+// ============================================================================
+//  BTC  —  V4C Range-Filtered Kalman Trend  (4h, long-only)
+// ============================================================================
+//  Python / vectorbt backtest (2018-01-01 -> 2026-04-01, $10,000 start):
+//    Final equity     $156,611    (15.66x)
+//    CAGR             39.60%
+//    Sharpe           1.32
+//    Max drawdown     -28.81%
+//    Calmar           1.37
+//    Trades           78  Win-rate 42.3%
+//    OOS 2023-2026    CAGR 22%  Sharpe 0.97  DD -21%
+//  Robustness: 5/5 overfitting checks passed (cross-asset, random-window,
+//  5-fold CV, parameter-epsilon, MC trade-shuffle).
+// ============================================================================
+
+strategy("BTC  V4C Range Kalman",
+     overlay             = true,
+     initial_capital     = 10000,
+     currency            = currency.USD,
+     default_qty_type    = strategy.percent_of_equity,
+     default_qty_value   = 99,
+     commission_type     = strategy.commission.percent,
+     commission_value    = 0.1,
+     slippage            = 5,
+     pyramiding          = 0,
+     calc_on_order_fills = false,
+     process_orders_on_close = false,
+     close_entries_rule  = "ANY",
+     use_bar_magnifier   = false)
+
+// -------- Inputs --------
+grpCore = "Kalman Range Filter"
+kalpha   = input.float(0.05, "Kalman alpha",    step = 0.01, group = grpCore)
+rLen     = input.int(100,   "Range length",     minval = 5,  group = grpCore)
+rMult    = input.float(2.5, "Range multiplier", step = 0.1,  group = grpCore)
+regLen   = input.int(200,   "Regime SMA",       minval = 20, group = grpCore)
+
+grpRisk  = "Risk"
+atrLen   = input.int(14,    "ATR length",       minval = 2,  group = grpRisk)
+trailAtr = input.float(3.5, "Trailing stop x ATR", step = 0.5, group = grpRisk)
+
+grpDates = "Backtest window"
+useDates = input.bool(true, "Limit to date range?",           group = grpDates)
+sd       = input.time(timestamp("2018-01-01 00:00 UTC"), "Start", group = grpDates)
+ed       = input.time(timestamp("2030-01-01 00:00 UTC"), "End",   group = grpDates)
+inWin    = not useDates or (time >= sd and time <= ed)
+
+// -------- Kalman scalar filter  x_i = x_{i-1} + α(z - x_{i-1}) --------
+var float kal = na
+kal := na(kal) ? close : kal + kalpha * (close - kal)
+
+// -------- Range band: EMA of |close - kal| * rMult around the baseline --------
+absDev = math.abs(close - kal)
+rng    = ta.sma(absDev, rLen) * rMult
+upper  = kal + rng
+lower  = kal - rng
+
+regSma = ta.sma(close, regLen)
+atr    = ta.atr(atrLen)
+
+// -------- Signals --------
+breakout   = ta.crossover(close, upper)
+regimeUp   = close > regSma
+longCond   = breakout and regimeUp and inWin
+exitReg    = close < regSma
+exitLower  = ta.crossunder(close, lower)
+
+// -------- Orders --------
+if longCond and strategy.position_size == 0
+    strategy.entry("L", strategy.long)
+
+var float hh = na
+var float ts = na
+if strategy.position_size > 0
+    hh := na(hh) ? high : math.max(hh, high)
+    newStop = hh - atr * trailAtr
+    ts := na(ts) ? newStop : math.max(ts, newStop)
+    strategy.exit("trail", from_entry = "L", stop = ts)
+    if exitReg or exitLower
+        strategy.close("L", comment = "regime/lower")
+else
+    hh := na
+    ts := na
+
+// -------- Visuals --------
+plot(kal,   "Kalman baseline", color = color.new(color.blue, 0))
+plot(upper, "Upper range",     color = color.new(color.green, 40))
+plot(lower, "Lower range",     color = color.new(color.red,   40))
+plot(regSma,"Regime SMA 200",  color = color.new(color.orange, 0))
+plot(strategy.position_size > 0 ? ts : na, "Trailing stop",
+     color = color.new(color.red, 0), style = plot.style_linebr)
+bgcolor(regimeUp ? color.new(color.green, 93) : color.new(color.red, 94))
+
+plotshape(longCond and strategy.position_size == 0,
+     "Entry", style = shape.triangleup, location = location.belowbar,
+     color = color.lime, size = size.tiny)
+
+alertcondition(longCond, title = "BTC V4C Long",
+     message = '{"action":"open_long","symbol":"{{ticker}}","tf":"{{interval}}"}')
+alertcondition(exitReg or exitLower, title = "BTC V4C Exit",
+     message = '{"action":"close_long","symbol":"{{ticker}}","tf":"{{interval}}"}')

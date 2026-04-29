@@ -1,0 +1,674 @@
+[
+  {
+    "file": "run_v24_15m_scalp.py",
+    "function": "sig_orb",
+    "qualified": "run_v24_15m_scalp.sig_orb",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v24_15m_scalp.py",
+    "function": "sig_rsi_bb",
+    "qualified": "run_v24_15m_scalp.sig_rsi_bb",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v24_15m_scalp.py",
+    "function": "sig_st_dual",
+    "qualified": "run_v24_15m_scalp.sig_st_dual",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v24_15m_scalp.py",
+    "function": "sig_vwap_band",
+    "qualified": "run_v24_15m_scalp.sig_vwap_band",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v25_creative.py",
+    "function": "sig_kelt_rsi",
+    "qualified": "run_v25_creative.sig_kelt_rsi",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v25_creative.py",
+    "function": "sig_mtf_conf",
+    "qualified": "run_v25_creative.sig_mtf_conf",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v25_creative.py",
+    "function": "sig_squeeze",
+    "qualified": "run_v25_creative.sig_squeeze",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v25_creative.py",
+    "function": "sig_sweep",
+    "qualified": "run_v25_creative.sig_sweep",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v26_priceaction.py",
+    "function": "sig_atr_sqz",
+    "qualified": "run_v26_priceaction.sig_atr_sqz",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v26_priceaction.py",
+    "function": "sig_engulf",
+    "qualified": "run_v26_priceaction.sig_engulf",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v26_priceaction.py",
+    "function": "sig_liq_sweep",
+    "qualified": "run_v26_priceaction.sig_liq_sweep",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v26_priceaction.py",
+    "function": "sig_msb",
+    "qualified": "run_v26_priceaction.sig_msb",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v26_priceaction.py",
+    "function": "sig_order_block",
+    "qualified": "run_v26_priceaction.sig_order_block",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v26_priceaction.py",
+    "function": "sig_rsi_div",
+    "qualified": "run_v26_priceaction.sig_rsi_div",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v27_swing.py",
+    "function": "sig_daily_ema_cross",
+    "qualified": "run_v27_swing.sig_daily_ema_cross",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v27_swing.py",
+    "function": "sig_htf_donchian",
+    "qualified": "run_v27_swing.sig_htf_donchian",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v27_swing.py",
+    "function": "sig_trend_pullback",
+    "qualified": "run_v27_swing.sig_trend_pullback",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v27_swing.py",
+    "function": "sig_vwap_fade",
+    "qualified": "run_v27_swing.sig_vwap_fade",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v29_regime.py",
+    "function": "sig_lateral_bb_fade",
+    "qualified": "run_v29_regime.sig_lateral_bb_fade",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v29_regime.py",
+    "function": "sig_regime_switch",
+    "qualified": "run_v29_regime.sig_regime_switch",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v29_regime.py",
+    "function": "sig_trend_grade",
+    "qualified": "run_v29_regime.sig_trend_grade",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v30_creative.py",
+    "function": "sig_cci_extreme",
+    "qualified": "run_v30_creative.sig_cci_extreme",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v30_creative.py",
+    "function": "sig_connors_rsi",
+    "qualified": "run_v30_creative.sig_connors_rsi",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v30_creative.py",
+    "function": "sig_supertrend_flip",
+    "qualified": "run_v30_creative.sig_supertrend_flip",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v30_creative.py",
+    "function": "sig_ttm_squeeze",
+    "qualified": "run_v30_creative.sig_ttm_squeeze",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v30_creative.py",
+    "function": "sig_vwap_zfade",
+    "qualified": "run_v30_creative.sig_vwap_zfade",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v33_scalp_creative.py",
+    "function": "sig_atr_burst",
+    "qualified": "run_v33_scalp_creative.sig_atr_burst",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v33_scalp_creative.py",
+    "function": "sig_keltner_pullback",
+    "qualified": "run_v33_scalp_creative.sig_keltner_pullback",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v33_scalp_creative.py",
+    "function": "sig_rsi_div",
+    "qualified": "run_v33_scalp_creative.sig_rsi_div",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v33_scalp_creative.py",
+    "function": "sig_vwap_scalp",
+    "qualified": "run_v33_scalp_creative.sig_vwap_scalp",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v34_expand.py",
+    "function": "sig_htf_donchian_ls",
+    "qualified": "run_v34_expand.sig_htf_donchian_ls",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38_smc.py",
+    "function": "sig_bos_continuation",
+    "qualified": "run_v38_smc.sig_bos_continuation",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38_smc.py",
+    "function": "sig_choch_reversal",
+    "qualified": "run_v38_smc.sig_choch_reversal",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38_smc.py",
+    "function": "sig_fvg_entry",
+    "qualified": "run_v38_smc.sig_fvg_entry",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38_smc.py",
+    "function": "sig_fvg_fill_fade",
+    "qualified": "run_v38_smc.sig_fvg_fill_fade",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38_smc.py",
+    "function": "sig_liquidity_sweep_fade",
+    "qualified": "run_v38_smc.sig_liquidity_sweep_fade",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38_smc.py",
+    "function": "sig_ob_touch",
+    "qualified": "run_v38_smc.sig_ob_touch",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38_smc.py",
+    "function": "sig_smc_confluence",
+    "qualified": "run_v38_smc.sig_smc_confluence",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38_smc_sweep.py",
+    "function": "sig_bos",
+    "qualified": "run_v38_smc_sweep.sig_bos",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38_smc_sweep.py",
+    "function": "sig_choch",
+    "qualified": "run_v38_smc_sweep.sig_choch",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38_smc_sweep.py",
+    "function": "sig_confluence_ob_bos",
+    "qualified": "run_v38_smc_sweep.sig_confluence_ob_bos",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38_smc_sweep.py",
+    "function": "sig_fvg",
+    "qualified": "run_v38_smc_sweep.sig_fvg",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38_smc_sweep.py",
+    "function": "sig_fvg_fade",
+    "qualified": "run_v38_smc_sweep.sig_fvg_fade",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38_smc_sweep.py",
+    "function": "sig_liquidity",
+    "qualified": "run_v38_smc_sweep.sig_liquidity",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38_smc_sweep.py",
+    "function": "sig_ob",
+    "qualified": "run_v38_smc_sweep.sig_ob",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38b_smc_mixes.py",
+    "function": "mix_bbbreak_bos",
+    "qualified": "run_v38b_smc_mixes.mix_bbbreak_bos",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38b_smc_mixes.py",
+    "function": "mix_bbbreak_ob",
+    "qualified": "run_v38b_smc_mixes.mix_bbbreak_ob",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38b_smc_mixes.py",
+    "function": "mix_donchian_bos",
+    "qualified": "run_v38b_smc_mixes.mix_donchian_bos",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38b_smc_mixes.py",
+    "function": "mix_donchian_choch_reverse",
+    "qualified": "run_v38b_smc_mixes.mix_donchian_choch_reverse",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38b_smc_mixes.py",
+    "function": "sig_bbbreak",
+    "qualified": "run_v38b_smc_mixes.sig_bbbreak",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38b_smc_mixes.py",
+    "function": "sig_donchian",
+    "qualified": "run_v38b_smc_mixes.sig_donchian",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38b_smc_mixes.py",
+    "function": "smc_bos_series",
+    "qualified": "run_v38b_smc_mixes.smc_bos_series",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v38b_smc_mixes.py",
+    "function": "smc_ob_touch_zone",
+    "qualified": "run_v38b_smc_mixes.smc_ob_touch_zone",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v39_smc_ict_proper.py",
+    "function": "bos_recent",
+    "qualified": "run_v39_smc_ict_proper.bos_recent",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v39_smc_ict_proper.py",
+    "function": "fvg_recent",
+    "qualified": "run_v39_smc_ict_proper.fvg_recent",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v39_smc_ict_proper.py",
+    "function": "liquidity_sweeps",
+    "qualified": "run_v39_smc_ict_proper.liquidity_sweeps",
+    "return_type": "tuple"
+  },
+  {
+    "file": "run_v39_smc_ict_proper.py",
+    "function": "ob_zones",
+    "qualified": "run_v39_smc_ict_proper.ob_zones",
+    "return_type": "tuple"
+  },
+  {
+    "file": "strategies.py",
+    "function": "donchian_breakout",
+    "qualified": "strategies.donchian_breakout",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies.py",
+    "function": "ema_trend_adx",
+    "qualified": "strategies.ema_trend_adx",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies.py",
+    "function": "gaussian_channel",
+    "qualified": "strategies.gaussian_channel",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies.py",
+    "function": "macd_htf",
+    "qualified": "strategies.macd_htf",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies.py",
+    "function": "rsi_mean_reversion",
+    "qualified": "strategies.rsi_mean_reversion",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies.py",
+    "function": "squeeze_breakout",
+    "qualified": "strategies.squeeze_breakout",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies.py",
+    "function": "supertrend",
+    "qualified": "strategies.supertrend",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies.py",
+    "function": "volume_breakout",
+    "qualified": "strategies.volume_breakout",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v11.py",
+    "function": "v11_regime_ensemble",
+    "qualified": "strategies_v11.v11_regime_ensemble",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v12.py",
+    "function": "v12a_pullback_trend",
+    "qualified": "strategies_v12.v12a_pullback_trend",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v12.py",
+    "function": "v12b_bb_squeeze_break",
+    "qualified": "strategies_v12.v12b_bb_squeeze_break",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v12.py",
+    "function": "v12c_higher_lows",
+    "qualified": "strategies_v12.v12c_higher_lows",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v12.py",
+    "function": "v12d_nr7_break",
+    "qualified": "strategies_v12.v12d_nr7_break",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v19_grid.py",
+    "function": "v19a_static_grid",
+    "qualified": "strategies_v19_grid.v19a_static_grid",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v19_grid.py",
+    "function": "v19b_atr_grid_adaptive",
+    "qualified": "strategies_v19_grid.v19b_atr_grid_adaptive",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v2.py",
+    "function": "donchian_v2",
+    "qualified": "strategies_v2.donchian_v2",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v2.py",
+    "function": "ema_trend_adx_v2",
+    "qualified": "strategies_v2.ema_trend_adx_v2",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v2.py",
+    "function": "ensemble_trend_vol",
+    "qualified": "strategies_v2.ensemble_trend_vol",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v2.py",
+    "function": "gaussian_channel_v2",
+    "qualified": "strategies_v2.gaussian_channel_v2",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v2.py",
+    "function": "supertrend_v2",
+    "qualified": "strategies_v2.supertrend_v2",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v2.py",
+    "function": "volume_breakout_v2",
+    "qualified": "strategies_v2.volume_breakout_v2",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v20_trendfollow.py",
+    "function": "v20a_heikin_supertrend",
+    "qualified": "strategies_v20_trendfollow.v20a_heikin_supertrend",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v20_trendfollow.py",
+    "function": "v20b_dema_ichimoku",
+    "qualified": "strategies_v20_trendfollow.v20b_dema_ichimoku",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v20_trendfollow.py",
+    "function": "v20c_ott",
+    "qualified": "strategies_v20_trendfollow.v20c_ott",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v20_trendfollow.py",
+    "function": "v20d_squeeze_ichimoku",
+    "qualified": "strategies_v20_trendfollow.v20d_squeeze_ichimoku",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v3.py",
+    "function": "v3a_htf_rising",
+    "qualified": "strategies_v3.v3a_htf_rising",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v3.py",
+    "function": "v3b_adx",
+    "qualified": "strategies_v3.v3b_adx",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v3.py",
+    "function": "v3c_slope",
+    "qualified": "strategies_v3.v3c_slope",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v3.py",
+    "function": "v3d_composite",
+    "qualified": "strategies_v3.v3d_composite",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v3.py",
+    "function": "v3e_score2of3",
+    "qualified": "strategies_v3.v3e_score2of3",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v4.py",
+    "function": "v4a_ott",
+    "qualified": "strategies_v4.v4a_ott",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v4.py",
+    "function": "v4b_ott_twin",
+    "qualified": "strategies_v4.v4b_ott_twin",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v4.py",
+    "function": "v4c_range_kalman",
+    "qualified": "strategies_v4.v4c_range_kalman",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v4.py",
+    "function": "v4d_trend_strength",
+    "qualified": "strategies_v4.v4d_trend_strength",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v4.py",
+    "function": "v4e_ott_vol_donchian",
+    "qualified": "strategies_v4.v4e_ott_vol_donchian",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v4.py",
+    "function": "v4f_ott_pullback",
+    "qualified": "strategies_v4.v4f_ott_pullback",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v4.py",
+    "function": "v4g_mtf_ott",
+    "qualified": "strategies_v4.v4g_mtf_ott",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v4.py",
+    "function": "v4h_vol_regime_switch",
+    "qualified": "strategies_v4.v4h_vol_regime_switch",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v5.py",
+    "function": "v5_volume_breakout_liqfilter",
+    "qualified": "strategies_v5.v5_volume_breakout_liqfilter",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v6.py",
+    "function": "v6_rsi_2065",
+    "qualified": "strategies_v6.v6_rsi_2065",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v7.py",
+    "function": "hwr1_bb_meanrev",
+    "qualified": "strategies_v7.hwr1_bb_meanrev",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v7.py",
+    "function": "hwr1b_bb_strict",
+    "qualified": "strategies_v7.hwr1b_bb_strict",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v7.py",
+    "function": "hwr2_rsi_stoch_oversold",
+    "qualified": "strategies_v7.hwr2_rsi_stoch_oversold",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v7.py",
+    "function": "hwr3_pullback_1to1",
+    "qualified": "strategies_v7.hwr3_pullback_1to1",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v7.py",
+    "function": "hwr3b_pullback_asym",
+    "qualified": "strategies_v7.hwr3b_pullback_asym",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v7.py",
+    "function": "hwr4_keltner_bounce",
+    "qualified": "strategies_v7.hwr4_keltner_bounce",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v7.py",
+    "function": "hwr5_tight_tp_wide_sl",
+    "qualified": "strategies_v7.hwr5_tight_tp_wide_sl",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v8.py",
+    "function": "v8a_supertrend_stack",
+    "qualified": "strategies_v8.v8a_supertrend_stack",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v8.py",
+    "function": "v8b_hma_adx",
+    "qualified": "strategies_v8.v8b_hma_adx",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v8.py",
+    "function": "v8c_vol_regime_donchian",
+    "qualified": "strategies_v8.v8c_vol_regime_donchian",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v9.py",
+    "function": "v9a_v3b_plus_ladder",
+    "qualified": "strategies_v9.v9a_v3b_plus_ladder",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v9.py",
+    "function": "v9b_v4c_plus_ladder",
+    "qualified": "strategies_v9.v9b_v4c_plus_ladder",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v9.py",
+    "function": "v9c_v2b_plus_ladder",
+    "qualified": "strategies_v9.v9c_v2b_plus_ladder",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v9.py",
+    "function": "v9d_hwr1_plus_ladder",
+    "qualified": "strategies_v9.v9d_hwr1_plus_ladder",
+    "return_type": "dict"
+  },
+  {
+    "file": "strategies_v9.py",
+    "function": "v9e_v3b_aggressive_runner",
+    "qualified": "strategies_v9.v9e_v3b_aggressive_runner",
+    "return_type": "dict"
+  }
+]

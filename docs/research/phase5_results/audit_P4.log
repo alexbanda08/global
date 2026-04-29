@@ -1,0 +1,20 @@
+
+=== AUDIT P4: CCI_ETH_4h + STF_AVAX_4h + STF_SOL_4h + VWZ_INJ_4h ===
+
+Baseline: Sharpe=2.155  CAGR=+28.8%  MDD=-11.2%  Calmar=2.572
+Running 15 permutations ...
+  perm: p=0.000  real=2.155  null_mean=-0.4800188434342377  null_99th=0.5259595033824488
+Running plateau sweep ...
+  plateau: pass=True  worst25=20.9%  worst50=22.3%  cliff=False
+
+BATTERY: 7/8
+  [OK] per_year_>=70pct
+  [OK] permutation_p<0.01
+  [OK] bootstrap_sharpe_lowerCI>0.5
+  [  ] bootstrap_calmar_lowerCI>1.0
+  [OK] bootstrap_mdd_upperCI<30%
+  [OK] walk_forward_efficiency>0.5
+  [OK] walk_forward_pos_folds>=5
+  [OK] plateau_passed
+
+Wrote C:\Users\alexandre bandarra\Desktop\global\docs\research\phase5_results\portfolio_audit_P4.json

@@ -1,0 +1,697 @@
+//@version=6
+// ╔══════════════════════════════════════════════════════════════════════════════╗
+// ║                                                                              ║
+// ║     Alpha Wave by @DaviddTech - Enhanced & Optimized                           ║
+// ║     Version: 1.0.0 (2025)                                                    ║
+// ║                                                                              ║
+// ╚══════════════════════════════════════════════════════════════════════════════╝
+
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ============================== INDICATOR OVERVIEW ===============================
+// This professional trading system follows the DaviddTech methodology with:
+// 1. Baseline: Quantum Adaptive Moving Average (FVMA-based)
+// 2. Confirmation #1: WavePulse Indicator (CoralChannel-based)
+// 3. Confirmation #2: Quantum Channel (G-Channel-based)
+// 4. Volatility Filter: Momentum Density (Stiffness-based)
+// 5. Entry/Exit System: Dynamic Trailing Stop (ATR-based)
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+
+indicator("Alpha Wave DaviddTech System @DaviddTech", 
+         shorttitle = "AlphaWave @DaviddTech", 
+         overlay = true, 
+         max_labels_count = 500, 
+         max_lines_count = 500)
+
+// ╔══════════════════════════════════════════════════════════════════════════════╗
+// ║                           COLOR PALETTE DEFINITIONS                          ║
+// ╚══════════════════════════════════════════════════════════════════════════════╝
+
+// Primary Signal Colors
+var color BULL_COLOR = #01FFA7    // Bullish Green
+var color BEAR_COLOR = #FB0BFF    // Bearish Pink
+var color NEUTRAL_COLOR = color.rgb(158, 158, 158)  // Grey
+
+// Gradient Variations
+var color BULL_STRONG = color.new(BULL_COLOR, 0)
+var color BULL_MEDIUM = color.new(BULL_COLOR, 40)
+var color BULL_WEAK = color.new(BULL_COLOR, 70)
+var color BEAR_STRONG = color.new(BEAR_COLOR, 0)
+var color BEAR_MEDIUM = color.new(BEAR_COLOR, 40)
+var color BEAR_WEAK = color.new(BEAR_COLOR, 70)
+
+// UI Elements
+var color TEXT_COLOR = color.new(color.white, 0)
+var color BG_COLOR = color.new(color.black, 90)
+var color DASH_HEADER = color.new(color.navy, 20)
+var color DASH_ROW = color.new(color.blue, 64)
+
+// Stop Loss
+var color STOP_COLOR = color.white
+
+// ╔══════════════════════════════════════════════════════════════════════════════╗
+// ║                           INPUT PARAMETERS                                   ║
+// ╚══════════════════════════════════════════════════════════════════════════════╝
+
+// --------- Section 1: Baseline Settings (Quantum Adaptive MA / FVMA) ---------
+baselineGroup = "1. Baseline Settings (Quantum Adaptive MA)"
+baseline_adx_length = input.int(2, "ADX Length", minval = 1, group = baselineGroup)
+baseline_weight = input.float(10.0, "Weighting Factor", minval = 1.0, step = 0.5, group = baselineGroup)
+baseline_ma_length = input.int(6, "MA Length", minval = 1, group = baselineGroup)
+baseline_show = input.bool(true, "Show Baseline", group = baselineGroup)
+
+// --------- Section 2: Confirmation #1 (WavePulse / CoralChannel) ---------
+conf1Group = "2. Confirmation #1 (WavePulse)"
+use_conf1 = input.bool(true, "Use WavePulse", group = conf1Group)
+conf1_smooth = input.int(21, "Smoothing Period", minval = 3, group = conf1Group)
+conf1_constant = input.float(0.4, "Constant Factor", step = 0.1, minval = 0.1, maxval = 1.0, group = conf1Group)
+conf1_cross = input.bool(true, "Cross Confirmation", group = conf1Group)
+conf1_inverse = input.bool(false, "Inverse Signals", group = conf1Group)
+conf1_highlight = input.bool(true, "Use Color Signals", group = conf1Group)
+conf1_show = input.bool(true, "Show Indicator Line", group = conf1Group)
+
+// --------- Section 3: Confirmation #2 (Quantum Channel / G-Channel) ---------
+conf2Group = "3. Confirmation #2 (Quantum Channel)"
+use_conf2 = input.bool(true, "Use Quantum Channel", group = conf2Group)
+conf2_source = input.source(hlc3, "Price Source", group = conf2Group)
+conf2_poles = input.int(4, "Filter Poles", minval = 1, maxval = 9, group = conf2Group)
+conf2_period = input.int(144, "Sampling Period", minval = 2, group = conf2Group)
+conf2_multiplier = input.float(1.414, "Channel Multiplier", minval = 0.1, step = 0.1, group = conf2Group)
+conf2_cross = input.bool(true, "Cross Confirmation", group = conf2Group)
+conf2_inverse = input.bool(false, "Inverse Signals", group = conf2Group)
+conf2_highlight = input.bool(true, "Use Color Signals", group = conf2Group)
+conf2_show = input.bool(true, "Show Channel", group = conf2Group)
+
+// --------- Section 4: Volatility Filter (Momentum Density / Stiffness) ---------
+volGroup = "4. Volatility Filter (Momentum Density)"
+use_vol = input.bool(true, "Use Momentum Density", group = volGroup)
+vol_ma_length = input.int(100, "MA Length", minval = 1, group = volGroup)
+vol_length = input.int(60, "Calculation Length", minval = 1, group = volGroup)
+vol_smooth = input.int(3, "Smoothing Length", minval = 1, group = volGroup)
+vol_threshold = input.int(90, "Threshold Level", minval = 1, maxval = 100, group = volGroup)
+vol_show = input.bool(true, "Show Indicator", group = volGroup)
+
+// --------- Section 5: Stop Loss Settings ---------
+stopGroup = "5. Stop Loss Settings"
+use_stop = input.bool(true, "Use Trailing Stop", group = stopGroup)
+stop_atr_length = input.int(22, "ATR Period", minval = 1, group = stopGroup)
+stop_atr_mult = input.float(3.0, "ATR Multiplier", step = 0.1, minval = 0.1, group = stopGroup)
+stop_src = input.source(hl2, "Price Source", group = stopGroup)
+stop_use_wicks = input.bool(true, "Consider Wicks", group = stopGroup)
+stop_show = input.bool(true, "Show Stop Levels", group = stopGroup)
+stop_labels = input.bool(true, "Show Entry/Exit Labels", group = stopGroup)
+exit_type = input.string("Inversed Channel", "Exit Method", options = ["Stop Only", "Inversed Channel", "Combined"], tooltip = "Stop Only: Uses trailing stop for regular exits. Inversed Channel: Exits long when price > short stop level, exits short when price < long stop level. Combined: Either condition.", group = stopGroup)
+
+// --------- Section 6: Trading Style & Entry/Exit Settings ---------
+tradeGroup = "6. Trading Style Settings"
+trade_style = input.string("Balanced", "Trading Style", options = ["Exits Only", "Scalper", "Balanced", "Strict"], group = tradeGroup)
+entry_filter = input.int(3, "Entry Filter Bars", minval = 0, maxval = 10, group = tradeGroup, 
+                       tooltip = "Minimum bars between entry signals (prevents overtrading)")
+exit_filter = input.int(2, "Exit Filter Bars", minval = 0, maxval = 10, group = tradeGroup,
+                      tooltip = "Minimum bars between exit signals")
+require_all_aligned = input.bool(false, "Require All Components Aligned", group = tradeGroup,
+                               tooltip = "If enabled, all indicators must be aligned with the baseline direction")
+
+// --------- Section 7: Visual Settings ---------
+visualGroup = "7. Visual Settings"
+show_dashboard = input.bool(true, "Show Main Dashboard", group = visualGroup)
+show_stats = input.bool(true, "Show Trade Statistics", group = visualGroup)
+show_cloud = input.bool(true, "Show Trend Cloud", group = visualGroup)
+entry_size = input.string("normal", "Label Size", options = ["tiny", "small", "normal", "large"], group = visualGroup)
+show_alerts = input.bool(true, "Show Alert Messages", group = visualGroup)
+
+// ╔══════════════════════════════════════════════════════════════════════════════╗
+// ║                           FUNCTION DEFINITIONS                               ║
+// ╚══════════════════════════════════════════════════════════════════════════════╝
+
+// --- Function: Quantum Adaptive Moving Average (FVMA Based) ---
+f_quantum_adaptive_ma() =>
+    vma = close
+    var_ma = close
+    ma = close
+    str_range = high - low
+    power_bulls = 0.0
+    power_bears = 0.0
+    diag_x = 0.0
+    
+    hi = high
+    hi1 = high[1]
+    lo = low
+    lo1 = low[1]
+    close1 = close[1]
+    
+    bulls1 = 0.5 * (math.abs(hi - hi1) + (hi - hi1))
+    bears1 = 0.5 * (math.abs(lo1 - lo) + (lo1 - lo))
+    
+    bears = bulls1 > bears1 ? 0 : bulls1 == bears1 ? 0 : bears1
+    bulls = bulls1 < bears1 ? 0 : bulls1 == bears1 ? 0 : bulls1
+    
+    if bar_index > 0
+        power_bulls := (baseline_weight * power_bulls[1] + bulls) / (baseline_weight + 1)
+        power_bears := (baseline_weight * power_bears[1] + bears) / (baseline_weight + 1)
+    
+    true_range = math.max(hi - lo, hi - close1)
+    if bar_index > 0
+        str_range := (baseline_weight * str_range[1] + true_range) / (baseline_weight + 1)
+    
+    pos_di = str_range > 0 ? power_bulls / str_range : 0
+    neg_di = str_range > 0 ? power_bears / str_range : 0
+    di_diff = pos_di + neg_di > 0 ? math.abs(pos_di - neg_di) / (pos_di + neg_di) : 0
+    
+    if bar_index > 0
+        diag_x := (baseline_weight * diag_x[1] + di_diff) / (baseline_weight + 1)
+    
+    adx_val = diag_x
+    
+    adx_low = ta.lowest(adx_val, baseline_adx_length)
+    adx_high = ta.highest(adx_val, baseline_adx_length)
+    adx_min = math.min(1000000.0, adx_low)
+    adx_max = math.max(-1.0, adx_high)
+    adx_diff = adx_max - adx_min
+    
+    adx_constant = adx_diff > 0 ? (adx_val - adx_min) / adx_diff : 0
+    
+    if bar_index > 0
+        var_ma := ((2 - adx_constant) * var_ma[1] + adx_constant * close) / 2
+    
+    ma := ta.sma(var_ma, baseline_ma_length)
+    ma
+
+// --- Function: WavePulse Trend Indicator (CoralChannel Based) ---
+f_wave_pulse() =>
+    di_val = (conf1_smooth - 1.0) / 2.0 + 1.0
+    c1_val = 2 / (di_val + 1.0)
+    c2_val = 1 - c1_val
+    c3_val = 3.0 * (conf1_constant * conf1_constant + conf1_constant * conf1_constant * conf1_constant)
+    c4_val = -3.0 * (2.0 * conf1_constant * conf1_constant + conf1_constant + conf1_constant * conf1_constant * conf1_constant)
+    c5_val = 3.0 * conf1_constant + 1.0 + conf1_constant * conf1_constant * conf1_constant + 3.0 * conf1_constant * conf1_constant
+    
+    var float i1_val = na
+    var float i2_val = na
+    var float i3_val = na
+    var float i4_val = na
+    var float i5_val = na
+    var float i6_val = na
+    
+    i1_val := c1_val * close + c2_val * nz(i1_val[1])
+    i2_val := c1_val * i1_val + c2_val * nz(i2_val[1])
+    i3_val := c1_val * i2_val + c2_val * nz(i3_val[1])
+    i4_val := c1_val * i3_val + c2_val * nz(i4_val[1])
+    i5_val := c1_val * i4_val + c2_val * nz(i5_val[1])
+    i6_val := c1_val * i5_val + c2_val * nz(i6_val[1])
+    
+    wave_val = -conf1_constant * conf1_constant * conf1_constant * i6_val + c3_val * i5_val + c4_val * i4_val + c5_val * i3_val
+    wave_val
+
+// --- Function: Quantum Channel Filter (G-Channel Based) ---
+f_quantum_filter(_a, _s, _i) =>
+    int _m2 = 0
+    int _m3 = 0
+    int _m4 = 0
+    int _m5 = 0
+    int _m6 = 0
+    int _m7 = 0
+    int _m8 = 0
+    int _m9 = 0
+    float _f = .0
+    _x = 1 - _a
+    
+    // Weights calculation
+    _m2 := _i == 9 ? 36 : _i == 8 ? 28 : _i == 7 ? 21 : _i == 6 ? 15 : _i == 5 ? 10 : _i == 4 ? 6 : _i == 3 ? 3 : _i == 2 ? 1 : 0
+    _m3 := _i == 9 ? 84 : _i == 8 ? 56 : _i == 7 ? 35 : _i == 6 ? 20 : _i == 5 ? 10 : _i == 4 ? 4 : _i == 3 ? 1 : 0
+    _m4 := _i == 9 ? 126 : _i == 8 ? 70 : _i == 7 ? 35 : _i == 6 ? 15 : _i == 5 ? 5 : _i == 4 ? 1 : 0
+    _m5 := _i == 9 ? 126 : _i == 8 ? 56 : _i == 7 ? 21 : _i == 6 ? 6 : _i == 5 ? 1 : 0
+    _m6 := _i == 9 ? 84 : _i == 8 ? 28 : _i == 7 ? 7 : _i == 6 ? 1 : 0
+    _m7 := _i == 9 ? 36 : _i == 8 ? 8 : _i == 7 ? 1 : 0
+    _m8 := _i == 9 ? 9 : _i == 8 ? 1 : 0
+    _m9 := _i == 9 ? 1 : 0
+    
+    // Advanced filtering
+    _f := math.pow(_a, _i) * nz(_s) + _i * _x * nz(_f[1]) - (_i >= 2 ? _m2 * math.pow(_x, 2) * nz(_f[2]) : 0) + (_i >= 3 ? _m3 * math.pow(_x, 3) * nz(_f[3]) : 0) - (_i >= 4 ? _m4 * math.pow(_x, 4) * nz(_f[4]) : 0) + (_i >= 5 ? _m5 * math.pow(_x, 5) * nz(_f[5]) : 0) - (_i >= 6 ? _m6 * math.pow(_x, 6) * nz(_f[6]) : 0) + (_i >= 7 ? _m7 * math.pow(_x, 7) * nz(_f[7]) : 0) - (_i >= 8 ? _m8 * math.pow(_x, 8) * nz(_f[8]) : 0) + (_i == 9 ? _m9 * math.pow(_x, 9) * nz(_f[9]) : 0)
+    _f
+
+f_quantum_channel_pole(_a, _s, _i) =>
+    _f1 = f_quantum_filter(_a, _s, 1)
+    _f2 = _i >= 2 ? f_quantum_filter(_a, _s, 2) : 0
+    _f3 = _i >= 3 ? f_quantum_filter(_a, _s, 3) : 0
+    _f4 = _i >= 4 ? f_quantum_filter(_a, _s, 4) : 0
+    _f5 = _i >= 5 ? f_quantum_filter(_a, _s, 5) : 0
+    _f6 = _i >= 6 ? f_quantum_filter(_a, _s, 6) : 0
+    _f7 = _i >= 2 ? f_quantum_filter(_a, _s, 7) : 0
+    _f8 = _i >= 8 ? f_quantum_filter(_a, _s, 8) : 0
+    _f9 = _i == 9 ? f_quantum_filter(_a, _s, 9) : 0
+    _fn = _i == 1 ? _f1 : _i == 2 ? _f2 : _i == 3 ? _f3 : _i == 4 ? _f4 : _i == 5 ? _f5 : _i == 6 ? _f6 : _i == 7 ? _f7 : _i == 8 ? _f8 : _i == 9 ? _f9 : na
+    [_fn, _f1]
+
+// --- Function: Momentum Density (Stiffness Based) ---
+f_momentum_density() =>
+    bound = ta.sma(close, vol_ma_length) - 0.2 * ta.stdev(close, vol_ma_length)
+    sum_above = math.sum(close > bound ? 1 : 0, vol_length)
+    density = ta.ema(sum_above * 100 / vol_length, vol_smooth)
+    density
+
+// ╔══════════════════════════════════════════════════════════════════════════════╗
+// ║                          INDICATOR CALCULATIONS                              ║
+// ╚══════════════════════════════════════════════════════════════════════════════╝
+
+// --- Baseline Calculations (Quantum Adaptive MA) ---
+baseline_value = f_quantum_adaptive_ma()
+baseline_trend = close > baseline_value ? 1 : close < baseline_value ? -1 : 0
+
+// --- Confirmation #1 Calculations (WavePulse) ---
+wave_pulse_value = f_wave_pulse()
+wave_pulse_signal = wave_pulse_value > wave_pulse_value[1] ? 1 : -1
+
+// Basic signal conditions
+wave_pulse_long_basic = wave_pulse_signal > 0 and close > wave_pulse_value
+wave_pulse_short_basic = wave_pulse_signal < 0 and close < wave_pulse_value
+
+// Apply configuration options
+wave_pulse_long = use_conf1 ? conf1_highlight ? wave_pulse_long_basic : close > wave_pulse_value : true
+wave_pulse_short = use_conf1 ? conf1_highlight ? wave_pulse_short_basic : close < wave_pulse_value : true
+
+// Apply cross confirmation if enabled
+wave_pulse_long_cross = conf1_cross ? not wave_pulse_long[1] and wave_pulse_long : wave_pulse_long
+wave_pulse_short_cross = conf1_cross ? not wave_pulse_short[1] and wave_pulse_short : wave_pulse_short
+
+// Apply inverse logic if enabled
+wave_pulse_long_final = conf1_inverse ? wave_pulse_short_cross : wave_pulse_long_cross
+wave_pulse_short_final = conf1_inverse ? wave_pulse_long_cross : wave_pulse_short_cross
+
+// --- Confirmation #2 Calculations (Quantum Channel) ---
+// Channel parameters
+quantum_beta = (1 - math.cos(4 * math.asin(1) / conf2_period)) / (math.pow(1.414, 2 / conf2_poles) - 1)
+quantum_alpha = -quantum_beta + math.sqrt(math.pow(quantum_beta, 2) + 2 * quantum_beta)
+
+// Data calculations
+quantum_src = conf2_source
+quantum_tr = ta.tr(true)
+
+// Get filtered values
+[quantum_filter_n, quantum_filter_1] = f_quantum_channel_pole(quantum_alpha, quantum_src, conf2_poles)
+[quantum_tr_n, quantum_tr_1] = f_quantum_channel_pole(quantum_alpha, quantum_tr, conf2_poles)
+
+// Calculate final filter and bands
+quantum_filter = quantum_filter_n
+quantum_tr_filtered = quantum_tr_n
+quantum_upper_band = quantum_filter + quantum_tr_filtered * conf2_multiplier
+quantum_lower_band = quantum_filter - quantum_tr_filtered * conf2_multiplier
+
+// Generate signal
+quantum_signal = quantum_filter > quantum_filter[1] ? 1 : -1
+
+// Basic signal conditions
+quantum_long_basic = quantum_signal > 0 and close > quantum_filter
+quantum_short_basic = quantum_signal < 0 and close < quantum_filter
+
+// Apply configuration options
+quantum_long = use_conf2 ? conf2_highlight ? quantum_long_basic : close > quantum_filter : true
+quantum_short = use_conf2 ? conf2_highlight ? quantum_short_basic : close < quantum_filter : true
+
+// Apply cross confirmation if enabled
+quantum_long_cross = conf2_cross ? not quantum_long[1] and quantum_long : quantum_long
+quantum_short_cross = conf2_cross ? not quantum_short[1] and quantum_short : quantum_short
+
+// Apply inverse logic if enabled
+quantum_long_final = conf2_inverse ? quantum_short_cross : quantum_long_cross
+quantum_short_final = conf2_inverse ? quantum_long_cross : quantum_short_cross
+
+// --- Volatility Filter Calculations (Momentum Density) ---
+momentum_density = f_momentum_density()
+momentum_signal = use_vol ? momentum_density > vol_threshold : true
+
+// --- Stop Loss Calculations ---
+stop_atr = stop_atr_mult * ta.atr(stop_atr_length)
+
+// Price references for stop calculation
+stop_high_price = stop_use_wicks ? high : close
+stop_low_price = stop_use_wicks ? low : close
+stop_doji_price = open == close and open == low and open == high
+
+// Calculate trailing stops
+stop_long_level = stop_src - stop_atr
+stop_long_prev = nz(stop_long_level[1], stop_long_level)
+stop_long_level := stop_doji_price ? stop_long_prev : 
+                  (stop_low_price[1] > stop_long_prev ? math.max(stop_long_level, stop_long_prev) : stop_long_level)
+
+stop_short_level = stop_src + stop_atr
+stop_short_prev = nz(stop_short_level[1], stop_short_level)
+stop_short_level := stop_doji_price ? stop_short_prev : 
+                   (stop_high_price[1] < stop_short_prev ? math.min(stop_short_level, stop_short_prev) : stop_short_level)
+
+// Track position direction
+var int stop_direction = 1
+stop_direction := stop_direction == -1 and stop_high_price > stop_short_prev ? 1 :
+                 stop_direction == 1 and stop_low_price < stop_long_prev ? -1 :
+                 stop_direction
+
+// Stop signals
+stop_buy_signal = stop_direction == 1 and stop_direction[1] == -1
+stop_sell_signal = stop_direction == -1 and stop_direction[1] == 1
+
+// ╔══════════════════════════════════════════════════════════════════════════════╗
+// ║                       DaviddTech SIGNAL GENERATION LOGIC                          ║
+// ╚══════════════════════════════════════════════════════════════════════════════╝
+
+// --- Position and Trade Tracking Logic ---
+var bool in_long_position = false
+var bool in_short_position = false
+var int bars_since_last_entry = 1000
+var int bars_since_last_exit = 1000
+
+// Trade statistics variables
+var int total_trades = 0
+var int winning_trades = 0
+var float long_entry_price = na
+var float short_entry_price = na
+var float trade_profit_sum = 0.0
+var float max_drawdown = 0.0
+var float current_drawdown = 0.0
+var int max_consecutive_wins = 0
+var int max_consecutive_losses = 0
+var int current_consecutive_wins = 0
+var int current_consecutive_losses = 0
+
+// Update counters
+bars_since_last_entry := bars_since_last_entry + 1
+bars_since_last_exit := bars_since_last_exit + 1
+
+// --- Trading Style-Based Signal Generation Logic ---
+
+// Raw signal conditions based on trading style
+bool raw_long_signal = switch trade_style
+    "Strict" => baseline_trend == 1 and close > baseline_value and wave_pulse_long_final and quantum_long_final and momentum_signal
+    "Balanced" => baseline_trend == 1 and close > baseline_value and ((wave_pulse_long_final and quantum_long_final) or 
+                 (wave_pulse_long_final and momentum_signal) or 
+                 (quantum_long_final and momentum_signal))
+    "Scalper" => baseline_trend == 1 and close > baseline_value and (wave_pulse_long_final or quantum_long_final) and momentum_signal
+    "Exits Only" => false
+    => baseline_trend == 1 and close > baseline_value and wave_pulse_long_final and quantum_long_final and momentum_signal // Default to Strict
+
+bool raw_short_signal = switch trade_style
+    "Strict" => baseline_trend == -1 and close < baseline_value and wave_pulse_short_final and quantum_short_final and momentum_signal
+    "Balanced" => baseline_trend == -1 and close < baseline_value and ((wave_pulse_short_final and quantum_short_final) or 
+                 (wave_pulse_short_final and momentum_signal) or 
+                 (quantum_short_final and momentum_signal))
+    "Scalper" => baseline_trend == -1 and close < baseline_value and (wave_pulse_short_final or quantum_short_final) and momentum_signal
+    "Exits Only" => false
+    => baseline_trend == -1 and close < baseline_value and wave_pulse_short_final and quantum_short_final and momentum_signal // Default to Strict
+
+// Alignment requirement check (for Strict mode)
+bool all_aligned_long = baseline_trend == 1 and wave_pulse_signal == 1 and quantum_signal == 1 and momentum_signal
+bool all_aligned_short = baseline_trend == -1 and wave_pulse_signal == -1 and quantum_signal == -1 and momentum_signal
+
+// Apply alignment requirement if needed
+raw_long_signal := require_all_aligned ? raw_long_signal and all_aligned_long : raw_long_signal
+raw_short_signal := require_all_aligned ? raw_short_signal and all_aligned_short : raw_short_signal
+
+// Apply entry filter (minimum bars between entries)
+bool filtered_long_entry = raw_long_signal and bars_since_last_entry >= entry_filter and not in_long_position
+bool filtered_short_entry = raw_short_signal and bars_since_last_entry >= entry_filter and not in_short_position
+
+// Generate exit signals based on trading style and selected exit method
+bool stop_long_exit = stop_sell_signal
+bool stop_short_exit = stop_buy_signal
+
+// Channel-based exit: Exit long when price > short stop level, exit short when price < long stop level
+bool channel_long_exit = high > stop_short_level
+bool channel_short_exit = low < stop_long_level
+
+// Combine exit signals based on exit type selection
+bool raw_long_exit = exit_type == "Stop Only" ? stop_long_exit : exit_type == "Inversed Channel" ? channel_long_exit : stop_long_exit or channel_long_exit  // "Combined"
+
+bool raw_short_exit = exit_type == "Stop Only" ? stop_short_exit : exit_type == "Inversed Channel" ? channel_short_exit : stop_short_exit or channel_short_exit  // "Combined"
+
+// Apply exit filter (minimum bars between exits)
+bool filtered_long_exit = raw_long_exit and bars_since_last_exit >= exit_filter and in_long_position
+bool filtered_short_exit = raw_short_exit and bars_since_last_exit >= exit_filter and in_short_position
+
+// Final entry/exit signals
+dtech_long_entry = trade_style != "Exits Only" ? filtered_long_entry : false
+dtech_short_entry = trade_style != "Exits Only" ? filtered_short_entry : false
+dtech_long_exit = filtered_long_exit
+dtech_short_exit = filtered_short_exit
+
+// Update position tracking and trade statistics
+if dtech_long_entry
+    in_long_position := true
+    in_short_position := false
+    bars_since_last_entry := 0
+    long_entry_price := close // Record entry price for P&L calculation
+
+if dtech_short_entry
+    in_short_position := true
+    in_long_position := false
+    bars_since_last_entry := 0
+    short_entry_price := close // Record entry price for P&L calculation
+
+if dtech_long_exit
+    // Process trade result
+    if in_long_position and not na(long_entry_price)
+        float profit_pct = (close - long_entry_price) / long_entry_price * 100
+        trade_profit_sum := trade_profit_sum + profit_pct
+        total_trades := total_trades + 1
+        
+        // Register win/loss
+        if close > long_entry_price
+            winning_trades := winning_trades + 1
+            current_consecutive_wins := current_consecutive_wins + 1
+            current_consecutive_losses := 0
+            max_consecutive_wins := math.max(max_consecutive_wins, current_consecutive_wins)
+        else
+            current_consecutive_losses := current_consecutive_losses + 1
+            current_consecutive_wins := 0
+            max_consecutive_losses := math.max(max_consecutive_losses, current_consecutive_losses)
+    
+    in_long_position := false
+    bars_since_last_exit := 0
+    long_entry_price := na
+
+if dtech_short_exit
+    // Process trade result
+    if in_short_position and not na(short_entry_price)
+        float profit_pct = (short_entry_price - close) / short_entry_price * 100
+        trade_profit_sum := trade_profit_sum + profit_pct
+        total_trades := total_trades + 1
+        
+        // Register win/loss
+        if close < short_entry_price
+            winning_trades := winning_trades + 1
+            current_consecutive_wins := current_consecutive_wins + 1
+            current_consecutive_losses := 0
+            max_consecutive_wins := math.max(max_consecutive_wins, current_consecutive_wins)
+        else
+            current_consecutive_losses := current_consecutive_losses + 1
+            current_consecutive_wins := 0
+            max_consecutive_losses := math.max(max_consecutive_losses, current_consecutive_losses)
+    
+    in_short_position := false
+    bars_since_last_exit := 0
+    short_entry_price := na
+
+// Calculate trend strength based on volatility reading
+trend_strength = momentum_density / 100
+bull_strength = baseline_trend == 1 ? trend_strength : 0
+bear_strength = baseline_trend == -1 ? trend_strength : 0
+
+// ╔══════════════════════════════════════════════════════════════════════════════╗
+// ║                             VISUALIZATION                                   ║
+// ╚══════════════════════════════════════════════════════════════════════════════╝
+
+// --- Baseline Plot ---
+baseline_color = baseline_trend == 1 ? color.new(BULL_COLOR, 0) : color.new(BEAR_COLOR, 0)
+baseline_plot = plot(baseline_show ? baseline_value : na, "Quantum Adaptive MA", 
+     color = baseline_color, linewidth = 2)
+
+// --- WavePulse Plot ---
+wave_color = wave_pulse_value > wave_pulse_value[1] ? BULL_COLOR : BEAR_COLOR
+plot(conf1_show ? wave_pulse_value : na, "WavePulse", 
+     color = color.new(wave_color, 20), linewidth = 2, style = plot.style_line)
+
+// --- Quantum Channel Plots ---
+filter_color = quantum_filter > quantum_filter[1] ? BULL_COLOR : BEAR_COLOR
+
+quantum_filter_plot = plot(conf2_show ? quantum_filter :na, "Quantum Filter", color = color.new(filter_color, 0), linewidth = 2)
+
+quantum_upper_plot = plot(conf2_show ? quantum_upper_band : na, "Upper Band",color = color.new(filter_color, 40))
+
+quantum_lower_plot = plot(conf2_show ? quantum_lower_band : na, "Lower Band", color = color.new(filter_color, 40))
+
+fill(quantum_upper_plot, quantum_lower_plot,color = color.new(filter_color, 90))
+
+// --- Stop Loss Lines ---
+
+plot(stop_show ? stop_long_level : na , "Long Stop", color = color.new(BEAR_COLOR, 30), linewidth = 1, style = plot.style_stepline)
+plot(stop_show? stop_short_level : na, "Short Stop", color = color.new(BULL_COLOR, 30), linewidth = 1, style = plot.style_stepline)
+
+// --- Entry/Exit Labels ---
+if stop_labels
+    label_style = switch entry_size
+        "tiny" => size.tiny
+        "small" => size.small
+        "normal" => size.normal
+        "large" => size.large
+        => size.normal
+
+    // Entry labels
+    if dtech_long_entry and show_alerts
+        label.new(bar_index, low, "ENTER LONG", 
+                 color = color.new(BULL_COLOR, 20), 
+                 style = label.style_label_up, 
+                 textcolor = color.black, 
+                 size = label_style)
+    
+    if dtech_short_entry and show_alerts
+        label.new(bar_index, high, "ENTER SHORT", 
+                 color = color.new(BEAR_COLOR, 20), 
+                 style = label.style_label_down, 
+                 textcolor = color.black, 
+                 size = label_style)
+    
+    // Exit labels - only shown if in the corresponding position
+    if dtech_long_exit and show_alerts
+        label.new(bar_index, high, "EXIT LONG", 
+                 color = color.new(BEAR_COLOR, 30), 
+                 style = label.style_label_down, 
+                 textcolor = color.black, 
+                 size = label_style)
+    
+    if dtech_short_exit and show_alerts
+        label.new(bar_index, low, "EXIT SHORT", 
+                 color = color.new(BULL_COLOR, 30), 
+                 style = label.style_label_up, 
+                 textcolor = color.black, 
+                 size = label_style)
+                 
+    // Display current position status
+    if barstate.islast
+        var statusLabel = label.new(bar_index, na, "", color = DASH_HEADER,style = label.style_label_right,textcolor = color.white, size = size.normal)
+        
+        status_text = ""
+        if in_long_position
+            status_text := "ACTIVE LONG POSITION"
+            label.set_y(statusLabel, high + (5 * ta.atr(14)))
+            label.set_color(statusLabel, color.new(BULL_COLOR, 20))
+        else if in_short_position
+            status_text := "ACTIVE SHORT POSITION"
+            label.set_y(statusLabel, low - (5 * ta.atr(14)))
+            label.set_color(statusLabel, color.new(BEAR_COLOR, 20))
+        else
+            status_text := "NO ACTIVE POSITION"
+            label.set_y(statusLabel, close)
+            label.set_color(statusLabel, DASH_HEADER)
+        
+        label.set_x(statusLabel, bar_index)
+        label.set_text(statusLabel, status_text)
+
+// --- Bar Coloring Based on Trend ---
+bar_color = baseline_trend == 1 ? 
+           (wave_pulse_long_final and quantum_long_final ? color.new(BULL_COLOR, 0) : color.new(BULL_COLOR, 70)) : 
+           baseline_trend == -1 ? 
+           (wave_pulse_short_final and quantum_short_final ? color.new(BEAR_COLOR, 0) : color.new(BEAR_COLOR, 70)) : 
+           NEUTRAL_COLOR
+
+barcolor(bar_color)
+
+// --- Background Coloring (Cloud) ---
+
+cloud_color = color.new(BULL_COLOR, 95 - math.round(bull_strength * 25))
+if show_cloud
+	cloud_color := stop_direction == 1 ? 
+				 color.new(BULL_COLOR, 95 - math.round(bull_strength * 25)) : 
+				 color.new(BEAR_COLOR, 95 - math.round(bear_strength * 25))
+bgcolor(cloud_color)
+
+// --- Momentum Density Plot ---
+
+plot(vol_show ? momentum_density : na , "Momentum Density", color = color.new(color.yellow, 0), linewidth = 1, display = display.pane)
+plot(vol_show ? vol_threshold : na, "Threshold", color = color.new(color.red, 0),linewidth = 1, display = display.pane)
+
+// --- Dashboard ---
+if show_dashboard and barstate.islast
+    var table dash = table.new(position.top_right, 3, 9, border_width = 1)
+    
+    // Header
+    table.cell(dash, 0, 0, "Alpha Wave", bgcolor = DASH_HEADER, text_color = TEXT_COLOR)
+    table.cell(dash, 1, 0, "@DaviddTech", bgcolor = DASH_HEADER, text_color = TEXT_COLOR)
+    table.cell(dash, 2, 0, stop_direction == 1 ? "BULLISH" : "BEARISH", 
+               bgcolor = stop_direction == 1 ? color.new(BULL_COLOR, 0) : color.new(BEAR_COLOR, 0),
+               text_color = TEXT_COLOR)
+    
+    // Component Status
+    table.cell(dash, 0, 1, "Component", bgcolor = DASH_HEADER, text_color = TEXT_COLOR)
+    table.cell(dash, 1, 1, "Signal", bgcolor = DASH_HEADER, text_color = TEXT_COLOR)
+    table.cell(dash, 2, 1, "Strength", bgcolor = DASH_HEADER, text_color = TEXT_COLOR)
+    
+    // Baseline Status
+    base_strength = str.tostring(math.round(math.abs((close - baseline_value) / baseline_value * 100), 2)) + "%"
+    table.cell(dash, 0, 2, "Baseline", bgcolor = DASH_ROW, text_color = TEXT_COLOR)
+    table.cell(dash, 1, 2, baseline_trend == 1 ? "Bullish" : "Bearish", 
+               bgcolor = baseline_trend == 1 ? color.new(BULL_COLOR, 0) : color.new(BEAR_COLOR, 0),
+               text_color = TEXT_COLOR)
+    table.cell(dash, 2, 2, base_strength, bgcolor = DASH_ROW, text_color = TEXT_COLOR)
+    
+    // Confirmation #1 Status
+    wave_strength = str.tostring(math.round(100 * (wave_pulse_value > wave_pulse_value[1] ? 1 : 0), 0)) + "%"
+    table.cell(dash, 0, 3, "WavePulse", bgcolor = DASH_ROW, text_color = TEXT_COLOR)
+    table.cell(dash, 1, 3, wave_pulse_signal == 1 ? "Bullish" : "Bearish", 
+               bgcolor = wave_pulse_signal == 1 ? color.new(BULL_COLOR, 0) : color.new(BEAR_COLOR, 0),
+               text_color = TEXT_COLOR)
+    table.cell(dash, 2, 3, wave_strength, bgcolor = DASH_ROW, text_color = TEXT_COLOR)
+    
+    // Confirmation #2 Status
+    quantum_strength = str.tostring(math.round(math.abs(close - quantum_filter) / quantum_filter * 100, 2)) + "%"
+    table.cell(dash, 0, 4, "Quantum Channel", bgcolor = DASH_ROW, text_color = TEXT_COLOR)
+    table.cell(dash, 1, 4, quantum_signal == 1 ? "Bullish" : "Bearish", 
+               bgcolor = quantum_signal == 1 ? color.new(BULL_COLOR, 0) : color.new(BEAR_COLOR, 0),
+               text_color = TEXT_COLOR)
+    table.cell(dash, 2, 4, quantum_strength, bgcolor = DASH_ROW, text_color = TEXT_COLOR)
+    
+    // Volatility Status
+    mom_status = str.tostring(math.round(momentum_density, 2)) + "%"
+    table.cell(dash, 0, 5, "Momentum", bgcolor = DASH_ROW, text_color = TEXT_COLOR)
+    table.cell(dash, 1, 5, momentum_signal ? "Confirmed" : "Filtering", 
+               bgcolor = momentum_signal ? color.new(BULL_COLOR, 0) : color.new(BEAR_COLOR, 0),
+               text_color = TEXT_COLOR)
+    table.cell(dash, 2, 5, mom_status, bgcolor = DASH_ROW, text_color = TEXT_COLOR)
+    
+    // Stop Loss Status
+    stop_str = str.tostring(math.round(stop_atr_mult, 1)) + " ATR"
+    table.cell(dash, 0, 6, "Exit Method", bgcolor = DASH_ROW, text_color = TEXT_COLOR)
+    table.cell(dash, 1, 6, exit_type, 
+               bgcolor = (exit_type == "Stop Only" ? DASH_ROW : 
+                         exit_type == "Inversed Channel" ? color.new(color.yellow, 20) : 
+                         color.new(color.orange, 20)),
+               text_color = TEXT_COLOR)
+    table.cell(dash, 2, 6, stop_str, bgcolor = DASH_ROW, text_color = TEXT_COLOR)
+    
+    // Trigger Status
+    string trigger_status = raw_long_signal ? "Buy Signal" : 
+                           raw_short_signal ? "Sell Signal" : 
+                           "Waiting for Signal"
+    string trigger_reason = in_long_position or in_short_position ? "Already in Position" :
+                           bars_since_last_entry < entry_filter ? "Entry Filter Active" : 
+                           not (raw_long_signal or raw_short_signal) ? "Waiting for Alignment" :
+                           "Signal Active"
+    
+    table.cell(dash, 0, 7, "Trigger", bgcolor = DASH_ROW, text_color = TEXT_COLOR)
+    table.cell(dash, 1, 7, trigger_status, bgcolor = raw_long_signal ? color.new(BULL_COLOR, 0) : raw_short_signal ? color.new(BEAR_COLOR, 0) : DASH_ROW, text_color = TEXT_COLOR)
+    table.cell(dash, 2, 7, trigger_reason, bgcolor = DASH_ROW, text_color = TEXT_COLOR)
+    
+    // System Status
+    system_state = dtech_long_entry ? "BUY" : 
+                  dtech_short_entry ? "SELL" : 
+                  dtech_long_exit ? "EXIT LONG" : 
+                  dtech_short_exit ? "EXIT SHORT" : "HOLD"
+    table.cell(dash, 0, 8, "System", bgcolor = DASH_ROW, text_color = TEXT_COLOR)
+    table.cell(dash, 1, 8, system_state, bgcolor = dtech_long_entry or dtech_short_exit ? color.new(BULL_COLOR, 0) : dtech_short_entry or dtech_long_exit ? color.new(BEAR_COLOR, 0) : DASH_ROW, text_color = TEXT_COLOR)
+    table.cell(dash, 2, 8, trade_style, bgcolor = DASH_ROW, text_color = TEXT_COLOR)
+
+// ╔══════════════════════════════════════════════════════════════════════════════╗
+// ║                              ALERTS                                         ║
+// ╚══════════════════════════════════════════════════════════════════════════════╝
+alertcondition(dtech_long_entry or dtech_short_entry, "Entered A Trade", "Profit Hunter: New Trade Signal")
+alertcondition(dtech_long_entry, "Long Entry", "Alpha Wave DaviddTech: Long Entry Signal")
+alertcondition(dtech_short_entry, "Short Entry", "Alpha Wave DaviddTech: Short Entry Signal")
+alertcondition(dtech_long_exit, "Exit Long", "Alpha Wave DaviddTech: Exit Long Position")
+alertcondition(dtech_short_exit, "Exit Short", "Alpha Wave DaviddTech: Exit Short Position")
+

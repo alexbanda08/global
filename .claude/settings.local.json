@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__plugin_context-mode_context-mode__ctx_fetch_and_index",
+      "Bash(rm \"/c/Users/alexandre bandarra/.claude/.mcp.json\")",
+      "Bash(claude mcp *)",
+      "mcp__plugin_context-mode_context-mode__ctx_execute"
+    ]
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "params": {
+    "train_frac": 0.3,
+    "seed": 42,
+    "k_range": [
+      3,
+      4,
+      5
+    ],
+    "covariance_type": "full",
+    "n_init": 3,
+    "max_iter": 300,
+    "persistence_bars": 3,
+    "flicker_window": 20,
+    "flicker_max_changes": 4
+  },
+  "best_k": 4,
+  "bic_table": {
+    "3": 5084.944,
+    "4": 4967.7303,
+    "5": 4984.0428
+  },
+  "regime_labels_by_id": {
+    "0": "LowVol",
+    "1": "MedLowVol",
+    "2": "MedHighVol",
+    "3": "HighVol"
+  },
+  "vol_score_by_id": {
+    "0": 0.013452,
+    "1": 0.013647,
+    "2": 0.013673,
+    "3": 0.013965
+  },
+  "verification": {
+    "train_end_date": "2025-09-10 16:00:00+00:00",
+    "oos_start_date": "2025-09-10 20:00:00+00:00",
+    "train_bars": 582,
+    "oos_bars": 1358,
+    "no_leak_assertion": true
+  },
+  "regime_distribution": {
+    "HighVol": 1108,
+    "MedHighVol": 363,
+    "LowVol": 316,
+    "MedLowVol": 139,
+    "Warming": 13,
+    "Uncertain": 1
+  },
+  "first_50_regime_labels": [
+    "Warming",
+    "Warming",
+    "Warming",
+    "Warming",
+    "Warming",
+    "Warming",
+    "Warming",
+    "Warming",
+    "Warming",
+    "Warming",
+    "Warming",
+    "Warming",
+    "Warming",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "HighVol",
+    "MedHighVol",
+    "MedHighVol",
+    "MedHighVol",
+    "MedHighVol",
+    "MedHighVol",
+    "MedHighVol",
+    "MedHighVol",
+    "MedHighVol",
+    "MedHighVol",
+    "MedHighVol",
+    "MedHighVol",
+    "MedHighVol",
+    "MedHighVol"
+  ],
+  "tolerance": "exact-match on best_k, regime_distribution, label sequence (given seed=42)"
+}

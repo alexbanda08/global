@@ -1,0 +1,111 @@
+{
+  "elapsed_s": 6.3,
+  "alphas": [
+    0.55,
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8,
+    0.85
+  ],
+  "L_for_stack": 1.75,
+  "rows": [
+    {
+      "alpha": 0.55,
+      "sharpe": 2.431,
+      "cagr": 0.308,
+      "mdd": -0.0582,
+      "calmar": 5.29,
+      "wr_daily": 49.82,
+      "lev_sharpe": 2.431,
+      "lev_cagr": 0.5865,
+      "lev_mdd": -0.1001,
+      "lev_calmar": 5.859,
+      "passes_target": false
+    },
+    {
+      "alpha": 0.6,
+      "sharpe": 2.52,
+      "cagr": 0.3145,
+      "mdd": -0.058,
+      "calmar": 5.418,
+      "wr_daily": 50.43,
+      "lev_sharpe": 2.52,
+      "lev_cagr": 0.6007,
+      "lev_mdd": -0.0998,
+      "lev_calmar": 6.019,
+      "passes_target": true
+    },
+    {
+      "alpha": 0.65,
+      "sharpe": 2.586,
+      "cagr": 0.3208,
+      "mdd": -0.059,
+      "calmar": 5.432,
+      "wr_daily": 50.55,
+      "lev_sharpe": 2.586,
+      "lev_cagr": 0.6144,
+      "lev_mdd": -0.1025,
+      "lev_calmar": 5.995,
+      "passes_target": true
+    },
+    {
+      "alpha": 0.7,
+      "sharpe": 2.626,
+      "cagr": 0.3269,
+      "mdd": -0.0661,
+      "calmar": 4.945,
+      "wr_daily": 50.18,
+      "lev_sharpe": 2.626,
+      "lev_cagr": 0.6276,
+      "lev_mdd": -0.1142,
+      "lev_calmar": 5.493,
+      "passes_target": true
+    },
+    {
+      "alpha": 0.75,
+      "sharpe": 2.639,
+      "cagr": 0.3329,
+      "mdd": -0.0731,
+      "calmar": 4.552,
+      "wr_daily": 50.43,
+      "lev_sharpe": 2.639,
+      "lev_cagr": 0.6402,
+      "lev_mdd": -0.1259,
+      "lev_calmar": 5.085,
+      "passes_target": true
+    },
+    {
+      "alpha": 0.8,
+      "sharpe": 2.626,
+      "cagr": 0.3388,
+      "mdd": -0.0801,
+      "calmar": 4.228,
+      "wr_daily": 50.79,
+      "lev_sharpe": 2.626,
+      "lev_cagr": 0.6524,
+      "lev_mdd": -0.1375,
+      "lev_calmar": 4.745,
+      "passes_target": true
+    },
+    {
+      "alpha": 0.85,
+      "sharpe": 2.591,
+      "cagr": 0.3446,
+      "mdd": -0.0871,
+      "calmar": 3.956,
+      "wr_daily": 50.49,
+      "lev_sharpe": 2.591,
+      "lev_cagr": 0.6639,
+      "lev_mdd": -0.1489,
+      "lev_calmar": 4.458,
+      "passes_target": true
+    }
+  ],
+  "best_standalone_sharpe": {
+    "alpha": 0.75,
+    "sharpe": 2.639
+  },
+  "smallest_alpha_passing_60_50_40": 0.6
+}

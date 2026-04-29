@@ -1,0 +1,873 @@
+version: 1
+generated_at: "2026-04-22"
+source_root: "strategy_lab/"
+# Scan summary:
+#   Total .py files in strategy_lab/ root: 144
+#   Excluded as harnesses (sweep drivers, PDF/report builders, OOS/overfit
+#   audit scripts, portfolio combiners, validators, dashboards, feature
+#   loaders, hunt-only-param-search scripts): 112
+#   Canonical strategy rows below: 50 (deduplicated by signal-logic fingerprint)
+strategies:
+
+  # ---------------------------------------------------------------
+  # V1 — original 8 architectures (strategies.py)
+  # ---------------------------------------------------------------
+  - id: ema_trend_adx
+    family: trend
+    primary_file: "strategy_lab/strategies.py"
+    related_files: ["strategy_lab/strategies_v2.py"]
+    symbols_targeted: ["ALL"]
+    timeframes: ["4h"]
+    signal_logic: "Enter long on fast EMA cross above slow EMA when ADX > adx_min"
+    exit_logic: "Exit on fast EMA cross under slow EMA; V2 variant adds ATR trail and 1d regime gate"
+    order_type_current: "market_open_next"
+    features_required: ["ema", "adx", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "V2 variant is same signal plus stop management"
+
+  - id: donchian_breakout
+    family: breakout
+    primary_file: "strategy_lab/strategies.py"
+    related_files: ["strategy_lab/strategies_v2.py"]
+    symbols_targeted: ["ALL"]
+    timeframes: ["4h"]
+    signal_logic: "Enter long when close breaks above Donchian high(lookback)"
+    exit_logic: "Exit on Donchian-low break or ATR trail"
+    order_type_current: "market_open_next"
+    features_required: ["donchian", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "donchian_v2 only adds regime gate"
+
+  - id: rsi_mean_reversion
+    family: mean_reversion
+    primary_file: "strategy_lab/strategies.py"
+    related_files: []
+    symbols_targeted: ["ALL"]
+    timeframes: ["4h"]
+    signal_logic: "Long when RSI crosses above buy threshold inside regime filter"
+    exit_logic: "Exit when RSI crosses above sell threshold"
+    order_type_current: "market_open_next"
+    features_required: ["rsi"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: ""
+
+  - id: squeeze_breakout
+    family: breakout
+    primary_file: "strategy_lab/strategies.py"
+    related_files: ["strategy_lab/strategies_v12.py", "strategy_lab/strategies_v20_trendfollow.py"]
+    symbols_targeted: ["ALL"]
+    timeframes: ["4h"]
+    signal_logic: "Long on TTM-squeeze release (BB inside KC) with positive momentum"
+    exit_logic: "Exit on momentum flip or basis cross"
+    order_type_current: "market_open_next"
+    features_required: ["bollinger", "keltner", "squeeze"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "V12_bb_squeeze_break and V20_squeeze_ichimoku are param/filter variants"
+
+  - id: macd_htf
+    family: trend
+    primary_file: "strategy_lab/strategies.py"
+    related_files: []
+    symbols_targeted: ["ALL"]
+    timeframes: ["4h"]
+    signal_logic: "Long on MACD signal-line cross with higher-timeframe trend confirmation"
+    exit_logic: "Exit on opposite MACD cross; symmetric short leg"
+    order_type_current: "market_open_next"
+    features_required: ["macd", "ema"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "Long + short"
+
+  - id: supertrend_classic
+    family: trend
+    primary_file: "strategy_lab/strategies.py"
+    related_files: ["strategy_lab/strategies_v2.py", "strategy_lab/strategies_v8.py"]
+    symbols_targeted: ["ALL"]
+    timeframes: ["4h"]
+    signal_logic: "Long on SuperTrend direction flip up; triple-stack variant requires 3 SuperTrends aligned"
+    exit_logic: "SuperTrend flip down; Chandelier ATR trail in V8 variant"
+    order_type_current: "market_open_next"
+    features_required: ["supertrend", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "V8A triple-SuperTrend stack and V2 variant are param extensions"
+
+  - id: gaussian_channel
+    family: trend
+    primary_file: "strategy_lab/strategies.py"
+    related_files: ["strategy_lab/strategies_v2.py"]
+    symbols_targeted: ["ALL"]
+    timeframes: ["4h"]
+    signal_logic: "Long when close crosses above Gaussian upper band while filter is rising"
+    exit_logic: "Exit when close crosses below Gaussian filter line"
+    order_type_current: "market_open_next"
+    features_required: ["gaussian_channel"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: ""
+
+  - id: volume_breakout
+    family: breakout
+    primary_file: "strategy_lab/strategies_v2.py"
+    related_files: ["strategy_lab/strategies.py", "strategy_lab/strategies_v5.py"]
+    symbols_targeted: ["SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Donchian breakout confirmed by volume spike and 1d regime filter"
+    exit_logic: "Exit on Donchian low or below ATR trail"
+    order_type_current: "market_open_next"
+    features_required: ["donchian", "atr", "ema"]
+    depends_on_derivatives: false
+    documented_sharpe: 1.35
+    documented_max_dd: -0.515
+    documented_source: "README.md winners table (SOL V2B)"
+    notes: "Canonical SOL winner. V5 variant adds dollar-volume liquidity filter (deprecated tune)"
+
+  # ---------------------------------------------------------------
+  # V3 — trend validators on V2B
+  # ---------------------------------------------------------------
+  - id: v3_trend_validator
+    family: trend
+    primary_file: "strategy_lab/strategies_v3.py"
+    related_files: ["strategy_lab/run_v3.py"]
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "V2B volume breakout gated by one of: rising daily 200-EMA, ADX>min, EMA slope, or a 2-of-3 composite"
+    exit_logic: "V2B exits plus ATR trailing stop"
+    order_type_current: "market_open_next"
+    features_required: ["donchian", "ema", "adx", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "V3A/V3C/V3D/V3E are gate-filter variants on the same base signal; V3B is split out as own row due to winner status"
+
+  - id: v3b_adx_gate
+    family: trend
+    primary_file: "strategy_lab/strategies_v3.py"
+    related_files: ["strategy_lab/run_v3.py", "strategy_lab/strategies_v9.py"]
+    symbols_targeted: ["ETHUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "V2B volume breakout gated by ADX > adx_min"
+    exit_logic: "V2B exits plus ATR trailing stop"
+    order_type_current: "market_open_next"
+    features_required: ["donchian", "adx", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: 1.26
+    documented_max_dd: -0.338
+    documented_source: "README.md winners table (ETH V3B)"
+    notes: "Canonical ETH winner"
+
+  # ---------------------------------------------------------------
+  # V4 — OTT + Range-Kalman family
+  # ---------------------------------------------------------------
+  - id: ott_trend
+    family: trend
+    primary_file: "strategy_lab/strategies_v4.py"
+    related_files: ["strategy_lab/strategies_v20_trendfollow.py"]
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Long on close crossing above OTT line; twin variant requires fast-OTT flip with slow-OTT up"
+    exit_logic: "OTT flip with ATR trail"
+    order_type_current: "market_open_next"
+    features_required: ["ott", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "V4A/V4B/V4F pullback/V20C are param variants of same OTT-crossover logic"
+
+  - id: range_kalman
+    family: trend
+    primary_file: "strategy_lab/strategies_v4.py"
+    related_files: ["strategy_lab/run_v13_trend_1h.py", "strategy_lab/run_v15_1h_hunt.py", "strategy_lab/run_v16_1h_hunt.py", "strategy_lab/run_v17_eth_tune.py", "strategy_lab/run_v20_multi_tf_multi_asset.py", "strategy_lab/run_v21_btc_sol_deep.py", "strategy_lab/run_v22_btc_final.py", "strategy_lab/run_v23_all_coins.py"]
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["1h", "2h", "4h"]
+    signal_logic: "Long when close breaks above Kalman-smoothed mid + k*range; symmetric short leg"
+    exit_logic: "Exit on mid-line cross with ATR stop and trail"
+    order_type_current: "market_open_next"
+    features_required: ["kalman", "kalman_range", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: 1.32
+    documented_max_dd: -0.288
+    documented_source: "README.md winners table (BTC V4C)"
+    notes: "Canonical BTC winner. V13/V15/V16/V17/V20/V21/V22/V23 are parameter re-tunes (tight, balanced, scaled) and multi-asset sweeps of the same signal"
+
+  - id: v4d_trend_strength
+    family: trend
+    primary_file: "strategy_lab/strategies_v4.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Long when ADX > min and close above slow EMA with RSI confirm"
+    exit_logic: "Exit on ADX fade or EMA cross with ATR trail"
+    order_type_current: "market_open_next"
+    features_required: ["adx", "ema", "rsi", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: ""
+
+  - id: v4e_ott_vol_donchian
+    family: breakout
+    primary_file: "strategy_lab/strategies_v4.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Donchian breakout gated by OTT-up and volume spike"
+    exit_logic: "Exit on Donchian-low or OTT flip with ATR trail"
+    order_type_current: "market_open_next"
+    features_required: ["ott", "donchian", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: ""
+
+  - id: mtf_ott
+    family: mtf
+    primary_file: "strategy_lab/strategies_v4.py"
+    related_files: ["strategy_lab/strategies_v20_trendfollow.py"]
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Fast OTT entry on 4h gated by slow-OTT up (V4G) or 200-EMA up (V20C) on daily"
+    exit_logic: "Fast OTT flip with ATR trail"
+    order_type_current: "market_open_next"
+    features_required: ["ott", "ema", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "Multi-timeframe confluence"
+
+  - id: vol_regime_switch
+    family: regime_router
+    primary_file: "strategy_lab/strategies_v4.py"
+    related_files: ["strategy_lab/strategies_v8.py"]
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Switch between trend and mean-reversion sub-signal by ATR percentile; V8C restricts Donchian to high-vol regime"
+    exit_logic: "Regime-aware exits from active sub-strategy"
+    order_type_current: "market_open_next"
+    features_required: ["atr", "adx"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "V4H and V8C dedupe together"
+
+  # ---------------------------------------------------------------
+  # V6 — RSI mean-reversion port
+  # ---------------------------------------------------------------
+  - id: v6_rsi_2065
+    family: mean_reversion
+    primary_file: "strategy_lab/strategies_v6.py"
+    related_files: ["strategy_lab/run_v6.py", "strategy_lab/run_v6_direct.py"]
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["5m", "15m", "1h"]
+    signal_logic: "Long when RSI<20 and StochK<25 and close>0.9*EMA200; short symmetric at 65/75"
+    exit_logic: "Fixed percentage SL/TP, no trailing"
+    order_type_current: "market_open_next"
+    features_required: ["rsi", "stoch", "ema"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "Port of user Pine 'Optimized BTC Mean Reversion RSI 20/65'"
+
+  # ---------------------------------------------------------------
+  # V7/V8 — 15m cycle-aware scalp
+  # ---------------------------------------------------------------
+  - id: cycle_scalp
+    family: scalp
+    primary_file: "strategy_lab/run_v7_cycle_aware.py"
+    related_files: ["strategy_lab/run_v8_scalp.py", "strategy_lab/run_v9_chimera.py"]
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["15m"]
+    signal_logic: "SuperTrend + MACD-histogram momentum gated by cycle-regime classifier; V8 adds daily-VWAP side filter; V9 Chimera adds ADX/Stoch-RSI/BB confidence score"
+    exit_logic: "ATR trail and regime flip"
+    order_type_current: "market_open_next"
+    features_required: ["supertrend", "macd", "ema", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "V7/V8/V9 share the cycle-aware scalp framework with progressive filter additions"
+
+  - id: hma_adx
+    family: trend
+    primary_file: "strategy_lab/strategies_v8.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Hull MA slope flip with ADX strength confirm"
+    exit_logic: "HMA slope reversal with ATR trail"
+    order_type_current: "market_open_next"
+    features_required: ["hma", "adx", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: ""
+
+  # ---------------------------------------------------------------
+  # V7 — HWR mean-reversion family
+  # ---------------------------------------------------------------
+  - id: hwr1_bb_meanrev
+    family: mean_reversion
+    primary_file: "strategy_lab/strategies_v7.py"
+    related_files: ["strategy_lab/strategies_v9.py", "strategy_lab/strategies_v11.py"]
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Long when close<=BB lower and regime ok and bullish inside-bar"
+    exit_logic: "Exit at BB middle band with ATR stop"
+    order_type_current: "market_open_next"
+    features_required: ["bollinger", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "HWR1B is a stricter-threshold parameter variant"
+
+  - id: hwr2_rsi_stoch_oversold
+    family: mean_reversion
+    primary_file: "strategy_lab/strategies_v7.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Long when RSI<buy and Stoch<buy and regime ok"
+    exit_logic: "Exit at mid-range RSI with SL/TP"
+    order_type_current: "market_open_next"
+    features_required: ["rsi", "stoch"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: ""
+
+  - id: hwr3_pullback_rr
+    family: mean_reversion
+    primary_file: "strategy_lab/strategies_v7.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Long on pullback to EMA in uptrend with fixed risk:reward exit (1:1 or 1:1.5 asymmetric)"
+    exit_logic: "Fixed SL/TP ratio"
+    order_type_current: "market_open_next"
+    features_required: ["ema", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "HWR3B is asymmetric 1:1.5 variant; HWR5 (tight-TP wide-SL) is another payoff-ratio tune of same signal"
+
+  - id: hwr4_keltner_bounce
+    family: mean_reversion
+    primary_file: "strategy_lab/strategies_v7.py"
+    related_files: ["strategy_lab/run_v33_scalp_creative.py"]
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Long on bounce off Keltner lower band in uptrend"
+    exit_logic: "Exit at Keltner mid or SL"
+    order_type_current: "market_open_next"
+    features_required: ["keltner", "kc_bounce", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "V33 keltner_pullback is a scalp-timeframe variant"
+
+  # ---------------------------------------------------------------
+  # V9 — multi-TP ladder wrapper
+  # ---------------------------------------------------------------
+  - id: multi_tp_ladder
+    family: ensemble
+    primary_file: "strategy_lab/strategies_v9.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Reuses entries from V2B/V3B/V4C/HWR1 and replaces exits with 3-rung multi-TP ladder"
+    exit_logic: "Scale-out at ATR multiples with trailing stop on runner"
+    order_type_current: "market_open_next"
+    features_required: ["atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "V9A-E wrap different underlying entry signals; same exit framework. Exit-management innovation, not a new signal"
+
+  # ---------------------------------------------------------------
+  # V10 — derivatives orderflow signals
+  # ---------------------------------------------------------------
+  - id: funding_fade
+    family: mean_reversion
+    primary_file: "strategy_lab/strategies_v10.py"
+    related_files: ["strategy_lab/run_v10_fade.py", "strategy_lab/run_v19_feature_hunt.py"]
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["15m", "4h"]
+    signal_logic: "Long when base entry (V3B or rule-based) fires and funding rate is extreme negative"
+    exit_logic: "Base exits plus funding-revert stop"
+    order_type_current: "market_open_next"
+    features_required: ["funding", "atr", "ema"]
+    depends_on_derivatives: true
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "V19 funding_fade is same logic with z-score threshold"
+
+  - id: oi_breakout_confirm
+    family: trend
+    primary_file: "strategy_lab/strategies_v10.py"
+    related_files: ["strategy_lab/run_v19_feature_hunt.py"]
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["1h", "4h"]
+    signal_logic: "V4C range-kalman (or OI z-breakout) entry gated by rising open interest"
+    exit_logic: "Base exits plus OI-fade stop"
+    order_type_current: "market_open_next"
+    features_required: ["open_interest", "kalman_range", "atr"]
+    depends_on_derivatives: true
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "V10B oi_confirm + V19 oi_breakout share OI confirm/breakout logic"
+
+  - id: ls_ratio_extreme
+    family: mean_reversion
+    primary_file: "strategy_lab/strategies_v10.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Long when long-short ratio > enter_threshold and close above EMA"
+    exit_logic: "Exit when ratio reverts"
+    order_type_current: "market_open_next"
+    features_required: ["long_short_ratio", "ema"]
+    depends_on_derivatives: true
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: ""
+
+  - id: liq_cascade_rebound
+    family: mean_reversion
+    primary_file: "strategy_lab/strategies_v10.py"
+    related_files: ["strategy_lab/run_v19_feature_hunt.py"]
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["1h", "4h"]
+    signal_logic: "Long after short-side liquidation cascade spike"
+    exit_logic: "ATR trail or time stop"
+    order_type_current: "market_open_next"
+    features_required: ["liquidations", "atr"]
+    depends_on_derivatives: true
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: ""
+
+  - id: taker_delta_momentum
+    family: trend
+    primary_file: "strategy_lab/run_v19_feature_hunt.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "SOLUSDT"]
+    timeframes: ["1h"]
+    signal_logic: "Long when z-scored taker buy-sell delta exceeds threshold"
+    exit_logic: "Fixed TP/SL/trail with max hold"
+    order_type_current: "market_open_next"
+    features_required: ["taker_delta", "atr"]
+    depends_on_derivatives: true
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "Orderflow momentum signal"
+
+  - id: premium_revert
+    family: mean_reversion
+    primary_file: "strategy_lab/run_v19_feature_hunt.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "SOLUSDT"]
+    timeframes: ["1h"]
+    signal_logic: "Long when futures premium z-score is extreme negative, revert to basis"
+    exit_logic: "Exit at premium mean with ATR stop"
+    order_type_current: "market_open_next"
+    features_required: ["funding", "atr"]
+    depends_on_derivatives: true
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "Distinct from funding_fade (operates on perp-spot basis)"
+
+  # ---------------------------------------------------------------
+  # V11 — regime ensembles
+  # ---------------------------------------------------------------
+  - id: v11_regime_ensemble
+    family: regime_router
+    primary_file: "strategy_lab/strategies_v11.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Regime-aware union: V4C entries in BULL/TREND, HWR1 entries in CHOP/RANGE"
+    exit_logic: "Active sub-strategy's exits"
+    order_type_current: "market_open_next"
+    features_required: ["adx", "atr", "kalman_range"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "Classifies regime then routes entries"
+
+  - id: v11_ml_triple_barrier
+    family: ml_feature
+    primary_file: "strategy_lab/run_v11_ml.py"
+    related_files: ["strategy_lab/run_v12_1h.py"]
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["15m", "1h"]
+    signal_logic: "LightGBM classifier predicts triple-barrier labels from derivatives + price features"
+    exit_logic: "Fixed ATR barrier: first of SL, TP, or vertical time horizon"
+    order_type_current: "market_open_next"
+    features_required: ["atr", "funding", "open_interest", "liquidations", "long_short_ratio", "ml_classifier"]
+    depends_on_derivatives: true
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "ML labeling via Lopez de Prado triple-barrier; V12B is the 1h sibling"
+
+  - id: v12a_fade_prev_hour
+    family: mean_reversion
+    primary_file: "strategy_lab/run_v12_1h.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["1h"]
+    signal_logic: "Long when previous-hour return < -X% and regime bullish and wick pattern present"
+    exit_logic: "Fixed TP/SL or next-bar close"
+    order_type_current: "market_open_next"
+    features_required: ["atr", "ema"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "Rule-based mean-reversion on strongest 1h IC"
+
+  # ---------------------------------------------------------------
+  # V12 — pullback / higher-lows / NR7
+  # ---------------------------------------------------------------
+  - id: pullback_trend
+    family: trend
+    primary_file: "strategy_lab/strategies_v12.py"
+    related_files: ["strategy_lab/run_v27_swing.py"]
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["1h", "4h"]
+    signal_logic: "Long on pullback to fast EMA inside confirmed trend with RSI dip confirm"
+    exit_logic: "ATR trail or trend break"
+    order_type_current: "market_open_next"
+    features_required: ["ema", "rsi", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "V12A pullback and V27 trend_pullback share signal logic"
+
+  - id: higher_lows
+    family: trend
+    primary_file: "strategy_lab/strategies_v12.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Long on detected higher-low swing with ADX confirm and bullish close"
+    exit_logic: "ATR trail"
+    order_type_current: "market_open_next"
+    features_required: ["adx", "ema", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: ""
+
+  - id: nr7_break
+    family: breakout
+    primary_file: "strategy_lab/strategies_v12.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Long on NR7 narrow-range breakout in uptrend"
+    exit_logic: "ATR trail"
+    order_type_current: "market_open_next"
+    features_required: ["donchian", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: ""
+
+  # ---------------------------------------------------------------
+  # V19 — grid trading
+  # ---------------------------------------------------------------
+  - id: v19_grid
+    family: mean_reversion
+    primary_file: "strategy_lab/strategies_v19_grid.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Grid buy rungs below center in range-bound regime; V19B uses ATR-adaptive spacing"
+    exit_logic: "Exit at center line or regime break"
+    order_type_current: "market_open_next"
+    features_required: ["atr", "adx", "grid"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "V19A static grid; V19B ATR-adaptive. Both same signal family"
+
+  # ---------------------------------------------------------------
+  # V20 — modern trend-follow
+  # ---------------------------------------------------------------
+  - id: heikin_supertrend
+    family: trend
+    primary_file: "strategy_lab/strategies_v20_trendfollow.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Heikin-Ashi close above SuperTrend with 200-EMA uptrend filter"
+    exit_logic: "SuperTrend trailing stop"
+    order_type_current: "market_open_next"
+    features_required: ["supertrend", "heikin_ashi", "ema", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: ""
+
+  - id: dema_ichimoku
+    family: trend
+    primary_file: "strategy_lab/strategies_v20_trendfollow.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "Dual-DEMA crossover confirmed by price above Ichimoku cloud and above EMA50"
+    exit_logic: "DEMA cross-down with ATR trail"
+    order_type_current: "market_open_next"
+    features_required: ["ema", "ichimoku", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: ""
+
+  # ---------------------------------------------------------------
+  # V24 — regime router + 15m scalp suite
+  # ---------------------------------------------------------------
+  - id: v24_regime_router
+    family: regime_router
+    primary_file: "strategy_lab/run_v24_regime_router.py"
+    related_files: ["strategy_lab/run_v29_regime.py"]
+    symbols_targeted: ["ALL"]
+    timeframes: ["15m", "30m", "1h", "2h", "4h"]
+    signal_logic: "Hurst+ADX+SMA classifier routes each bar to Donchian long, Donchian short, or BB mean-revert"
+    exit_logic: "Sub-signal exits plus regime-flip hard close"
+    order_type_current: "market_open_next"
+    features_required: ["adx", "donchian", "bollinger", "atr"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "V29 regime_switch uses a different trend-grade classifier but same router pattern"
+
+  - id: v24_scalp_suite
+    family: scalp
+    primary_file: "strategy_lab/run_v24_15m_scalp.py"
+    related_files: []
+    symbols_targeted: ["ALL"]
+    timeframes: ["15m"]
+    signal_logic: "Four 15m scalp families: ORB session-break, VWAP-band fade, RSI-BB mean-revert, dual-SuperTrend"
+    exit_logic: "Fixed TP/SL/trail with max hold (scalp-grade)"
+    order_type_current: "market_open_next"
+    features_required: ["atr", "rsi", "bollinger", "supertrend", "ema"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "Four distinct sub-signals sharing exit framework"
+
+  # ---------------------------------------------------------------
+  # V25 — creative MTF-confluence
+  # ---------------------------------------------------------------
+  - id: v25_mtf_confluence
+    family: mtf
+    primary_file: "strategy_lab/run_v25_creative.py"
+    related_files: []
+    symbols_targeted: ["ALL"]
+    timeframes: ["30m", "1h"]
+    signal_logic: "1h/30m entry (squeeze, seasonal, Keltner-RSI, or sweep sub-signal) gated by 4h EMA-trend filter"
+    exit_logic: "ATR trail"
+    order_type_current: "market_open_next"
+    features_required: ["ema", "atr", "keltner", "squeeze"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "Five sub-signals sharing MTF gate"
+
+  # ---------------------------------------------------------------
+  # V26 — SMC / price-action
+  # ---------------------------------------------------------------
+  - id: v26_priceaction_smc
+    family: breakout
+    primary_file: "strategy_lab/run_v26_priceaction.py"
+    related_files: ["strategy_lab/run_v26_ob_rerun.py"]
+    symbols_targeted: ["ALL"]
+    timeframes: ["15m", "30m", "1h", "2h", "4h"]
+    signal_logic: "Six price-action families: liquidity sweep at swing pivot, order block touch, MSB continuation, engulfing, RSI divergence, ATR squeeze"
+    exit_logic: "Fixed SL/TP/trail with max hold"
+    order_type_current: "market_open_next"
+    features_required: ["atr", "rsi", "bollinger", "squeeze", "smc_ob"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "Re-run with look-ahead fix applied (run_v26_ob_rerun)"
+
+  # ---------------------------------------------------------------
+  # V27 — swing / higher-TF
+  # ---------------------------------------------------------------
+  - id: v27_swing_suite
+    family: mtf
+    primary_file: "strategy_lab/run_v27_swing.py"
+    related_files: []
+    symbols_targeted: ["ALL"]
+    timeframes: ["1h", "2h", "4h"]
+    signal_logic: "Four swing sub-signals: trend-pullback, HTF Donchian breakout, VWAP fade, daily-EMA cross"
+    exit_logic: "ATR trail or opposing cross"
+    order_type_current: "market_open_next"
+    features_required: ["atr", "rsi", "donchian", "ema"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "Funding is an optional filter on VWAP-fade only"
+
+  # ---------------------------------------------------------------
+  # V30 — creative library
+  # ---------------------------------------------------------------
+  - id: v30_creative_suite
+    family: ensemble
+    primary_file: "strategy_lab/run_v30_creative.py"
+    related_files: []
+    symbols_targeted: ["ALL"]
+    timeframes: ["15m", "30m", "1h", "2h", "4h"]
+    signal_logic: "Five new families: TTM squeeze pop, VWAP z-fade, Connors RSI, SuperTrend flip, CCI extreme"
+    exit_logic: "Fixed TP/SL/trail with max hold"
+    order_type_current: "market_open_next"
+    features_required: ["atr", "rsi", "bollinger", "keltner", "supertrend", "squeeze"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "Five distinct sub-signals"
+
+  # ---------------------------------------------------------------
+  # V33 — scalp creative
+  # ---------------------------------------------------------------
+  - id: v33_scalp_creative
+    family: scalp
+    primary_file: "strategy_lab/run_v33_scalp_creative.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT", "DOGEUSDT", "SUIUSDT"]
+    timeframes: ["15m", "30m", "1h"]
+    signal_logic: "Six scalp sub-signals: VWAP z-fade, Keltner pullback, RSI divergence, ATR burst, ORB break, ETHBTC-ratio revert"
+    exit_logic: "Scalp-grade fixed TP/SL/trail"
+    order_type_current: "market_open_next"
+    features_required: ["atr", "rsi", "ema", "keltner"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "ETHBTC-ratio revert is a cross-asset pair sub-signal"
+
+  # ---------------------------------------------------------------
+  # V34 — pair-ratio
+  # ---------------------------------------------------------------
+  - id: pair_ratio_revert
+    family: pairs
+    primary_file: "strategy_lab/run_v34_expand.py"
+    related_files: []
+    symbols_targeted: ["BTCUSDT", "ETHUSDT", "SOLUSDT", "LINKUSDT", "AVAXUSDT", "DOGEUSDT", "INJUSDT", "SUIUSDT"]
+    timeframes: ["1h", "2h", "4h"]
+    signal_logic: "Z-score mean-reversion on ETH/BTC and altcoin-pair ratios"
+    exit_logic: "Z-score crosses zero or stop"
+    order_type_current: "market_open_next"
+    features_required: ["atr", "ema"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "Companion BBBreak and HTF-Donchian extensions are just coin-scope param variants of v3-family, not new signals"
+
+  # ---------------------------------------------------------------
+  # V37 — LLM orchestrator (NOT a signal strategy)
+  # ---------------------------------------------------------------
+  - id: v37_claude_trader
+    family: other
+    primary_file: "strategy_lab/run_v37_claude_trader.py"
+    related_files: ["strategy_lab/v37_claude_trader.py", "strategy_lab/v37_providers.py"]
+    symbols_targeted: ["ETHUSDT", "SOLUSDT", "LINKUSDT", "AVAXUSDT", "DOGEUSDT"]
+    timeframes: ["4h"]
+    signal_logic: "LLM consumes OHLCV + indicator snapshot and emits Decision picking one of tested signal families"
+    exit_logic: "Executed via the chosen underlying family's exits"
+    order_type_current: "market_open_next"
+    features_required: ["atr", "adx", "rsi", "ema"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "LLM orchestrator, not a signal strategy"
+
+  # ---------------------------------------------------------------
+  # V38/V39 — SMC/ICT
+  # ---------------------------------------------------------------
+  - id: v38_smc_lib
+    family: breakout
+    primary_file: "strategy_lab/run_v38_smc.py"
+    related_files: []
+    symbols_targeted: ["ALL"]
+    timeframes: ["15m", "30m", "1h", "2h", "4h"]
+    signal_logic: "Seven SMC sub-signals: FVG entry, FVG fill fade, OB touch, BOS continuation, CHoCH reversal, liquidity sweep fade, SMC confluence"
+    exit_logic: "ATR trail or invalidation of SMC level"
+    order_type_current: "market_open_next"
+    features_required: ["atr", "rsi", "donchian", "smc_ob", "ict"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "Wraps joshyattridge/smart-money-concepts"
+
+  - id: v39_ict_killzone
+    family: mtf
+    primary_file: "strategy_lab/run_v39_smc_ict_proper.py"
+    related_files: []
+    symbols_targeted: ["ALL"]
+    timeframes: ["15m", "30m", "1h", "4h"]
+    signal_logic: "4H bias + 15M killzone entry + liquidity sweep + FVG + OB confluence (ICT methodology)"
+    exit_logic: "Invalidation of HTF bias or FVG fill"
+    order_type_current: "market_open_next"
+    features_required: ["atr", "ema", "bollinger", "smc_ob", "ict"]
+    depends_on_derivatives: false
+    documented_sharpe: null
+    documented_max_dd: null
+    documented_source: null
+    notes: "Killzone session filter; research-informed ICT rewrite distinct from V38 raw SMC primitives"
