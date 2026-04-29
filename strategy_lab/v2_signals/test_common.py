@@ -16,3 +16,19 @@ def test_load_features_returns_dataframe(tmp_path, monkeypatch):
 
 def test_assets_constant():
     assert ASSETS == ("btc", "eth", "sol")
+
+
+def test_save_features_round_trip(tmp_path, monkeypatch):
+    p = tmp_path / "data" / "polymarket"
+    p.mkdir(parents=True)
+    monkeypatch.setattr("strategy_lab.v2_signals.common.DATA_DIR", p.parent)
+    df = pd.DataFrame({"asset": ["btc"], "slug": ["s"], "outcome_up": [1], "extra": [42]})
+    save_features("btc", df)
+    out = load_features("btc")
+    pd.testing.assert_frame_equal(out, df)
+
+
+def test_load_features_missing_raises(tmp_path, monkeypatch):
+    monkeypatch.setattr("strategy_lab.v2_signals.common.DATA_DIR", tmp_path)
+    with pytest.raises(FileNotFoundError, match="Features file not found"):
+        load_features("nonexistent")
