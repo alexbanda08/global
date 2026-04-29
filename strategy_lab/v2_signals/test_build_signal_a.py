@@ -40,3 +40,13 @@ def test_calibrate_prob_a_falls_back_when_thin_bucket():
     out = calibrate_prob_a(full, train, min_samples=20)
     # Bucket too thin -> fall back to 0.5
     assert out.loc[0, "prob_a"] == 0.5
+
+
+def test_compute_votes_up_treats_nan_as_down_vote():
+    df = pd.DataFrame({
+        "ret_5m": [float("nan")],
+        "ret_15m": [0.01],
+        "ret_1h": [float("nan")],
+    })
+    # ret_15m positive (1), the two NaN treated as not-positive (0+0)
+    assert compute_votes_up(df).iloc[0] == 1

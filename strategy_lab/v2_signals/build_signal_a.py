@@ -7,12 +7,16 @@ import argparse
 import os
 import pandas as pd
 import numpy as np
-from strategy_lab.v2_signals.common import load_features, save_features, ASSETS
-
-TRAIN_FRAC = 0.8
+from strategy_lab.v2_signals.common import load_features, save_features, ASSETS, chronological_split
 
 
 def compute_votes_up(df: pd.DataFrame) -> pd.Series:
+    """Count how many of {ret_5m, ret_15m, ret_1h} are strictly > 0.
+
+    NaN behavior: any NaN return is treated as a down vote (NaN > 0 is False).
+    Caller is responsible for upstream NaN filtering if needed; current
+    feature builder produces these columns NaN-free per pre-flight checks.
+    """
     return ((df.ret_5m > 0).astype(int)
             + (df.ret_15m > 0).astype(int)
             + (df.ret_1h > 0).astype(int))
@@ -29,12 +33,6 @@ def calibrate_prob_a(full: pd.DataFrame, train: pd.DataFrame, min_samples: int =
     fallback = (out["n_bucket"].isna()) | (out["n_bucket"] < min_samples)
     out["prob_a"] = np.where(fallback, 0.5, out["p_up_bucket"])
     return out.drop(columns=["p_up_bucket", "n_bucket"])
-
-
-def chronological_split(df: pd.DataFrame, train_frac: float = TRAIN_FRAC) -> tuple[pd.DataFrame, pd.DataFrame]:
-    df = df.sort_values("window_start_unix").reset_index(drop=True)
-    cut = int(len(df) * train_frac)
-    return df.iloc[:cut].copy(), df.iloc[cut:].copy()
 
 
 def build_one_asset(asset: str) -> None:

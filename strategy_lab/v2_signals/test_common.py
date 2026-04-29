@@ -32,3 +32,18 @@ def test_load_features_missing_raises(tmp_path, monkeypatch):
     monkeypatch.setattr("strategy_lab.v2_signals.common.DATA_DIR", tmp_path)
     with pytest.raises(FileNotFoundError, match="Features file not found"):
         load_features("nonexistent")
+
+
+def test_chronological_split_orders_by_time():
+    from strategy_lab.v2_signals.common import chronological_split
+    df = pd.DataFrame({
+        "window_start_unix": [3, 1, 2, 4, 5],
+        "outcome_up": [0, 1, 0, 1, 0],
+    })
+    train, holdout = chronological_split(df, train_frac=0.6)
+    # 0.6 * 5 = 3 → train has 3 rows
+    assert len(train) == 3
+    assert len(holdout) == 2
+    # Ordered ascending by window_start_unix
+    assert list(train["window_start_unix"]) == [1, 2, 3]
+    assert list(holdout["window_start_unix"]) == [4, 5]

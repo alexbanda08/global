@@ -10,6 +10,16 @@ ASSETS = ("btc", "eth", "sol")
 TIMEFRAMES = ("5m", "15m")
 
 
+TRAIN_FRAC = 0.8
+
+
+def chronological_split(df: pd.DataFrame, train_frac: float = TRAIN_FRAC) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Sort by window_start_unix and split into (train, holdout)."""
+    df = df.sort_values("window_start_unix").reset_index(drop=True)
+    cut = int(len(df) * train_frac)
+    return df.iloc[:cut].copy(), df.iloc[cut:].copy()
+
+
 def load_features(asset: str) -> pd.DataFrame:
     p = DATA_DIR / "polymarket" / f"{asset}_features_v3.csv"
     if not p.exists():
