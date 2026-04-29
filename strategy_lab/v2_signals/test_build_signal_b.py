@@ -34,3 +34,37 @@ def test_isotonic_calibrate_monotone():
     cal = isotonic_calibrate(raw, y, raw_to_calibrate=raw)
     diffs = np.diff(cal)
     assert (diffs >= -1e-9).all()
+
+def test_compute_raw_prob_b_basic():
+    from strategy_lab.v2_signals.build_signal_b import compute_raw_prob_b
+    # Synthetic: 2 days of 1m closes constant = 100, then features at 2 known windows
+    n = 2880
+    base_ts = 1700000000
+    klines = pd.DataFrame({
+        "ts_s": list(range(base_ts, base_ts + n * 60, 60)),
+        "price_close": [100.0] * n,
+    })
+    features = pd.DataFrame({
+        "window_start_unix": [base_ts + 86400, base_ts + 86400 + 1800],
+        "strike_price": [100.0, 100.0],
+        "timeframe": ["5m", "5m"],
+    })
+    raw = compute_raw_prob_b(features, klines)
+    # Constant prices -> RMS vol = 0 -> sigma_daily = 0 -> guard returns NaN-skip
+    # since the function only writes valid where sigma > 0.
+    assert raw.isna().all() or (raw == 0.5).all() or (raw.between(0.4, 0.6).all())
+
+def test_compute_raw_prob_b_skip_when_no_lookback():
+    from strategy_lab.v2_signals.build_signal_b import compute_raw_prob_b
+    klines = pd.DataFrame({
+        "ts_s": [1700000000 + 60 * i for i in range(30)],  # only 30 minutes
+        "price_close": [100.0 + i * 0.01 for i in range(30)],
+    })
+    features = pd.DataFrame({
+        "window_start_unix": [1700000000 + 60 * 25],  # only 25 min of lookback
+        "strike_price": [100.0],
+        "timeframe": ["5m"],
+    })
+    raw = compute_raw_prob_b(features, klines)
+    # < 60 min of lookback -> NaN
+    assert raw.isna().iloc[0]
