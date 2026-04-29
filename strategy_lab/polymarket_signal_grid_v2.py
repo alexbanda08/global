@@ -64,7 +64,15 @@ def load_trajectories(asset: str) -> dict[str, pd.DataFrame]:
     })[["slug","bucket_10s",
         "dn_bid_first","dn_bid_last","dn_bid_min","dn_bid_max",
         "dn_ask_first","dn_ask_last","dn_ask_min","dn_ask_max"]]
-    merged = up.merge(dn, on=["slug","bucket_10s"], how="outer").sort_values(["slug","bucket_10s"])
+    # Sort up/dn before merge so the joined frame is already in order — avoids a
+    # pandas block-consolidation copy that can OOM on memory-constrained machines.
+    up = up.sort_values(["slug", "bucket_10s"])
+    dn = dn.sort_values(["slug", "bucket_10s"])
+    merged = up.merge(dn, on=["slug","bucket_10s"], how="outer")
+    # Convert float64 → float32 to halve memory before groupby/reset_index copies
+    float_cols = merged.select_dtypes("float64").columns
+    merged[float_cols] = merged[float_cols].astype("float32")
+    merged = merged.sort_values(["slug","bucket_10s"])
     return {slug: g.reset_index(drop=True) for slug, g in merged.groupby("slug")}
 
 
@@ -241,6 +249,20 @@ def add_full_signal(df: pd.DataFrame) -> pd.DataFrame:
     return df[df.signal != -1].copy()
 
 
+def add_prob_signal(df: pd.DataFrame, col: str,
+                    thr_up: float = 0.55, thr_dn: float = 0.45) -> pd.DataFrame:
+    """Calibrated probability signal: col > thr_up → BUY UP (signal=1),
+    col < thr_dn → BUY DOWN (signal=0), else skip (signal=-1)."""
+    df = df.copy()
+    df["signal"] = -1
+    if col not in df.columns:
+        return df[df.signal != -1].copy()
+    valid = df[col].notna()
+    df.loc[valid & (df[col] >= thr_up), "signal"] = 1
+    df.loc[valid & (df[col] <= thr_dn), "signal"] = 0
+    return df[df.signal != -1].copy()
+
+
 def run(df: pd.DataFrame, traj_by_asset: dict, k1m_by_asset: dict,
         target, stop, rev_bp, merge_aware, hedge_hold: bool = False) -> dict:
     pnls = []
@@ -314,9 +336,14 @@ def main():
     feats_q10  = add_q10_signal(feats)
     feats_q20  = add_q20_signal(feats)
     feats_full = add_full_signal(feats)
+    feats_prob_a     = add_prob_signal(feats, "prob_a")
+    feats_prob_b     = add_prob_signal(feats, "prob_b")
+    feats_prob_c     = add_prob_signal(feats, "prob_c")
+    feats_prob_stack = add_prob_signal(feats, "prob_stack")
     print(f"q10: {len(feats_q10)} markets ({(feats_q10.timeframe=='5m').sum()}× 5m + {(feats_q10.timeframe=='15m').sum()}× 15m)")
     print(f"q20: {len(feats_q20)} markets ({(feats_q20.timeframe=='5m').sum()}× 5m + {(feats_q20.timeframe=='15m').sum()}× 15m)")
     print(f"full: {len(feats_full)} markets")
+    print(f"prob_a: {len(feats_prob_a)} markets  prob_b: {len(feats_prob_b)}  prob_c: {len(feats_prob_c)}  prob_stack: {len(feats_prob_stack)}")
 
     # Define exit rules: (label, target, stop, rev_bp, merge_aware, hedge_hold)
     rules = [
@@ -335,7 +362,15 @@ def main():
 
     # Build cell task list
     tasks = []
-    for sig_label, sig_df in [("q10", feats_q10), ("q20", feats_q20), ("full", feats_full)]:
+    for sig_label, sig_df in [
+        ("q10",        feats_q10),
+        ("q20",        feats_q20),
+        ("full",       feats_full),
+        ("prob_a",     feats_prob_a),
+        ("prob_b",     feats_prob_b),
+        ("prob_c",     feats_prob_c),
+        ("prob_stack", feats_prob_stack),
+    ]:
         for tf in ["5m", "15m"]:
             sub = sig_df[sig_df.timeframe == tf]
             for asset_filter in [None, "btc", "eth", "sol"]:
@@ -356,7 +391,7 @@ def main():
             r = run(ssub, traj_by_asset, k1m_by_asset, tgt, stp, rev, merge, hedge)
             r.update(meta)
             rows.append(r)
-            print(f"{meta['signal']:4s} {meta['timeframe']} {meta['asset']:3s} {meta['rule']:24s} → "
+            print(f"{meta['signal']:4s} {meta['timeframe']} {meta['asset']:3s} {meta['rule']:24s} -> "
                   f"n={r['n']:4d} pnl=${r['total_pnl']:+7.2f} "
                   f"hit={r['hit']*100:5.1f}% roi={r['roi_pct']:+.2f}% "
                   f"sharpe={r.get('sharpe', float('nan')):+.2f} maxDD=${r.get('max_dd', float('nan')):.2f}")
@@ -374,7 +409,7 @@ def main():
             )
         # Print summary after all workers complete
         for r in rows:
-            print(f"{r['signal']:4s} {r['timeframe']} {r['asset']:3s} {r['rule']:24s} → "
+            print(f"{r['signal']:4s} {r['timeframe']} {r['asset']:3s} {r['rule']:24s} -> "
                   f"n={r['n']:4d} pnl=${r['total_pnl']:+7.2f} "
                   f"hit={r['hit']*100:5.1f}% roi={r['roi_pct']:+.2f}% "
                   f"sharpe={r.get('sharpe', float('nan')):+.2f} maxDD=${r.get('max_dd', float('nan')):.2f}")
@@ -392,7 +427,7 @@ def main():
           "Exits include merge-aware variants (sell direct OR buy-other+merge) and Binance-reversal "
           "trailing (close early if BTC moves against signal by N bps). Fee 2% on winnings. Bootstrap n=2000. "
           "Sharpe/Sortino/MaxDD computed on chronologically-sorted equity curve, annualized via inferred trades/year.\n"]
-    for sig_label in ["q10", "q20", "full"]:
+    for sig_label in ["q10", "q20", "full", "prob_a", "prob_b", "prob_c", "prob_stack"]:
         for tf in ["5m", "15m"]:
             sub = df[(df.signal == sig_label) & (df.timeframe == tf)].sort_values("total_pnl", ascending=False)
             md.append(f"\n## {sig_label} signal — {tf} — top 12 cells\n")

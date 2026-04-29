@@ -26,6 +26,7 @@ sys.path.insert(0, str(HERE))
 from polymarket_signal_grid_v2 import (
     load_features, load_trajectories, load_klines_1m,
     simulate_market,
+    add_prob_signal,
 )
 
 OUT_MD = HERE / "reports" / "POLYMARKET_FORWARD_WALK_V2.md"
@@ -99,8 +100,10 @@ def main():
           "fit on TRAIN only. Strategy = sig_ret5m + Binance reversal at 15 bps + "
           "buy-other-side-and-hold-to-resolution.\n"]
 
+    PROB_COLS = {"prob_a", "prob_b", "prob_c", "prob_stack"}
+
     rows = []
-    for sig_label in ["full", "q20"]:
+    for sig_label in ["full", "q20", "prob_a", "prob_b", "prob_c", "prob_stack"]:
         for tf in ["5m", "15m"]:
             for asset_filter in [None, "btc", "eth", "sol"]:
                 base = feats if asset_filter is None else feats[feats.asset == asset_filter]
@@ -114,6 +117,10 @@ def main():
                 if sig_label == "full":
                     train_signal   = add_full_signal(train_raw)
                     holdout_signal = add_full_signal(holdout_raw)
+                elif sig_label in PROB_COLS:
+                    # prob signals use calibrated threshold; no train/holdout leakage
+                    train_signal   = add_prob_signal(train_raw,   sig_label)
+                    holdout_signal = add_prob_signal(holdout_raw, sig_label)
                 else:
                     # q20 threshold from TRAIN; then apply to both train and holdout
                     train_signal   = add_q20_signal_with_train_threshold(train_raw, train_raw)
@@ -143,7 +150,7 @@ def main():
                       f"HOLD n={ho_e10['n']:4d} hit={ho_e10['hit']*100:5.1f}% pnl=${ho_e10['total_pnl']:+7.2f} CI=[${ho_e10['ci_lo']:+5.0f},${ho_e10['ci_hi']:+5.0f}]")
 
     # Markdown
-    for sig_label in ["full", "q20"]:
+    for sig_label in ["full", "q20", "prob_a", "prob_b", "prob_c", "prob_stack"]:
         for tf in ["5m", "15m"]:
             sub = [r for r in rows if r["signal"] == sig_label and r["tf"] == tf]
             if not sub:
