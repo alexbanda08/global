@@ -1,30 +1,57 @@
 # Polymarket UP/DOWN 5m & 15m — Context Brief
 
-Project state snapshot for resuming the search for an edge on Polymarket BTC Up/Down markets. Generated 2026-04-27, last updated **2026-04-28 (after strategy hunt session + folder reorganization)**.
+Project state snapshot for resuming the search for an edge on Polymarket BTC Up/Down markets. Generated 2026-04-27, last updated **2026-04-29 (V3 portfolio strategy discovered, 10-gate validation passed, deploy guide ready)**.
 
 ---
 
-## ⚡ HEAD STATE (read first) — 2026-04-28
+## ⚡ HEAD STATE (read first) — 2026-04-29
 
-> **TV agent is implementing the validated strategy stack right now.** Phase 18 in progress.
-> See [`../../session/SESSION_HANDOFF_2026_04_28.md`](../../session/SESSION_HANDOFF_2026_04_28.md) for current state, [`NEXT_TASK_ALPHAPURIFY_ANALYSIS.md`](NEXT_TASK_ALPHAPURIFY_ANALYSIS.md) for the next session's task, [`../01_deployable/TV_STRATEGY_IMPLEMENTATION_GUIDE.md`](../01_deployable/TV_STRATEGY_IMPLEMENTATION_GUIDE.md) for the live deployment spec.
+> **V3 PORTFOLIO STRATEGY READY TO SHIP.** Per-asset tuned 3-sleeve sniper (BTC q10 + ETH q5 + SOL q15 multi-horizon) on 5m markets. Forward-walk holdout +32% ROI, 0 down days, 10/10 validation gates passed. Deploy guide: [`../01_deployable/TV_STRATEGY_V3_PORTFOLIO_DEPLOY_GUIDE.md`](../01_deployable/TV_STRATEGY_V3_PORTFOLIO_DEPLOY_GUIDE.md).
 >
-> **Validated deployment matrix (after 2026-04-27 strategy hunt):**
+> Read first: [`../../session/SESSION_HANDOFF_2026_04_29.md`](../../session/SESSION_HANDOFF_2026_04_29.md) for the full state.
 >
-> | Asset × TF | Signal | Entry | Exit | Holdout ROI |
-> |---|---|---|---|---|
-> | BTC × 5m | q10 | taker | hedge-hold rev_bp=5 | +35.5% |
-> | BTC × 15m | q20 | maker hybrid | hedge-hold rev_bp=5 | +25.2% |
-> | ETH × 5m | q10 + btc-confirm | taker | hedge-hold rev_bp=5 | +24.8% |
-> | ETH × 15m | q20 | maker hybrid | hedge-hold rev_bp=5 | +27.8% |
-> | SOL × 5m | q10 + btc-confirm | taker | hedge-hold rev_bp=5 | +25.6% |
-> | SOL × 15m | q20 | maker hybrid | hedge-hold rev_bp=5 | +24.6% |
+> **V3 deployment matrix (forward-walk-validated, 10-gate-passed):**
 >
-> **Cross-asset average: ~27% holdout ROI** vs locked baseline +20.4% = **+6.6pp from layered improvements** (q10, maker entry, cross-asset filter).
+> | Sleeve | Magnitude | Multi-horizon | Entry | Exit | HO ROI |
+> |---|---|---|---|---|---|
+> | BTC × 5m | q10 (top 10%) | no | maker @bid+1¢ wait 30s, fb taker | HEDGE_HOLD hold-to-resolution | **+47.1%** (n=36) |
+> | ETH × 5m | q5 (top 5%) | no | same | same | **+37.6%** (n=26) |
+> | SOL × 5m | q15 (top 15%) | **yes** (ret_5m, ret_15m, ret_1h all same sign) | same | same | **+54.9%** (n=23) |
+> | **PORTFOLIO** | combined | — | — | — | **+32.16% top-of-ask / +27.09% L10-realistic / +33.47% with maker overlay** |
 >
-> **Strategies tested this session (9 total):** see [`../../session/SESSION_SUMMARY_2026_04_27_strategies.md`](../../session/SESSION_SUMMARY_2026_04_27_strategies.md). 4 validated (above table), 5 dead (in [`../03_no_edge/`](../03_no_edge/)). Plain-English explanations: [`../../_STRATEGY_FILTERS_EXPLAINED.md`](../../_STRATEGY_FILTERS_EXPLAINED.md).
+> Spread<2% pre-entry filter on top. 15m markets dropped (adding 15m sleeves drops portfolio HO ROI 32% → 26%).
 >
-> **Next session focus:** analyze https://github.com/eliasswu/AlphaPurify and identify steal-worthy patterns for our backtest engines. Spec at `NEXT_TASK_ALPHAPURIFY_ANALYSIS.md`. After that, original experiments queue items 8 (funding rate, awaits May 1) and 9 (composite stacking) remain.
+> **What was tested + ruled out this session (12 paradigms):**
+> - V2 calibrated-probability stack (prob_a/b/c/stack): killed in forward-walk (overfits 7-day data)
+> - Synthetic covered call (long perp + short YES, 1×–60×): no edge in steady-state, leverage adds nothing
+> - Maker-on-both-sides spread provision: adverse selection dominates, ROI -5% to -21%
+> - Cross-asset BTC-leader: 50% hit (random), no predictive power on 5m/15m alts
+> - Vol-regime conditional sleeves: minor edge (+3pp at most), not worth conditioning
+> - Entry-timing delay (30/60/120s into window): loses 24pp ROI vs delay=0
+> - Take-profit / stop-loss / trailing-stop / opposite-flip exits: ALL hurt vs hold-to-resolution
+>
+> Full evidence: [`../RESEARCH_DEEP_DIVE_2026_04_29.md`](../RESEARCH_DEEP_DIVE_2026_04_29.md) and per-item reports ([`../COVERED_CALL_BACKTEST.md`](../COVERED_CALL_BACKTEST.md), [`../MAKER_BOTH_SIDES_BACKTEST.md`](../MAKER_BOTH_SIDES_BACKTEST.md), [`../CROSS_ASSET_LEADLAG.md`](../CROSS_ASSET_LEADLAG.md), [`../SIM_VS_LIVE_RECONCILIATION.md`](../SIM_VS_LIVE_RECONCILIATION.md)).
+>
+> **Sim-vs-live mystery closed:** the 30-pp gap between backtest and live VPS3 is decomposed in [`../SIM_VS_LIVE_RECONCILIATION.md`](../SIM_VS_LIVE_RECONCILIATION.md). Causes: 50% feed direction agreement on small |ret_5m| (vanishes at q10) + HYBRID bid-exit branch ($1.3k cost). Both addressed in `docs/VPS3_FIX_PLAN.md`. **Simulator is honest.**
+>
+> **Next session focus:** ship V3 to VPS3 (TV agent's task) OR continue research. Re-validate V3 + V2 on 30 days when collector reaches that (~2026-05-23).
+
+---
+
+## SUPERSEDED — Pre-V3 deployment matrix (2026-04-28)
+
+Single-tier sniper (q10 5m / q20 15m), no per-asset magnitude tuning. **V3 portfolio above replaces this.**
+
+| Asset × TF | Signal | Entry | Exit | Holdout ROI |
+|---|---|---|---|---|
+| BTC × 5m | q10 | taker | hedge-hold rev_bp=5 | +35.5% |
+| BTC × 15m | q20 | maker hybrid | hedge-hold rev_bp=5 | +25.2% |
+| ETH × 5m | q10 + btc-confirm | taker | hedge-hold rev_bp=5 | +24.8% |
+| ETH × 15m | q20 | maker hybrid | hedge-hold rev_bp=5 | +27.8% |
+| SOL × 5m | q10 + btc-confirm | taker | hedge-hold rev_bp=5 | +25.6% |
+| SOL × 15m | q20 | maker hybrid | hedge-hold rev_bp=5 | +24.6% |
+
+Cross-asset average ~27% HO ROI. **V3 portfolio averages +32% on the same forward-walk** with tighter per-asset gating + multi-horizon-on-SOL.
 
 ---
 
