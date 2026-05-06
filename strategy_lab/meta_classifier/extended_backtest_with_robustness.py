@@ -57,7 +57,19 @@ RNG = np.random.default_rng(42)
 # ---------------------------------------------------------------------------
 
 def load_universe() -> pd.DataFrame:
+    """Load market resolutions and ensure (asset, timeframe, window_start_unix,
+    outcome_up) columns exist. Derives missing columns from `slug` and
+    `outcome` if the CSV came from the minimal-column pull format.
+    """
     df = pd.read_csv(REFRESH_NEW / "market_resolutions_full.csv")
+    # Schema-compat: derive columns if absent (minimal pull only has
+    # slug, outcome, recorded_at, source).
+    if "window_start_unix" not in df.columns or "outcome_up" not in df.columns:
+        parts = df["slug"].str.split("-", n=3, expand=True)
+        df["asset"] = parts[0]
+        df["timeframe"] = parts[2]
+        df["window_start_unix"] = pd.to_numeric(parts[3], errors="coerce")
+        df["outcome_up"] = (df["outcome"].str.lower() == "up").astype(int)
     df = df.dropna(subset=["window_start_unix", "outcome_up"]).copy()
     df["asset"] = df["slug"].str.extract(r'^(btc|eth|sol)-updown-')[0]
     df = df.dropna(subset=["asset"]).copy()
@@ -91,7 +103,26 @@ def load_klines() -> dict[str, pd.DataFrame]:
 
 
 def asof(k1m: pd.DataFrame, ts: int) -> float:
-    idx = k1m.ts_s.searchsorted(ts, side="right") - 1
+    """End-time-indexed asof: returns price_close of the most recent
+    1MIN bar whose CLOSE TIME has already happened by ``ts``.
+
+    Bug fix 2026-05-06: previous version used bar OPEN time as the index,
+    which returned a bar whose price_close was up to 60s in the FUTURE
+    of the query timestamp. For 5m markets, that meant the last 5
+    monitoring buckets (bucket 25-29 at ws+250..ws+290) read the
+    resolution-time price (ws+300) when computing rev_bp — i.e., the
+    backtest could "see the answer" during the last 50s of every market.
+
+    Effect of bug: HEDGE/SELL backtest PnL inflated by ~$2-6/trade
+    depending on cell. Verified by `verify_lookahead_bug.py`.
+
+    The strict implementation: target = ts × 1e6 (microseconds),
+    bar end_us = (ts_s + 60) × 1e6 for 1MIN bars. Find largest bar
+    where end_us ≤ target. That guarantees the bar has CLOSED before ts.
+    """
+    end_us = (k1m.ts_s.astype("int64") + 60).values * 1_000_000
+    target_us = int(ts) * 1_000_000
+    idx = int(np.searchsorted(end_us, target_us, side="right")) - 1
     return float("nan") if idx < 0 else float(k1m.price_close.iloc[idx])
 
 
