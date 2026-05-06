@@ -59,7 +59,11 @@ def add_q10_signal(df):
 
 
 def asof_close(k1m, ts):
-    idx = k1m.ts_s.searchsorted(ts, side="right") - 1
+    """End-time-indexed asof (1MIN bars). Avoids the bar-open-indexed
+    lookahead bug fixed in extended_backtest_with_robustness 2026-05-06."""
+    end_us = (k1m.ts_s.astype("int64") + 60).values * 1_000_000
+    target_us = int(ts) * 1_000_000
+    idx = int(np.searchsorted(end_us, target_us, side="right")) - 1
     return float("nan") if idx < 0 else float(k1m.price_close.iloc[idx])
 
 
@@ -91,11 +95,13 @@ def compute_vol_features(feats: pd.DataFrame, k1m_by_asset: dict) -> pd.DataFram
                 k.loc[k.index[i], "abs_ret5m"] = abs(math.log(p_now / p_prior))
         # rolling 24h = 1440 minutes
         k["vol24h"] = k["abs_ret5m"].rolling(window=1440, min_periods=60).mean()
-        # For each market in this asset, look up vol24h at window_start
+        # For each market in this asset, look up vol24h at window_start.
+        # End-time-indexed lookup: bar's CLOSE TIME must be <= ws.
         sub_idx = (out.asset == asset)
+        bar_end_us = (k.ts_s.astype("int64") + 60).values * 1_000_000
         for idx in out[sub_idx].index:
             ws = int(out.at[idx, "window_start_unix"])
-            j = k.ts_s.searchsorted(ws, side="right") - 1
+            j = int(np.searchsorted(bar_end_us, ws * 1_000_000, side="right")) - 1
             if j >= 0:
                 v = k.vol24h.iloc[j]
                 if pd.notna(v):

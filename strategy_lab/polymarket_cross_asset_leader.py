@@ -56,11 +56,15 @@ def add_q10_signal(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def compute_btc_ret_at_lag(btc_k1m: pd.DataFrame, ws: int, lag_s: int) -> float:
-    """BTC ret_5m at window ending (ws - lag_s)."""
+    """BTC ret_5m at window ending (ws - lag_s).
+
+    End-time-indexed asof (1MIN bars). Avoids the bar-open-indexed lookahead
+    bug fixed in extended_backtest_with_robustness 2026-05-06."""
     end_ts = ws - lag_s
     start_ts = end_ts - 300
-    end_idx = btc_k1m.ts_s.searchsorted(end_ts, side="right") - 1
-    start_idx = btc_k1m.ts_s.searchsorted(start_ts, side="right") - 1
+    bar_end_us = (btc_k1m.ts_s.astype("int64") + 60).values * 1_000_000
+    end_idx = int(np.searchsorted(bar_end_us, int(end_ts) * 1_000_000, side="right")) - 1
+    start_idx = int(np.searchsorted(bar_end_us, int(start_ts) * 1_000_000, side="right")) - 1
     if end_idx < 0 or start_idx < 0:
         return float("nan")
     p_end = float(btc_k1m.price_close.iloc[end_idx])

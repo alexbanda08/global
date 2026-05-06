@@ -37,7 +37,11 @@ def load_metrics(path: Path) -> pd.DataFrame:
 
 
 def asof(df: pd.DataFrame, ts: int, col: str) -> float:
-    idx = df.ts_s.searchsorted(ts, side="right") - 1
+    """End-time-indexed asof (1MIN bars). Avoids the bar-open-indexed
+    lookahead bug fixed in extended_backtest_with_robustness 2026-05-06."""
+    end_us = (df.ts_s.astype("int64") + 60).values * 1_000_000
+    target_us = int(ts) * 1_000_000
+    idx = int(np.searchsorted(end_us, target_us, side="right")) - 1
     if idx < 0:
         return float("nan")
     return float(df[col].iloc[idx])

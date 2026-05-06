@@ -84,10 +84,14 @@ def compute_vol_features(feats, k1m_full_by_asset):
         # 24h rolling mean and std of 5m volume
         k["vol24h_mean"] = k["vol5m"].rolling(window=1440, min_periods=60).mean()
         k["vol24h_std"] = k["vol5m"].rolling(window=1440, min_periods=60).std()
+        # End-time-indexed lookup: bar's CLOSE TIME must be <= ws.
+        # Avoids the bar-open-indexed lookahead bug fixed in
+        # extended_backtest_with_robustness 2026-05-06.
         sub_idx = (out.asset == asset)
+        bar_end_us = (k.ts_s.astype("int64") + 60).values * 1_000_000
         for idx in out[sub_idx].index:
             ws = int(out.at[idx, "window_start_unix"])
-            j = k.ts_s.searchsorted(ws, side="right") - 1
+            j = int(np.searchsorted(bar_end_us, ws * 1_000_000, side="right")) - 1
             if j >= 0:
                 out.at[idx, "vol_5m_now"] = float(k.vol5m.iloc[j]) if pd.notna(k.vol5m.iloc[j]) else float("nan")
                 out.at[idx, "vol_24h_mean"] = float(k.vol24h_mean.iloc[j]) if pd.notna(k.vol24h_mean.iloc[j]) else float("nan")

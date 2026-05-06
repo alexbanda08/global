@@ -75,7 +75,13 @@ def load_klines() -> dict[str, pd.DataFrame]:
 
 
 def asof(k1m: pd.DataFrame, ts: int) -> float:
-    idx = k1m.ts_s.searchsorted(ts, side="right") - 1
+    """End-time-indexed asof (1MIN bars). Returns price_close of the most
+    recent bar whose CLOSE TIME has already happened by ``ts``. Avoids the
+    bar-open-indexed lookahead bug fixed in extended_backtest_with_robustness
+    on 2026-05-06."""
+    end_us = (k1m.ts_s.astype("int64") + 60).values * 1_000_000
+    target_us = int(ts) * 1_000_000
+    idx = int(np.searchsorted(end_us, target_us, side="right")) - 1
     return float("nan") if idx < 0 else float(k1m.price_close.iloc[idx])
 
 
