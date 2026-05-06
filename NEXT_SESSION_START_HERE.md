@@ -1,13 +1,14 @@
 # NEXT SESSION — Start Here
 
-**Last update:** 2026-05-05 18:45 UTC (V4 subset hierarchy bug deep-dive added)
-**Replaces previous:** 2026-05-04 21:00 UTC version (kept for ref; new findings since merged)
+**Last update:** 2026-05-06 02:00 UTC (momo sleeves deployed Phase 18.5 + ContextVar bug fix)
+**Authoritative handoff:** `strategy_lab/reports/SESSION_HANDOFF_2026_05_06.md` ← **read this first**
+**Previous handoffs (kept for ref):** `SESSION_HANDOFF_2026_05_05.md`, V4 subset deep-dive in this file's history
 
 ---
 
 ## In one sentence
 
-**SOL V3 fix IS deployed (V3/V3.1/V3.2/V3.3/V4 all firing); SOL V3 family appears INVERTED (89% inverse hit, n=18 — but only ~9 distinct markets ⇒ correlation-adjusted p≈0.5–2%, not the 0.07% I first claimed). BTC V4 emerging as winner (73.9%, n=23). V4 SUBSET HIERARCHY BUG IS REAL — root cause = independent per-controller `fetch_close_asof` calls at bar boundaries (race condition); fix = shared aux cache (Path A). Meta-classifier with Kronos REJECTED. Live launch HAS NOT FIRED.**
+**18 momo sleeves DEPLOYED on VPS3 in shadow mode at 00:28 UTC May 6 (Phase 18.5 — top-10% \|asset_ret_2m\| at t+120s × HOLD/HEDGE/SELL × 6 cells). Concurrency bug found + fixed via ContextVar isolation. First trades firing. Backtest evidence is strong: 6/6 cells significant on direction permutation (p<0.01), 5/6 on gate permutation, all 6 cells profitable in walkforward, combined +$13,481 (HOLD) → +$14,752 (SELL) over 14 days. Two-day shadow validation underway → if pass, $1 live trade on `btc_5m_momo_SELL`.**
 
 ---
 
@@ -15,16 +16,86 @@
 
 | Thing | Status |
 |---|---|
-| **Backtest framework** — production-faithful (95-100% dir match) | ✅ DONE 2026-05-04 |
-| **Top-5 sleeve selection + per-sleeve SL/TP** | ✅ DONE — see `LIVE_LAUNCH_TOP5_2026_05_04.md` + `TOP5_STOPS_OPTIMIZATION_2026_05_04.md` |
-| **SOL V3 fix spec + V3.3 A/B sleeve** | ✅ READY for TV agent — see `SOL_V3_FIX_SPEC_2026_05_04.md` |
-| **Anti-edge inverse sleeves (NEW)** | ✅ SPEC READY for TV agent — see `TV_AGENT_INVERSE_SLEEVES_IMPLEMENTATION.md` |
-| **Combined V3 + Phase 7 UNION (NEW)** | ✅ ANALYSIS DONE — needs OOS validation + live signal pipeline build — see `COMBINED_V3_PHASE7.md` |
-| **Meta-classifier with Kronos** | ❌ REJECTED (Kronos importance = 0, V3 alone wins) — see `META_CLASSIFIER_FULL_REPORT.md` |
-| **Live launch (5 sleeves at $1)** | 🔴 NOT FIRED — 0 live trades observed across 10,378 events. Operator clarification needed. |
-| **Phase 8 (residual IC)** | 🔵 deferred — UNION strategy makes this lower priority |
-| **Phase 9 (trade flow imbalance)** | 🔵 NOT STARTED |
-| **Rolling 14-day quantile** (production parity) | 🔵 NOT STARTED — current backtest uses fixed train fit |
+| **Momo strategy** (top-10% \|asset_ret_2m\| at t+120s, 18 sleeves) | 🟡 SHADOW LIVE — TV agent shipped 00:28 UTC May 6, ContextVar bug fix held; first FILLED row pending |
+| **Permutation + walkforward robustness** | ✅ DONE — 6/6 DIRECTION significant, 5/6 GATE, all 6 cells profitable OOS — see `EXTENDED_BACKTEST_ROBUSTNESS.md` |
+| **Tier 1 microsecond data pipeline** (25-level book, ms-precise t+120s) | ✅ DONE — pulls direct from VPS2 `orderbook_snapshots_v2`; 28,700 entries on 15,370-market universe |
+| **Anti-edge inverse sleeves** (SOL/ETH sniper + volume_INV_NIGHT) | ✅ DEPLOYED VPS3 since May 5 16:59 UTC — running ~28h, awaiting +48h check |
+| **Backtest framework** — production-faithful (incl. tier1 entries) | ✅ DONE — see `EXIT_POLICY_TIER1.md` + `extended_backtest_with_robustness.py` |
+| **Real-time data flow audit** (klines + CLOB books) | ✅ VERIFIED — REST path now, WS migration is Phase 2 (separate spec needed) |
+| **Repo + secrets hygiene** | ✅ DONE — all credentials moved to env vars, .gitignore hardened, .env.example template added, pushed to GitHub |
+| **Top-5 sleeve live launch (5 sleeves at $1)** | 🔴 NEVER FIRED (carried from previous session — operator clarification still needed) |
+| **Combined V3 ∪ Phase 7** | 🟡 SUPERSEDED by momo (BTC_only strategy crushes Phase 7 in production engine — see `STRATEGY_LOGIC_AND_DATA_GAP.md`) |
+| **Meta-classifier with Kronos** | ❌ REJECTED (Kronos importance = 0) |
+| **Phase 9 (TFI)** | ❌ DOMINATED by BTC-only — drop from union per `PHASE9_LOOKAHEAD_REALFILLS_MULTI.md` |
+| **WS migration** (Polymarket CLOB) | 🔵 PHASE 2 — required before live trading at scale |
+| **$1 live trade transition** | 🔵 GATED on 2-day shadow pass criteria — pending |
+
+---
+
+## What's NEW since 2026-05-05 18:45 UTC (today's session, 2026-05-06)
+
+### ⭐⭐⭐ Momo strategy designed → backtested → deployed in one day
+
+**Strategy logic** (formal):
+```
+For each Polymarket BTC/ETH/SOL UpDown market, AT t+120s:
+  asset_ret_2m = log(BinanceSpot_close@(ws+120) / BinanceSpot_close@ws)
+  thr = rolling-14d q90 of |asset_ret_2m|, daily-cached per (asset, tf)
+  fire if |asset_ret_2m| ≥ thr AND (ask_0 - bid_0) ≤ spread_filter[asset]
+  direction = sign(asset_ret_2m)  (UP = buy YES, DOWN = buy NO)
+  entry: book-walk top-25 ASK levels for $25 notional
+  exit: HOLD / HEDGE_HOLD (rev_bp=5) / SELL_BID (rev_bp=5) — three sleeve variants per cell
+```
+
+**Alpha thesis:** Polymarket CLOB lags Binance ~30-120s after sharp BTC moves. We bet in BTC's just-completed direction while Polymarket is still mispricing. ~1.7% of trades catch deep-stale fills (e.g. $0.02 YES → $1 settlement = 50× return).
+
+**Backtest (extended, 15,370 markets Apr 22 → May 6, $25 stake):**
+| Cell | n | hit% | HOLD | HEDGE | SELL |
+|---|---:|---:|---:|---:|---:|
+| BTC 5m | 325 | 89.2% | $+4,705 | $+5,127 | $+5,141 |
+| BTC 15m | 108 | 82.4% | $+1,017 | $+1,006 | $+1,022 |
+| ETH 5m | 294 | 92.2% | $+3,700 | $+3,850 | $+3,863 |
+| ETH 15m | 101 | 74.3% | $+549 | $+797 | $+816 |
+| SOL 5m | 252 | 89.3% | $+2,821 | $+3,236 | $+3,257 |
+| SOL 15m | 71 | 84.5% | $+688 | $+640 | $+650 |
+| **TOTAL** | **1,151** | — | **$+13,481** | **$+14,656** | **$+14,752** |
+
+**Robustness — strict permutation tests (1,000 draws each):**
+- DIRECTION_PERM (randomize sign on fired trades): 6/6 cells significant, 5/6 at p<0.001
+- GATE_PERM (random 10% of universe): 5/6 cells significant
+- Walkforward (rolling 7d train / 1d test): all 6 cells profitable OOS, combined +$5,097
+- PnL audit: $1,200 outliers verified as REAL — raw VPS2 book genuinely had $0.02 × 3,400 shares for 3+ seconds
+
+### Production deployment (TV agent — Phase 18.5)
+
+Shipped at **2026-05-06 00:28:58 UTC**. 18 sleeves = 6 cells × {HOLD, HEDGE_HOLD, SELL_BID}. Master scheduler dispatches at t+120s via Option C (10s-tick window detection — restart-safe, no asyncio.sleep tasks). New `_maybe_sell_at_bid` is thin wrapper over existing `_try_bid_exit`. BarContext extended with 4 backward-compat fields. `_RET_2M_SAMPLES_CACHE` parallels existing `_SAMPLES_CACHE`. All 23 new momo tests + 218 regression tests pass.
+
+### Concurrency bug found + fixed (the V4-subset bug, again)
+
+**Symptom:** first SOL momo trade — all 3 policies entered identically, lost $25.60, FILLED audit rows missed `entry_phase`/`ret_2m_at_signal`/etc. NONE rows had them.
+
+**Root cause:** master scheduler dispatches 9 concurrent tasks per controller via `asyncio.gather`. Three tasks per controller share `self._bar_ctx_active` (plain instance attr). Race: A sets ctx_a, awaits → B clobbers with ctx_b → A resumes seeing wrong/None context → late-stage `_audit` reads None → conditional fields dropped.
+
+**Fix:** module-level `ContextVar[BarContext | None]` + property accessor + Token-based reset. Task-isolated state — each asyncio task gets its own snapshot. Bug class eliminated regardless of await chain length.
+
+**Verification:** 27/27 post-fix audit rows have all 4 enrichment fields populated. `bar_ctx_age_ms` = 1-7ms (well below <50ms p95 target). FILLED row pending q90 trigger.
+
+This is the same class of bug as the V4-subset hierarchy issue from May 5. Both were races caused by per-controller state in a shared-controller-instance dispatch model. Phase 24 master scheduler + ContextVar should now eliminate this whole bug class.
+
+### Real-time data flow — verified working
+
+Confirmed: klines fetched live from `binance_klines_v2` (Binance WS ingest, ms latency); CLOB books fetched directly via `executor.get_orderbook_snapshot(token_id)` REST API (~200-500ms); spreads pre-computed per BarContext. The Phase 24 master scheduler builds ONE shared BarContext per (symbol, tf, ws_s). Per-day samples cache is for HISTORICAL threshold computation only — does NOT affect real-time entry data.
+
+For momo specifically: `build_bar_context_t_plus_120` re-fetches the live CLOB book at t+120s (the bar-close BarContext would be 2 minutes stale). Confirmed working.
+
+### Repo + secrets hygiene
+
+- 286 files committed (multi-session bundle) at f49cb00
+- Security audit: removed hardcoded VPS2 + VPS3 Postgres passwords from 3 code files + 6 reports
+- All scripts now read credentials from env vars (`VPS2_RO_PWD`, `VPS3_TV_PWD`, `VPS2_HOST`, `VPS3_HOST`)
+- `.gitignore` hardened (`.envrc`, `*.crt`, `*.p12`, `id_*`, etc.)
+- `.env.example` template added — copy to `.env` (gitignored) and fill in
+- Pushed to GitHub `https://github.com/alexbanda08/global` on `main`
 
 ---
 
