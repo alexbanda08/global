@@ -204,7 +204,7 @@ ssh -i ~/.ssh/vps2_ed25519 root@'[2605:a140:2323:6975::1]'
 ssh -i ~/.ssh/vps3_ed25519 root@185.190.143.7
 # Postgres: tradingvenue_ro (pwd in /etc/tv/tv-ro.env)
 # Operator login: operator / 7ldip+mTW-8k#@RsgJv#
-# tradingvenue write user: tradingvenue / e7mFkLNAJc6agwBam5H6AnJRb1W-YwdT
+# tradingvenue write user: tradingvenue / <VPS3_TV_PWD>
 ```
 
 **Important:** large `EXISTS (SELECT 1 FROM orderbook_snapshots_v2 ...)` queries can lock the table for tens of minutes on VPS2. Always slug-scope or short-time-range queries.

@@ -1,0 +1,4 @@
+symbol,buy_hold_x,leg_1h_variant,leg_1h_n,leg_1h_sharpe,leg_1h_mdd,leg_1h_eq_x,leg_4h_variant,leg_4h_n,leg_4h_sharpe,leg_4h_mdd,leg_4h_eq_x,combined_n,combined_sharpe,combined_calmar,combined_mdd,combined_cagr,combined_eq_x,combined_outperform
+BTCUSDT,2.6077848733625166,V9_lowvol,331,1.307,-0.2488,2.461,A3_brigalS+TP6_SL2p5_TR4_H48+R_3loss_pause,185,1.413,-0.2236,1.604,516,1.282,1.375,-0.1941,0.2669,2.032,0.779
+ETHUSDT,1.2017683906796157,V10_ma200_lowvol,180,1.318,-0.2402,2.328,A1_zlsr_only+TP6_SL2p5_TR4_H48+R_none,217,1.199,-0.2556,1.483,397,1.216,1.239,-0.1937,0.24,1.906,1.586
+SOLUSDT,3.6414185639229424,V10_ma200_lowvol,97,0.919,-0.3566,2.163,A6_3of3_composite+TP6_SL2p5_TR4_H48+R_3loss_pause,94,1.504,-0.1914,1.451,191,0.97,0.888,-0.2458,0.2182,1.807,0.496

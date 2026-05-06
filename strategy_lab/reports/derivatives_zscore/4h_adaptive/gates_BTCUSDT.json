@@ -1,0 +1,107 @@
+{
+  "config": {
+    "z_top_thr": -0.5,
+    "brigals_thr": -1.5,
+    "ci_thr": 1.0,
+    "use_ma200": true,
+    "use_lowvol": false,
+    "eqfilter": "dd10"
+  },
+  "core_stats": {
+    "n_trades": 32,
+    "win_rate": 0.53125,
+    "profit_factor": 3.271566328789661,
+    "sharpe": 1.4697817724755604,
+    "calmar": 2.3307551380248275,
+    "max_dd": -0.10372418734767484,
+    "cagr": 0.24175568259804292,
+    "final_eq_x": 1.9138829593662126,
+    "buy_hold_x": 2.658448250870241,
+    "outperform": 0.7199248504234395,
+    "median_hold_h": 78.0,
+    "expectancy": 0.02192785527770895
+  },
+  "gates": {
+    "G1_sharpe>=0.5": true,
+    "G2_calmar>=1.0": true,
+    "G3_maxdd>=-15%": true,
+    "G4_per_year_pos>=70%": false,
+    "G5_perm_p<0.01": false,
+    "G6_boot_sh_lo>0": true,
+    "G7_wfe>=0.5": false,
+    "G8_pf_at_24bp>1.0": true,
+    "G9_psen_med_sh>0": true,
+    "G10_pf>=1.10": true
+  },
+  "gates_passed": 7,
+  "permutation": {
+    "p_value": 1.0,
+    "real_sharpe": 1.4697817724755604
+  },
+  "bootstrap_sharpe": {
+    "ci_lo": 0.3834440037609475,
+    "ci_hi": 2.5898513447479856
+  },
+  "per_year": {
+    "2023": {
+      "sharpe": -1.074940712122615,
+      "n_days": 244
+    },
+    "2024": {
+      "sharpe": 2.8275679503714173,
+      "n_days": 366
+    },
+    "2025": {
+      "sharpe": 0.0,
+      "n_days": 365
+    },
+    "2026": {
+      "sharpe": 0.0,
+      "n_days": 120
+    }
+  },
+  "walk_forward": {
+    "folds": [
+      {
+        "fold": 1,
+        "sharpe": 3.3354950805144488,
+        "n_trades": 7
+      },
+      {
+        "fold": 2,
+        "sharpe": 0.9071326310886207,
+        "n_trades": 15
+      },
+      {
+        "fold": 3,
+        "sharpe": 2.397986366849673,
+        "n_trades": 10
+      },
+      {
+        "fold": 4,
+        "sharpe": -1.7427253573048518,
+        "n_trades": 9
+      },
+      {
+        "fold": 5,
+        "sharpe": -0.6578491719355094,
+        "n_trades": 1
+      },
+      {
+        "fold": 6,
+        "sharpe": 0.0,
+        "n_trades": 0
+      }
+    ],
+    "efficiency_ratio": 0.4808014845712847,
+    "avg_test_sharpe": 0.7066732582020636,
+    "is_sharpe": 1.4697817724755604
+  },
+  "parameter_sensitivity": {
+    "median_sharpe": 1.4257033427976444,
+    "min_sharpe": 0.6768894800544906,
+    "max_sharpe": 1.5203257136011803,
+    "n_cells": 27
+  },
+  "pf_at_24bp": 3.0765937469573865
+}

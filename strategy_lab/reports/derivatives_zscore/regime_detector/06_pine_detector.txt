@@ -1,0 +1,95 @@
+// ════════════════════════════════════════════════════════════════
+// BTC Trend-Start Regime Detector  —  generated from 3y event study
+// Source: strategy_lab/v4_signals/derivatives_zscore/regime_detector_research.py
+// ════════════════════════════════════════════════════════════════
+//@version=6
+indicator("BTC Trend-Start Regime Detector (DZS-EventStudy v1)", overlay=true)
+import TradingView/Request/2 as req
+
+// ── Inputs ──
+grpCfg = "Config"
+zLen   = input.int(21,           "Z-Score Length",  group=grpCfg, minval=5)
+exch   = input.string("BINANCE", "Exchange",        group=grpCfg, options=["BINANCE","BYBIT","OKX"])
+oi_sym = input.symbol("BINANCE:BTCUSDT.P_OI", "OI Symbol")
+
+// ── Symbol resolution ──
+base = str.replace(syminfo.ticker, "USDT", "")
+base := str.replace(base, "USD", "")
+base := str.replace(base, ".P", "")
+sym = exch + ":" + base + "USDT.P"
+
+// ── Data ──
+lsr_acc  = req.cryptoDerivativeMetric(sym, "Long/Short Ratio Accounts", "")
+funding  = req.cryptoDerivativeMetric(sym, "Funding Rate", "")
+oi       = request.security(oi_sym, timeframe.period, close)
+btc_cb   = request.security("COINBASE:BTCUSD",   "", close)
+btc_bn   = request.security("BINANCE:BTCUSDT",   "", close)
+stablecd = request.security("CRYPTOCAP:STABLE.C.D","", close)
+
+// ── Z-score helper ──
+f_z(src, len) =>
+    m = ta.sma(src, len)
+    s = ta.stdev(src, len)
+    na(src) or na(s) or s == 0 ? na : (src - m) / s
+
+z_lsr  = f_z(lsr_acc,  zLen)
+z_fund = f_z(funding,  zLen)
+z_oi   = f_z(oi,       zLen)
+z_doms = f_z(stablecd, zLen)
+cb_prem_pct = (btc_cb - btc_bn) / btc_bn * 100
+z_cb   = f_z(ta.ema(cb_prem_pct, 3), zLen)
+// OI silent
+oi_roc3   = ta.roc(oi, 3)
+px_roc3   = ta.roc((btc_cb + btc_bn) / 2, 3)
+z_oi_fast = f_z(oi_roc3, zLen)
+z_px_fast = f_z(px_roc3, zLen)
+oi_silent_raw = z_oi_fast > 1.0 ? z_oi_fast - z_px_fast : 0.0
+z_oi_silent = f_z(ta.ema(oi_silent_raw, 3), zLen)
+
+// ── Macro regime filter ──
+price_ema200 = ta.ema(close, 200)
+realized_vol_30d = ta.stdev(ta.change(close)/close, 720) * math.sqrt(8760)
+vol_median_90d   = ta.median(realized_vol_30d, 2160)
+low_vol_regime   = realized_vol_30d < vol_median_90d
+trending_up      = close > price_ema200
+
+// ── Computed composites (for sequencing-derived triggers) ──
+brigalS = f_z(req.cryptoDerivativeMetric(sym,"Long Accounts",""), zLen) - f_z(req.cryptoDerivativeMetric(sym,"Short Accounts",""), zLen)
+oilsr   = z_oi - z_lsr
+// Top-trader LSR z-scores (used in some triggers)
+z_top_lsr_count = f_z(req.cryptoDerivativeMetric(sym,"Top Trader Long/Short Ratio Accounts",""), zLen)
+z_top_lsr_sum   = f_z(req.cryptoDerivativeMetric(sym,"Top Trader Long/Short Ratio Positions",""), zLen)
+z_taker_ratio   = f_z(req.cryptoDerivativeMetric(sym,"Taker Buy/Sell Volume Ratio",""), zLen)
+// cross_institutional_lead — proxy via USDC.D Δ - USDT.D Δ
+usdcd = request.security("CRYPTOCAP:USDC.D", "", close)
+usdtd = request.security("CRYPTOCAP:USDT.D", "", close)
+d_usdc = (ta.ema(usdcd,3) - ta.ema(usdcd,3)[14]) / ta.ema(usdcd,3)[14] * 100
+d_usdt = (ta.ema(usdtd,3) - ta.ema(usdtd,3)[14]) / ta.ema(usdtd,3)[14] * 100
+cross_inst_lead = d_usdc - d_usdt
+cross_risk_off  = (ta.ema(stablecd,3) - ta.ema(stablecd,3)[14]) / ta.ema(stablecd,3)[14] * 100 - (d_usdt*0.6 + d_usdc*0.4)
+
+// ── BULL trigger composite (sequencing-derived thresholds at offset 0) ──
+bull_score = 0
+bull_score := bull_score + (brigalS < -0.093 ? 1 : 0)
+bull_score := bull_score + (cross_inst_lead > +0.091 ? 1 : 0)
+bull_score := bull_score + (oilsr > +0.081 ? 1 : 0)
+bull_score := bull_score + (z_top_lsr_sum < -0.049 ? 1 : 0)
+bull_score := bull_score + (z_lsr < -0.043 ? 1 : 0)
+// Require macro filters AND ≥3 of the 5 leading inds firing
+bull_signal = trending_up and low_vol_regime and bull_score >= 3
+
+// ── BEAR trigger composite ──
+bear_score = 0
+bear_score := bear_score + (cross_inst_lead > +0.268 ? 1 : 0)
+bear_score := bear_score + (brigalS > +0.066 ? 1 : 0)
+bear_score := bear_score + (z_top_lsr_count > +0.044 ? 1 : 0)
+bear_score := bear_score + (z_lsr > +0.036 ? 1 : 0)
+bear_score := bear_score + (z_oi_silent > +0.024 ? 1 : 0)
+bear_signal = (not trending_up) and bear_score >= 3
+
+// ── Plot ──
+plotshape(bull_signal, title="Bull Trend Start", style=shape.triangleup, location=location.belowbar, color=color.green, size=size.normal)
+plotshape(bear_signal, title="Bear Trend Start", style=shape.triangledown, location=location.abovebar, color=color.red, size=size.normal)
+
+alertcondition(bull_signal, title="BULL trend start", message="BTC Trend-Start Detector — BULL")
+alertcondition(bear_signal, title="BEAR trend start", message="BTC Trend-Start Detector — BEAR")

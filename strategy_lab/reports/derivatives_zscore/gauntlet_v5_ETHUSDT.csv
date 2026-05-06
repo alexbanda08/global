@@ -1,0 +1,6 @@
+symbol,combo,n_trades,final_eq_x,buy_hold_x,outperform,gates_passed,gates_total,G1_sharpe>=0.5,G2_calmar>=1.0,G3_maxdd>=-30%,G4_per_year_pos>=70%,G5_perm_p<0.01,G6_bootstrap_sh_ci_lo>0,G7_walk_forward,G8_cost_stress_pf>1.0,G9_param_sensitivity,G10_pf>=1.10
+ETHUSDT,X_none__S_volscale__E_tp_7__R_3loss_pause,32,1.69317103779184,1.200688988338978,1.4101662080986994,6,8,True,True,True,False,False,True,DEFERRED,True,DEFERRED,True
+ETHUSDT,X_none__S_volscale__E_24h__R_3loss_pause,31,1.7390350255366454,1.200688988338978,1.4483642662055312,6,8,True,True,True,False,False,True,DEFERRED,True,DEFERRED,True
+ETHUSDT,X_none__S_volscale__E_tp_5__R_3loss_pause,34,1.7086785643695435,1.200688988338978,1.4230817313760107,6,8,True,True,True,False,False,True,DEFERRED,True,DEFERRED,True
+ETHUSDT,X_btc_band__S_flat__E_tp7_trail5__R_3loss_pause,56,2.353516952934705,1.200688988338978,1.960138700189579,6,8,True,True,True,False,False,True,DEFERRED,True,DEFERRED,True
+ETHUSDT,X_none__S_flat__E_24h__R_3loss_pause,31,1.7226444535217889,1.200688988338978,1.4347132939937088,6,8,True,True,True,False,False,True,DEFERRED,True,DEFERRED,True
