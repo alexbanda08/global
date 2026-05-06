@@ -34,13 +34,27 @@ Thumbs.db
 *~
 
 # === Secrets / local config (defence in depth) ===
+# Allow tracking only .env.example (the no-secrets template)
 .env
 .env.*
+!.env.example
+.envrc
+*.env
 secrets.*
 credentials.*
 *.pem
 *.key
+*.crt
+*.p12
+id_rsa*
+id_ed25519*
 config.local.*
+*_secret.*
+*_secrets.*
+local.settings.json
+.aws/
+.gcp/
+.kube/config
 
 # === Allow specific large reports to be tracked (already version-controlled artifacts) ===
 !*.pdf
