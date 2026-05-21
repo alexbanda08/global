@@ -1,3 +1,0 @@
-group,n_pre,wr_pre,pnl_pre,avg_pre,w20_1m_voladaptive_n,w20_1m_voladaptive_wr,w20_1m_voladaptive_pnl,w20_1m_voladaptive_avg,w20_1m_voladaptive_keep%,w20_1m_fixed_n,w20_1m_fixed_wr,w20_1m_fixed_pnl,w20_1m_fixed_avg,w20_1m_fixed_keep%,w20_5m_voladaptive_n,w20_5m_voladaptive_wr,w20_5m_voladaptive_pnl,w20_5m_voladaptive_avg,w20_5m_voladaptive_keep%,w20_5m_fixed_n,w20_5m_fixed_wr,w20_5m_fixed_pnl,w20_5m_fixed_avg,w20_5m_fixed_keep%
-v1,6374,48.21,-6974.36,-1.094,4550,47.71,-4479.96,-0.985,71.4,1435,42.65,-4158.64,-2.898,22.5,2113,48.94,-1184.47,-0.561,33.2,549,46.45,-757.45,-1.38,8.6
-v2,6400,49.19,262.95,0.041,4688,50.6,4656.75,0.993,73.2,1493,44.61,-614.71,-0.412,23.3,2126,48.73,7.77,0.004,33.2,773,50.97,1613.6,2.087,12.1

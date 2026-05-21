@@ -1,7 +1,0 @@
-cell,n_base,wr_base,avg_base,pnl_base,best_filter,n_best,wr_best,avg_best,pnl_best,keep%_best,lift_avg,lift_total_pnl
-btc_15m_v1,47,57.45,2.832,133.1,MARKOV_only:w20_1m_voladaptive,26,61.54,5.438,141.38,5.0,2.606,8.28
-btc_15m_v2,64,51.56,-0.354,-22.68,MARKOV_only:w20_1m_voladaptive,42,52.38,0.353,14.85,8.1,0.707,37.53
-btc_5m_v1,161,49.07,-1.351,-217.45,F7+MARKOV:w20_5m_voladaptive,33,51.52,0.281,9.27,6.4,1.632,226.72
-btc_5m_v2,205,47.8,-1.882,-385.83,F7+MARKOV:w20_1m_fixed,63,47.62,-1.329,-83.73,12.2,0.553,302.1
-eth_5m_v1,11,36.36,-8.287,-91.16,NO_FILTER,11,36.36,-8.287,-91.16,2.1,0.0,0.0
-eth_5m_v2,25,40.0,-6.142,-153.54,MARKOV_only:w20_5m_voladaptive,10,50.0,-0.692,-6.92,1.9,5.45,146.62

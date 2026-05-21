@@ -78,3 +78,21 @@ local.settings.json
 /data/v4/canonical/orderbook_l25/
 /data/v4/canonical/trades_polymarket/
 /data/v4/canonical/*.parquet
+
+# === Tracked-by-accident data CSVs / caches (do NOT push to origin) ===
+strategy_lab/monitoring/_logs/
+strategy_lab/markov_filter/_vps3_pull/
+strategy_lab/markov_filter/_results/
+strategy_lab/wallet_hunt/cache/
+strategy_lab/f2_replica/_results/
+strategy_lab/backtests/*.csv
+strategy_lab/backtests/*.jsonl
+strategy_lab/data/polymarket/
+strategy_lab/ga_optimizer/runs/
+docs/research/phase5_results/*.csv
+cyclops/_results/*.csv
+cyclops/_results/*.json
+cyclops/_results/*.log
+cyclops/_results/*.txt
+**/_results/*.csv
+**/_results/*.jsonl
