@@ -12,26 +12,26 @@ A $1,200 win implies ~1,250 shares filled, which means avg ask ~$0.02. Is the bo
 
 ## Per-trade audit
 
-- Total trades: 286
-- Wins / losses: 255 / 31
-- Hit rate: 89.2%
+- Total trades: 302
+- Wins / losses: 266 / 36
+- Hit rate: 88.1%
 
 ### PnL distribution
 
 | Stat | Raw | Winsorized (cap shares ≤ 50 = max $25 win) |
 |---|---:|---:|
-| Total | $+3122.65 | $+1298.16 |
-| Mean  | $+10.9184 | $+4.5390 |
-| Median | $+3.9884 | $+3.9884 |
-| Std   | $73.92 | $12.60 |
+| Total | $-125.86 | $-125.86 |
+| Mean  | $-0.4168 | $-0.4168 |
+| Median | $+1.8441 | $+1.8441 |
+| Std   | $9.45 | $9.45 |
 | Min   | $-25.00 | $-25.00 |
-| Max   | $+1200.50 | $+24.50 |
+| Max   | $+23.54 | $+23.54 |
 
 ### Outlier contribution
 
-- Top 1 trade: **$+1200.50** (38.4% of total PnL)
-- Top 10 trades: **$+1983.22** (63.5% of total PnL)
-- All 31 losses: $-750.00
+- Top 1 trade: **$+23.54** (-18.7% of total PnL)
+- Top 10 trades: **$+132.17** (-105.0% of total PnL)
+- All 36 losses: $-750.00
 
 **If a single trade contributes >20% of total PnL, the strategy depends on extreme outliers.**
 
@@ -39,49 +39,49 @@ A $1,200 win implies ~1,250 shares filled, which means avg ask ~$0.02. Is the bo
 
 | slug | sig | won | vwap_e | shares_e | usd_e | lvls | underfilled | pnl |
 |---|---|---|---:|---:|---:|---:|---:|---:|
-| btc-updown-5m-1776903300 | UP | ✓ | $0.0200 | 1250.0 | $25.00 | 1 | False | $+1200.50 |
-| btc-updown-5m-1777808700 | UP | ✓ | $0.0847 | 295.1 | $25.00 | 2 | False | $+264.67 |
-| btc-updown-5m-1776952800 | UP | ✓ | $0.2100 | 119.0 | $25.00 | 1 | False | $+92.17 |
-| btc-updown-5m-1776967800 | DN | ✓ | $0.2300 | 108.7 | $25.00 | 1 | False | $+82.02 |
-| btc-updown-5m-1777901700 | DN | ✓ | $0.2586 | 96.7 | $25.00 | 3 | False | $+70.23 |
-| btc-updown-5m-1776895200 | DN | ✓ | $0.2832 | 88.3 | $25.00 | 2 | False | $+62.01 |
-| btc-updown-5m-1777769100 | DN | ✓ | $0.3000 | 83.3 | $25.00 | 1 | False | $+57.17 |
-| btc-updown-5m-1777651500 | DN | ✓ | $0.3175 | 78.7 | $25.00 | 2 | False | $+52.66 |
-| btc-updown-5m-1777864800 | DN | ✓ | $0.3200 | 78.1 | $25.00 | 1 | False | $+52.06 |
-| btc-updown-5m-1777759200 | DN | ✓ | $0.3300 | 75.8 | $25.00 | 1 | False | $+49.74 |
+| btc-updown-5m-1777486200 | UP | ✓ | $0.5100 | 49.0 | $25.00 | 1 | False | $+23.54 |
+| btc-updown-5m-1777476600 | UP | ✓ | $0.5900 | 42.4 | $25.00 | 1 | False | $+17.03 |
+| btc-updown-5m-1776967200 | UP | ✓ | $0.6300 | 39.7 | $25.00 | 1 | False | $+14.39 |
+| btc-updown-5m-1777485900 | DN | ✓ | $0.6609 | 37.8 | $25.00 | 3 | False | $+12.57 |
+| btc-updown-5m-1776972300 | UP | ✓ | $0.6800 | 36.8 | $25.00 | 1 | False | $+11.53 |
+| btc-updown-5m-1777487400 | DN | ✓ | $0.6884 | 36.3 | $25.00 | 2 | False | $+11.09 |
+| btc-updown-5m-1776966900 | UP | ✓ | $0.6900 | 36.2 | $25.00 | 1 | False | $+11.01 |
+| btc-updown-5m-1777860300 | UP | ✓ | $0.6900 | 36.2 | $25.00 | 1 | False | $+11.01 |
+| btc-updown-5m-1777643400 | UP | ✓ | $0.7100 | 35.2 | $25.00 | 1 | False | $+10.01 |
+| btc-updown-5m-1777907100 | UP | ✓ | $0.7100 | 35.2 | $25.00 | 1 | False | $+10.01 |
 
 ### Trades with `vwap_e < 0.20` (deeply mispriced YES/NO buy)
 
-- count: **5 of 286** (1.7%)
-- sum of these trades' PnL: **$+1390.17** (44.5% of total)
-- if ALL these trades won: max possible PnL contribution = $+2229.44
+- count: **0 of 302** (0.0%)
+- sum of these trades' PnL: **$+0.00** (-0.0% of total)
+- if ALL these trades won: max possible PnL contribution = $+0.00
 
 ### Trades with `shares_e > 100` (avg fill price < $0.25)
 
-- count: **8 of 286** (2.8%)
-- sum: **$+1539.36** (49.3% of total)
+- count: **0 of 302** (0.0%)
+- sum: **$+0.00** (-0.0% of total)
 
 ## Vwap distribution (entry book quality)
 
 | Bucket | count | %  |
 |---|---:|---:|
-| $0.00–$0.10 | 4 | 1.4% |
-| $0.10–$0.20 | 1 | 0.3% |
-| $0.20–$0.30 | 5 | 1.7% |
-| $0.30–$0.40 | 9 | 3.1% |
-| $0.40–$0.50 | 18 | 6.3% |
-| $0.50–$0.60 | 21 | 7.3% |
-| $0.60–$0.70 | 39 | 13.6% |
-| $0.70–$0.80 | 44 | 15.4% |
-| $0.80–$0.90 | 52 | 18.2% |
-| $0.90–$1.00 | 93 | 32.5% |
+| $0.00–$0.10 | 0 | 0.0% |
+| $0.10–$0.20 | 0 | 0.0% |
+| $0.20–$0.30 | 0 | 0.0% |
+| $0.30–$0.40 | 0 | 0.0% |
+| $0.40–$0.50 | 0 | 0.0% |
+| $0.50–$0.60 | 3 | 1.0% |
+| $0.60–$0.70 | 7 | 2.3% |
+| $0.70–$0.80 | 25 | 8.3% |
+| $0.80–$0.90 | 74 | 24.5% |
+| $0.90–$1.00 | 193 | 63.9% |
 
 ## Verdict
 
-✅ Outlier impact is bounded: top-10 trades contribute 64% of total PnL. The strategy edge is broad-based, not carried by a few extreme entries.
+✅ Outlier impact is bounded: top-10 trades contribute -105% of total PnL. The strategy edge is broad-based, not carried by a few extreme entries.
 
 ## What this means for shadow projections
 
 - **Raw backtest** assumed the orderbook quotes are real, fillable, and stable.
 - **Live trading** would NOT capture deep-mispricing wins because (a) those quotes are usually stale snapshots, (b) when real, they're consumed by arbitrage bots in <1s, (c) Polymarket matching engine may slip the fill.
-- **Realistic projection** = winsorized total $+1298.16 on 286 trades = $+4.5390/trade. Apply this haircut to all earlier headline numbers.
+- **Realistic projection** = winsorized total $-125.86 on 302 trades = $-0.4168/trade. Apply this haircut to all earlier headline numbers.

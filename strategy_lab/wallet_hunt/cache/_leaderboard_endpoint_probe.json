@@ -1,0 +1,128 @@
+{
+  "http://lb-api.polymarket.com/profit?window=1d": {
+    "status": 200,
+    "preview": {
+      "len": 50,
+      "first": {
+        "proxyWallet": "0xa5ea13a81d2b7e8e424b182bdc1db08e756bd96a",
+        "amount": 98052.63696809998,
+        "pseudonym": "bossoskil1",
+        "name": "bossoskil1",
+        "bio": "",
+        "profileImage": "",
+        "profileImageOptimized": ""
+      }
+    }
+  },
+  "http://lb-api.polymarket.com/profit?window=1d&limit=50": {
+    "status": 200,
+    "preview": {
+      "len": 50,
+      "first": {
+        "proxyWallet": "0xa5ea13a81d2b7e8e424b182bdc1db08e756bd96a",
+        "amount": 98052.63696809998,
+        "pseudonym": "bossoskil1",
+        "name": "bossoskil1",
+        "bio": "",
+        "profileImage": "",
+        "profileImageOptimized": ""
+      }
+    }
+  },
+  "http://lb-api.polymarket.com/profit/leaderboard?window=1d": {
+    "status": 404,
+    "preview": {
+      "_text": "404 page not found\n"
+    }
+  },
+  "http://lb-api.polymarket.com/profit/top?window=1d": {
+    "status": 404,
+    "preview": {
+      "_text": "404 page not found\n"
+    }
+  },
+  "http://lb-api.polymarket.com/profit?window=1d&top=50": {
+    "status": 200,
+    "preview": {
+      "len": 50,
+      "first": {
+        "proxyWallet": "0xa5ea13a81d2b7e8e424b182bdc1db08e756bd96a",
+        "amount": 98052.63696809998,
+        "pseudonym": "bossoskil1",
+        "name": "bossoskil1",
+        "bio": "",
+        "profileImage": "",
+        "profileImageOptimized": ""
+      }
+    }
+  },
+  "http://lb-api.polymarket.com/volume?window=1d": {
+    "status": 200,
+    "preview": {
+      "len": 50,
+      "first": {
+        "proxyWallet": "0xb687f00464e33934f5d591f224e71c3559ecaee5",
+        "pseudonym": "alwayslatetotheparty",
+        "amount": 1426440.3,
+        "name": "alwayslatetotheparty",
+        "bio": "",
+        "profileImage": "",
+        "profileImageOptimized": ""
+      }
+    }
+  },
+  "https://data-api.polymarket.com/leaderboard?window=1d&type=profit": {
+    "status": 404,
+    "preview": {
+      "_text": "404 page not found\n"
+    }
+  },
+  "https://data-api.polymarket.com/leaderboard?window=1d": {
+    "status": 404,
+    "preview": {
+      "_text": "404 page not found\n"
+    }
+  },
+  "https://data-api.polymarket.com/leaderboard/profit?window=1d": {
+    "status": 404,
+    "preview": {
+      "_text": "404 page not found\n"
+    }
+  },
+  "https://data-api.polymarket.com/top-traders?window=1d": {
+    "status": 404,
+    "preview": {
+      "_text": "404 page not found\n"
+    }
+  },
+  "https://gamma-api.polymarket.com/leaderboard?window=1d": {
+    "status": 404,
+    "preview": {
+      "_text": "404 page not found\n"
+    }
+  },
+  "https://gamma-api.polymarket.com/leaderboard": {
+    "status": 404,
+    "preview": {
+      "_text": "404 page not found\n"
+    }
+  },
+  "https://polymarket.com/api/leaderboard?window=1d": {
+    "status": 404,
+    "preview": {
+      "_text": "<!DOCTYPE html><html data-dpl-id=\"dpl_EVdPT5JYGBBChJ7cbwLtCqB9rdwX\" id=\"__pm_html\" lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-sc"
+    }
+  },
+  "https://polymarket.com/api/profile/leaderboard?window=1d": {
+    "status": 404,
+    "preview": {
+      "_text": "<!DOCTYPE html><html id=\"__pm_html\" lang=\"en\" data-dpl-id=\"dpl_EVdPT5JYGBBChJ7cbwLtCqB9rdwX\"><head><meta charSet=\"utf-8\" data-next-head=\"\"/><meta name=\"viewport\" content=\"width=device-width\" data-next"
+    }
+  },
+  "https://clob.polymarket.com/leaderboard?window=1d": {
+    "status": 404,
+    "preview": {
+      "_text": "<html>\r\n<head><title>404 Not Found</title></head>\r\n<body>\r\n<center><h1>404 Not Found</h1></center>\r\n<hr><center>nginx</center>\r\n<script>(function(){function c(){var b=a.contentDocument||a.contentWindo"
+    }
+  }
+}

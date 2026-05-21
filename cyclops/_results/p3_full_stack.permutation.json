@@ -1,0 +1,15 @@
+{
+  "n_trades": 53,
+  "observed_mean_pnl": 4.335057196990466,
+  "observed_total_pnl": 229.75803144049468,
+  "observed_wr": 0.6792452830188679,
+  "p_value": 0.011397720455908818,
+  "n_permutations": 5000,
+  "null_mean": -2.854643808222825,
+  "null_std": 3.20484203977986,
+  "null_q05": -8.082418157354745,
+  "null_q95": 2.468417692233086,
+  "null_q99": 4.433235845297606,
+  "csv": "cyclops\\_results\\p3_full_stack.csv",
+  "verdict": "PASS"
+}

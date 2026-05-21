@@ -1,0 +1,11 @@
+filter,n,wr,pnl,avg,keep%
+NO_FILTER,516,48.84,-763.06,-1.479,100.0
+F7_only,336,47.02,-689.42,-2.052,65.1
+MARKOV_only:w20_1m_voladaptive,293,48.46,-430.21,-1.468,56.8
+F7+MARKOV:w20_1m_voladaptive,243,48.15,-381.59,-1.57,47.1
+MARKOV_only:w20_1m_fixed,158,46.84,-289.59,-1.833,30.6
+F7+MARKOV:w20_1m_fixed,151,47.68,-207.5,-1.374,29.3
+MARKOV_only:w20_5m_voladaptive,171,47.37,-321.34,-1.879,33.1
+F7+MARKOV:w20_5m_voladaptive,126,45.24,-353.72,-2.807,24.4
+MARKOV_only:w20_5m_fixed,118,39.83,-647.18,-5.485,22.9
+F7+MARKOV:w20_5m_fixed,91,40.66,-446.11,-4.902,17.6

@@ -1,0 +1,35 @@
+v3 deep-dive: 14 wallets, threaded fetch...
+
+  done: JetFadil                       PURE_PAIR_ARB_MAKER
+  done: anon-14k                       PURE_PAIR_ARB_MAKER
+  done: aoe2gamer                      MIXED_MAKER_BIDS_AND_ASKS
+  done: anon-19k                       PURE_PAIR_ARB_MAKER
+  done: anon-217k                      PURE_PAIR_ARB_MAKER
+  done: sixx7                          PURE_PAIR_ARB_MAKER
+  done: hydroflask                     PURE_PAIR_ARB_MAKER
+  done: loser2                         PURE_PAIR_ARB_MAKER
+  done: sherlockhomie                  PURE_PAIR_ARB_MAKER
+  done: BIG_LOSER                      MIXED_PAIR_ARB
+  done: 0xb27bc932_KNOWN               PURE_PAIR_ARB_MAKER
+  done: 0x04b6d7e9_KNOWN               PURE_PAIR_ARB_MAKER
+  done: 0x89b5cdaa_KNOWN               UNCLEAR
+  done: 0xeebde7a0_KNOWN               PURE_PAIR_ARB_MAKER
+
+================================================================================
+v3 VERDICT SUMMARY
+================================================================================
+           label            kind                   verdict  pct_updown  n_updown_trades  n_slugs  pct_slugs_paired_buy  pct_slugs_both_sides  pct_slugs_single_outcome  pct_buy  up_pct  n_merge  n_split  notional_med  price_med                                                                         asset_mix                                    timeframe_mix
+       aoe2gamer WINNER-allcross MIXED_MAKER_BIDS_AND_ASKS       100.0             3481       19                 100.0                 100.0                       0.0     61.2    46.2        0        0          3.03       0.48                                                                     {"btc": 3481}                                     {"5m": 3481}
+       BIG_LOSER           LOSER            MIXED_PAIR_ARB        93.8             3027      257                  64.6                  60.3                      34.6     82.8    46.9        0        0          5.30       0.47 {"btc": 1795, "eth": 1146, "bnb": 44, "sol": 18, "doge": 10, "hype": 8, "xrp": 6}    {"5m": 2759, "15m": 222, "long": 42, "4h": 4}
+        JetFadil          WINNER       PURE_PAIR_ARB_MAKER       100.0             3370      129                  91.5                   0.0                       8.5    100.0    50.7        0        0         13.06       0.64                                                                     {"btc": 3370}                                     {"5m": 3370}
+        anon-14k          WINNER       PURE_PAIR_ARB_MAKER       100.0             3451       50                  96.0                   0.0                       4.0    100.0    50.1        0        0          2.81       0.58                                                        {"btc": 2224, "eth": 1227}                        {"5m": 2448, "15m": 1003}
+        anon-19k          WINNER       PURE_PAIR_ARB_MAKER       100.0             3459       44                 100.0                   0.0                       0.0    100.0    48.9        0        0          2.85       0.57                                                        {"btc": 2294, "eth": 1165}                        {"5m": 2248, "15m": 1211}
+       anon-217k          WINNER       PURE_PAIR_ARB_MAKER        99.4             3309      172                  84.9                   0.0                      15.1    100.0    52.4        0        0          8.97       0.45                                {"btc": 1192, "eth": 1093, "sol": 636, "xrp": 388} {"5m": 1351, "15m": 927, "long": 892, "4h": 139}
+           sixx7          WINNER       PURE_PAIR_ARB_MAKER       100.0             3409       63                  93.7                   0.0                       6.3    100.0    52.0       32        0          2.94       0.46                                 {"btc": 2395, "eth": 511, "sol": 325, "xrp": 178}                        {"15m": 2164, "5m": 1245}
+      hydroflask           LOSER       PURE_PAIR_ARB_MAKER       100.0             3405       38                 100.0                   0.0                       0.0    100.0    52.7       56        0          3.15       0.43                                                         {"btc": 2742, "eth": 663}                         {"5m": 2893, "15m": 512}
+          loser2           LOSER       PURE_PAIR_ARB_MAKER       100.0             2824      108                  97.2                   0.0                       2.8    100.0    48.9      573        0          2.55       0.47                                             {"btc": 2053, "sol": 466, "eth": 305}                         {"5m": 2341, "15m": 483}
+   sherlockhomie          WINNER       PURE_PAIR_ARB_MAKER       100.0             3463       40                  97.5                   0.0                       2.5    100.0    51.1        0        0          1.91       0.42                                 {"btc": 1487, "eth": 835, "sol": 631, "xrp": 510}                                    {"15m": 3463}
+0xb27bc932_KNOWN    REF_PAIR_ARB       PURE_PAIR_ARB_MAKER       100.0             3488       11                 100.0                   0.0                       0.0    100.0    51.3        0        0          3.32       0.49                                                                     {"btc": 3488}                                     {"5m": 3488}
+0x04b6d7e9_KNOWN    REF_PAIR_ARB       PURE_PAIR_ARB_MAKER       100.0             3477       21                 100.0                   0.0                       0.0    100.0    47.5        0        0          3.69       0.45                                                                     {"btc": 3477}            {"5m": 2824, "15m": 478, "long": 175}
+0xeebde7a0_KNOWN      REF_HYBRID       PURE_PAIR_ARB_MAKER       100.0             3454       46                  95.7                   0.0                       4.3    100.0    51.7        0        0          3.43       0.45                                                         {"btc": 2767, "eth": 687}  {"5m": 2145, "15m": 1248, "long": 39, "4h": 22}
+0x89b5cdaa_KNOWN REF_DIRECTIONAL                   UNCLEAR       100.0             3308      204                  29.9                  20.1                      70.1     85.7    34.3        0        0          7.65       0.74                                 {"btc": 2005, "eth": 634, "sol": 441, "xrp": 228}            {"5m": 2420, "15m": 744, "long": 144}

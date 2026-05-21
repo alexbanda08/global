@@ -1,0 +1,26 @@
+{
+  "PAT+ACC-M": {
+    "n_slugs_with_activity": 1197,
+    "mean_pnl": 3.015059763656563,
+    "median_pnl": 0.15175012004375465,
+    "sum_pnl": 3609.0265370969055,
+    "pct_positive": 69.25647451963242,
+    "stddev": 13.722228748882694
+  },
+  "PAT+ACC-M-t600": {
+    "n_slugs_with_activity": 1120,
+    "mean_pnl": 9.758872245034542,
+    "median_pnl": 2.2748175295851008,
+    "sum_pnl": 10929.936914438687,
+    "pct_positive": 65.71428571428571,
+    "stddev": 25.234666647603063
+  },
+  "PAT+ACC-M-t600-COMBO": {
+    "n_slugs_with_activity": 1104,
+    "mean_pnl": 36.54608405125389,
+    "median_pnl": 2.869474975073338,
+    "sum_pnl": 40346.8767925843,
+    "pct_positive": 66.30434782608695,
+    "stddev": 101.63704914487188
+  }
+}

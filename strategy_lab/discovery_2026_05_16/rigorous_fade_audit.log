@@ -1,0 +1,77 @@
+Loading events...
+  13,002 resolution events
+  loading BTC L25 (1537 slugs)...
+    -> 3074 keys in 26s
+  loading ETH L25 (1482 slugs)...
+    -> 2964 keys in 8s
+  loading SOL L25 (1653 slugs)...
+    -> 3306 keys in 7s
+Computing fills (SAME + INVERSE) for every event...
+  computed 10344 events with both fills in 1s
+
+Scanning every (sleeve, signal, hour_bucket) cut with n>=25...
+  tested 147 cuts
+
+Walk-forward per cut (4 weekly blocks)...
+
+Bonferroni α = 0.05 / 294 = 1.70e-04
+
+STRICT survivors (Bonferroni α=1.70e-04, WF majority pos, CI lo > 0):
+  FADE: 4 cuts
+  KEEP: 0 cuts
+
+RELAXED (p<0.05, WF majority pos, CI lo > 0):
+  FADE: 12 cuts
+  KEEP: 7 cuts
+
+=== TOP 20 FADE — STRICT (Bonferroni) ===
+                           sleeve_id signal hour_bucket  inv_n  inv_hit  inv_pnl  inv_ppt  inv_perm_p  inv_ci_lo  inv_ci_hi  inv_weeks_pos  n_weeks
+poly_updown_btc_15m_volume_INV_NIGHT     UP       06-11     53   0.7358 593.1537  11.1916      0.0000     5.4470    16.8915              2        2
+       poly_updown_btc_5m_momo_HEDGE   DOWN       18-23     36   0.8611 578.0522  16.0570      0.0000    10.3531    21.1911              2        2
+        poly_updown_btc_5m_momo_HOLD   DOWN       18-23     36   0.8611 578.0522  16.0570      0.0000    10.4280    21.1338              2        2
+        poly_updown_btc_5m_momo_SELL   DOWN       18-23     36   0.8333 526.5105  14.6253      0.0000     8.1332    20.1281              2        2
+
+=== TOP 20 FADE — RELAXED (p<0.05) ===
+                           sleeve_id signal hour_bucket  inv_n  inv_hit  inv_pnl  inv_ppt  inv_perm_p  inv_ci_lo  inv_ci_hi  inv_weeks_pos  n_weeks
+poly_updown_btc_15m_volume_INV_NIGHT     UP       06-11     53   0.7358 593.1537  11.1916      0.0000     5.4470    16.8915              2        2
+       poly_updown_btc_5m_momo_HEDGE   DOWN       18-23     36   0.8611 578.0522  16.0570      0.0000    10.3531    21.1911              2        2
+        poly_updown_btc_5m_momo_HOLD   DOWN       18-23     36   0.8611 578.0522  16.0570      0.0000    10.4280    21.1338              2        2
+ poly_updown_eth_5m_volume_INV_NIGHT     UP       06-11    103   0.6117 539.4234   5.2371      0.0145     0.4601     9.7122              2        2
+        poly_updown_btc_5m_momo_SELL   DOWN       18-23     36   0.8333 526.5105  14.6253      0.0000     8.1332    20.1281              2        2
+       poly_updown_sol_5m_sniper_INV     UP       00-05     36   0.7500 424.7334  11.7981      0.0030     4.8091    18.5223              2        2
+poly_updown_eth_15m_volume_INV_NIGHT     UP       06-11     33   0.7273 357.8905  10.8452      0.0055     3.1840    18.2759              2        2
+    poly_updown_eth_5m_momo_v2_HEDGE   DOWN       12-17     25   0.7600 277.9898  11.1196      0.0060     3.2824    18.5647              1        1
+     poly_updown_eth_5m_momo_v2_HOLD   DOWN       12-17     25   0.7600 277.9898  11.1196      0.0080     2.0497    18.7561              1        1
+  poly_updown_eth_5m_sniper_DOWN_INV     UP       00-05     30   0.6667 258.4252   8.6142      0.0260     0.0689    17.0615              1        2
+poly_updown_sol_15m_volume_INV_NIGHT   DOWN       06-11     34   0.6765 257.8536   7.5839      0.0250     0.3858    14.7855              2        2
+     poly_updown_eth_5m_momo_v2_SELL   DOWN       12-17     25   0.7200 232.7172   9.3087      0.0275     1.2389    17.0290              1        1
+
+=== TOP 20 KEEP — STRICT (Bonferroni) ===
+  (none — all cuts fail Bonferroni)
+
+=== TOP 20 KEEP — RELAXED (p<0.05) ===
+                       sleeve_id signal hour_bucket  same_n  same_hit  same_pnl  same_ppt  same_perm_p  same_ci_lo  same_ci_hi  same_weeks_pos  n_weeks
+ poly_updown_btc_5m_momo_v2_HOLD     UP       12-17      88    0.6136  477.4352    5.4254       0.0200      0.4103     10.0327               2        2
+poly_updown_btc_5m_momo_v2_HEDGE     UP       12-17      98    0.6020  466.4359    4.7596       0.0235      0.1673      9.7443               2        2
+poly_updown_sol_5m_momo_v2_HEDGE     UP       12-17      58    0.6724  442.3992    7.6276       0.0090      1.7163     13.4654               2        2
+       poly_updown_btc_5m_sniper   DOWN       18-23      49    0.6735  436.9426    8.9172       0.0055      1.7865     15.4260               1        2
+       poly_updown_eth_5m_sniper   DOWN       00-05      33    0.7273  382.3362   11.5859       0.0005      3.9246     19.1649               1        1
+       poly_updown_sol_5m_sniper   DOWN       00-05      28    0.7857  376.7029   13.4537       0.0005      6.2648     20.3999               2        2
+      poly_updown_sol_15m_sniper     UP       12-17      30    0.7667  350.8909   11.6964       0.0005      3.8110     18.2184               2        2
+
+=== COMBINED PORTFOLIO (RELAXED set) — day-blocked bootstrap ===
+  portfolio trades (KEEP + FADE): 856
+  total PnL: $+7835.93
+  $/trade: $+9.15
+  win rate: 0.6986
+C:\Users\alexandre bandarra\Desktop\global\strategy_lab\discovery_2026_05_16\rigorous_fade_audit.py:272: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  portfolio["date"] = portfolio["at_ts"].dt.date
+  Day-blocked bootstrap 95% CI on total PnL: [$+2245, $+14713]
+  p(PnL > 0): 1.0000
+  median bootstrap PnL: $+7666
+
+Saved CSVs to C:\Users\alexandre bandarra\Desktop\global\strategy_lab\discovery_2026_05_16

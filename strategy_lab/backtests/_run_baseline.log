@@ -1,0 +1,104 @@
+Window: 2026-04-26 → 2026-05-03
+Looking for BTC 5m slugs (max 50)...
+Selected 50 slugs.
+  [1/50] btc-updown-5m-1777161600 Up   | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2521ms
+  [2/50] btc-updown-5m-1777173300 Down | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2484ms
+  [3/50] btc-updown-5m-1777185300 Up   | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2578ms
+  [4/50] btc-updown-5m-1777197300 Up   | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2433ms
+  [5/50] btc-updown-5m-1777209300 Down | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2412ms
+  [6/50] btc-updown-5m-1777221300 Down | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2583ms
+  [7/50] btc-updown-5m-1777233300 Down | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2512ms
+  [8/50] btc-updown-5m-1777246800 Up   | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2403ms
+  [9/50] btc-updown-5m-1777258500 Down | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2520ms
+  [10/50] btc-updown-5m-1777270500 Up   | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2418ms
+  [11/50] btc-updown-5m-1777282500 Down | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2496ms
+  [12/50] btc-updown-5m-1777294500 Down | ACC-M $-2.0210 (12+9f) | ACC-PC $-3.3609 (1+1t)  diff $-1.3400  2497ms
+  [13/50] btc-updown-5m-1777306500 Up   | ACC-M $-0.0220 (19+12f) | ACC-PC $+1.9447 (0+0t)  diff $+1.9667  2451ms
+  [14/50] btc-updown-5m-1777318500 Up   | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2489ms
+  [15/50] btc-updown-5m-1777330500 Down | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2630ms
+  [16/50] btc-updown-5m-1777348500 Up   | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2475ms
+  [17/50] btc-updown-5m-1777360500 Down | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2423ms
+  [18/50] btc-updown-5m-1777372500 Down | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2603ms
+  [19/50] btc-updown-5m-1777384500 Up   | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2534ms
+  [20/50] btc-updown-5m-1777396500 Down | ACC-M $+0.0000 (0+0f) | ACC-PC $+0.0000 (0+0t)  diff $+0.0000  2495ms
+  [21/50] btc-updown-5m-1777409100 Up   | ACC-M $-4.0050 (5+8f) | ACC-PC $-5.4101 (1+0t)  diff $-1.4051  2479ms
+  [22/50] btc-updown-5m-1777420800 Up   | ACC-M $-6.4989 (4+8f) | ACC-PC $-8.2330 (0+0t)  diff $-1.7341  2619ms
+  [23/50] btc-updown-5m-1777432800 Up   | ACC-M $-1.0920 (16+13f) | ACC-PC $-0.6739 (0+1t)  diff $+0.4181  2522ms
+  [24/50] btc-updown-5m-1777449300 Up   | ACC-M $-0.2067 (15+15f) | ACC-PC $-0.2067 (0+0t)  diff $+0.0000  2445ms
+  [25/50] btc-updown-5m-1777461300 Down | ACC-M $+0.0111 (12+8f) | ACC-PC $+1.1303 (1+0t)  diff $+1.1192  2516ms
+  [26/50] btc-updown-5m-1777473300 Up   | ACC-M $-0.5609 (5+5f) | ACC-PC $+0.9653 (2+0t)  diff $+1.5263  2536ms
+  [27/50] btc-updown-5m-1777485300 Up   | ACC-M $+3.8825 (9+12f) | ACC-PC $+3.7138 (0+1t)  diff $-0.1687  2646ms
+  [28/50] btc-updown-5m-1777497300 Up   | ACC-M $-1.0070 (8+11f) | ACC-PC $-1.8967 (0+0t)  diff $-0.8897  2473ms
+  [29/50] btc-updown-5m-1777509300 Up   | ACC-M $-1.3050 (3+4f) | ACC-PC $-0.3946 (0+0t)  diff $+0.9103  2509ms
+  [30/50] btc-updown-5m-1777521000 Up   | ACC-M $-4.4363 (1+5f) | ACC-PC $-6.1704 (0+0t)  diff $-1.7341  2561ms
+  [31/50] btc-updown-5m-1777534200 Up   | ACC-M $-4.5830 (16+13f) | ACC-PC $-3.6095 (0+0t)  diff $+0.9735  2498ms
+  [32/50] btc-updown-5m-1777546200 Up   | ACC-M $-1.6025 (9+10f) | ACC-PC $-2.7401 (0+0t)  diff $-1.1376  2506ms
+  [33/50] btc-updown-5m-1777558200 Down | ACC-M $+1.2948 (9+6f) | ACC-PC $-1.0975 (1+0t)  diff $-2.3924  2552ms
+  [34/50] btc-updown-5m-1777570200 Up   | ACC-M $-1.8807 (21+21f) | ACC-PC $+0.5465 (0+0t)  diff $+2.4272  2616ms
+  [35/50] btc-updown-5m-1777582200 Down | ACC-M $-2.9056 (11+12f) | ACC-PC $-1.8651 (0+0t)  diff $+1.0404  2557ms
+  [36/50] btc-updown-5m-1777594200 Down | ACC-M $-3.0776 (4+3f) | ACC-PC $-4.4635 (0+0t)  diff $-1.3859  2535ms
+  [37/50] btc-updown-5m-1777605900 Down | ACC-M $-8.1135 (18+18f) | ACC-PC $-10.9636 (0+0t)  diff $-2.8501  2477ms
+  [38/50] btc-updown-5m-1777617900 Down | ACC-M $+1.3827 (5+3f) | ACC-PC $-1.0042 (1+0t)  diff $-2.3869  2525ms
+  [39/50] btc-updown-5m-1777632000 Down | ACC-M $+0.8135 (17+13f) | ACC-PC $-1.5691 (0+0t)  diff $-2.3825  2628ms
+  [40/50] btc-updown-5m-1777644600 Up   | ACC-M $+4.6967 (4+5f) | ACC-PC $+6.0852 (0+1t)  diff $+1.3885  2448ms
+  [41/50] btc-updown-5m-1777656600 Down | ACC-M $-3.8364 (14+12f) | ACC-PC $-4.1307 (0+0t)  diff $-0.2943  2583ms
+  [42/50] btc-updown-5m-1777668600 Down | ACC-M $+2.9237 (7+5f) | ACC-PC $+3.5816 (0+0t)  diff $+0.6579  2558ms
+  [43/50] btc-updown-5m-1777680900 Down | ACC-M $-4.3574 (8+6f) | ACC-PC $-3.0943 (0+0t)  diff $+1.2631  2548ms
+  [44/50] btc-updown-5m-1777693500 Down | ACC-M $+0.0031 (3+2f) | ACC-PC $+2.4779 (1+1t)  diff $+2.4748  2473ms
+  [45/50] btc-updown-5m-1777706100 Down | ACC-M $-0.9460 (15+9f) | ACC-PC $-2.5805 (0+0t)  diff $-1.6345  2476ms
+  [46/50] btc-updown-5m-1777718100 Down | ACC-M $-1.1136 (10+9f) | ACC-PC $-1.9538 (0+0t)  diff $-0.8401  2506ms
+  [47/50] btc-updown-5m-1777730100 Up   | ACC-M $-2.3484 (4+7f) | ACC-PC $-0.9420 (1+0t)  diff $+1.4064  2508ms
+  [48/50] btc-updown-5m-1777742100 Up   | ACC-M $-6.0468 (11+10f) | ACC-PC $-10.4021 (0+0t)  diff $-4.3552  2453ms
+  [49/50] btc-updown-5m-1777754100 Up   | ACC-M $-2.0880 (6+6f) | ACC-PC $+3.9164 (3+0t)  diff $+6.0044  2555ms
+  [50/50] btc-updown-5m-1777766100 Down | ACC-M $-2.9502 (11+14f) | ACC-PC $-3.7779 (0+0t)  diff $-0.8278  2574ms
+
+================================================================================
+SUMMARY
+================================================================================
+{
+  "n_slugs": 50,
+  "config": {
+    "cvd_threshold": 0.0,
+    "no_cvd": false,
+    "max_pair_cost": 0.97
+  },
+  "accm": {
+    "mean_pnl_per_slug": -1.0399292608306805,
+    "median_pnl_per_slug": 0.0,
+    "sum_pnl": -51.99646304153403,
+    "pct_profitable": 16.0,
+    "mean_fills_per_slug": 12.12,
+    "mean_merges_per_slug": 3.98,
+    "mean_pairs_merged": 20.70780001552105,
+    "mean_cost": 22.233474053866498,
+    "mean_rebates": 0.11134479506238126,
+    "mean_cash_recovered": 21.08219999797344,
+    "mean_leftover_redeemed_usd": 0.3743999824523926,
+    "mean_leftover_burned_usd": 5.881204343648274
+  },
+  "accpc": {
+    "mean_pnl_per_slug": -1.1235682694372924,
+    "median_pnl_per_slug": 0.0,
+    "sum_pnl": -56.17841347186462,
+    "pct_profitable": 18.0,
+    "mean_fills_per_slug": 13.7,
+    "mean_merges_per_slug": 4.48,
+    "mean_taker_buys_per_slug": 0.34,
+    "n_slugs_with_taker_fire": 12,
+    "mean_pairs_merged": 23.355400006079673,
+    "mean_cost": 24.960678076938507,
+    "mean_rebates": 0.1250316985738037,
+    "mean_cash_recovered": 23.737999988245964,
+    "mean_leftover_redeemed_usd": 0.38259998216629026,
+    "mean_leftover_burned_usd": 7.04121399248731,
+    "mean_taker_fees": 0.025921879318552766
+  },
+  "diff": {
+    "mean_pnl_diff": -0.08363900860661198,
+    "median_pnl_diff": 0.0,
+    "pct_slugs_accpc_better": 28.000000000000004,
+    "pct_slugs_accpc_same": 38.0,
+    "pct_slugs_accpc_worse": 34.0
+  },
+  "total_runtime_s": 126.91309332847595
+}

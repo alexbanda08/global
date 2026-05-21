@@ -1,0 +1,6 @@
+sleeve,n_base,wr_base,avg_base,sum_base,best_filter,n_best,wr_best,avg_best,sum_best,lift_avg
+btc_15m_v1,47,57.45,2.832,133.1,F7+MARKOV:w20_1m_voladaptive,20,65.0,7.474,149.47,4.642
+btc_15m_v2,64,51.56,-0.354,-22.68,MARKOV:w20_1m_voladaptive,42,52.38,0.353,14.85,0.707
+eth_5m_v2,25,40.0,-6.142,-153.54,MARKOV:w20_5m_voladaptive,10,50.0,-0.692,-6.92,5.45
+btc_5m_v1,161,49.07,-1.351,-217.45,MARKOV:w20_5m_voladaptive,49,51.02,-0.154,-7.52,1.197
+btc_5m_v2,205,47.8,-1.882,-385.83,F7+MARKOV:w20_1m_voladaptive,87,49.43,-0.887,-77.21,0.995

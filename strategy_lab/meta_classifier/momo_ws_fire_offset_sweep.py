@@ -1,3 +1,19 @@
+"""
+DEPRECATED FEE MODEL — DO NOT QUOTE PnL FROM THIS FILE FORWARD.
+
+This file uses the legacy `FEE_RATE = 0.02` ("2% on profit only, winning leg")
+approximation. The real Polymarket fee is:
+
+    fee = C × feeRate × p × (1 − p)
+
+charged on EVERY fill (not just the winner). For crypto markets feeRate = 0.07.
+Use `strategy_lab/fees.py` (`poly_fee_usd`, `poly_maker_rebate_usd`) instead.
+
+Kept here for historical reproducibility only. Numbers produced by this file
+diverge materially from real Polymarket settlements — re-run via
+`engine_v2.fill_at_book` + `fees.poly_fee_usd` before any decision.
+"""
+
 """Momo backtest — sweep fire-time offset using REAL WS L25 parquet books.
 
 Hypothesis: production fires at slug_ws+120s, but the alpha thesis ("t+120 of
@@ -126,8 +142,9 @@ def load_books_for_slugs(asset: str, slugs: set) -> dict:
     cols_as = [f"ask_size_{i}" for i in range(LEVELS)]
     cols_bp = [f"bid_price_{i}" for i in range(LEVELS)]
     cols_bs = [f"bid_size_{i}" for i in range(LEVELS)]
-    raw = raw.sort_values(["slug","outcome","timestamp_us"])
-    for slug, oc, sub in [(s, o, raw[(raw.slug==s)&(raw.outcome==o)]) for s in raw.slug.unique() for o in ("Up","Down")]:
+    raw = raw.sort_values(["slug", "outcome", "timestamp_us"]).reset_index(drop=True)
+    # Single groupby pass — O(N) instead of O(slugs × outcomes × N) scans.
+    for (slug, oc), sub in raw.groupby(["slug", "outcome"], sort=False):
         if len(sub) == 0:
             continue
         ts = sub.timestamp_us.values

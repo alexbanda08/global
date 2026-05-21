@@ -1,0 +1,52 @@
+================================================================================
+KNOWN WALLETS RECONCILIATION (chain-decoded vs LB-API)
+================================================================================
+     short                                                pseudonym    profit_all    profit_30d    profit_7d    profit_1d   volume_all  chain_per_day  lb_per_day_30d  overestimate_ratio_30d
+0xeebde7a0                                               Bonereaper 754017.127095 181416.918563 20458.675826  -418.377712 9.975712e+07       344000.0     6047.230619               56.885543
+0xb27bc932               0xb27bc932bf8110d8f78e55da7d5f0497a18b5b82 569134.476148  52207.316211          NaN          NaN 1.294719e+08       254000.0     1740.243874              145.956555
+0x89b5cdaa                                                  ohanism 490942.226317 127755.400877  7850.526024 -1489.448727 3.913071e+07        10000.0     4258.513363                2.348237
+0x0fe40e88                                             gobblewobble 397130.258085   4731.652562  3373.312771 -1069.139359 2.685294e+07        19000.0      157.721752              120.465312
+0x04b6d7e9 0x04b6D7E930cf9e493c5E6eF24B496294F95594C8-1774448369789 193283.236284  61130.824819  5852.559607          NaN 4.755884e+07       212000.0     2037.694161              104.039165
+0x7dfc8aa2                                         CramSchoolClub01 180397.406509  64758.493515          NaN          NaN 4.095218e+06        -7900.0     2158.616450               -3.659752
+0xce25e214 0xcE25E214D5cfE4f459cf67F08DF581885AAE7Fdc-1777575398144 140094.107332 138967.535191 11139.618993    46.854320 9.177873e+06      -295000.0     4632.251173              -63.683939
+0xcfb103c3                                              xuanxuan008 129131.920576  76795.944057  1206.113804    87.291022 1.261701e+07          -39.0     2559.864802               -0.015235
+0x9dae874a                                               Prgovindu1  49205.109683  49205.109683          NaN          NaN 5.518927e+05         5900.0     1640.170323                3.597187
+0xa0a50783 0xA0a5078359daD63993a868F6d2Db82D3a7b3606F-1778412797282  46438.311366  46438.311366          NaN          NaN 4.896838e+05         6000.0     1547.943712                3.876110
+0x7f599984 0x7F59998477864871448e312011fA5cC6b210b636-1778412523496  41344.306315  41344.306315          NaN          NaN 5.375469e+05         6300.0     1378.143544                4.571367
+0x3e6bfd2f                                             btcbeliver01  29593.598901  29593.598901          NaN          NaN 2.110270e+05       166000.0      986.453297              168.279634
+0xeefe46de                                               hqhjqoqggg  29406.162265  29406.162265          NaN          NaN 6.066025e+05           94.0      980.205409                0.095898
+0xf247584e                                                      NaN           NaN           NaN          NaN          NaN          NaN            NaN             NaN                     NaN
+0xf3cfb6a6                                                      NaN           NaN           NaN          NaN          NaN          NaN            NaN             NaN                     NaN
+0xf7f0b0b1                                                      NaN           NaN           NaN          NaN          NaN          NaN        30000.0             NaN                     NaN
+
+Saved: C:\Users\alexandre bandarra\Desktop\global\strategy_lab\wallet_hunt\cache\_lb_known_wallets_table.csv
+
+================================================================================
+LEADERBOARDS — top 50 per (type, window)
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\alexandre bandarra\Desktop\global\strategy_lab\wallet_hunt\lb_api_canonical.py", line 216, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\alexandre bandarra\Desktop\global\strategy_lab\wallet_hunt\lb_api_canonical.py", line 176, in main
+    for (ep, w), group in lb_df.groupby(["type", "window"]):
+                          ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\site-packages\pandas\core\frame.py", line 9210, in groupby
+    return DataFrameGroupBy(
+        obj=self,
+    ...<7 lines>...
+        dropna=dropna,
+    )
+  File "C:\Python314\Lib\site-packages\pandas\core\groupby\groupby.py", line 1331, in __init__
+    grouper, exclusions, obj = get_grouper(
+                               ~~~~~~~~~~~^
+        obj,
+        ^^^^
+    ...<5 lines>...
+        dropna=self.dropna,
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Python314\Lib\site-packages\pandas\core\groupby\grouper.py", line 1043, in get_grouper
+    raise KeyError(gpr)
+KeyError: 'type'

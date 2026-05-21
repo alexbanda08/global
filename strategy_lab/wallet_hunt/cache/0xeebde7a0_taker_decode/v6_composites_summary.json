@@ -1,0 +1,109 @@
+{
+  "composites": [
+    {
+      "name": "V2 baseline (A OR B OR C)",
+      "fire_cap": 929.0,
+      "ctrl_cap": 677.0,
+      "fire_pct": 0.6886582653817642,
+      "ctrl_pct": 0.483226266952177,
+      "lift": 1.425125893352809,
+      "z": 10.926314517224563,
+      "inc_fire": 0,
+      "inc_ctrl": 0
+    },
+    {
+      "name": "V3a: + H11 (buy_vol_60s>50 AND pm_drop_5s>0)",
+      "fire_cap": 1036,
+      "ctrl_cap": 777,
+      "fire_pct": 0.7679762787249814,
+      "ctrl_pct": 0.5546038543897216,
+      "lift": 1.38472942920682,
+      "z": 11.802146020674458,
+      "inc_fire": 107,
+      "inc_ctrl": 100
+    },
+    {
+      "name": "V3b: + H11 stricter (buy_vol_60s>100 AND pm_drop_5s>0.005)",
+      "fire_cap": 1034,
+      "ctrl_cap": 774,
+      "fire_pct": 0.7664936990363233,
+      "ctrl_pct": 0.5524625267665952,
+      "lift": 1.3874130133719496,
+      "z": 11.823437366880894,
+      "inc_fire": 105,
+      "inc_ctrl": 97
+    },
+    {
+      "name": "V3c: + H12 utc_hour == 15",
+      "fire_cap": 964,
+      "ctrl_cap": 714,
+      "fire_pct": 0.7146034099332839,
+      "ctrl_pct": 0.5096359743040685,
+      "lift": 1.4021840018438807,
+      "z": 11.017495609402873,
+      "inc_fire": 35,
+      "inc_ctrl": 37
+    },
+    {
+      "name": "V3d: + H8 coinbase_sret_60s > 0.0005",
+      "fire_cap": 995,
+      "ctrl_cap": 753,
+      "fire_pct": 0.737583395107487,
+      "ctrl_pct": 0.5374732334047109,
+      "lift": 1.3723165159967987,
+      "z": 10.900739403446734,
+      "inc_fire": 66,
+      "inc_ctrl": 76
+    },
+    {
+      "name": "V3e: + H11 OR H8_cb_strong",
+      "fire_cap": 1082,
+      "ctrl_cap": 840,
+      "fire_pct": 0.8020756115641215,
+      "ctrl_pct": 0.5995717344753747,
+      "lift": 1.3377475378587314,
+      "z": 11.572651418127622,
+      "inc_fire": 153,
+      "inc_ctrl": 163
+    },
+    {
+      "name": "V3f: + H11 OR H12_hour15",
+      "fire_cap": 1065,
+      "ctrl_cap": 810,
+      "fire_pct": 0.7894736842105263,
+      "ctrl_pct": 0.5781584582441114,
+      "lift": 1.3654970760233918,
+      "z": 11.893714719960407,
+      "inc_fire": 136,
+      "inc_ctrl": 133
+    },
+    {
+      "name": "V3g: + H11 OR H12_hour15 OR H8_cb_strong",
+      "fire_cap": 1100,
+      "ctrl_cap": 866,
+      "fire_pct": 0.815418828762046,
+      "ctrl_pct": 0.6181299072091363,
+      "lift": 1.319170645606959,
+      "z": 11.456297952227931,
+      "inc_fire": 171,
+      "inc_ctrl": 189
+    },
+    {
+      "name": "V3h: + H11 OR H8_cb_strong OR H8_okx_strong",
+      "fire_cap": 1088,
+      "ctrl_cap": 851,
+      "fire_pct": 0.8065233506300964,
+      "ctrl_pct": 0.6074232690935046,
+      "lift": 1.3277781600855054,
+      "z": 11.446257074901926,
+      "inc_fire": 159,
+      "inc_ctrl": 174
+    }
+  ],
+  "h11_on_v3un": {
+    "fire_rate": 0.25476190476190474,
+    "ctrl_rate": 0.13812154696132597,
+    "fire_n": 420,
+    "ctrl_n": 724
+  }
+}

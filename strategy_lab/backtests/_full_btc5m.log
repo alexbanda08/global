@@ -1,0 +1,245 @@
+Building slug universe for BTC ['5m']...
+  found 6110 slugs in universe
+Strategies: ['ACC-M-sz5', 'ACC-M-sz20', 'ACC-M-sz50', 'ACC-M-sz100', 'PAT+ACC-M', 'MAS-pre30', 'ACC-PC']
+
+=== Running ACC-M-sz5 on 6110 slugs (btc) ===
+    Loading btc_orderbook_L25.parquet (113 row groups)...
+      rg 20/113  events=636,645  elapsed=2s
+      rg 40/113  events=2,717,292  elapsed=9s
+      rg 60/113  events=4,701,496  elapsed=15s
+      rg 80/113  events=6,755,809  elapsed=21s
+      rg 100/113  events=8,818,515  elapsed=27s
+    Loading btc_orderbook_L25_delta.parquet (295 row groups)...
+      rg 20/295  events=10,651,317  elapsed=33s
+      rg 40/295  events=11,193,153  elapsed=34s
+      rg 60/295  events=11,741,703  elapsed=35s
+      rg 80/295  events=12,277,496  elapsed=36s
+      rg 100/295  events=12,814,230  elapsed=37s
+      rg 120/295  events=13,387,360  elapsed=38s
+      rg 140/295  events=13,917,568  elapsed=39s
+      rg 160/295  events=14,464,738  elapsed=41s
+      rg 180/295  events=14,982,247  elapsed=42s
+      rg 200/295  events=15,502,860  elapsed=43s
+      rg 220/295  events=15,974,005  elapsed=44s
+      rg 240/295  events=16,452,207  elapsed=45s
+      rg 260/295  events=16,995,185  elapsed=46s
+      rg 280/295  events=17,508,177  elapsed=47s
+  L25 phase: 17,838,446 events in 48s
+    Loading btc.parquet (66 row groups)...
+      rg 10/66  events=2,671,054  elapsed=3s
+      rg 20/66  events=5,331,327  elapsed=7s
+      rg 30/66  events=7,988,814  elapsed=10s
+      rg 40/66  events=10,647,653  elapsed=14s
+      rg 50/66  events=13,238,507  elapsed=17s
+      rg 60/66  events=15,980,837  elapsed=21s
+  Trade phase: 17,445,109 events in 23s
+  Total wall-clock: 71s; 1594 slugs had activity
+
+=== Running ACC-M-sz20 on 6110 slugs (btc) ===
+    Loading btc_orderbook_L25.parquet (113 row groups)...
+      rg 20/113  events=636,645  elapsed=2s
+      rg 40/113  events=2,717,292  elapsed=9s
+      rg 60/113  events=4,701,496  elapsed=15s
+      rg 80/113  events=6,755,809  elapsed=22s
+      rg 100/113  events=8,818,515  elapsed=28s
+    Loading btc_orderbook_L25_delta.parquet (295 row groups)...
+      rg 20/295  events=10,651,317  elapsed=34s
+      rg 40/295  events=11,193,153  elapsed=35s
+      rg 60/295  events=11,741,703  elapsed=36s
+      rg 80/295  events=12,277,496  elapsed=37s
+      rg 100/295  events=12,814,230  elapsed=38s
+      rg 120/295  events=13,387,360  elapsed=39s
+      rg 140/295  events=13,917,568  elapsed=41s
+      rg 160/295  events=14,464,738  elapsed=42s
+      rg 180/295  events=14,982,247  elapsed=43s
+      rg 200/295  events=15,502,860  elapsed=44s
+      rg 220/295  events=15,974,005  elapsed=45s
+      rg 240/295  events=16,452,207  elapsed=46s
+      rg 260/295  events=16,995,185  elapsed=47s
+      rg 280/295  events=17,508,177  elapsed=48s
+  L25 phase: 17,838,446 events in 49s
+    Loading btc.parquet (66 row groups)...
+      rg 10/66  events=2,671,054  elapsed=3s
+      rg 20/66  events=5,331,327  elapsed=7s
+      rg 30/66  events=7,988,814  elapsed=10s
+      rg 40/66  events=10,647,653  elapsed=13s
+      rg 50/66  events=13,238,507  elapsed=17s
+      rg 60/66  events=15,980,837  elapsed=20s
+  Trade phase: 17,445,109 events in 22s
+  Total wall-clock: 70s; 1594 slugs had activity
+
+=== Running ACC-M-sz50 on 6110 slugs (btc) ===
+    Loading btc_orderbook_L25.parquet (113 row groups)...
+      rg 20/113  events=636,645  elapsed=2s
+      rg 40/113  events=2,717,292  elapsed=10s
+      rg 60/113  events=4,701,496  elapsed=18s
+      rg 80/113  events=6,755,809  elapsed=26s
+      rg 100/113  events=8,818,515  elapsed=35s
+    Loading btc_orderbook_L25_delta.parquet (295 row groups)...
+      rg 20/295  events=10,651,317  elapsed=42s
+      rg 40/295  events=11,193,153  elapsed=43s
+      rg 60/295  events=11,741,703  elapsed=44s
+      rg 80/295  events=12,277,496  elapsed=46s
+      rg 100/295  events=12,814,230  elapsed=47s
+      rg 120/295  events=13,387,360  elapsed=49s
+      rg 140/295  events=13,917,568  elapsed=50s
+      rg 160/295  events=14,464,738  elapsed=52s
+      rg 180/295  events=14,982,247  elapsed=53s
+      rg 200/295  events=15,502,860  elapsed=54s
+      rg 220/295  events=15,974,005  elapsed=56s
+      rg 240/295  events=16,452,207  elapsed=57s
+      rg 260/295  events=16,995,185  elapsed=58s
+      rg 280/295  events=17,508,177  elapsed=60s
+  L25 phase: 17,838,446 events in 61s
+    Loading btc.parquet (66 row groups)...
+      rg 10/66  events=2,671,054  elapsed=4s
+      rg 20/66  events=5,331,327  elapsed=9s
+      rg 30/66  events=7,988,814  elapsed=13s
+      rg 40/66  events=10,647,653  elapsed=18s
+      rg 50/66  events=13,238,507  elapsed=22s
+      rg 60/66  events=15,980,837  elapsed=27s
+  Trade phase: 17,445,109 events in 29s
+  Total wall-clock: 90s; 1594 slugs had activity
+
+=== Running ACC-M-sz100 on 6110 slugs (btc) ===
+    Loading btc_orderbook_L25.parquet (113 row groups)...
+      rg 20/113  events=636,645  elapsed=3s
+      rg 40/113  events=2,717,292  elapsed=11s
+      rg 60/113  events=4,701,496  elapsed=20s
+      rg 80/113  events=6,755,809  elapsed=28s
+      rg 100/113  events=8,818,515  elapsed=36s
+    Loading btc_orderbook_L25_delta.parquet (295 row groups)...
+      rg 20/295  events=10,651,317  elapsed=43s
+      rg 40/295  events=11,193,153  elapsed=44s
+      rg 60/295  events=11,741,703  elapsed=46s
+      rg 80/295  events=12,277,496  elapsed=47s
+      rg 100/295  events=12,814,230  elapsed=49s
+      rg 120/295  events=13,387,360  elapsed=50s
+      rg 140/295  events=13,917,568  elapsed=52s
+      rg 160/295  events=14,464,738  elapsed=53s
+      rg 180/295  events=14,982,247  elapsed=54s
+      rg 200/295  events=15,502,860  elapsed=56s
+      rg 220/295  events=15,974,005  elapsed=57s
+      rg 240/295  events=16,452,207  elapsed=58s
+      rg 260/295  events=16,995,185  elapsed=59s
+      rg 280/295  events=17,508,177  elapsed=61s
+  L25 phase: 17,838,446 events in 62s
+    Loading btc.parquet (66 row groups)...
+      rg 10/66  events=2,671,054  elapsed=4s
+      rg 20/66  events=5,331,327  elapsed=9s
+      rg 30/66  events=7,988,814  elapsed=13s
+      rg 40/66  events=10,647,653  elapsed=18s
+      rg 50/66  events=13,238,507  elapsed=22s
+      rg 60/66  events=15,980,837  elapsed=26s
+  Trade phase: 17,445,109 events in 29s
+  Total wall-clock: 90s; 1594 slugs had activity
+
+=== Running PAT+ACC-M on 6110 slugs (btc) ===
+    Loading btc_orderbook_L25.parquet (113 row groups)...
+      rg 20/113  events=636,645  elapsed=3s
+      rg 40/113  events=2,717,292  elapsed=11s
+      rg 60/113  events=4,701,496  elapsed=19s
+      rg 80/113  events=6,755,809  elapsed=27s
+      rg 100/113  events=8,818,515  elapsed=34s
+    Loading btc_orderbook_L25_delta.parquet (295 row groups)...
+      rg 20/295  events=10,651,317  elapsed=41s
+      rg 40/295  events=11,193,153  elapsed=42s
+      rg 60/295  events=11,741,703  elapsed=43s
+      rg 80/295  events=12,277,496  elapsed=45s
+      rg 100/295  events=12,814,230  elapsed=46s
+      rg 120/295  events=13,387,360  elapsed=47s
+      rg 140/295  events=13,917,568  elapsed=48s
+      rg 160/295  events=14,464,738  elapsed=50s
+      rg 180/295  events=14,982,247  elapsed=51s
+      rg 200/295  events=15,502,860  elapsed=52s
+      rg 220/295  events=15,974,005  elapsed=53s
+      rg 240/295  events=16,452,207  elapsed=54s
+      rg 260/295  events=16,995,185  elapsed=55s
+      rg 280/295  events=17,508,177  elapsed=56s
+  L25 phase: 17,838,446 events in 57s
+    Loading btc.parquet (66 row groups)...
+      rg 10/66  events=2,671,054  elapsed=4s
+      rg 20/66  events=5,331,327  elapsed=7s
+      rg 30/66  events=7,988,814  elapsed=11s
+      rg 40/66  events=10,647,653  elapsed=14s
+      rg 50/66  events=13,238,507  elapsed=17s
+      rg 60/66  events=15,980,837  elapsed=21s
+  Trade phase: 17,445,109 events in 23s
+  Total wall-clock: 80s; 2984 slugs had activity
+
+=== Running MAS-pre30 on 6110 slugs (btc) ===
+    Loading btc_orderbook_L25.parquet (113 row groups)...
+      rg 20/113  events=636,645  elapsed=2s
+      rg 40/113  events=2,717,292  elapsed=9s
+      rg 60/113  events=4,701,496  elapsed=15s
+      rg 80/113  events=6,755,809  elapsed=22s
+      rg 100/113  events=8,818,515  elapsed=29s
+    Loading btc_orderbook_L25_delta.parquet (295 row groups)...
+      rg 20/295  events=10,651,317  elapsed=34s
+      rg 40/295  events=11,193,153  elapsed=35s
+      rg 60/295  events=11,741,703  elapsed=37s
+      rg 80/295  events=12,277,496  elapsed=38s
+      rg 100/295  events=12,814,230  elapsed=39s
+      rg 120/295  events=13,387,360  elapsed=40s
+      rg 140/295  events=13,917,568  elapsed=41s
+      rg 160/295  events=14,464,738  elapsed=42s
+      rg 180/295  events=14,982,247  elapsed=44s
+      rg 200/295  events=15,502,860  elapsed=45s
+      rg 220/295  events=15,974,005  elapsed=46s
+      rg 240/295  events=16,452,207  elapsed=46s
+      rg 260/295  events=16,995,185  elapsed=48s
+      rg 280/295  events=17,508,177  elapsed=49s
+  L25 phase: 17,838,446 events in 49s
+    Loading btc.parquet (66 row groups)...
+      rg 10/66  events=2,671,054  elapsed=3s
+      rg 20/66  events=5,331,327  elapsed=6s
+      rg 30/66  events=7,988,814  elapsed=9s
+      rg 40/66  events=10,647,653  elapsed=12s
+      rg 50/66  events=13,238,507  elapsed=15s
+      rg 60/66  events=15,980,837  elapsed=18s
+  Trade phase: 17,445,109 events in 20s
+  Total wall-clock: 70s; 6110 slugs had activity
+
+=== Running ACC-PC on 6110 slugs (btc) ===
+    Loading btc_orderbook_L25.parquet (113 row groups)...
+      rg 20/113  events=636,645  elapsed=2s
+      rg 40/113  events=2,717,292  elapsed=9s
+      rg 60/113  events=4,701,496  elapsed=16s
+      rg 80/113  events=6,755,809  elapsed=22s
+      rg 100/113  events=8,818,515  elapsed=29s
+    Loading btc_orderbook_L25_delta.parquet (295 row groups)...
+      rg 20/295  events=10,651,317  elapsed=35s
+      rg 40/295  events=11,193,153  elapsed=36s
+      rg 60/295  events=11,741,703  elapsed=37s
+      rg 80/295  events=12,277,496  elapsed=38s
+      rg 100/295  events=12,814,230  elapsed=39s
+      rg 120/295  events=13,387,360  elapsed=41s
+      rg 140/295  events=13,917,568  elapsed=42s
+      rg 160/295  events=14,464,738  elapsed=43s
+      rg 180/295  events=14,982,247  elapsed=44s
+      rg 200/295  events=15,502,860  elapsed=45s
+      rg 220/295  events=15,974,005  elapsed=46s
+      rg 240/295  events=16,452,207  elapsed=47s
+      rg 260/295  events=16,995,185  elapsed=49s
+      rg 280/295  events=17,508,177  elapsed=50s
+  L25 phase: 17,838,446 events in 51s
+    Loading btc.parquet (66 row groups)...
+      rg 10/66  events=2,671,054  elapsed=5s
+      rg 20/66  events=5,331,327  elapsed=9s
+      rg 30/66  events=7,988,814  elapsed=14s
+      rg 40/66  events=10,647,653  elapsed=19s
+      rg 50/66  events=13,238,507  elapsed=23s
+      rg 60/66  events=15,980,837  elapsed=28s
+  Trade phase: 17,445,109 events in 30s
+  Total wall-clock: 81s; 1594 slugs had activity
+
+====================================================================================================
+SUMMARY
+====================================================================================================
+  PAT+ACC-M             n= 2984  mean=$ +9.573  med=$ +7.871  sum=$   +28565  pos=73%  sd=$15.43
+  MAS-pre30             n= 6110  mean=$ +0.012  med=$ +0.000  sum=$      +73  pos=26%  sd=$1.41
+  ACC-M-sz5             n= 1594  mean=$ -0.610  med=$ -2.433  sum=$     -973  pos=37%  sd=$2.37
+  ACC-M-sz20            n= 1594  mean=$ -2.482  med=$ -9.730  sum=$    -3957  pos=37%  sd=$9.46
+  ACC-PC                n= 1594  mean=$ -2.482  med=$ -9.730  sum=$    -3957  pos=37%  sd=$9.46
+  ACC-M-sz50            n= 1594  mean=$ -6.340  med=$-24.325  sum=$   -10105  pos=37%  sd=$23.53
+  ACC-M-sz100           n= 1594  mean=$-13.222  med=$-48.650  sum=$   -21075  pos=37%  sd=$46.48

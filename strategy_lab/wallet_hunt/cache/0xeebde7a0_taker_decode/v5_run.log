@@ -1,0 +1,160 @@
+[   0.0s] loading enriched fire + control parquets...
+[   0.0s]   fire n=1349 ctrl n=1401
+[   0.0s]   fire disc-rule covers: 542 (40.2%)
+[   0.0s]   ctrl disc-rule covers: 399 (28.5%)
+[   0.0s]   UN-EXPLAINED fires: n=807  controls: n=1002
+[   0.0s] loading trades_polymarket/btc.parquet (signed volume context)...
+[   0.0s]   unique slugs to filter: 506
+[   3.4s]   trades_polymarket filtered: 1897281 rows (506 slugs)
+[   3.9s]   trades_idx keys: 1012
+[   3.9s] H1: computing signed volume features (5s, 15s, 60s)...
+[   4.0s]   done: fire mean sell_vol_60s=910.23, ctrl=994.84
+[   4.0s] H2: loading L25 books for bid/ask size imbalance...
+[   4.0s]   streaming L25 for 506 slugs ...
+[  17.6s]   loaded 1012 (slug,outcome) series
+[  17.6s] H2: computing book imbalance ...
+[  17.6s]   done: fire mean book_imb_total=-0.155, ctrl=-0.117
+[  17.6s] H3: loading binance 1m klines ...
+[  17.7s]   binance 1m: 67836 rows; range=2026-04-06 03:48:59.999999 -> 2026-05-16 03:46:59.999999
+[  17.7s] H3: computing binance returns (5s ~ N/A bc 1m granularity, 60s, 120s, 300s) ...
+[  17.7s] H4: computing slot offsets ...
+[  17.7s] H6: computing polymarket recent price drop (own side) ...
+[  17.8s] H7: loading trades_chain to get wallet maker fill timestamps ...
+[  18.8s]   maker fills in BTC 5m: 77906
+[  18.9s]   done: fire median sec_since_last_maker=16.0, ctrl=17.0
+
+==============================================================================
+V5 HYPOTHESIS TEST: un-explained taker fires vs matched controls
+  fire (un-explained) n = 807
+  ctrl (un-explained) n = 1002
+==============================================================================
+
+--- DISTRIBUTION SUMMARY ---
+
+feature                  fire med   ctrl med  fire mean  ctrl mean   fire p75   ctrl p75
+----------------------------------------------------------------------------------------
+flow_imb_5s                0.8592     0.8495     0.7122     0.7002     0.9576     0.9657
+flow_imb_15s               0.8174     0.8087     0.7506     0.7301     0.9262     0.9211
+flow_imb_60s               0.8078     0.7895     0.7917     0.7664     0.9008     0.8749
+sell_vol_5s               40.0000    32.6350   113.9943   111.1175   123.9500   117.8050
+sell_vol_15s             159.9200   164.1100   294.3124   308.9959   347.5600   376.0625
+sell_vol_60s             619.0700   715.6550   910.2322   994.8432  1227.5400  1351.6625
+net_sell_60s           -5177.1723 -5201.7303 -5931.4179 -6108.9671 -3609.1768 -3595.4793
+n_tr_60s                 325.0000   318.0000   354.9864   355.8174   460.0000   460.7500
+book_imb_total            -0.1630    -0.1173    -0.1554    -0.1170     0.0674     0.1186
+best_imb                  -0.1569     0.0430    -0.0719     0.0215     0.5529     0.6355
+ask_depth_ratio            0.7197     0.7900     1.5566    19.0503     1.1445     1.2691
+sum_ask_sz              8936.9899  8309.7150 11819.7369 11391.0057 16295.4551 14963.6996
+best_ask_sz              236.9800   201.1800   438.6275   612.0934   500.3800   463.0825
+bin_sret_60s               0.0001     0.0001     0.0001     0.0001     0.0003     0.0003
+bin_sret_120s              0.0001     0.0001     0.0001     0.0001     0.0005     0.0004
+bin_sret_300s              0.0001     0.0001     0.0001     0.0001     0.0006     0.0006
+offset_s                 143.0000   158.0000   140.4746   153.5768   205.0000   207.0000
+own_best_ask               0.6600     0.6600     0.6420     0.6235     0.8700     0.8500
+pm_drop_30s               -0.0300    -0.0400    -0.0545    -0.0550     0.0175     0.0100
+pm_ret_30s                 0.0625     0.0670     0.1565     0.2154     0.2239     0.2607
+sec_since_last_maker      16.0000    17.0000    26.8915    28.9126    37.0000    39.0000
+
+
+--- HYPOTHESIS THRESHOLD TESTS (FIRE vs CTRL, lift = f_rate/c_rate) ---
+
+test                                                       fire%    ctrl%    lift       z    verdict
+----------------------------------------------------------------------------------------------------
+H1: sell_vol_60s > 5                                       96.9%    99.6%   0.97x  -4.54     REJECT
+H1: sell_vol_60s > 20                                      94.1%    98.7%   0.95x  -5.45     REJECT
+H1: sell_vol_60s > 50                                      90.7%    97.5%   0.93x  -6.29     REJECT
+H1: sell_vol_15s > 5                                       93.6%    96.5%   0.97x  -2.92     REJECT
+H1: sell_vol_15s > 20                                      86.4%    89.1%   0.97x  -1.78     REJECT
+H1: sell_vol_5s > 5                                        80.7%    78.3%   1.03x  +1.22     REJECT
+H1: net_sell_60s > 0                                        0.1%     0.1%   1.24x  +0.15     REJECT
+H1: net_sell_60s > 10                                       0.1%     0.1%   1.24x  +0.15     REJECT
+H1: net_sell_60s > 30                                       0.1%     0.1%   1.24x  +0.15     REJECT
+H1: flow_imb_60s < -0.2                                     0.0%     0.0%    infx  +0.00     REJECT
+H1: flow_imb_60s < -0.5                                     0.0%     0.0%    infx  +0.00     REJECT
+H1: flow_imb_15s < -0.5                                     0.1%     0.2%   0.62x  -0.39     REJECT
+H2: book_imb_total > 0.0                                   33.2%    36.8%   0.90x  -1.60     REJECT
+H2: book_imb_total > 0.1                                   22.9%    26.7%   0.86x  -1.87     REJECT
+H2: book_imb_total > 0.3                                   13.8%    15.8%   0.87x  -1.20     REJECT
+H2: best_imb > 0.2                                         37.9%    43.3%   0.88x  -2.32     REJECT
+H2: best_imb > 0.5                                         27.8%    32.4%   0.86x  -2.15     REJECT
+H2: ask_depth_ratio > 1.5                                  17.6%    19.5%   0.90x  -1.01     REJECT
+H2: ask_depth_ratio > 2.0                                  12.8%    14.9%   0.86x  -1.29     REJECT
+H3: bin_sret_60s > 0                                       58.0%    54.9%   1.06x  +1.32     REJECT
+H3: bin_sret_60s > 0.0005                                  14.0%    10.8%   1.30x  +2.08       WEAK
+H3: bin_sret_120s > 0                                      57.6%    58.3%   0.99x  -0.28     REJECT
+H3: bin_sret_120s > 0.001                                   5.9%     5.3%   1.12x  +0.61     REJECT
+H3: bin_sret_300s > 0                                      56.1%    56.5%   0.99x  -0.15     REJECT
+H4: offset_s in [0,60]                                     20.3%    12.5%   1.63x  +4.53    CONFIRM
+H4: offset_s in [60,180]                                   46.2%    47.8%   0.97x  -0.67     REJECT
+H4: offset_s in [180,280]                                  33.1%    40.7%   0.81x  -3.34     REJECT
+H4: offset_s in [240,300]                                  12.8%    12.1%   1.06x  +0.44     REJECT
+H4: offset_s > 280                                          1.1%     0.0%    infx  +3.35    CONFIRM
+H5: own_best_ask < 0.50                                    25.9%    27.3%   0.95x  -0.69     REJECT
+H5: own_best_ask < 0.40                                    15.5%    20.3%   0.76x  -2.62     REJECT
+H5: own_best_ask < 0.30                                    10.7%    14.8%   0.72x  -2.59     REJECT
+H5: own_best_ask < 0.20                                     7.4%     9.9%   0.75x  -1.83     REJECT
+H5: own_best_ask < 0.10                                     3.2%     5.8%   0.56x  -2.58     REJECT
+H5: 0.10<=ask<0.30                                          7.4%     9.0%   0.83x  -1.19     REJECT
+H6: pm_drop_30s > 0.02                                     23.3%    21.6%   1.08x  +0.88     REJECT
+H6: pm_drop_30s > 0.05                                     12.8%    12.9%   0.99x  -0.07     REJECT
+H6: pm_drop_5s > 0.02                                      33.1%    17.1%   1.94x  +7.91    CONFIRM
+H6: pm_ret_30s < -0.05                                     19.6%    20.4%   0.96x  -0.41     REJECT
+H6: pm_ret_30s < -0.10                                     12.5%    13.7%   0.92x  -0.72     REJECT
+H7: sec_since_last_maker > 10                              53.0%    58.8%   0.90x  -2.45     REJECT
+H7: sec_since_last_maker > 30                              27.0%    30.8%   0.88x  -1.78     REJECT
+H7: sec_since_last_maker > 60                              10.9%    14.1%   0.77x  -2.01     REJECT
+H7: sec_since_last_maker > 120                              1.9%     2.2%   0.85x  -0.50     REJECT
+H7: sec_since_last_maker is NaN (never maker'd on this side)    12.0%     6.4%   1.88x  +4.18    CONFIRM
+
+
+--- COMPOSITE RULE TESTING ---
+
+[  18.9s] 
+rebuilding features on FULL fire+ctrl sets for composite ...
+C:\Users\alexandre bandarra\Desktop\global\strategy_lab\wallet_hunt\decode_eebde7a0_taker_v5_hypotheses.py:521: RuntimeWarning: invalid value encountered in divide
+  df["flow_imb_60s"] = np.where(tot_60>0, (A[:,4]-A[:,5])/tot_60, 0.0)
+C:\Users\alexandre bandarra\Desktop\global\strategy_lab\wallet_hunt\decode_eebde7a0_taker_v5_hypotheses.py:521: RuntimeWarning: invalid value encountered in divide
+  df["flow_imb_60s"] = np.where(tot_60>0, (A[:,4]-A[:,5])/tot_60, 0.0)
+[  19.1s]   fe_full n=1349  ce_full n=1401
+rule                                                       fire%    ctrl%    lift        z
+----------------------------------------------------------------------------------------
+disc_capture (baseline)                                    40.2%    28.5%   1.41x   +6.46
+R_B1: sell_vol_60s>20 AND ask<0.60                         59.3%    55.8%   1.06x   +1.85
+R_B2: sell_vol_60s>50                                      89.1%    95.5%   0.93x   -6.32
+R_B3: book_imb_total>0.3 AND ask<0.50                      25.4%    23.2%   1.09x   +1.32
+R_B4: own_best_ask<0.30                                    32.8%    28.6%   1.15x   +2.40
+R_B5: pm_drop_30s>0.05                                     36.8%    29.3%   1.26x   +4.23
+R_B6: bin_sret_60s>0.0005                                   9.9%     8.6%   1.14x   +1.11
+R_B7: offset_s > 280                                        1.0%     0.0%    infx   +3.82
+R_B8: sec_since_last_maker IS NaN                          15.2%     8.2%   1.85x   +5.71
+R_B9: offset_s in [0,60] (early)                           20.9%    14.2%   1.47x   +4.62
+R_B11: R_B9 OR R_B8 (early or first-take)                  24.8%    17.5%   1.42x   +4.72
+
+--- COMPOSITE (OR-combined) — applied to FULL fire+ctrl pool ---
+
+composite                                             fire%    ctrl%    lift        z
+-----------------------------------------------------------------------------------
+disc OR R_B9 (early)                                  52.3%    37.4%   1.40x   +7.87
+disc OR R_B8 (first-take)                             47.4%    33.0%   1.43x   +7.66
+disc OR R_B10 (pm_drop_5s>0.02)                       60.0%    40.7%   1.47x  +10.11
+disc OR R_B7 (late offset>280)                        40.8%    28.5%   1.43x   +6.82
+disc OR R_B11 (early OR first-take)                   54.1%    39.4%   1.37x   +7.73
+disc OR R_B10 OR R_B9                                 68.9%    48.3%   1.43x  +10.93
+disc OR R_B10 OR R_B9 OR R_B8                         69.8%    50.2%   1.39x  +10.51
+disc OR R_B10 OR R_B9 OR R_B8 OR R_B7                 70.3%    50.2%   1.40x  +10.80
+
+--- INCREMENTAL COVERAGE ON UN-EXPLAINED 67% (n=807 fires) ---
+
+rule on un-explained                             fire%    ctrl%    lift
+------------------------------------------------------------------------
+R_B9 (offset 0-60)                               20.3%    12.5%   1.63x
+R_B8 (sec_since_last_maker NaN)                  12.0%     6.4%   1.88x
+R_B7 (offset > 280)                               1.1%     0.0%    infx
+R_B10 (pm_drop_5s>0.02)                          33.1%    17.1%   1.94x
+R_B9 OR R_B8                                     23.3%    15.3%   1.53x
+R_B9 OR R_B10                                    48.0%    27.7%   1.73x
+R_B9 OR R_B8 OR R_B10                            49.6%    30.3%   1.63x
+R_B9 OR R_B8 OR R_B10 OR R_B7                    50.4%    30.3%   1.66x
+[  19.2s] 
+saved C:\Users\alexandre bandarra\Desktop\global\strategy_lab\wallet_hunt\cache\0xeebde7a0_taker_decode\summary_v5.json
+[  19.2s] DONE in 19.2s

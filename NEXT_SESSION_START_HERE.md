@@ -1,596 +1,548 @@
 # NEXT SESSION — Start Here
 
-**Last update:** 2026-05-06 22:30 UTC
-**Replaces previous:** 2026-05-05 18:45 UTC
-**Active deploys:** momo paper (18 sleeves) on VPS3 since 2026-05-06 00:28 UTC
+> 🚨 **Most recent session (2026-05-19): read [`NEXT_SESSION_PICKUP_2026_05_19.md`](NEXT_SESSION_PICKUP_2026_05_19.md) FIRST.**
+> Three production-ready maker-bot strategies (ACC-M, MAS, ACC-H) fully
+> spec'd + Python-coded + handed off to TV agent for deployment on
+> Ireland VPS. Shadow engine at `shadow_engine/`. Master TV handoff doc:
+> `strategy_lab/reports/README_TV_AGENT_HANDOFF.md`.
+>
+> Prior pickup (2026-05-18) — Mint-and-Sell V2 deep-dive — superseded by
+> the 3-strategy decode + build session above. Cyclops S7 X1 still
+> paper-deploy-ready as a parallel option.
+
+**Last data refresh:** 2026-05-16 (canonical re-built from VPS3 + VPS2 collectors)
+**Window:** 2026-04-24 → 2026-05-15 (21 days, 23,553 chainlink-resolved markets)
+**Canonical entry point:** `from data.v4.canonical.load import *`
+**Status:** Full-universe backtest sober — see §"Recent benchmark" — only 2 cells carry positive expectancy at scale.
 
 ---
 
 ## In one sentence
 
-**Momo paper deployed; 16h shadow shows 5m bleeding $-1/trade vs realfill $+6/trade because (a) hedge mechanism returns empty book 100% of the time on opposite side, (b) production ignores spread filter on thin SOL books, and (c) backtest had a kline-asof lookahead bug. Three fix specs ready for TV agent. L25 raw orderbook + trades pulled from VPS2; ~5.4 GB local. New strategy architecture (Cyclops-inspired Multi-Layer Confluence) speced and queued for build after 5m fix lands.**
+**Production momo strategy is unprofitable on a full 21d chainlink-resolved universe (-$1.21/tr, n=2,909, 48.4% hit, walkforward 5/18 positive days, permutation p>0.07).** The 14d shadow positives (`btc_15m_momo_HOLD` +$10.73/tr n=23, etc.) collapse on the larger backtest sample. Only **`v1 sol_5m HOLD`** (+$1.45/tr n=227) and **`v1 btc_15m HYBRID_RevOrStop_SELL`** (+$3.19/tr n=97, p≈0.08) survive. Pursue new strategies on the canonical universe; don't trust small-n shadow signals.
 
 ---
 
-## State of the world (TL;DR)
+## Where everything lives (`data/v4/`)
 
-| Thing | Status |
-|---|---|
-| **Momo strategy deployed** (18 sleeves) | ✅ live paper since 2026-05-06 00:28 UTC |
-| **Shadow vs L25 realfill 3-way comparison** | ✅ DONE — `MOMO_3WAY_COMPARISON_2026_05_06.md` |
-| **TRUE same-trade matcher** (slug-by-slug) | ✅ DONE — `match_shadow.py` + `MOMO_SHADOW_MATCH_2026_05_06.md` |
-| **Production controller hedge bug ROOT CAUSE found** | ✅ DONE — `VPS3_PRODUCTION_INVESTIGATION_2026_05_06.md` |
-| **TV agent fix prompt for hedge bug** (3-tier CLOB→WS→DB) | ✅ READY — `TV_AGENT_FIX_OPPOSITE_BOOK_FALLBACK.md` |
-| **5m vs 15m diagnosis** + slippage decomposition | ✅ DONE — `MOMO_5M_VS_15M_ANALYSIS_2026_05_06.md`, `MOMO_5M_FIX_PLAN_2026_05_06.md` |
-| **Lookahead bug in backtest** (kline asof bar-start) | ✅ FIXED 2026-05-06 — `extended_backtest_with_robustness.py:asof()` now end-time-indexed |
-| **Dynamic sizing cap spec** for SOL thin books | 🟡 SPEC IN THIS DOC §5 |
-| **Multi-Layer Confluence (Cyclops) architecture** | 🟡 SPEC IN THIS DOC §6 |
-| **L25 raw orderbook + trades pulled to local** (~5.4GB) | ✅ DONE 2026-05-06 |
-| **Parquet cache built** (4.3 GB, fast slug-filter) | ✅ DONE — `data/v4/refresh_2026_05_06/cache/*` |
-| **VPS2 → VPS3 migration scripts** (HL liq, oracle, markets, trades, OB) | ✅ READY to fire — `migration_2026_05_06/` |
-| **VPS2 deprecation deadline** | 🔴 ~10 days; migration MUST run first |
+| Path | Size | Status | Purpose |
+|---|---:|---|---|
+| **`canonical/`** | **6.6 GB** | ✅ fresh 2026-05-16 | **read all data through `canonical/load.py`** |
+| `refresh_2026_05_12/` | 3.5 GB | scratch CSVs from May 12 pull | trading.events 14d, server-side flow features, hl_liquidations, markets catalog |
+| `refresh_2026_05_06/` | 9.8 GB | kept (canonical's L25 cache references early-window subset) | DO NOT delete — would break `build.py --step orderbook` re-runs |
+| `tier1_entries/` | 30 MB | indirectly used (canonical has `tier1_entries_at_t120/`) | legacy path; prefer canonical |
+| `derivatives_zscore/` | 208 MB | kept (V5 gauntlet alpha) | derivatives Z-score features, regime tagging |
+| `oi/`, `funding/` | small | active for derivatives features | |
+| `shadow_trades_2026_05_09/` | small | most recent shadow audit snapshot | sleeve-level deltas |
+| `refresh_2026_05_16/` | 1.6 MB | current scratch | partial today's pull |
+
+### Canonical sub-paths (the ones backtests actually load)
+
+```
+data/v4/canonical/
+├── load.py                          # the API — import from here always
+├── README.md                        # schema + conventions
+├── build.py                         # rebuild canonical from raw refreshes
+├── _test_ws_s.py                    # self-test the ws_s convention
+├── chainlink_rtds.parquet           # 89.9 MB, 5.19M rows (1Hz oracle, 3 assets × 21d)
+├── klines_1m.parquet                # 21.6 MB, multi-venue 1MIN bars
+├── resolutions_from_rtds.parquet    # 2.6 MB, 23,553 markets (locally re-derived, chainlink-only)
+├── clob_resolutions_cache.parquet   # CLOB-side resolutions (binance contamination filtered)
+├── orderbook_l25/{btc,eth,sol}.parquet  # 5.4 GB total — full L25 OB streamed by slug
+├── tier1_entries_at_t120/{btc,eth,sol}.parquet  # 10.4 MB — pre-joined entry book at ws+120s
+├── trades_polymarket/{btc,eth,sol}.parquet      # ⚠️ STALE 2026-04-22 → 2026-05-06
+└── _results/                        # backtest outputs (CSVs)
+    └── full_universe_2026_05_16/    # latest full backtest
+```
+
+### Per-dataset time coverage
+
+| dataset | window (UTC) | span |
+|---|---|---:|
+| **Backtest universe** (resolutions, chainlink-only) | **2026-04-24 01:40 → 2026-05-15 02:55** | **21.0 days** |
+| Orderbook L25 (book at any time) | 2026-04-22 ~14:47 → 2026-05-15 ~01:45 | 22.5 days |
+| Chainlink RTDS (1Hz oracle prices) | 2026-04-24 01:38 → 2026-05-15 03:30 | 21.1 days |
+| Binance 1MIN klines (binance-spot-ws) | 2026-04-14 16:00 → 2026-05-15 03:01 | 30.5 days |
+| Binance 1MIN klines (binance-vision archive) | 2026-04-05 03:03 → 2026-04-28 18:52 | 23.7 days |
+| Coinbase 1MIN klines | 2026-04-08 00:56 → 2026-05-15 03:01 | 37.1 days |
+| Kraken 1MIN klines | 2026-05-07 12:58 → 2026-05-15 03:01 | 7.6 days *(collector started May 7)* |
+| OKX 1MIN klines | 2026-04-28 04:50 → 2026-05-15 03:01 | 16.9 days |
+| Tier1 entries (entry book at ws+120s) | 2026-04-24 01:42 → 2026-05-15 02:57 | 21.0 days |
+| ⚠️ **Polymarket trades** *(STALE — no fresh delta puller yet)* | 2026-04-22 12:08 → **2026-05-06 15:20** | 14.1 days (ends 10d ago) |
+| VPS3 `trading.events` (sleeve audit) | last 14d through 2026-05-15 02:42 | 14 days |
+
+### Resolutions per (asset, timeframe) — 23,553 markets total
+
+- BTC 5m: 5,887 | BTC 15m: 1,964
+- ETH 5m: 5,887 | ETH 15m: 1,964
+- SOL 5m: 5,887 | SOL 15m: 1,964
 
 ---
 
-## Critical findings this session
+## ⚠️ Critical conventions agents MUST respect
 
-### 1. Production controller hedge mechanism is fully broken
+### 1. Timestamps are UTC microseconds
 
-**0 hedges fired** across all 18 sleeves in 215 momo resolutions over 16h.
-**5 partial-bid-exits** fired (only 2.4%).
-**233 hedge_skip events ALL with `book_ts=0`** (100%).
+Columns: `*_us` (microseconds), `slot_start_us`, `timestamp_us`, `time_exchange_us`, `query_ts_us`. Seconds-suffix `*_s` columns are also UTC. **Never localize, never CET.**
 
-**Root cause:** `_fetch_opposite_book()` calls Polymarket CLOB HTTP `/book?token_id=...` which returns empty/error for thinly-traded opposite-side tokens. The Storedata DB fallback is **disabled** by default (`_db_fallback_enabled=False` in `paper.py:117`). Storedata has 98% ask coverage on the same markets, but the controller never reads from it.
+### 2. `ws_s ≠ slot_start` — the slug-ws convention
 
-**Fix queued:** 4-commit plan in `TV_AGENT_FIX_OPPOSITE_BOOK_FALLBACK.md`:
-1. Diagnose CLOB empty-response root cause (instrumentation)
-2. Fix CLOB tier-1 (likely token-id precision loss or rate-limit)
-3. Add WS BookMirror as tier-2 fallback (subscribe at slot creation)
-4. Enable Storedata DB fallback as tier-3 (default ON, env-overridable)
+🚨 **The most expensive bug in this codebase.** Get this wrong → hit rate inflates **25–40 pp** (≈ 85% on backtest vs ≈ 50% live).
 
-### 2. TRUE same-trade comparison: production leaves $7.30/trade on the table
+```python
+# Slug-to-time mapping
+slug_suffix    = int(slug.rsplit("-", 1)[1])           # seconds
+slot_start_us  = slug_suffix * 1_000_000
+slot_end_us    = slot_start_us + window_s * 1_000_000  # window_s = 300 (5m) or 900 (15m)
 
-For 221 of 299 shadow fires (matched to L25 raw book on the same slug+ts):
+# Production controller anchor (USE THIS)
+ws_s    = slug_suffix - window_s                       # PREVIOUS slot's start
+ret_2m  = log(close@(ws_s + 120) / close@(ws_s))       # 2-min PRE-strike momentum
+fire_us = (ws_s + 120) * 1_000_000                     # production fire wall-clock
+```
 
-| Metric | Shadow paper | L25 realfill SAME trades | Δ |
-|---|---:|---:|---:|
-| Total PnL (matched) | **$+598.89** | **$+2,211.63** | **+$1,612.74** |
-| Mean $/trade | $+2.71 | $+10.01 | **+$7.30** |
+Use the helpers; don't re-derive:
 
-Realfill = same markets, same outcomes, only the EXIT POLICY simulation differs (uses canonical `book_walk_fill` against fresh L25 raw snapshot).
+```python
+from load import slug_to_ws_s, add_ws_s, ret_2m_at_ws
+ws_s = slug_to_ws_s(slug, timeframe)
+ret  = ret_2m_at_ws(end_us, prices, ws_s)
+```
 
-### 3. 5m bleeds, 15m profits — pure win-rate gap
+Self-test: `py -3 -X utf8 data/v4/canonical/_test_ws_s.py` must print `=== ALL CHECKS PASSED ===`.
 
-| tf | n fires | win_rate | mean_pnl/trade | total |
-|---|---:|---:|---:|---:|
-| **15m** | 42 | **69.0%** | **$+11.03** | $+463 |
-| **5m** | 150 | **47.3%** | **$-1.09** | $-164 |
+Reference: `strategy_lab/reports/SESSION_HANDOFF_2026_05_10_WS_S_CONVENTION.md`.
 
-**Hedge/sell are essentially never firing on either tf** (0 hedges, 4 partial exits across all). So the difference is purely HOLD outcome dynamics.
+### 3. Outcome resolution = Chainlink Data Streams (NEVER derive from binance)
 
-5m loses because:
-- Short window (3 min after t+120 entry) → less directional reliability
-- Thin SOL books → poor entry vwap when walking $25 deep
-- Production fires on wide-spread markets that realfill correctly skips
+Use either:
+- The `outcome` column on `load_resolutions()` (already chainlink-derived, binance-contaminated rows filtered out)
+- OR compute from `load_chainlink_asof()` strike vs settlement
 
-### 4. SOL has THIN orderbooks — median L1 = $5.80
+Never resolve a binary market by comparing binance close prices — multiple sleeves got bad hit rates from binance contamination in the catalog.
 
-| Asset | Median L1 USD | $25 fits at L1 |
-|---|---:|---:|
-| BTC | $64.68 | 92% |
-| ETH | $14.87 | 45% |
-| **SOL** | **$5.80** | **25%** |
+### 4. Binance is the SIGNAL source
 
-50% of SOL_5m markets have less than $6 of liquidity at best ask. Walking $25 forces 5+ level walks → bad vwap → entry slippage → losses.
+Matches production momo controller. Coinbase / Kraken / OKX are alternative venues for ablation tests only. The signal anchor uses `BINANCE_SPOT_*_USDT` with `source='binance-spot-ws'`.
 
-**Fix: dynamic stake cap** (see §5 below).
+### 5. `asof_strict(end_us, prices, target_us)` — causal asof
 
-### 5. Lookahead bug in backtest's kline asof — **FIXED**
+Returns close of the bar that ENDED at-or-before `target_us`. End-time-indexed; cannot return a future-bar close. Use this for all 1MIN kline lookups in backtests.
 
-`extended_backtest_with_robustness.py::asof()` was using bar-start-time indexing. For a query at `ts=t+130`, returned the close of the bar opening at `t=120` — but that bar's close is at `t=180` (50s in the future).
+```python
+from load import asof_strict
+price_at_ws = asof_strict(end_us, prices, target_us=ws_s * 1_000_000)
+```
 
-For 5m markets, this means buckets 25-29 (t+250..290) read the bar that closes at market resolution (t+300) — **the answer itself.** Backtest sees future prices when computing rev_bp during the last 50s of monitoring.
+### 6. L25 walk = production fill model
 
-Effect: backtest over-estimates HEDGE/SELL trigger frequency in last 50s of 5m markets. Production correctly does NOT have this lookahead → fires hedge/sell less often.
+Production fills lift the ask with $25 notional. Backtest must mirror:
 
-Fix landed in `extended_backtest_with_robustness.py:asof()` 2026-05-06: end-time-indexed lookup (`time_period_end_us ≤ ts × 1e6`) guarantees the bar has CLOSED before the query timestamp.
+```python
+from strategy_lab.book_walk import book_walk_fill
+vwap_e, shares_e, usd_e, levels_hit, under = book_walk_fill(ask_p, ask_s, notional_usd=25.0)
+# under == True → book was thinner than $25; usd_e is what actually got filled
+```
 
-**Re-run with strict asof on full 14d universe (2026-05-06 backtest):** dramatic regression vs prior (buggy) numbers.
-- BTC_5m_HOLD: was $+14.48 (buggy) → now $+0.27/trade (strict)
-- ETH_5m_HOLD: $+12.58 → $+0.97/trade
-- SOL_5m_HOLD: $+11.20 → $-0.25/trade
-- BTC_15m_HOLD: $+9.42 → $-1.39/trade
-- All HEDGE/SELL cells negative or near-zero
-- **Permutation test:** all 6 cells p > 0.4 (not statistically distinguishable from random)
+### 7. Fee model — 2% on profit only
 
-The buggy backtest's profitability was largely an artifact of the lookahead. Strategy alpha needs to be re-validated.
+Win: `pnl = shares * 1.0 - usd_e - max(0, (shares - usd_e)) * 0.02`
+Loss: `pnl = -usd_e` (no fee on losses)
 
-**However:** shadow live data shows 15m sleeves making $+11/trade in production. So either:
-- Production has a similar lookahead bug (need to verify `fetch_close_asof` semantics on VPS3)
-- Or the strict backtest universe selection differs from production (vwap is now 0.90 vs 0.69 before — fires on different markets)
-
-Tools:
-- Bug fix: `strategy_lab/meta_classifier/extended_backtest_with_robustness.py:asof()`
-- Audit script: `strategy_lab/momo_realfill/verify_lookahead_bug.py`
-- Strict matcher (for shadow comparison): `strategy_lab/momo_realfill/match_shadow_strict.py`
+Hedge: 2% on the winning leg's profit only.
 
 ---
 
-## 5 · Dynamic sizing cap — implementation logic
+## Engine catalog — pick the right tool
 
-**Goal:** stop walking thin books that hurt vwap. Take only what L1 (best ask) supports cleanly.
+### Tier A: Canonical engines (start here)
 
-### Per-asset config
-
-```python
-# strategy_lab params + production controller env-driven
-TV_POLY_DYNAMIC_STAKE_ENABLED = True
-
-# Min USD on L1 below which we SKIP the trade entirely (L1 too thin to matter)
-SKIP_IF_L1_USD_BELOW = {
-    "btc": 5.0,    # very rarely triggered (BTC books are deep)
-    "eth": 5.0,
-    "sol": 3.0,    # SOL thin — skip only when truly empty
-}
-
-# Target stake we'd ideally take if liquidity is there
-TARGET_STAKE = {"btc": 25.0, "eth": 25.0, "sol": 25.0}  # $25 across the board
-
-# Walk depth tolerance: how much vwap may drift above L1 price (in bps)
-# before we cap the stake
-MAX_WALK_SLIP_BPS = {"btc": 200, "eth": 200, "sol": 300}  # SOL slightly looser
-```
-
-### Decision tree at entry (re-fetch own book, then):
-
-```python
-# At t+120s, after rev_2m signal fires:
-own_book = await self._fetch_own_book(slot, signal_outcome)
-if not own_book or not own_book.get("asks"):
-    return self._audit_skip(slot, reason="no_own_book_at_entry")
-
-ask0_p = float(own_book["asks"][0]["price"])
-ask0_size = float(own_book["asks"][0]["size"])
-l1_usd = ask0_p * ask0_size
-
-# 1. Hard skip if L1 is too thin to bother
-if l1_usd < SKIP_IF_L1_USD_BELOW[symbol]:
-    return self._audit_skip(slot, reason="l1_usd_too_thin",
-                            l1_usd=l1_usd, l1_size=ask0_size, l1_price=ask0_p)
-
-# 2. Spread filter (existing, but enforce HERE not at signal-time)
-bid0_p = float(own_book["bids"][0]["price"]) if own_book.get("bids") else 0
-spread = ask0_p - bid0_p
-if spread > SPREAD_FILTER[symbol]:
-    return self._audit_skip(slot, reason="spread_too_wide_at_fill",
-                            spread=spread, threshold=SPREAD_FILTER[symbol])
-
-# 3. Compute the target stake we'd ideally take
-target = TARGET_STAKE[symbol]
-
-# 4. Simulate the walk to see where vwap lands
-vwap_target, _, usd_filled, hit_levels, under = book_walk_fill(
-    [lvl["price"] for lvl in own_book["asks"]],
-    [lvl["size"]  for lvl in own_book["asks"]],
-    target,
-)
-slip_bps_target = (vwap_target - ask0_p) / ask0_p * 10000
-
-# 5. If walking $25 stays within slip tolerance, take full target
-if slip_bps_target <= MAX_WALK_SLIP_BPS[symbol]:
-    actual_stake = target
-    actual_vwap = vwap_target
-else:
-    # Walk would slip too much. Cap stake at whatever fills at L1+L2 within tolerance.
-    # Binary search the largest stake where slip <= MAX_WALK_SLIP_BPS
-    actual_stake = max(
-        SKIP_IF_L1_USD_BELOW[symbol],
-        find_max_stake_within_slip(own_book["asks"], MAX_WALK_SLIP_BPS[symbol], ask0_p)
-    )
-    if actual_stake < SKIP_IF_L1_USD_BELOW[symbol]:
-        return self._audit_skip(slot, reason="cant_size_within_slip_tolerance")
-    actual_vwap, _, _, _, _ = book_walk_fill(
-        own_book["asks_p"], own_book["asks_s"], actual_stake
-    )
-
-# 6. Place order with actual_stake
-await self.executor.place_buy_order(
-    token_id=slot.held_token_id,
-    qty=actual_stake / actual_vwap,
-    limit_px=actual_vwap * 1.01,  # 1% allowance for tick tolerance
-)
-
-# 7. Log the dynamic-sizing decision
-log.info("poly_updown.dynamic_stake",
-         slot=slot.slot_id, target=target, actual=actual_stake,
-         l1_usd=l1_usd, ask0_p=ask0_p, vwap=actual_vwap,
-         slip_bps=(actual_vwap - ask0_p) / ask0_p * 10000)
-```
-
-### Helper: find_max_stake_within_slip
-
-```python
-def find_max_stake_within_slip(
-    asks: list[dict],
-    max_slip_bps: float,
-    l1_price: float,
-    notional_step: float = 1.0,  # $1 increments
-    max_test: float = 100.0,
-) -> float:
-    """Binary search for largest USD stake such that walking the asks gives
-    a vwap within max_slip_bps of L1 price. Returns 0 if even L1's L1_size
-    × L1_price exceeds tolerance.
-    """
-    prices = [float(a["price"]) for a in asks]
-    sizes  = [float(a["size"])  for a in asks]
-    lo, hi = 0.0, max_test
-    best = 0.0
-    while hi - lo > notional_step:
-        mid = (lo + hi) / 2
-        vwap, _, _, _, _ = book_walk_fill(prices, sizes, mid)
-        slip = (vwap - l1_price) / l1_price * 10000 if vwap > 0 else float("inf")
-        if slip <= max_slip_bps:
-            best = mid
-            lo = mid
-        else:
-            hi = mid
-    return best
-```
-
-### Expected impact (per realfill estimates)
-
-| Cell | Current $/trade | Estimated post-fix $/trade |
-|---|---:|---:|
-| BTC_5m | $-7.62 | $+0 to $+2 (mostly unchanged — BTC books fat) |
-| ETH_5m | $+0.18 | $+3 to $+5 (smaller stake on thin moments) |
-| **SOL_5m** | **$-0.06** | **$+8 to $+12** (huge win — SOL was bleeding on walks) |
-
-### Telemetry
-
-Every entry should log:
-- `target_stake`, `actual_stake`, `was_capped` (bool)
-- `l1_usd`, `l1_size`, `l1_price`
-- `walk_vwap`, `walk_slip_bps`, `walk_hit_levels`
-- `skip_reason` if skipped (l1_usd_too_thin / spread_too_wide / cant_size_within_slip)
-
-Then a daily roll-up:
-- % fires capped vs target
-- Avg actual_stake
-- Hit rate by capped/uncapped
-
-### Validation criteria post-deploy
-
-- After 24h: SOL_5m skip rate ≈ 25% (those that should be skipped are skipped)
-- After 7d: SOL_5m mean_pnl/trade ≥ $+5 (was $-0.06)
-- After 7d: avg actual_stake on SOL_5m ~$10-15 (was always $25)
-
----
-
-## 6 · Multi-Layer Confluence System (Cyclops-inspired) — architecture
-
-This is the next-gen strategy targeted AFTER the momo 5m fix lands. Speced from the comparison vs the Cyclops bot.
-
-### Core architecture: 4 independent confirmation layers
-
-```
-                   ┌─ STRUCTURE (macro context) ─┐
-                   │  - BTC trend / S+R          │
-                   │  - Pattern memory (240 segs)│
-                   │  - Asset return history      │
-                   └─────────────────────────────┘
-                              │
-                   ┌─ FLOW (orderflow now) ──────┐
-                   │  - CVD over 1m / 5m         │
-                   │  - Aggressor ratio (taker)  │
-                   │  - L25 OB imbalance         │
-                   │  - Coinbase Premium (later) │
-                   └─────────────────────────────┘
-                              │
-                   ┌─ TRIGGER (entry catalyst) ──┐
-                   │  - Liquidation magnet       │
-                   │  - FVG (fair value gap)     │
-                   │  - OFI (order flow imbal)   │
-                   └─────────────────────────────┘
-                              │
-                   ┌─ GUARD (final block) ───────┐
-                   │  - Overextension (>0.15%)   │
-                   │  - Choppiness > 0.70        │
-                   │  - Fake impulse detection   │
-                   │  - Extreme price (<0.35,>0.65) │
-                   │  - Dead market (90s/$5)     │
-                   │  - Min time-to-close ≥1min  │
-                   └─────────────────────────────┘
-                              │
-                              ▼
-                   ┌─ TIER CLASSIFIER ───────────┐
-                   │  GOLD:   all 4 layers       │  fair_prob 0.72  size 2.0%
-                   │  SILVER: STRUCTURE + FLOW   │  fair_prob 0.64  size 1.5%
-                   │  BRONZE: FLOW + TRIGGER     │  fair_prob 0.54  size 1.0%
-                   │  SKIP:   < 2 layers         │  no entry
-                   └─────────────────────────────┘
-```
-
-### Build plan (4 modules)
-
-#### Module 1: FLOW engine (uses already-pulled L25 + trades_v2)
-
-```
-strategy_lab/flow/
-├── __init__.py
-├── features.py           # per-(slug, 10s_bucket) compute:
-│                         #   - cvd_delta, aggressor_ratio
-│                         #   - imb_l1, imb_l5, imb_l10, imb_l25
-│                         #   - bid_max_size_l10 (wall detection)
-│                         #   - depth_l5, depth_l10, depth_l25
-│                         #   - momentum (last 30s buy-vs-sell pressure)
-├── build_features.py     # CLI: pre-aggregate raw → parquet (one-time)
-└── join_with_signals.py  # merge FLOW with V3/momo signal data
-```
-
-**Inputs:** the parquet cache we built (`data/v4/refresh_2026_05_06/cache/`).
-**Output:** `data/v4/refresh_2026_05_06/{asset}_flow_features.parquet` (~150 MB).
-**Dependency:** none new; reuses `book_walk`, `polymarket_stats`, our new loaders.
-
-#### Module 2: STRUCTURE features
-
-- BTC trend on 1h kline + 4h kline (uptrend / downtrend / sideways)
-- Support / resistance from prior-day levels (round numbers, swing highs)
-- Pattern memory: at first, defer (low priority for binary 5m markets per Cyclops analysis)
-
-```
-strategy_lab/structure/
-├── __init__.py
-├── btc_trend.py          # rolling regression slope on 1h closes
-├── sr_levels.py          # swing-high / swing-low extraction
-└── regime_classifier.py  # output: TREND / SIDEWAYS / VOLATILE
-```
-
-#### Module 3: TRIGGER features
-
-- Liquidation magnet: are large liquidations clustering nearby?
-  - Use `data/v4/refresh_2026_05_06/hl_liquidations_btc_eth_sol.csv` (1.98M rows)
-- FVG (Fair Value Gap): 3-candle pattern where wick gap unfilled
-- OFI (Order Flow Imbalance): same as FLOW but at trigger time (last 30s)
-
-#### Module 4: GUARD filters + tier classifier
-
-```python
-# strategy_lab/confluence/tier_classifier.py
-
-def classify(structure_score, flow_score, trigger_active, guard_blocks):
-    if any(guard_blocks):
-        return "SKIP"
-
-    s_align = structure_score >= 0.50
-    f_align = flow_score >= 0.40
-    t_active = bool(trigger_active)
-
-    if s_align and f_align and t_active and structure_score >= 0.50 and flow_score >= 0.50:
-        return ("GOLD", fair_prob=0.72, size_pct=0.020)
-    if s_align and f_align and structure_score >= 0.30 and flow_score >= 0.40:
-        return ("SILVER", fair_prob=0.64, size_pct=0.015)
-    if f_align and t_active and flow_score >= 0.40:
-        return ("BRONZE", fair_prob=0.54, size_pct=0.010)
-    return "SKIP"
-```
-
-### Why this beats current momo
-
-| Capability | Current (momo) | Confluence System |
+| Engine | Path | What it does |
 |---|---|---|
-| Signal axes | 1 (`ret_2m > q90`) | 4 (STRUCTURE/FLOW/TRIGGER/GUARD) |
-| Hedge mechanism | Broken (zero fires) | Multi-tier (CLOB→WS→DB) — see §1 |
-| Sizing | Fixed $25 (broken on thin SOL) | Tier-based + dynamic L1-cap (§5) |
-| Filter quality | Loose | 4 guards + per-tier confidence threshold |
-| Pattern recognition | None | (deferred) 240-segment similarity |
+| **`load.py`** | `data/v4/canonical/load.py` | the data API — every loader you need |
+| **`build.py`** | `data/v4/canonical/build.py` | rebuilds canonical from raw refreshes; `--step` to target one part |
+| **`momo_full_universe_canonical.py`** | `strategy_lab/meta_classifier/momo_full_universe_canonical.py` | **the current full-universe backtest** — 15 variants × 6 cells × walkforward × permutation |
+| **`momo_full_universe_validation.py`** | `strategy_lab/meta_classifier/momo_full_universe_validation.py` | validates `momo_full_universe_canonical` output against shadow data |
+| `clob_resolutions.py` | `data/v4/canonical/clob_resolutions.py` | builds the CLOB-side resolutions cache (filters binance contamination) |
+| `_test_ws_s.py` | `data/v4/canonical/_test_ws_s.py` | run before any backtest to confirm ws_s convention holds |
+| `_sanity.py` | `data/v4/canonical/_sanity.py` | sanity checks on canonical parquets |
 
-### Build order (recommended)
+### Tier B: Backtest variants + audits
 
-1. **Wait for momo 5m fix** to land + validate (1-2 weeks)
-2. **Build FLOW engine** (module 1) — ~3-5 days, runs offline first
-3. **Backtest FLOW alone** on shadow universe — validate alpha exists
-4. **Add STRUCTURE features** — ~2-3 days
-5. **Add TRIGGER features** — ~2-3 days
-6. **Combine + tier-classify** in lab → backtest grand combo
-7. **Ship to TV agent** as new sleeve mode `confluence_v1`
+| Engine | Path | What it does |
+|---|---|---|
+| `extended_backtest_with_robustness.py` | `strategy_lab/meta_classifier/extended_backtest_with_robustness.py` | older 18-cell backtest with permutation + walkforward (refresh_2026_05_02 dependent) |
+| `momo_shadow_vs_backtest.py` | `strategy_lab/meta_classifier/momo_shadow_vs_backtest.py` | shadow data vs backtest reconciliation |
+| `momo_partial_fill_backtest.py` | same dir | partial-fill simulator (book thinner than notional) |
+| `momo_exit_policy_explore.py` | same dir | exit policy sweep (HOLD vs HEDGE vs SELL at various rev_bp) |
+| `momo_coinbase_overlay.py` / `momo_coinbase_lead.py` | same dir | coinbase-as-signal-source ablation tests |
+| `cex_alignment_*.py` | same dir | cex venue alignment / disagreement signal |
+| `momo_live_vs_backtest_diagnose.py` | same dir | per-trade comparison live vs backtest |
+| `permutation_strict.py` | same dir | strict sign-flip permutation (1000+ draws) |
+| `momo_ws_walkforward_perm.py` | same dir | walkforward + perm combo on momo strategy |
+| `v3_production_replay.py` | same dir | replay v3 strategy through production timestamps |
 
----
+### Tier C: Realfill (L25 raw book) replay
 
-## Unfinished tasks (priority order)
+| Engine | Path | What it does |
+|---|---|---|
+| `validate_with_real_book.py` | `strategy_lab/momo_realfill/validate_with_real_book.py` | replay each shadow fire against L25 raw book |
+| `match_shadow_strict.py` | same dir | slug-by-slug match of shadow trades to backtest decisions, strict-asof |
+| `compare_3way.py` | same dir | shadow vs backtest vs realfill triple comparison |
+| `diagnose_5m_slippage.py` | same dir | slippage decomposition for 5m markets |
+| `verify_lookahead_bug.py` | same dir | proves the asof-bar-open vs asof-bar-end lookahead difference |
 
-### 🔴 P0 — TV agent (waiting on agent)
+### Tier D: Confluence layer experiments (deprecated for v1 deploy — see verdict)
 
-1. **Fix opposite-book fetch for HEDGE/SELL** — `TV_AGENT_FIX_OPPOSITE_BOOK_FALLBACK.md`
-   - 4 commits: diagnose → fix CLOB → add WS BookMirror → enable Storedata fallback
-   - Expected impact: hedge fire rate 0% → 90%+, recovers $2-4/trade
+| Engine | Path | What it does |
+|---|---|---|
+| `run_grand_backtest.py` | `strategy_lab/confluence/run_grand_backtest.py` | 4-layer (FLOW/STRUCT/TRIG/GUARD) → tier classifier → backtest |
+| `run_struct_flow_backtest.py` | same dir | 2-layer (struct+flow only) simpler classifier |
+| `validate_silver_alpha.py` | same dir | 5-gate validation battery (perm/walkforward/bootstrap/regression/realfill) |
+| `silver_overview.py` | same dir | per-trade + monthly expectancy projection |
+| `validate_layers.py` | same dir | sanity-check each layer parquet (schema + coverage) |
 
-2. **Implement dynamic stake cap** — §5 of this doc
-   - 7 code changes: re-fetch book, L1 USD gate, spread gate, walk-vwap gate, cap function, telemetry, tests
-   - Expected impact: SOL_5m $-0.06 → $+8 to +$12/trade
+**Verdict on confluence (2026-05-07):** SILVER tier on SOL alpha vector was n=8, mechanical pass on 2/5 gates, breakeven hit rate 86%. Paper-only candidate; not ship-ready. See `strategy_lab/reports/SILVER_VALIDATION_FINAL_2026_05_07.md`. Strategy ideas section §I has a "revisit on canonical" item.
 
-3. **Pause 5m sleeves until fixes deploy** — operator action
-   - 5m bleeding $-1/trade × ~100 fires/day = $-100/day. Pause beats bleed.
+### Tier E: Feature builders (cached output in canonical or per-asset)
 
-### 🟡 P1 — Migration (deadline VPS2 deprecation)
+| Engine | Path | What it does |
+|---|---|---|
+| `confluence/flow/build_features.py` | `strategy_lab/confluence/flow/build_features.py` | builds FLOW per-(slug,outcome) features from L25 + trades |
+| `confluence/structure/build_structure.py` | same package | builds STRUCTURE per-slug features from klines |
+| `confluence/trigger/build_trigger.py` | same package | builds TRIGGER (liq_magnet, FVG, OFI) features |
+| `confluence/guard/build_guards.py` | same package | builds GUARD blocks (extreme price, dead market, etc.) |
+| `meta_classifier/pull_tier1_entries.py` | `strategy_lab/meta_classifier/` | pulls L25 entries at ws+120 per slug (legacy path; canonical has the parquet) |
 
-4. **Run VPS2 → VPS3 migration scripts** — `migration_2026_05_06/99_run_all.sh`
-   - Migrates: HL liquidations (5M rows), oracle_prices (1.18M), markets (756 older), trades_v2 gap (2.5M), orderbook_snapshots gap (1.5M)
-   - Skip: binance_liquidations (will be re-collected from non-geoblocked VPS)
-   - Tonight job; ~5-7 hours. Idempotent. README in `migration_2026_05_06/00_README.md`.
+### Tier F: Derivatives (V5 gauntlet — KEPT as alpha-flagged)
 
-5. **Verify VPS3 has parity post-migration** — re-run row-count audit
+| Engine | Path | What it does |
+|---|---|---|
+| `gauntlet_v5.py` | `strategy_lab/v4_signals/derivatives_zscore/gauntlet_v5.py` | **V5 gauntlet — ETH deploy candidate** per `V5_GAUNTLET_VALIDATION.md` |
+| `research_v5.py` | same dir | `run_combo()` — core compute backing the gauntlet |
+| `compute_zscores.py` | same dir | builds the Z-score features |
+| `strategy_4h_adaptive.py` | same dir | adaptive 4h strategy variant |
+| `carry_overlay.py` | same dir | post-process: 5% idle-cash carry overlay (fixes G4 per-year-positive gate) |
+| `regime_detector_v2.py` | same dir | regime tagging used by ensemble |
 
-### 🟡 P1 — Lab work
+### Tier G: V3/Phase7 union (existing momo predecessor)
 
-6. **Build FLOW engine module** (module 1 of confluence) — §6
-   - ~3-5 days; uses parquet cache already built
-   - Output: per-(slug, 10s_bucket) features parquet
+| Engine | Path | What it does |
+|---|---|---|
+| `v4_signals/phase7_clob_imbalance_momentum.py` | `strategy_lab/v4_signals/` | the active phase7 momentum signal |
+| `v4_signals/phase7_validation.py` | same dir | validation harness |
+| `v4_signals/backtest_vs_shadow_audit.py` | same dir | audit phase7 backtest vs production shadow |
 
-7. **Backtest momo with corrected (strict) asof** + L25 raw data on full Apr-May window
-   - We have data; just need to swap `asof` → `asof_strict` in extended_backtest
-   - Re-validate the 18-cell numbers; current backtest results overstated by $2-6/trade on HEDGE/SELL cells
+### Tier H: Cleanup / archive
 
-8. **Investigate the slugs realfill SKIPPED that production fired on** (78 cases)
-   - Did production lack the spread/L1 filter at fill time?
-   - Were these all wide-spread or thin-book?
-   - Per-trade table: `strategy_lab/results/meta_classifier/momo_5m_slippage_diag.csv`
-
-### 🟢 P2 — Future work
-
-9. **Build STRUCTURE module** (Cyclops Layer 1)
-10. **Build TRIGGER module** (Cyclops Layer 3)
-11. **Build GUARD filters + tier classifier** (Cyclops Layer 4 + tier logic)
-12. **Investigate VPS3 collector daily 5-10% loss** on Polymarket OB — separate ticket
-13. **Set up new VPS for binance liquidations** (non-geoblocked region)
-
----
-
-## Critical files
-
-### Reports
-- `strategy_lab/reports/MOMO_3WAY_COMPARISON_2026_05_06.md` — shadow vs L10 vs L25 (period diff)
-- `strategy_lab/reports/MOMO_SHADOW_MATCH_2026_05_06.md` — TRUE same-trade comparison
-- `strategy_lab/reports/VPS3_PRODUCTION_INVESTIGATION_2026_05_06.md` — hedge bug root cause
-- `strategy_lab/reports/MOMO_5M_VS_15M_ANALYSIS_2026_05_06.md` — why 5m loses
-- `strategy_lab/reports/MOMO_5M_FIX_PLAN_2026_05_06.md` — 3 fixes ranked
-- `strategy_lab/reports/TV_AGENT_FIX_OPPOSITE_BOOK_FALLBACK.md` — TV agent prompt
-- `strategy_lab/reports/STRATEGY_ARCHITECTURE_2026_05_06.md` — engine inventory
-- `strategy_lab/reports/TRADINGVENUE_VS_CYCLOPS_2026_05_06.md` — competitor analysis
-- `strategy_lab/reports/DATA_INVENTORY_2026_05_06.md` — VPS2/VPS3/local matrix
-
-### Code (new this session)
-- `strategy_lab/loaders/raw_orderbook_l25.py` — canonical L25 loader (parquet-cached)
-- `strategy_lab/loaders/prebuild_l25_parquet.py` — gz CSV → parquet converter
-- `strategy_lab/momo_realfill/match_shadow.py` — same-trade matcher
-- `strategy_lab/momo_realfill/match_shadow_strict.py` — strict-asof variant
-- `strategy_lab/momo_realfill/compare_3way.py` — shadow/realfill/backtest comparator
-- `strategy_lab/momo_realfill/diagnose_5m_slippage.py` — slippage decomposer
-- `strategy_lab/momo_realfill/verify_lookahead_bug.py` — kline asof audit
-
-### Data (new this session)
-- `data/v4/refresh_2026_05_06/cache/{btc,eth,sol}_orderbook_L25.parquet` — 4.3 GB total
-- `data/v4/refresh_2026_05_06/cache/{btc,eth,sol}_trades.parquet` — small
-- `data/v4/refresh_2026_05_06/{btc,eth,sol}_orderbook_raw_L25.csv.gz` — 3.3 GB (source for parquet)
-- `data/v4/refresh_2026_05_06/{btc,eth,sol}_trades_raw.csv.gz` — 757 MB
-- `data/v4/refresh_2026_05_06/markets_full.csv`, `market_resolutions_full.csv`, `binance_klines_full.csv` (refreshed)
-- `data/v4/refresh_2026_05_06/hl_liquidations_btc_eth_sol.csv` — 245 MB (1.98M HL liq)
-- `data/v4/shadow_trades_2026_05_06/momo_resolutions_fresh.csv` — 299 momo fires (server-side JSON-extracted)
-- `data/v4/shadow_trades_2026_05_06/momo_signal_fills.csv` — 235 entry-fill events with telemetry
-
-### Migration (ready to fire)
-- `migration_2026_05_06/00_README.md` — deployment instructions
-- `migration_2026_05_06/99_run_all.sh` — orchestrator
-- `migration_2026_05_06/0{1,2,3,4,5}_*.sh` — individual table migrators
-- `migration_2026_05_06/local_pull.sh` — local data refresh helper
+`strategy_lab/_archive/` holds 33 retired top-level builders moved here on 2026-05-07. Restorable via `mv` if needed.
 
 ---
 
-## Production controller signal logic (memorize this)
+## How to run a backtest that EXACTLY matches a live market
 
-Production code at `/opt/tradingvenue/backend/app/controllers/polymarket_updown.py` (3133 lines on VPS3):
+This is the canonical recipe. Mirrors production controller's signal → fire → fill → resolve loop.
+
+### Step 0: Prelude — paste this at top of any backtest script
 
 ```python
-# signal_ts = bars[-1].bar_open of just-closed strategy 5MIN bar
-# = polymarket_window_start - 300s
-# (one strategy_tf period BEFORE the polymarket market opens)
+import sys
+from pathlib import Path
+import numpy as np
+import pandas as pd
 
-ws_s = int(window_start_us) // 1_000_000
-btc_now = await fetch_close_asof('BINANCE_SPOT_BTC_USDT', '1MIN', ws_s,
-                                  source='binance-spot-ws')
-btc_prior = await fetch_close_asof(symbol_id, '1MIN', ws_s - 300, ...)
-ret_5m = math.log(btc_now / btc_prior)
+ROOT = Path(r"C:\Users\alexandre bandarra\Desktop\global")
+sys.path.insert(0, str(ROOT / "data" / "v4" / "canonical"))
+sys.path.insert(0, str(ROOT / "strategy_lab"))
 
-# For momo: ret_2m at t+120 of market
-btc_at_t120 = await fetch_close_asof(symbol_id, '1MIN', ws_s + 120, ...)
-btc_at_open  = await fetch_close_asof(symbol_id, '1MIN', ws_s, ...)
-ret_2m = math.log(btc_at_t120 / btc_at_open)
+from load import (
+    load_resolutions,                    # chainlink-only universe (23,553 markets)
+    load_klines, load_klines_asof,        # binance + cex 1MIN bars
+    load_chainlink_rtds, load_chainlink_asof,
+    load_orderbook_l25_streaming,         # filter by slugs to bound memory
+    load_tier1_entries,                   # pre-joined entry book at ws+120s
+    load_trades,                          # ⚠️ stale through May 6 only
+    asof_strict,                          # CAUSAL end-time-indexed asof
+    slug_to_ws_s, add_ws_s, ret_2m_at_ws, # ws_s convention helpers
+)
+from book_walk import book_walk_fill      # production fill model
 ```
 
-**To replicate in backtest:**
-- Use `binance_klines_v2` table on VPS3 with `source='binance-spot-ws'` filter
-- For polymarket_window_start = ws, use `ts_query = ws + 120` for momo, `ws - 300` for V3
-- Use 1MIN bars only
-- `asof` query MUST be end-time-indexed (`time_period_end_us ≤ ts_query × 1e6`) to avoid lookahead
+### Step 1: Verify environment
+
+```python
+import subprocess
+subprocess.run(["py", "-3", "-X", "utf8",
+                str(ROOT / "data" / "v4" / "canonical" / "_test_ws_s.py")],
+               check=True)
+# Must print "=== ALL CHECKS PASSED ==="
+```
+
+### Step 2: Load universe (chainlink-resolved markets only)
+
+```python
+res = load_resolutions()                                          # 23,553 markets, all assets / tfs
+# Or filter:
+res = load_resolutions(assets=["BTC"], timeframes=["5m"])         # 5,887 BTC 5m markets
+
+# Add ws_s column (production anchor)
+res = add_ws_s(res)
+# res now has: slug, asset, timeframe, window_start_unix (slug suffix),
+#              ws_s (= window_start_unix - window_s), outcome (Up/Down, chainlink-derived)
+```
+
+### Step 3: Compute signal (production-matching)
+
+```python
+end_us_btc, prices_btc = load_klines_asof("BTC", "binance-spot-ws", "1MIN")
+
+def signal_for_row(row):
+    ws_s = int(row.ws_s)
+    p0 = asof_strict(end_us_btc, prices_btc, ws_s * 1_000_000)
+    p2 = asof_strict(end_us_btc, prices_btc, (ws_s + 120) * 1_000_000)
+    if not (np.isfinite(p0) and np.isfinite(p2) and p0 > 0):
+        return np.nan, np.nan
+    ret_2m = np.log(p2 / p0)
+    return ret_2m, "Up" if ret_2m > 0 else "Down"
+
+res[["ret_2m", "signal_dir"]] = res.apply(signal_for_row, axis=1, result_type="expand")
+```
+
+### Step 4: Gate (production fire rule = top decile per cell-day)
+
+```python
+res["day"] = res["ws_s"] // 86_400
+gated = []
+for (asset, tf), sub in res.groupby(["asset", "timeframe"]):
+    sub = sub.sort_values("ws_s").reset_index(drop=True)
+    sub["abs_ret"] = sub["ret_2m"].abs()
+    for day, day_df in sub.groupby("day"):
+        train = sub[(sub.day < day) & (sub.day >= day - 14)]
+        if len(train) < 50:
+            continue   # warmup
+        thr = train.abs_ret.quantile(0.90)
+        fires = day_df[day_df.abs_ret >= thr].copy()
+        fires["thr_used"] = thr
+        gated.append(fires)
+gated = pd.concat(gated, ignore_index=True)
+# `gated` is every market production would have fired on
+```
+
+### Step 5: Lookup entry book at ws+120 (production fire moment)
+
+```python
+tier1_btc = load_tier1_entries("btc")   # rows keyed by (slug, outcome)
+# Each row has ask_price_0..24, ask_size_0..24, bid_price_0..24, bid_size_0..24
+def entry_book(row):
+    held = row.signal_dir
+    book = tier1_btc[(tier1_btc.slug == row.slug) & (tier1_btc.outcome == held)]
+    return book.iloc[0] if len(book) else None
+```
+
+### Step 6: Spread filter (production)
+
+```python
+SPREAD_FILTER = {"btc": 0.02, "eth": 0.02, "sol": 0.025}
+def passes_spread(book, asset):
+    return (book.ask_price_0 - book.bid_price_0) <= SPREAD_FILTER[asset]
+```
+
+### Step 7: Walk the book — fill at $25 notional
+
+```python
+ask_p = np.array([book[f"ask_price_{i}"] for i in range(25)])
+ask_s = np.array([book[f"ask_size_{i}"]  for i in range(25)])
+vwap_e, shares_e, usd_e, levels_hit, under = book_walk_fill(ask_p, ask_s, 25.0)
+if under and usd_e < 25.0 * 0.5:
+    # production skips: book too thin
+    pass
+```
+
+### Step 8: Exit policy
+
+```python
+# HOLD (simplest, matches baseline)
+def settle_hold(row, vwap_e, shares_e, usd_e):
+    won = (row.signal_dir == row.outcome)
+    if won:
+        gross = shares_e * 1.0
+        profit = gross - usd_e
+        fee = profit * 0.02 if profit > 0 else 0.0
+        return profit - fee
+    return -usd_e
+```
+
+For HEDGE / SELL see `strategy_lab/meta_classifier/extended_backtest_with_robustness.py:simulate()` — the canonical implementation. Uses 10s bucket-book snapshots for exit monitoring.
+
+### Step 9: Aggregate
+
+```python
+gated["pnl"] = gated.apply(lambda r: settle_hold(r, ...), axis=1)
+print(f"n={len(gated)} hit={(gated.pnl>0).mean()*100:.1f}% "
+      f"mean=${gated.pnl.mean():+.4f} total=${gated.pnl.sum():+.2f}")
+```
+
+### Step 10: Validate against production shadow
+
+```python
+shadow = pd.read_csv(ROOT / "data" / "v4" / "refresh_2026_05_12" / "vps3_trading_events_14d.csv")
+# Filter to overlapping window + sleeve_id; compare per-slug PnL diff.
+# Tooling: strategy_lab/meta_classifier/momo_shadow_vs_backtest.py
+```
+
+If per-slug PnL diff is > $0.10/tr on any slug, something is wrong — anchor, asof, spread filter, or fee. Reference: `MOMO_PHASE3_4_ANCHOR_LOOKAHEAD_FIXED_2026_05_09.md` (May 7 within $0.07/tr of production after fixing anchor + asof).
 
 ---
 
-## VPS access reminders
+## Recent benchmark — full-universe momo on canonical (2026-05-16)
+
+**Headline:** -$1.21/tr (n=2,909), 48.4% hit, HOLD across full 21d universe.
+
+**HOLD per (version × asset × tf):**
+
+| version | asset | tf | n | pnl_mean | hit% |
+|---|---|---|---:|---:|---:|
+| **v1** | **BTC** | **15m** | **97** | **+$2.37** | **55.7%** |
+| **v1** | **SOL** | **5m** | **227** | **+$1.45** | **54.6%** |
+| v1 | BTC | 5m | 593 | -$1.36 | 48.1% |
+| v1 | ETH | 15m | 40 | -$6.61 | 37.5% |
+| v1 | ETH | 5m | 331 | -$2.99 | 45.0% |
+| v1 | SOL | 15m | 25 | -$3.50 | 44.0% |
+| v2 | BTC | 15m | 136 | -$0.14 | 50.7% |
+| v2 | BTC | 5m | 565 | -$1.27 | 48.1% |
+| v2 | ETH | 15m | 75 | -$3.26 | 44.0% |
+| v2 | ETH | 5m | 415 | -$0.60 | 49.9% |
+| v2 | SOL | 15m | 70 | -$7.22 | 37.1% |
+| v2 | SOL | 5m | 335 | -$1.42 | 48.7% |
+
+**Walkforward:** every variant has negative `oos_pnl_total` across 18 trading days. Best: v1 SELL_3bp on BTC 15m with 6 of 18 days positive.
+
+**Permutation (1000 sign-flip draws):** no cell achieves p<0.05. Best p≈0.08 on `v1 BTC 15m SELL_3bp / HEDGE_3bp / HYBRID_3bp` (n=97, observed +$278).
+
+**Conclusion:** the q90 |ret_2m| gate on the 21d chainlink-resolved universe does NOT carry positive expectancy on Polymarket-CLOB walks at $25 notional. Strong shadow numbers from prior sessions are window effects on n=20-58.
+
+Full output: `data/v4/canonical/_results/full_universe_2026_05_16/`
+Source: `strategy_lab/reports/MOMO_FULL_UNIVERSE_2026_05_16.md`
+
+---
+
+## Open work / strategy ideas
+
+### A. Deploy the two surviving cells; drop the rest
+- `v1 sol_5m_momo_HOLD` (+$1.45/tr, n=227, hit 55%)
+- `v1 btc_15m_momo_HYBRID_RevOrStop_SELL` (+$3.19/tr, n=97, hit 56%, p≈0.08)
+
+### B. Spread filter sensitivity (never run)
+Loosen from {BTC: 0.02, ETH: 0.02, SOL: 0.025} → {0.05, 0.05, 0.05}. Prior overlap analysis showed it would close ~$1.69/tr gap but won't flip sign. Worth running for completeness.
+
+### C. v3 family dispatcher bug — NOT fixed
+Sleeves `v3, v3_1, v3_2, v3_3, v4` emit byte-identical signals on BTC/ETH ~98% of the time despite having different config. **Spec is ready:** `strategy_lab/reports/TV_AGENT_V3_FAMILY_REVERIFICATION_2026_05_16.md` (today). Hand to TV agent.
+
+### D. Sniper SOL direction inversion
+`sol_5m_sniper` -$824 vs `sol_5m_sniper_INV` +$394 (237 trades each, mirror images). Investigate sniper signal code on VPS3 before disabling.
+
+### E. Test if v2's anchors actually beat v1
+v2 (`ws-360, ws-240` for 5m) loses worse than v1 across every cell. Either v2 has no edge over v1, or the gate is misaligned. Try v2-only universe with q95 gate.
+
+### F. Trades data delta puller
+Polymarket trades end 2026-05-06 (10 days stale). Add a trades-delta step to `migration_2026_05_12/local_pull.sh` step 7.
+
+### G. Cross-venue cex alignment as a filter
+`cex_alignment_*.py` engines exist but not yet stacked with momo. Test whether coinbase/kraken agreement gate improves win rate at the cost of fire rate.
+
+### H. Hour-of-day / day-of-week effects
+`volume_INV_NIGHT` fires 100% during night hours and is structurally a bleeder. Test whether inverting the FILTER (only-day version) is the real edge.
+
+### I. Confluence revisit on canonical
+The 2026-05-07 confluence work used `refresh_2026_05_06/`. Re-build FLOW/STRUCTURE/TRIGGER/GUARD on canonical, re-test SILVER on the 21d universe (much larger n than the original n=8).
+
+### J. V5 derivatives gauntlet — ETH deploy candidate
+`V5_GAUNTLET_VALIDATION.md` says v5 frontier ETH passes 6/8 gates. **TODO:** apply carry overlay (Tier F fix) and re-run final 2 gates; if pass, hand to TV agent for ETH 4h deploy.
+
+---
+
+## Known issues
+
+1. **Polymarket trades data is STALE** (ends May 6, 10d ago). Strategy using trades → window Apr 22 - May 6 only.
+2. **v3 family dispatcher bug** — see §C above.
+3. **SPREAD_FILTER experiment never run** — see §B.
+4. **`eth_5m_momo_v2_HOLD` has 24 `qty_compute_failed` events** in 7d — separate ticket.
+5. **`sol_5m_sniper` inverted sign on SOL** — see §D.
+6. **`refresh_2026_05_06/` (9.8 GB) still on disk** — canonical references its L25 cache for the early-window Apr 22 - May 6 baseline. **DO NOT delete** — would break `build.py --step orderbook` re-runs.
+7. **Tier1 L25 server-side join (step 7 of local_pull.sh)** hung 25+ min on VPS3 last run — non-blocking but needs investigation.
+8. **HL liquidations dir-label drift post-Feb 2026** — collector still filters to liquidations at insertion, but `dir` field is now HLP-vault perspective. `build_trigger.py` was fixed 2026-05-07 to accept all rows. For directional analysis (longs liquidated vs shorts), see translation table in `strategy_lab/confluence/trigger/liq_magnet.py`.
+
+---
+
+## VPS / data access reference
 
 ```bash
-ssh -i ~/.ssh/vps2_ed25519 "root@[2605:a140:2323:6975::1]"   # collector + V1
-ssh -i ~/.ssh/vps3_ed25519 root@185.190.143.7                  # strategy engine + dashboard + binance-spot-ws
+# VPS2 (Contabo IPv6) — markets catalog, cex klines, hl_liquidations
+ssh -i ~/.ssh/vps2_ed25519 "root@[2605:a140:2323:6975::1]"
+
+# VPS3 — orderbook 11GB, trades 3.2GB, binance 2GB, oracle 593MB, trading.events
+ssh -i ~/.ssh/vps3_ed25519 root@185.190.143.7
 ```
 
-VPS2 = collector + V1 control arm (Binance collector DEAD due to geoblock since 2026-04-22).
-VPS3 = strategy engine + dashboard + Binance spot collector (working — `binance-spot-ws` source).
+- VPS3 production controller: `/opt/tradingvenue/backend/app/controllers/polymarket_updown.py`
+- VPS3 paper executor: `/opt/tradingvenue/backend/app/venues/polymarket/paper.py`
+- VPS3 .env: `/etc/tradingvenue/.env`
+- VPS3 storedata DB: `psql -d storedata`
 
-VPS3 production controller path: `/opt/tradingvenue/backend/app/controllers/polymarket_updown.py`.
-VPS3 paper executor path: `/opt/tradingvenue/backend/app/venues/polymarket/paper.py`.
-VPS3 .env: `/etc/tradingvenue/.env`.
-
----
-
-## Critical reminders
-
-1. **HEDGE MECHANISM IS BROKEN.** 0 hedges fired in 16h. All HEDGE sleeves are effectively HOLD-only. Don't trust HEDGE PnL until `TV_AGENT_FIX_OPPOSITE_BOOK_FALLBACK.md` ships.
-2. **5m sleeves are bleeding ($-1/trade).** Pause until dynamic-sizing fix deploys.
-3. **15m sleeves are working ($+11/trade).** Keep running.
-4. **Backtest kline-asof lookahead bug FIXED 2026-05-06.** Re-running showed prior numbers were overstated by $14/trade on HOLD cells (5m). Verify production controller's `fetch_close_asof` doesn't have the same bug — open question §1 below.
-5. **VPS2 binance collector DEAD** — use VPS3 `binance-spot-ws` source for klines.
-6. **L25 raw + trades_v2 already pulled and cached as parquet.** No need to re-pull. Parquet cache at `data/v4/refresh_2026_05_06/cache/`.
-7. **VPS2 deprecation in ~10 days.** Migration scripts ready in `migration_2026_05_06/`. Run before deadline.
-8. **Polymarket binary markets resolve at exact tf boundaries** (multiples of 300/900). Shadow `at` timestamp is recorded a few seconds AFTER actual resolution. Slug derivation:
-   ```python
-   tf_secs = 300 if tf == "5m" else 900
-   ws_unix = (at_unix // tf_secs) * tf_secs - tf_secs
-   slug = f"{asset}-updown-{tf}-{ws_unix}"
-   ```
-9. **Median SOL_5m L1 ask = $5.80.** Walking $25 stake forces 5+ level walks. Dynamic sizing cap is mandatory for SOL.
-10. **Production telemetry is logged in `trading.events` table on VPS3:**
-    - `kind='poly_updown_signal'` (every signal evaluation)
-    - `kind='poly_updown_hedge_skip'` (every hedge attempt that failed)
-    - `kind='poly_updown_resolution'` (every settled trade)
-    - `data` JSON has `bar_ctx_age_ms`, `book_ts`, `fill_price`, etc.
-
----
-
-## Open questions for next session
-
-1. **Production controller's spread filter timing**: signal-time or fill-time? (Determines whether dynamic-sizing fix needs to move the spread check or just tighten threshold.)
-2. **CLOB token-id encoding**: is `slot.no_token_id` stored as TEXT (preserved precision) or BIGINT (truncated)? `grep -n "no_token_id" /opt/tradingvenue/backend/app/controllers/polymarket_updown.py` on VPS3.
-3. **Production's `fetch_close_asof` semantics**: does it use `time_period_start_us` or `time_period_end_us`? Lookahead bug only matters in production if it inherits this.
-4. **Live trades vs paper**: confirm 0 live momo fires (only paper). Operator should verify.
-
----
-
-## Quick start commands for fresh session
+### Pull fresh data into canonical
 
 ```bash
-cd "/c/Users/alexandre bandarra/Desktop/global"
+# Full refresh (mirror VPS3 + VPS2)
+bash migration_2026_05_12/local_pull.sh
 
-# Refresh momo shadow data
-ssh -i ~/.ssh/vps3_ed25519 root@185.190.143.7 \
-  "sudo -u postgres psql -d storedata -c \"COPY (SELECT at, sleeve_id, data->>'symbol' AS symbol, data->>'tf' AS tf, data->>'signal' AS signal, data->>'outcome' AS outcome, (data->>'won')::boolean AS won, data->>'mode' AS mode, (data->>'hedged')::boolean AS hedged, COALESCE((data->>'partial_bid_exit')::boolean, false) AS partial_bid_exit, (data->>'pnl_usd')::numeric AS pnl_usd, (data->>'entry_price')::numeric AS entry_price, (data->>'entry_qty')::numeric AS entry_qty, data->>'hedge_price' AS hedge_price, data->>'condition_id' AS condition_id, data->>'price_source' AS price_source, data->>'fill_event_id' AS fill_event_id FROM trading.events WHERE kind='poly_updown_resolution' AND sleeve_id ~ 'momo' ORDER BY at) TO STDOUT WITH CSV HEADER\"" \
-  > data/v4/shadow_trades_2026_05_06/momo_resolutions_fresh.csv
+# L25 history (separate pull)
+bash migration_2026_05_12/pull_l25_vps3.sh
 
-# Re-run TRUE same-trade matcher
-py -X utf8 -m strategy_lab.momo_realfill.match_shadow
-
-# Re-run 3-way comparison (shadow vs L25 realfill vs L10 backtest)
-py -X utf8 -m strategy_lab.momo_realfill.compare_3way
-
-# Re-run 5m slippage diagnosis
-py -X utf8 -m strategy_lab.momo_realfill.diagnose_5m_slippage
-
-# Verify lookahead bug
-py -X utf8 -m strategy_lab.momo_realfill.verify_lookahead_bug
+# Rebuild canonical from raw refreshes
+py -3 -X utf8 data/v4/canonical/build.py
+py -3 -X utf8 data/v4/canonical/build.py --step orderbook   # one step only
 ```
 
 ---
 
-End of pointer doc. See specific reports for details:
-- Hedge bug + fix prompt: `TV_AGENT_FIX_OPPOSITE_BOOK_FALLBACK.md`
-- 5m fixes ranked: `MOMO_5M_FIX_PLAN_2026_05_06.md`
-- Engine inventory: `STRATEGY_ARCHITECTURE_2026_05_06.md`
-- Cyclops vs us: `TRADINGVENUE_VS_CYCLOPS_2026_05_06.md`
-- Same-trade evidence: `MOMO_SHADOW_MATCH_2026_05_06.md`
+## Recommended starting prompt for next session
+
+```
+Read NEXT_SESSION_START_HERE.md first.
+
+Canonical is fresh as of 2026-05-16 (Apr 24 → May 15 UTC, 23,553 chainlink-resolved
+markets). Use `from data.v4.canonical.load import *` for all data loads.
+
+Production convention: ws_s = slug_suffix - window_s (PREVIOUS slot). Never use
+the slug suffix as ws_s directly — that's a 25-40pp hit-rate inflation bug.
+
+Full-universe momo backtest shows the strategy is unprofitable except on 2 cells
+(v1 SOL 5m HOLD, v1 BTC 15m HYBRID_RevOrStop_SELL). Pursue new strategies on the
+canonical universe; small-n shadow positives don't survive.
+
+[Your task / strategy idea here]
+```
+
+If running backtests, copy Step 0 prelude from §"How to run a backtest that EXACTLY matches a live market".
+
+---
+
+## Recent reports (this session + relevant earlier)
+
+- `strategy_lab/reports/MOMO_FULL_UNIVERSE_2026_05_16.md` *(today — definitive full-universe verdict)*
+- `strategy_lab/reports/TV_AGENT_V3_FAMILY_REVERIFICATION_2026_05_16.md` *(today — v3 family spec for TV agent)*
+- `strategy_lab/reports/DATA_INVENTORY_2026_05_15.md` *(May 15 inventory baseline)*
+- `strategy_lab/reports/SESSION_HANDOFF_2026_05_10_WS_S_CONVENTION.md` *(THE ws_s convention reference)*
+- `strategy_lab/reports/MOMO_PHASE3_4_ANCHOR_LOOKAHEAD_FIXED_2026_05_09.md`
+- `strategy_lab/reports/MOMO_CHAINLINK_ONLY_2026_05_09.md`
+- `strategy_lab/reports/ALL_SHADOW_SLEEVES_TABLE_2026_05_11.md`
+- `strategy_lab/reports/ETH_5M_V3_V4_DIAGNOSIS_2026_05_11.md`
+- `strategy_lab/reports/SILVER_VALIDATION_FINAL_2026_05_07.md` *(confluence verdict — paper-only candidate)*
+- `strategy_lab/reports/CYCLOPS_UPDATE_COMPARISON_2026_05_07.md`
+- `strategy_lab/reports/TV_AGENT_SPEC_CONFLUENCE_SILVER_V1.md`
+- `strategy_lab/reports/derivatives_zscore/V5_GAUNTLET_VALIDATION.md`
+- `strategy_lab/reports/CLEANUP_EXECUTION_2026_05_07.md`
+
+---
+
+*End of context document. Generated 2026-05-16.*

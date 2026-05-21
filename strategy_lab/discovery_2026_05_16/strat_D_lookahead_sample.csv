@@ -1,0 +1,4 @@
+slug,ticker,tf,ws_s,fire_us,slot_end_us,fire_lt_slot_end (margin>=180s),bn_ret_2m,oi_delta_1h,ls_ratio,hl_funding,hl_funding_cross_4h,outcome
+btc-updown-5m-1777344300,BTC,5m,1777344000,1777344120000000,1777344600000000,True,0.0,0.0,0.816,-1e-05,0,Down
+btc-updown-5m-1777771200,BTC,5m,1777770900,1777771020000000,1777771500000000,True,-0.000143,0.0,0.816,1e-05,0,Down
+btc-updown-5m-1778879100,BTC,5m,1778878800,1778878920000000,1778879400000000,True,0.00018,0.0,0.816,-3e-06,1,Up

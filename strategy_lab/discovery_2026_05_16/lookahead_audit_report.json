@@ -1,0 +1,345 @@
+{
+  "n_borderline": 19,
+  "n_negative": 0,
+  "n_signal_changes_minus_1us": 6,
+  "trades": [
+    {
+      "slug": "btc-updown-15m-1778590800",
+      "ticker": "BTC",
+      "entry_us": 1778591400000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 784000,
+      "book_fill_delta_us": 784000,
+      "signal": "UP",
+      "vwap": 0.553652931266978,
+      "pnl": -25.0,
+      "signal_robust_to_-1us": "True",
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "eth-updown-15m-1777995000",
+      "ticker": "ETH",
+      "entry_us": 1777995600000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 4581000,
+      "book_fill_delta_us": 4581000,
+      "signal": "UP",
+      "vwap": 0.5236617335218406,
+      "pnl": 22.285927692725263,
+      "signal_robust_to_-1us": "True",
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "btc-updown-15m-1777321800",
+      "ticker": "BTC",
+      "entry_us": 1777322400000000,
+      "p_now_delta_us": 74400000000,
+      "p_then_delta_us": 74400000000,
+      "sigma_window_last_delta_us": 74400000000,
+      "book_up_delta_us": 806000,
+      "book_fill_delta_us": 806000,
+      "signal": "DOWN",
+      "vwap": 0.4214991944796526,
+      "pnl": 33.62585248293448,
+      "signal_robust_to_-1us": "True",
+      "warnings": []
+    },
+    {
+      "slug": "btc-updown-15m-1778221800",
+      "ticker": "BTC",
+      "entry_us": 1778222400000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 856000,
+      "book_fill_delta_us": 856000,
+      "signal": "UP",
+      "vwap": 0.42386748032970145,
+      "pnl": -25.0,
+      "signal_robust_to_-1us": false,
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "btc-updown-15m-1777901400",
+      "ticker": "BTC",
+      "entry_us": 1777902000000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 949000,
+      "book_fill_delta_us": 949000,
+      "signal": "DOWN",
+      "vwap": 0.5199999809265137,
+      "pnl": 22.615386343566684,
+      "signal_robust_to_-1us": "True",
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "eth-updown-15m-1778856300",
+      "ticker": "ETH",
+      "entry_us": 1778856900000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 338000,
+      "book_fill_delta_us": 335000,
+      "signal": "DOWN",
+      "vwap": 0.5699999928474426,
+      "pnl": 18.482456679709625,
+      "signal_robust_to_-1us": "True",
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "btc-updown-15m-1778870700",
+      "ticker": "BTC",
+      "entry_us": 1778871300000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 646000,
+      "book_fill_delta_us": 646000,
+      "signal": "UP",
+      "vwap": 0.5600000023841858,
+      "pnl": -25.0,
+      "signal_robust_to_-1us": false,
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "btc-updown-15m-1777496400",
+      "ticker": "BTC",
+      "entry_us": 1777497000000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 767000,
+      "book_fill_delta_us": 767000,
+      "signal": "UP",
+      "vwap": 0.5600000023841858,
+      "pnl": 19.249999813735485,
+      "signal_robust_to_-1us": false,
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "eth-updown-15m-1778086800",
+      "ticker": "ETH",
+      "entry_us": 1778087400000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 442000,
+      "book_fill_delta_us": 442000,
+      "signal": "UP",
+      "vwap": 0.5699999928474426,
+      "pnl": 18.482456679709625,
+      "signal_robust_to_-1us": "True",
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "eth-updown-15m-1777074300",
+      "ticker": "ETH",
+      "entry_us": 1777074900000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 1689000,
+      "book_fill_delta_us": 1689000,
+      "signal": "UP",
+      "vwap": 0.5416798175278493,
+      "pnl": 20.729671121613066,
+      "signal_robust_to_-1us": "True",
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "btc-updown-15m-1777620600",
+      "ticker": "BTC",
+      "entry_us": 1777621200000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 578000,
+      "book_fill_delta_us": 578000,
+      "signal": "UP",
+      "vwap": 0.5899999737739563,
+      "pnl": -25.0,
+      "signal_robust_to_-1us": "True",
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "eth-updown-15m-1778787900",
+      "ticker": "ETH",
+      "entry_us": 1778788500000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 1627000,
+      "book_fill_delta_us": 1627000,
+      "signal": "UP",
+      "vwap": 0.5393334020536437,
+      "pnl": -25.0,
+      "signal_robust_to_-1us": "True",
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "btc-updown-15m-1777540500",
+      "ticker": "BTC",
+      "entry_us": 1777541100000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 1705000,
+      "book_fill_delta_us": 1705000,
+      "signal": "DOWN",
+      "vwap": 0.5699999928474426,
+      "pnl": -25.0,
+      "signal_robust_to_-1us": "True",
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "eth-updown-15m-1778229900",
+      "ticker": "ETH",
+      "entry_us": 1778230500000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 1093000,
+      "book_fill_delta_us": 1093000,
+      "signal": "UP",
+      "vwap": 0.5293764672315323,
+      "pnl": -24.999999999999996,
+      "signal_robust_to_-1us": false,
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "btc-updown-15m-1778137200",
+      "ticker": "BTC",
+      "entry_us": 1778137800000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 835000,
+      "book_fill_delta_us": 835000,
+      "signal": "DOWN",
+      "vwap": 0.5899999737739563,
+      "pnl": -25.0,
+      "signal_robust_to_-1us": false,
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "btc-updown-15m-1777974300",
+      "ticker": "BTC",
+      "entry_us": 1777974900000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 241000,
+      "book_fill_delta_us": 241000,
+      "signal": "DOWN",
+      "vwap": 0.4699999988079071,
+      "pnl": 27.627659706683005,
+      "signal_robust_to_-1us": "True",
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "eth-updown-15m-1777994100",
+      "ticker": "ETH",
+      "entry_us": 1777994700000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 1056000,
+      "book_fill_delta_us": 1056000,
+      "signal": "UP",
+      "vwap": 0.5261422997430767,
+      "pnl": 22.06534935884023,
+      "signal_robust_to_-1us": "True",
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "btc-updown-15m-1777016700",
+      "ticker": "BTC",
+      "entry_us": 1777017300000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 964000,
+      "book_fill_delta_us": 964000,
+      "signal": "UP",
+      "vwap": 0.5899999737739563,
+      "pnl": 17.025425574656992,
+      "signal_robust_to_-1us": "True",
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "eth-updown-15m-1778256900",
+      "ticker": "ETH",
+      "entry_us": 1778257500000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 1344000,
+      "book_fill_delta_us": 1344000,
+      "signal": "UP",
+      "vwap": 0.5728055525196069,
+      "pnl": -25.000000000000004,
+      "signal_robust_to_-1us": false,
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    },
+    {
+      "slug": "eth-updown-15m-1778760000",
+      "ticker": "ETH",
+      "entry_us": 1778760600000000,
+      "p_now_delta_us": 0,
+      "p_then_delta_us": 600000000,
+      "sigma_window_last_delta_us": 0,
+      "book_up_delta_us": 6195000,
+      "book_fill_delta_us": 6195000,
+      "signal": "DOWN",
+      "vwap": 0.5,
+      "pnl": 24.5,
+      "signal_robust_to_-1us": "True",
+      "warnings": [
+        "p_now bar ends EXACTLY at entry_us"
+      ]
+    }
+  ]
+}

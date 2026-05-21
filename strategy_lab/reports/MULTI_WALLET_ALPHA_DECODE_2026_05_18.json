@@ -1,0 +1,603 @@
+[
+  {
+    "addr": "0x04b6d7e9",
+    "kpnl": "$212k/day",
+    "note": "pair-arb (reference)",
+    "basic": {
+      "n_trades": 57415,
+      "maker_pct": 0.9774971697291649,
+      "taker_pct": 0.022502830270835147,
+      "window_start": "2026-05-14 14:02:40",
+      "window_end": "2026-05-16 05:15:05",
+      "window_days": 1.6336226851851852,
+      "sum_notional": 21633835.390362334
+    },
+    "cells": {
+      "BTC_updown_15m": 9884,
+      "BTC_updown_5m": 45004,
+      "nan_other": 2061
+    },
+    "slug_agg_n": 266,
+    "leftover": {
+      "n_material": 228,
+      "n_with_res": 229,
+      "leftover_on_winner_pct": 0.44298245614035087,
+      "leftover_on_winner_pct_size_weighted": 0.31111571875099764,
+      "mean_paired_pct": 0.8717715300419308,
+      "median_paired_pct": 0.9153432278911555
+    },
+    "vol_filter": {
+      "primary_asset": "BTC",
+      "n_traded": 229,
+      "n_skipped": 169,
+      "traded_vol_mean": 0.0002449093143053688,
+      "skipped_vol_mean": 0.000207379948325475,
+      "traded_vol_median": 0.00019377464742476036,
+      "skipped_vol_median": 0.00015876634892819652,
+      "ratio_traded_to_skipped": 1.1809691162666938
+    },
+    "slug_selection": {
+      "primary_asset": "BTC",
+      "primary_tf": "5m",
+      "n_traded_in_window": 171,
+      "n_avail_in_window": 300,
+      "selection_rate": 0.57
+    },
+    "time_of_day": {
+      "by_hr": {
+        "5": {
+          "trades": 3237,
+          "pct": 0.056378995036140384
+        },
+        "6": {
+          "trades": 2595,
+          "pct": 0.04519724810589567
+        },
+        "9": {
+          "trades": 236,
+          "pct": 0.00411042410519899
+        },
+        "10": {
+          "trades": 3696,
+          "pct": 0.06437342157972656
+        },
+        "11": {
+          "trades": 2990,
+          "pct": 0.05207698336671601
+        },
+        "12": {
+          "trades": 3216,
+          "pct": 0.056013236958982845
+        },
+        "13": {
+          "trades": 2447,
+          "pct": 0.04261952451449969
+        },
+        "14": {
+          "trades": 4702,
+          "pct": 0.0818949751807019
+        },
+        "15": {
+          "trades": 8340,
+          "pct": 0.14525820778542192
+        },
+        "16": {
+          "trades": 6500,
+          "pct": 0.11321083340590438
+        },
+        "17": {
+          "trades": 7440,
+          "pct": 0.12958286162152746
+        },
+        "18": {
+          "trades": 6318,
+          "pct": 0.11004093007053906
+        },
+        "19": {
+          "trades": 5698,
+          "pct": 0.0992423582687451
+        }
+      },
+      "active_hours": 13,
+      "peak_hour": 15,
+      "peak_pct": 0.14525820778542192
+    },
+    "momentum": {
+      "n_late": 271,
+      "BTC_n_late": 198,
+      "BTC_match_ret60s": 0.5656565656565656,
+      "BTC_match_ret120s": 0.5404040404040404
+    },
+    "class": "MAKER PAIR ARB",
+    "recommendation": "COPY (high confidence). Pair-arb on maker side is self-hedging \u2014 directional risk minimal. Replication needs Polymarket maker access + L25 book + rebate-aware fee model. Reference is the mint-and-sell V2 spec (MINT_AND_SELL_*_2026_05_16.md)."
+  },
+  {
+    "addr": "0xcfb103c3",
+    "kpnl": "$-39/day",
+    "note": "loser",
+    "basic": {
+      "n_trades": 48379,
+      "maker_pct": 0.10182103805370099,
+      "taker_pct": 0.898178961946299,
+      "window_start": "2026-05-14 13:57:50",
+      "window_end": "2026-05-16 07:57:45",
+      "window_days": 1.7499421296296296,
+      "sum_notional": 12295285.2638642
+    },
+    "cells": {
+      "BTC_updown_5m": 47047
+    },
+    "slug_agg_n": 428,
+    "leftover": {
+      "n_material": 259,
+      "n_with_res": 324,
+      "leftover_on_winner_pct": 0.4247104247104247,
+      "leftover_on_winner_pct_size_weighted": 0.4248259286789801,
+      "mean_paired_pct": 0.969689786425289,
+      "median_paired_pct": 0.9857917436420526
+    },
+    "vol_filter": {
+      "primary_asset": "BTC",
+      "n_traded": 300,
+      "n_skipped": 154,
+      "traded_vol_mean": 0.00021093286647922463,
+      "skipped_vol_mean": 0.00021889897372167673,
+      "traded_vol_median": 0.0001572188393623719,
+      "skipped_vol_median": 0.00015969594283626876,
+      "ratio_traded_to_skipped": 0.9636082933281325
+    },
+    "slug_selection": {
+      "primary_asset": "BTC",
+      "primary_tf": "5m",
+      "n_traded_in_window": 324,
+      "n_avail_in_window": 361,
+      "selection_rate": 0.8975069252077562
+    },
+    "time_of_day": {
+      "by_hr": {
+        "0": {
+          "trades": 1905,
+          "pct": 0.03937658901589532
+        },
+        "1": {
+          "trades": 2846,
+          "pct": 0.05882717708096488
+        },
+        "2": {
+          "trades": 2516,
+          "pct": 0.05200603567663656
+        },
+        "3": {
+          "trades": 3437,
+          "pct": 0.07104322123235288
+        },
+        "4": {
+          "trades": 4162,
+          "pct": 0.08602906219640753
+        },
+        "5": {
+          "trades": 1792,
+          "pct": 0.03704086483804957
+        },
+        "6": {
+          "trades": 2604,
+          "pct": 0.05382500671779078
+        },
+        "7": {
+          "trades": 2531,
+          "pct": 0.05231608755865148
+        },
+        "8": {
+          "trades": 1659,
+          "pct": 0.03429173815085058
+        },
+        "9": {
+          "trades": 1668,
+          "pct": 0.03447776928005953
+        },
+        "10": {
+          "trades": 1343,
+          "pct": 0.027759978503069514
+        },
+        "11": {
+          "trades": 1620,
+          "pct": 0.033485603257611775
+        },
+        "12": {
+          "trades": 962,
+          "pct": 0.01988466069989045
+        },
+        "13": {
+          "trades": 479,
+          "pct": 0.009900990099009901
+        },
+        "14": {
+          "trades": 79,
+          "pct": 0.0016329399119452655
+        },
+        "15": {
+          "trades": 1364,
+          "pct": 0.02819405113789041
+        },
+        "16": {
+          "trades": 1202,
+          "pct": 0.02484549081212923
+        },
+        "17": {
+          "trades": 1698,
+          "pct": 0.03509787304408938
+        },
+        "18": {
+          "trades": 2168,
+          "pct": 0.04481283201389032
+        },
+        "19": {
+          "trades": 2692,
+          "pct": 0.055643977758944994
+        },
+        "20": {
+          "trades": 2754,
+          "pct": 0.05692552553794002
+        },
+        "21": {
+          "trades": 2384,
+          "pct": 0.049277579114905226
+        },
+        "22": {
+          "trades": 2826,
+          "pct": 0.05841377457161165
+        },
+        "23": {
+          "trades": 1688,
+          "pct": 0.03489117178941276
+        }
+      },
+      "active_hours": 24,
+      "peak_hour": 4,
+      "peak_pct": 0.08602906219640753
+    },
+    "momentum": {
+      "n_late": 232,
+      "BTC_n_late": 67,
+      "BTC_match_ret60s": 0.4925373134328358,
+      "BTC_match_ret120s": 0.45569620253164556
+    },
+    "class": "LOSER",
+    "recommendation": "DO NOT COPY. Underperforms. Reported $-39/day. Note: high chain volume can be misleading \u2014 net PnL is what matters."
+  },
+  {
+    "addr": "0xb27bc932",
+    "kpnl": "$254k/day",
+    "note": "scalper (partial cache, no trades_chain)",
+    "basic": {
+      "n_trades": 600,
+      "maker_pct": NaN,
+      "taker_pct": NaN,
+      "window_start": "2026-05-15 04:38:47",
+      "window_end": "2026-05-15 04:50:32",
+      "window_days": 0.008159722222222223,
+      "sum_notional": NaN
+    },
+    "time_of_day": {},
+    "momentum": {
+      "n_late": 73,
+      "BTC_n_late": 73,
+      "BTC_match_ret60s": 0.6986301369863014,
+      "BTC_match_ret120s": 0.7945205479452054
+    },
+    "class": "UNCLASSIFIED",
+    "recommendation": "INVESTIGATE FURTHER. Mixed signals; full deepdive needed."
+  },
+  {
+    "addr": "0x89b5cdaa",
+    "kpnl": "$10k/day",
+    "note": "directional",
+    "basic": {
+      "n_trades": 112296,
+      "maker_pct": 1.0,
+      "taker_pct": 0.0,
+      "window_start": "2026-05-10 06:49:53",
+      "window_end": "2026-05-16 09:49:43",
+      "window_days": 6.124884259259259,
+      "sum_notional": 6887699.28447936
+    },
+    "cells": {
+      "BTC_updown_15m": 14004,
+      "BTC_updown_5m": 49811,
+      "ETH_updown_15m": 5902,
+      "ETH_updown_5m": 13776,
+      "SOL_updown_15m": 3317,
+      "SOL_updown_5m": 6755,
+      "nan_other": 1413
+    },
+    "slug_agg_n": 5212,
+    "leftover": {
+      "n_material": 4389,
+      "n_with_res": 4786,
+      "leftover_on_winner_pct": 0.5914786967418546,
+      "leftover_on_winner_pct_size_weighted": 0.6394113544502333,
+      "mean_paired_pct": 0.19210204550005122,
+      "median_paired_pct": 0.0
+    },
+    "vol_filter": {
+      "primary_asset": "BTC",
+      "n_traded": 300,
+      "n_skipped": 300,
+      "traded_vol_mean": 0.0001856569632826292,
+      "skipped_vol_mean": 0.00017936374955887697,
+      "traded_vol_median": 0.00014374507920100754,
+      "skipped_vol_median": 0.00012197659694068719,
+      "ratio_traded_to_skipped": 1.0350863189425377
+    },
+    "slug_selection": {
+      "primary_asset": "BTC",
+      "primary_tf": "5m",
+      "n_traded_in_window": 1267,
+      "n_avail_in_window": 1579,
+      "selection_rate": 0.8024065864471184
+    },
+    "time_of_day": {
+      "by_hr": {
+        "0": {
+          "trades": 5293,
+          "pct": 0.04713435919355988
+        },
+        "1": {
+          "trades": 5333,
+          "pct": 0.047490560661109925
+        },
+        "2": {
+          "trades": 4836,
+          "pct": 0.0430647574268006
+        },
+        "3": {
+          "trades": 4427,
+          "pct": 0.03942259742110137
+        },
+        "4": {
+          "trades": 5033,
+          "pct": 0.04481904965448458
+        },
+        "5": {
+          "trades": 3932,
+          "pct": 0.03501460426016955
+        },
+        "6": {
+          "trades": 4963,
+          "pct": 0.044195697086271996
+        },
+        "7": {
+          "trades": 5370,
+          "pct": 0.047820047018593714
+        },
+        "8": {
+          "trades": 4940,
+          "pct": 0.04399088124243072
+        },
+        "9": {
+          "trades": 5210,
+          "pct": 0.04639524114839353
+        },
+        "10": {
+          "trades": 4482,
+          "pct": 0.03991237443898269
+        },
+        "11": {
+          "trades": 4044,
+          "pct": 0.03601196836930968
+        },
+        "12": {
+          "trades": 3159,
+          "pct": 0.028131010899764906
+        },
+        "13": {
+          "trades": 5119,
+          "pct": 0.045584882809717175
+        },
+        "14": {
+          "trades": 4257,
+          "pct": 0.037908741184013675
+        },
+        "15": {
+          "trades": 4493,
+          "pct": 0.04001032984255895
+        },
+        "16": {
+          "trades": 3539,
+          "pct": 0.03151492484149035
+        },
+        "17": {
+          "trades": 3371,
+          "pct": 0.030018878677780154
+        },
+        "18": {
+          "trades": 4162,
+          "pct": 0.037062762698582316
+        },
+        "19": {
+          "trades": 3909,
+          "pct": 0.03480978841632828
+        },
+        "20": {
+          "trades": 4860,
+          "pct": 0.04327847830733063
+        },
+        "21": {
+          "trades": 5546,
+          "pct": 0.04938733347581392
+        },
+        "22": {
+          "trades": 5776,
+          "pct": 0.05143549191422669
+        },
+        "23": {
+          "trades": 6242,
+          "pct": 0.05558523901118473
+        }
+      },
+      "active_hours": 24,
+      "peak_hour": 23,
+      "peak_pct": 0.05558523901118473
+    },
+    "momentum": {
+      "n_late": 214
+    },
+    "class": "DIRECTIONAL",
+    "recommendation": "DO NOT COPY (until directional signal decoded). Has alpha but trigger likely requires private data (CLOB tape, slug-selector signal). See F2 verdict for analogue."
+  },
+  {
+    "addr": "0xeebde7a0",
+    "kpnl": "$344k/day",
+    "note": "hybrid",
+    "basic": {
+      "n_trades": 547545,
+      "maker_pct": 0.5024098475924353,
+      "taker_pct": 0.49759015240756466,
+      "window_start": "2026-05-10 05:43:37",
+      "window_end": "2026-05-16 08:43:34",
+      "window_days": 6.124965277777778,
+      "sum_notional": 590200515.5652214
+    },
+    "cells": {
+      "BTC_updown_15m": 152846,
+      "BTC_updown_5m": 313997,
+      "ETH_updown_15m": 21514,
+      "ETH_updown_5m": 31991,
+      "nan_other": 5056
+    },
+    "slug_agg_n": 3548,
+    "leftover": {
+      "n_material": 3130,
+      "n_with_res": 3300,
+      "leftover_on_winner_pct": 0.5865814696485623,
+      "leftover_on_winner_pct_size_weighted": 0.8081933187606928,
+      "mean_paired_pct": 0.6822193042115473,
+      "median_paired_pct": 0.8217073810382974
+    },
+    "vol_filter": {
+      "primary_asset": "BTC",
+      "n_traded": 300,
+      "n_skipped": 300,
+      "traded_vol_mean": 0.00020330240576526808,
+      "skipped_vol_mean": 0.00020495766083369855,
+      "traded_vol_median": 0.00015487944049175084,
+      "skipped_vol_median": 0.00014410719757718127,
+      "ratio_traded_to_skipped": 0.9919239170582965
+    },
+    "slug_selection": {
+      "primary_asset": "BTC",
+      "primary_tf": "5m",
+      "n_traded_in_window": 1232,
+      "n_avail_in_window": 1594,
+      "selection_rate": 0.7728983688833124
+    },
+    "time_of_day": {
+      "by_hr": {
+        "0": {
+          "trades": 19117,
+          "pct": 0.03491402533125131
+        },
+        "1": {
+          "trades": 26909,
+          "pct": 0.0491448191472847
+        },
+        "2": {
+          "trades": 24878,
+          "pct": 0.04543553497886019
+        },
+        "3": {
+          "trades": 24046,
+          "pct": 0.04391602516688126
+        },
+        "4": {
+          "trades": 23529,
+          "pct": 0.04297181053612032
+        },
+        "5": {
+          "trades": 22917,
+          "pct": 0.04185409418403967
+        },
+        "6": {
+          "trades": 22433,
+          "pct": 0.040970148572263464
+        },
+        "7": {
+          "trades": 25711,
+          "pct": 0.04695687112474774
+        },
+        "8": {
+          "trades": 24383,
+          "pct": 0.04453149969408907
+        },
+        "9": {
+          "trades": 22381,
+          "pct": 0.04087517920901478
+        },
+        "10": {
+          "trades": 22569,
+          "pct": 0.041218529983836946
+        },
+        "11": {
+          "trades": 23494,
+          "pct": 0.04290788884931832
+        },
+        "12": {
+          "trades": 22032,
+          "pct": 0.040237788674903435
+        },
+        "13": {
+          "trades": 19865,
+          "pct": 0.03628012309490544
+        },
+        "14": {
+          "trades": 19724,
+          "pct": 0.03602261001378882
+        },
+        "15": {
+          "trades": 27932,
+          "pct": 0.05101315873581167
+        },
+        "16": {
+          "trades": 23952,
+          "pct": 0.04374434977947018
+        },
+        "17": {
+          "trades": 26374,
+          "pct": 0.04816773050616844
+        },
+        "18": {
+          "trades": 24863,
+          "pct": 0.04540813997023076
+        },
+        "19": {
+          "trades": 25916,
+          "pct": 0.047331269576016584
+        },
+        "20": {
+          "trades": 20222,
+          "pct": 0.03693212430028582
+        },
+        "21": {
+          "trades": 16025,
+          "pct": 0.029267000885771947
+        },
+        "22": {
+          "trades": 20823,
+          "pct": 0.03802975097937156
+        },
+        "23": {
+          "trades": 17450,
+          "pct": 0.03186952670556758
+        }
+      },
+      "active_hours": 24,
+      "peak_hour": 15,
+      "peak_pct": 0.05101315873581167
+    },
+    "momentum": {
+      "n_late": 940
+    },
+    "class": "HYBRID",
+    "recommendation": "COPY (medium confidence). Mix of pair-arb base + directional edge. Replicable for the paired portion; directional trigger needs separate decode."
+  }
+]

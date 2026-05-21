@@ -1,0 +1,18 @@
+{
+  "PAT+ACC-M": {
+    "n_slugs_with_activity": 1348,
+    "mean_pnl": 14.193741126087032,
+    "median_pnl": 7.526341346914187,
+    "sum_pnl": 19133.163037965318,
+    "pct_positive": 88.64985163204749,
+    "stddev": 18.607387650856456
+  },
+  "PAT+ACC-M-t5-COMBO": {
+    "n_slugs_with_activity": 1339,
+    "mean_pnl": 23.736262984755257,
+    "median_pnl": 8.093195286285226,
+    "sum_pnl": 31782.85613658729,
+    "pct_positive": 88.64824495892456,
+    "stddev": 45.60556098498753
+  }
+}

@@ -1,0 +1,21 @@
+==========================================================================================
+PAT+ACC-M Shadow Monitor — cell=btc_5m  generated=2026-05-20T08:01:00.416027+00:00
+==========================================================================================
+  log rows: 9,298
+  slugs seen: 80
+  POST_BID=6,286  CANCEL=1,341  FILL=1,268  TAKE=43  MERGE=280  LOG_SLUG_COMPLETE=80
+
+Metric                                            Live    Backtest     Drift
+------------------------------------------------------------------------------------------
+Fire rate (% of slugs with >=1 PAT)            47.5000     48.8000     GREEN
+PAT fires per slug (incl zeros)                 0.5370      0.5000     GREEN
+PAT pair_cost (mean)                            0.9691      0.9700     GREEN
+PAT pair_cost (max — MUST be < 1.00)            0.9987      1.0000     GREEN
+Partial-fill rate (%)                           2.3300      5.0000     GREEN
+Maker BID fills per slug (avg)                 15.8500     15.0000     GREEN
+Merges per slug (avg)                           3.5000      3.0000     GREEN
+PnL/slug — all slugs (mean)                     6.0015      7.7900     GREEN
+PnL/slug — firing only (mean)                  12.8116     15.9500     GREEN
+Win rate on firing slugs (%)                   89.4700     75.0000     GREEN
+
+All metrics GREEN ✓  no drift detected

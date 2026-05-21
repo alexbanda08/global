@@ -26,9 +26,9 @@ V3 features have 2734 BTC markets; V3 fires (prob_stack confidence ≥ 0.65): 33
 
 | Variant | n | hit% | avg vwap_e | total PnL | mean PnL | hedged | spread_skipped |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| A. PRODUCTION (entry@0 + spread≤0.02 + hedge_hold) | 248 | 70.6% | $0.5313 | $+2012.23 | $+8.1138 | 65 | 43 |
+| A. PRODUCTION (entry@0 + spread≤0.02 + hedge_hold) | 248 | 62.1% | $0.5313 | $+1440.79 | $+5.8097 | 52 | 43 |
 | B. PRODUCTION-NO-HEDGE (entry@0 + spread≤0.02 + hold-to-resolution) | 248 | 68.1% | $0.5313 | $+1766.93 | $+7.1247 | 0 | 43 |
-| C. PREVIOUS BACKTEST (entry@0 unchanged, no spread filter, hedge ON) | 291 | 66.7% | $0.5351 | $+1919.85 | $+6.5974 | 79 | 0 |
+| C. PREVIOUS BACKTEST (entry@0 unchanged, no spread filter, hedge ON) | 291 | 59.1% | $0.5351 | $+1276.66 | $+4.3871 | 63 | 0 |
 | D. NO-FILTER NO-HEDGE (entry@0, no spread filter, hold-to-resolution) | 291 | 65.3% | $0.5351 | $+1602.89 | $+5.5082 | 0 | 0 |
 
 ## VPS3 shadow `poly_updown_btc_5m_v3` (base V3, BTC only, Apr 30 → May 5)

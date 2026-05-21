@@ -1,0 +1,34 @@
+=== GA v2: sleeve=momo_5m asset=BTC pop=40 gens=15 ===
+  BTC 5m: 7,183 markets
+  capped to 2,000
+[loading] L25 books for BTC...
+  loaded 4000 (slug,side) keys in 74s
+[GAv2] CV window: 2026-04-24 01:40 → 2026-05-16 02:13
+[GAv2] held out: 2026-05-16 02:13 → 2026-05-19 23:30  (held last 15%)
+  fold 0: train 2026-04-24 01:40 → 2026-04-29 13:48  | val 2026-04-29 13:48 → 2026-05-05 01:56
+  fold 1: train 2026-04-24 01:40 → 2026-05-05 01:56  | val 2026-05-05 01:56 → 2026-05-10 14:05
+  fold 2: train 2026-04-24 01:40 → 2026-05-10 14:05  | val 2026-05-10 14:05 → 2026-05-16 02:13
+[GAv2] gen   0  cv_fit=-0.3586  val_pnls=['-33', '-138', '-34']  val_ns=[33, 31, 39]  div=0.509  mut=0.30  (4s)
+[GAv2] gen   1  cv_fit=+0.2276  val_pnls=['+132', '-11', '+125']  val_ns=[83, 79, 87]  div=0.506  mut=0.30  (5s)
+[GAv2] gen   2  cv_fit=+0.2276  val_pnls=['+132', '-11', '+125']  val_ns=[83, 79, 87]  div=0.506  mut=0.30  (5s)
+[GAv2] gen   3  cv_fit=+0.3746  val_pnls=['+63', '+46', '+119']  val_ns=[53, 45, 45]  div=0.494  mut=0.30  (6s)
+[GAv2] gen   4  cv_fit=+0.4886  val_pnls=['+285', '+275', '+136']  val_ns=[103, 114, 152]  div=0.483  mut=0.30  (5s)
+[GAv2] gen   5  cv_fit=+0.4886  val_pnls=['+285', '+275', '+136']  val_ns=[103, 114, 152]  div=0.483  mut=0.30  (5s)
+[GAv2] gen   6  cv_fit=+0.6163  val_pnls=['+331', '+291', '+503']  val_ns=[69, 52, 99]  div=0.491  mut=0.30  (5s)
+[GAv2] gen   7  cv_fit=+0.6244  val_pnls=['+360', '+237', '+665']  val_ns=[99, 63, 115]  div=0.474  mut=0.30  (5s)
+[GAv2] gen   8  cv_fit=+0.6820  val_pnls=['+388', '+484', '+481']  val_ns=[59, 76, 95]  div=0.463  mut=0.30  (5s)
+[GAv2] gen   9  cv_fit=+0.6820  val_pnls=['+388', '+484', '+481']  val_ns=[59, 76, 95]  div=0.432  mut=0.30  (5s)
+[GAv2] gen  10  cv_fit=+0.6820  val_pnls=['+388', '+484', '+481']  val_ns=[59, 76, 95]  div=0.408  mut=0.30  (5s)
+[GAv2] gen  11  cv_fit=+0.6820  val_pnls=['+388', '+484', '+481']  val_ns=[59, 76, 95]  div=0.420  mut=0.30  (5s)
+[GAv2] gen  12  cv_fit=+0.6820  val_pnls=['+388', '+484', '+481']  val_ns=[59, 76, 95]  div=0.410  mut=0.30  (5s)
+[GAv2] gen  13  cv_fit=+0.6820  val_pnls=['+388', '+484', '+481']  val_ns=[59, 76, 95]  div=0.413  mut=0.30  (5s)
+[GAv2] gen  14  cv_fit=+0.6820  val_pnls=['+388', '+484', '+481']  val_ns=[59, 76, 95]  div=0.386  mut=0.30  (5s)
+
+[GAv2] FINAL: re-evaluating top-5 on held-out window...
+  rank1: cv_fit=+0.6820  held: n= 53 win=0.472 pnl=$-97  sharpe=-9.36  individual={'ret_2m_threshold_bp': 0.0, 'direction_mode': 'fade', 'spread_max': 0.05, 'vwap_lo': 0.22358926582599284, 'vwap_hi': 0.5583358565228558, 'hour_mask': 1191264, 'dow_mask': 23, 'sigma_window_min': 24, 'notional_usd': 24.614767160164835}
+  rank2: cv_fit=+0.6801  held: n=117 win=0.453 pnl=$-673  sharpe=-16.84  individual={'ret_2m_threshold_bp': 0.03464939730350636, 'direction_mode': 'same', 'spread_max': 0.042449894766341326, 'vwap_lo': 0.4104634420884091, 'vwap_hi': 0.7699825290579583, 'hour_mask': 15557261, 'dow_mask': 67, 'sigma_window_min': 20, 'notional_usd': 45.7495651207864}
+  rank3: cv_fit=+0.6786  held: n=119 win=0.462 pnl=$-620  sharpe=-13.90  individual={'ret_2m_threshold_bp': 0.0, 'direction_mode': 'same', 'spread_max': 0.048094232047187185, 'vwap_lo': 0.43130312523599057, 'vwap_hi': 0.8100345316934147, 'hour_mask': 15557261, 'dow_mask': 67, 'sigma_window_min': 38, 'notional_usd': 47.96582136796316}
+  rank4: cv_fit=+0.6784  held: n=115 win=0.461 pnl=$-603  sharpe=-16.63  individual={'ret_2m_threshold_bp': 0.03464939730350636, 'direction_mode': 'same', 'spread_max': 0.03238353588112779, 'vwap_lo': 0.4104634420884091, 'vwap_hi': 0.7699825290579583, 'hour_mask': 15557261, 'dow_mask': 67, 'sigma_window_min': 20, 'notional_usd': 47.367258396995695}
+  rank5: cv_fit=+0.6746  held: n=119 win=0.462 pnl=$-591  sharpe=-13.88  individual={'ret_2m_threshold_bp': 0.0, 'direction_mode': 'same', 'spread_max': 0.04708666214040792, 'vwap_lo': 0.4104634420884091, 'vwap_hi': 0.7699825290579583, 'hour_mask': 15557261, 'dow_mask': 67, 'sigma_window_min': 21, 'notional_usd': 45.7495651207864}
+
+[GAv2] DONE. results saved to C:\Users\alexandre bandarra\Desktop\global\strategy_lab\ga_optimizer\runs\v2_BTC_momo_5m_1779237303

@@ -1,0 +1,47 @@
+{
+  "n_slugs": 50,
+  "config": {
+    "cvd_threshold": 0.0,
+    "no_cvd": true,
+    "max_pair_cost": 0.97
+  },
+  "accm": {
+    "mean_pnl_per_slug": -1.0399292608306805,
+    "median_pnl_per_slug": 0.0,
+    "sum_pnl": -51.99646304153403,
+    "pct_profitable": 16.0,
+    "mean_fills_per_slug": 12.12,
+    "mean_merges_per_slug": 3.98,
+    "mean_pairs_merged": 20.70780001552105,
+    "mean_cost": 22.233474053866498,
+    "mean_rebates": 0.11134479506238126,
+    "mean_cash_recovered": 21.08219999797344,
+    "mean_leftover_redeemed_usd": 0.3743999824523926,
+    "mean_leftover_burned_usd": 5.881204343648274
+  },
+  "accpc": {
+    "mean_pnl_per_slug": -1.1235682694372924,
+    "median_pnl_per_slug": 0.0,
+    "sum_pnl": -56.17841347186462,
+    "pct_profitable": 18.0,
+    "mean_fills_per_slug": 13.7,
+    "mean_merges_per_slug": 4.48,
+    "mean_taker_buys_per_slug": 0.34,
+    "n_slugs_with_taker_fire": 12,
+    "mean_pairs_merged": 23.355400006079673,
+    "mean_cost": 24.960678076938507,
+    "mean_rebates": 0.1250316985738037,
+    "mean_cash_recovered": 23.737999988245964,
+    "mean_leftover_redeemed_usd": 0.38259998216629026,
+    "mean_leftover_burned_usd": 7.04121399248731,
+    "mean_taker_fees": 0.025921879318552766
+  },
+  "diff": {
+    "mean_pnl_diff": -0.08363900860661198,
+    "median_pnl_diff": 0.0,
+    "pct_slugs_accpc_better": 28.000000000000004,
+    "pct_slugs_accpc_same": 38.0,
+    "pct_slugs_accpc_worse": 34.0
+  },
+  "total_runtime_s": 132.80986285209656
+}

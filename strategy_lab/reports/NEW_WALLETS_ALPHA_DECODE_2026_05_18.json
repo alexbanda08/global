@@ -1,0 +1,357 @@
+[
+  {
+    "addr": "0xb27bc932",
+    "kpnl": "$254k/day (reputed)",
+    "note": "kingpin scalper \u2014 99.98% maker for 3.4d",
+    "basic": {
+      "n_trades": 262715,
+      "maker_pct": 0.999817292503283,
+      "taker_pct": 0.00018270749671697468,
+      "window_start": "2026-05-11 18:40:45",
+      "window_end": "2026-05-15 04:45:42",
+      "window_days": 3.4201041666666665,
+      "sum_notional": 7137473.767542462
+    },
+    "token_match_pct": 0.9965513959994671,
+    "cells": {
+      "BTC_updown_5m": 261809
+    },
+    "slug_agg_n": 930,
+    "leftover": {
+      "n_material": 754,
+      "n_with_res": 908,
+      "leftover_on_winner_pct": 0.513262599469496,
+      "leftover_on_winner_pct_size_weighted": 0.3255940183663911,
+      "mean_paired_pct": 0.9382090107764458,
+      "median_paired_pct": 0.9753200509425084
+    },
+    "vol_filter": {
+      "primary_asset": "BTC",
+      "n_traded": 300,
+      "n_skipped": 300,
+      "traded_vol_mean": 0.0001957912795526262,
+      "skipped_vol_mean": 0.00016136454830499857,
+      "traded_vol_median": 0.00013953508944908322,
+      "skipped_vol_median": 0.00012165006647091303,
+      "ratio_traded_to_skipped": 1.2133475513007785
+    },
+    "slug_selection": {
+      "primary_asset": "BTC",
+      "primary_tf": "5m",
+      "n_traded_in_window": 908,
+      "n_avail_in_window": 954,
+      "selection_rate": 0.9517819706498952
+    },
+    "time_of_day": {
+      "by_hr": {
+        "0": {
+          "trades": 12905,
+          "pct": 0.04912167177359496
+        },
+        "1": {
+          "trades": 12664,
+          "pct": 0.04820432788382848
+        },
+        "2": {
+          "trades": 16644,
+          "pct": 0.06335382448661096
+        },
+        "3": {
+          "trades": 16114,
+          "pct": 0.06133642921036104
+        },
+        "4": {
+          "trades": 17395,
+          "pct": 0.0662124355289953
+        },
+        "5": {
+          "trades": 14126,
+          "pct": 0.053769293721333
+        },
+        "6": {
+          "trades": 12607,
+          "pct": 0.04798736273147708
+        },
+        "7": {
+          "trades": 7583,
+          "pct": 0.028863978075100393
+        },
+        "8": {
+          "trades": 7848,
+          "pct": 0.02987267571322536
+        },
+        "9": {
+          "trades": 9584,
+          "pct": 0.036480596844489274
+        },
+        "10": {
+          "trades": 9615,
+          "pct": 0.036598595436118986
+        },
+        "11": {
+          "trades": 9699,
+          "pct": 0.036918333555373696
+        },
+        "12": {
+          "trades": 8333,
+          "pct": 0.03171878271130312
+        },
+        "13": {
+          "trades": 4993,
+          "pct": 0.01900538606474697
+        },
+        "14": {
+          "trades": 7105,
+          "pct": 0.027044515920293853
+        },
+        "15": {
+          "trades": 9339,
+          "pct": 0.03554802732999639
+        },
+        "16": {
+          "trades": 7731,
+          "pct": 0.02942732618997773
+        },
+        "17": {
+          "trades": 8551,
+          "pct": 0.032548579258892714
+        },
+        "18": {
+          "trades": 7972,
+          "pct": 0.03034467007974421
+        },
+        "19": {
+          "trades": 9811,
+          "pct": 0.0373446510477133
+        },
+        "20": {
+          "trades": 13540,
+          "pct": 0.05153873969891327
+        },
+        "21": {
+          "trades": 14986,
+          "pct": 0.057042803037512135
+        },
+        "22": {
+          "trades": 13168,
+          "pct": 0.050122756599356715
+        },
+        "23": {
+          "trades": 10402,
+          "pct": 0.039594237101041055
+        }
+      },
+      "active_hours": 24,
+      "peak_hour": 4,
+      "peak_pct": 0.0662124355289953
+    },
+    "momentum": {
+      "n_late": 73,
+      "BTC_n_late": 73,
+      "BTC_match_ret60s": 0.6986301369863014,
+      "BTC_match_ret120s": 0.7945205479452054
+    },
+    "fires_micro": {
+      "n_fires": 600,
+      "sum_asks_gt_1_pct": 1.0,
+      "sum_asks_median": 1.0099999904632568,
+      "counterparty_mix": {
+        "0xe111180000d2663c0091e4f400237545b87b996b": 0.91,
+        "0xf3cfb6a6ebfeb51876289eb235719eb1c65252b0": 0.01,
+        "0xf7aae1ab91b0ff7ed22965ed4fd3e2c43e28abe3": 0.0033333333333333335
+      },
+      "offset_median_s": 170.0,
+      "offset_pct_late_240s": 0.12166666666666667
+    },
+    "usdc": {
+      "n_usdc_tx": 83460,
+      "usdc_inflow": 1596557.1603529998,
+      "usdc_outflow": 677929.928637,
+      "usdc_net": 918627.2317159998,
+      "usdc_net_per_day": 254189.47563695937,
+      "window_days": 3.6139467592592593,
+      "window_start": "2026-05-12 10:01:14",
+      "window_end": "2026-05-16 00:45:19"
+    },
+    "class": "MAKER PAIR ARB",
+    "recommendation": "COPY (high confidence). Pair-arb on maker side is self-hedging. Replication needs Polymarket maker access + L25 book + rebate-aware fee model. Reference is mint-and-sell V2 spec (MINT_AND_SELL_*_2026_05_16.md)."
+  },
+  {
+    "addr": "0x7dfc8aa2",
+    "kpnl": "unknown (NEW)",
+    "note": "NEW \u2014 84k fills/14.3d, 93% of fires have sum_asks>$1",
+    "basic": {
+      "n_trades": 84108,
+      "maker_pct": 0.2636015598991773,
+      "taker_pct": 0.7363984401008228,
+      "window_start": "2026-04-29 01:26:42",
+      "window_end": "2026-05-13 07:44:57",
+      "window_days": 14.262673611111111,
+      "sum_notional": 38671904.99127063
+    },
+    "token_match_pct": 1.0,
+    "cells": {
+      "BTC_updown_15m": 796,
+      "BTC_updown_5m": 83312
+    },
+    "slug_agg_n": 560,
+    "leftover": {
+      "n_material": 382,
+      "n_with_res": 531,
+      "leftover_on_winner_pct": 0.48429319371727747,
+      "leftover_on_winner_pct_size_weighted": 0.44227273362242203,
+      "mean_paired_pct": 0.8541467227417773,
+      "median_paired_pct": 0.9567160742103522
+    },
+    "vol_filter": {
+      "primary_asset": "BTC",
+      "n_traded": 300,
+      "n_skipped": 300,
+      "traded_vol_mean": 0.00021397829691337003,
+      "skipped_vol_mean": 0.0001810416902776938,
+      "traded_vol_median": 0.00014795804111100708,
+      "skipped_vol_median": 0.0001289787006331089,
+      "ratio_traded_to_skipped": 1.181928298311598
+    },
+    "slug_selection": {
+      "primary_asset": "BTC",
+      "primary_tf": "5m",
+      "n_traded_in_window": 523,
+      "n_avail_in_window": 3999,
+      "selection_rate": 0.13078269567391848
+    },
+    "time_of_day": {
+      "by_hr": {
+        "0": {
+          "trades": 6392,
+          "pct": 0.07599752698910923
+        },
+        "1": {
+          "trades": 14821,
+          "pct": 0.1762139154420507
+        },
+        "2": {
+          "trades": 15874,
+          "pct": 0.18873353307652066
+        },
+        "3": {
+          "trades": 8644,
+          "pct": 0.10277262567175537
+        },
+        "4": {
+          "trades": 7770,
+          "pct": 0.09238122414039093
+        },
+        "5": {
+          "trades": 8832,
+          "pct": 0.10500784705378799
+        },
+        "6": {
+          "trades": 8566,
+          "pct": 0.10184524658772055
+        },
+        "7": {
+          "trades": 1308,
+          "pct": 0.015551433870737623
+        },
+        "8": {
+          "trades": 1469,
+          "pct": 0.017465639415988967
+        },
+        "9": {
+          "trades": 718,
+          "pct": 0.008536643363294811
+        },
+        "10": {
+          "trades": 94,
+          "pct": 0.0011176106910163123
+        },
+        "11": {
+          "trades": 130,
+          "pct": 0.0015456318067246873
+        },
+        "12": {
+          "trades": 134,
+          "pct": 0.0015931897084700622
+        },
+        "13": {
+          "trades": 320,
+          "pct": 0.0038046321396299995
+        },
+        "14": {
+          "trades": 455,
+          "pct": 0.005409711323536405
+        },
+        "15": {
+          "trades": 1267,
+          "pct": 0.01506396537784753
+        },
+        "16": {
+          "trades": 750,
+          "pct": 0.008917106577257812
+        },
+        "17": {
+          "trades": 1054,
+          "pct": 0.01253150710990631
+        },
+        "18": {
+          "trades": 1049,
+          "pct": 0.012472059732724592
+        },
+        "19": {
+          "trades": 769,
+          "pct": 0.009143006610548343
+        },
+        "20": {
+          "trades": 750,
+          "pct": 0.008917106577257812
+        },
+        "21": {
+          "trades": 859,
+          "pct": 0.01021305939981928
+        },
+        "22": {
+          "trades": 1123,
+          "pct": 0.01335188091501403
+        },
+        "23": {
+          "trades": 960,
+          "pct": 0.011413896418889999
+        }
+      },
+      "active_hours": 24,
+      "peak_hour": 2,
+      "peak_pct": 0.18873353307652066
+    },
+    "momentum": {
+      "n_late": 1180,
+      "BTC_n_late": 491,
+      "BTC_match_ret60s": 0.2973523421588595,
+      "BTC_match_ret120s": 0.16700201207243462
+    },
+    "fires_micro": {
+      "n_fires": 5000,
+      "sum_asks_gt_1_pct": 0.9997854077253219,
+      "sum_asks_median": 1.0099999979138374,
+      "counterparty_mix": {
+        "0xe111180000d2663c0091e4f400237545b87b996b": 0.8912,
+        "0xf3cfb6a6ebfeb51876289eb235719eb1c65252b0": 0.0516,
+        "0xf22f6ba87a4f8c20fc696c4b07898c659dabd06e": 0.0134
+      },
+      "offset_median_s": 142.0,
+      "offset_pct_late_240s": 0.236
+    },
+    "usdc": {
+      "n_usdc_tx": 49497,
+      "usdc_inflow": 1153165.1939019999,
+      "usdc_outflow": 1347852.6452179998,
+      "usdc_net": -194687.45131599996,
+      "usdc_net_per_day": -7941.313200968196,
+      "window_days": 24.515775462962964,
+      "window_start": "2026-04-21 18:57:56",
+      "window_end": "2026-05-16 07:20:39"
+    },
+    "class": "LOSER",
+    "recommendation": "DO NOT COPY. Net USDC outflow."
+  }
+]

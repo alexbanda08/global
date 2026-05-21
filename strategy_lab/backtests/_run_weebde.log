@@ -1,0 +1,69 @@
+Backtest plan: 27 slugs, 5 strategies
+  [1/27] btc-updown-15m-1778806800 (Up) ACC-M=+1.85 ACC-M-lift1c=-4.21 ACC-PC=+3.81 ACC-H=-7.01 MAS=+3.28  7387ms
+  [2/27] btc-updown-15m-1778807700 (Down) ACC-M=-3.46 ACC-M-lift1c=-4.06 ACC-PC=-3.23 ACC-H=-7.81 MAS=+0.59  7447ms
+  [3/27] btc-updown-15m-1778808600 (Up) ACC-M=+8.40 ACC-M-lift1c=-4.57 ACC-PC=+3.19 ACC-H=-1.64 MAS=-4.71  7479ms
+  [4/27] btc-updown-15m-1778809500 (Down) ACC-M=-2.66 ACC-M-lift1c=-5.51 ACC-PC=-4.39 ACC-H=-13.49 MAS=-1.51  7185ms
+  [5/27] btc-updown-15m-1778810400 (Down) ACC-M=+5.33 ACC-M-lift1c=-4.12 ACC-PC=+8.45 ACC-H=+3.25 MAS=+0.63  7033ms
+  [6/27] btc-updown-15m-1778811300 (Down) ACC-M=+2.78 ACC-M-lift1c=-0.21 ACC-PC=+4.03 ACC-H=+5.59 MAS=-1.31  7483ms
+  [7/27] btc-updown-15m-1778812200 (Up) ACC-M=+6.61 ACC-M-lift1c=+3.47 ACC-PC=+5.50 ACC-H=+2.20 MAS=-0.94  7609ms
+  [8/27] btc-updown-15m-1778813100 (Up) ACC-M=+1.76 ACC-M-lift1c=+0.14 ACC-PC=-0.32 ACC-H=-3.62 MAS=+0.09  7039ms
+  [9/27] btc-updown-15m-1778814000 (Down) ACC-M=-4.98 ACC-M-lift1c=-0.74 ACC-PC=-2.42 ACC-H=-8.43 MAS=+0.26  6985ms
+  [10/27] btc-updown-15m-1778814900 (Up) ACC-M=-1.32 ACC-M-lift1c=-5.48 ACC-PC=+0.31 ACC-H=-7.21 MAS=+3.19  7035ms
+  [11/27] btc-updown-15m-1778815800 (Down) ACC-M=-2.02 ACC-M-lift1c=-4.16 ACC-PC=-2.61 ACC-H=-17.79 MAS=-2.75  7054ms
+  [12/27] btc-updown-15m-1778816700 (Up) ACC-M=+0.26 ACC-M-lift1c=-5.06 ACC-PC=-1.99 ACC-H=-1.57 MAS=-0.86  7504ms
+  [13/27] btc-updown-15m-1778817600 (Down) ACC-M=+1.77 ACC-M-lift1c=-2.35 ACC-PC=+0.50 ACC-H=-3.47 MAS=+0.11  7127ms
+  [14/27] btc-updown-15m-1778818500 (Down) ACC-M=-0.97 ACC-M-lift1c=-6.01 ACC-PC=-1.12 ACC-H=-10.03 MAS=-0.40  7024ms
+  [15/27] btc-updown-15m-1778819400 (Up) ACC-M=-3.57 ACC-M-lift1c=-1.45 ACC-PC=-5.77 ACC-H=-11.31 MAS=+1.26  7190ms
+  [16/27] btc-updown-15m-1778820300 (Down) ACC-M=-0.17 ACC-M-lift1c=-4.51 ACC-PC=-1.61 ACC-H=-2.60 MAS=-0.49  7245ms
+  [17/27] btc-updown-15m-1778821200 (Up) ACC-M=+2.13 ACC-M-lift1c=-2.70 ACC-PC=-0.46 ACC-H=-9.79 MAS=+1.72  7243ms
+  [18/27] btc-updown-15m-1778822100 (Down) ACC-M=+2.60 ACC-M-lift1c=-1.02 ACC-PC=+4.07 ACC-H=+3.12 MAS=+1.54  7413ms
+  [19/27] btc-updown-15m-1778823000 (Down) ACC-M=+2.25 ACC-M-lift1c=-4.76 ACC-PC=-1.15 ACC-H=-15.12 MAS=-0.14  7327ms
+  [20/27] btc-updown-15m-1778823900 (Down) ACC-M=-4.02 ACC-M-lift1c=-6.89 ACC-PC=-0.62 ACC-H=-10.22 MAS=+0.01  7545ms
+  [21/27] btc-updown-15m-1778824800 (Up) ACC-M=+4.76 ACC-M-lift1c=-1.62 ACC-PC=+6.30 ACC-H=+1.70 MAS=-1.60  7758ms
+  [22/27] btc-updown-15m-1778825700 (Up) ACC-M=+2.73 ACC-M-lift1c=-4.60 ACC-PC=+1.52 ACC-H=-0.12 MAS=-0.08  7305ms
+  [23/27] btc-updown-15m-1778826600 (Up) ACC-M=-3.13 ACC-M-lift1c=-6.26 ACC-PC=-3.13 ACC-H=-9.30 MAS=+0.76  7193ms
+  [24/27] btc-updown-15m-1778827500 (Down) ACC-M=-5.13 ACC-M-lift1c=-2.10 ACC-PC=-2.65 ACC-H=-6.14 MAS=+2.64  6962ms
+  [25/27] btc-updown-15m-1778828400 (Up) ACC-M=-2.55 ACC-M-lift1c=-3.96 ACC-PC=-0.67 ACC-H=-7.17 MAS=+0.81  6164ms
+  [26/27] btc-updown-15m-1778829300 (Up) ACC-M=+4.68 ACC-M-lift1c=+0.30 ACC-PC=+5.82 ACC-H=-3.91 MAS=+1.08  5967ms
+  [27/27] btc-updown-15m-1778830200 (Down) ACC-M=-2.72 ACC-M-lift1c=-5.51 ACC-PC=-4.30 ACC-H=-18.18 MAS=+0.26  5878ms
+
+================================================================================
+SUMMARY (27 slugs, 194s)
+================================================================================
+{
+  "ACC-M": {
+    "mean_pnl": 0.41554009032331946,
+    "median_pnl": 0.2632299836910095,
+    "sum_pnl": 11.219582438729626,
+    "pct_positive": 51.85185185185185,
+    "stddev": 3.685907672646073
+  },
+  "ACC-M-lift1c": {
+    "mean_pnl": -3.2572528823861773,
+    "median_pnl": -4.115642223493012,
+    "sum_pnl": -87.94582782442679,
+    "pct_positive": 11.11111111111111,
+    "stddev": 2.46274364478539
+  },
+  "ACC-PC": {
+    "mean_pnl": 0.2614879871300262,
+    "median_pnl": -0.622276118468285,
+    "sum_pnl": 7.060175652510708,
+    "pct_positive": 40.74074074074074,
+    "stddev": 3.693979672870227
+  },
+  "ACC-H": {
+    "mean_pnl": -5.928188650561384,
+    "median_pnl": -7.006349705189459,
+    "sum_pnl": -160.06109356515736,
+    "pct_positive": 18.51851851851852,
+    "stddev": 6.377866946795331
+  },
+  "MAS": {
+    "mean_pnl": 0.12709640203547587,
+    "median_pnl": 0.10540779709053183,
+    "sum_pnl": 3.4316028549578483,
+    "pct_positive": 59.25925925925925,
+    "stddev": 1.7111333145595535
+  }
+}

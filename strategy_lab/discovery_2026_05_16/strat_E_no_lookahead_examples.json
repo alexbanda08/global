@@ -1,0 +1,62 @@
+[
+  {
+    "asset": "BTC",
+    "setup": "1_5m_ws120",
+    "slug": "btc-updown-5m-1776994800",
+    "book_ts_us": 1776994612340000,
+    "entry_us": 1776994620000000,
+    "delta_s": 7.66,
+    "imb_up": 0.4813383569499262,
+    "outcome": "Down"
+  },
+  {
+    "asset": "ETH",
+    "setup": "1_5m_ws120",
+    "slug": "eth-updown-5m-1776994800",
+    "book_ts_us": 1776994542217000,
+    "entry_us": 1776994620000000,
+    "delta_s": 77.783,
+    "imb_up": 0.14910181322961175,
+    "outcome": "Down"
+  },
+  {
+    "asset": "SOL",
+    "setup": "1_5m_ws120",
+    "slug": "sol-updown-5m-1776994800",
+    "book_ts_us": 1776994522845000,
+    "entry_us": 1776994620000000,
+    "delta_s": 97.155,
+    "imb_up": 0.3671539474144129,
+    "outcome": "Down"
+  },
+  {
+    "asset": "BTC",
+    "setup": "2_5m_late",
+    "slug": "btc-updown-5m-1776994800",
+    "book_ts_us": 1776995039055000,
+    "entry_us": 1776995040000000,
+    "delta_s": 0.945,
+    "imb_up": 0.7952030611020268,
+    "outcome": "Down"
+  },
+  {
+    "asset": "ETH",
+    "setup": "2_5m_late",
+    "slug": "eth-updown-5m-1776994800",
+    "book_ts_us": 1776995039312000,
+    "entry_us": 1776995040000000,
+    "delta_s": 0.688,
+    "imb_up": 0.7055989265896929,
+    "outcome": "Down"
+  },
+  {
+    "asset": "SOL",
+    "setup": "2_5m_late",
+    "slug": "sol-updown-5m-1776994800",
+    "book_ts_us": 1776995031073000,
+    "entry_us": 1776995040000000,
+    "delta_s": 8.927,
+    "imb_up": 0.17019050053552134,
+    "outcome": "Down"
+  }
+]

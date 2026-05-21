@@ -1,0 +1,79 @@
+[   0.0s] loading v5 hypothesis parquets ...
+[   0.0s]   fire_v5 n=807 ctrl_v5 n=1002
+[   0.1s]   V3 un-explained (after V2 3-rule composite OFF): fire n=420 ctrl n=724
+[   0.1s] loading polymarket trades (btc) ...
+[  20.0s]   trades: rows=24002995 cols=['timestamp_us', 'local_timestamp_us', 'exchange', 'market_id', 'slug', 'asset_id', 'outcome', 'price', 'size', 'side', 'trade_id', 'origin_asset_id', 'outcome_id', 'source']
+[  20.0s]   filtering trades to 506 relevant slugs ...
+[  21.6s]   trades sub: rows=1897358
+[  22.9s]   trade index: 1012 (slug, outcome) groups
+[  22.9s] H8: loading cross-exchange 1MIN klines (coinbase / kraken / okx) ...
+[  23.1s]   coinbase: n_bars=54485 range_us=1775609820000000..1778903220000000
+[  23.3s]   kraken: n_bars=12405 range_us=1778158740000000..1778903220000000
+[  23.4s]   okx: n_bars=25852 range_us=1777351860000000..1778903220000000
+[  23.5s]   binance: n_bars=42743 range_us=1776182460000000..1778903220000000
+[  23.5s]   H8 enriching fire_un (n=420) ...
+[  23.6s]   H8 enriching ctrl_un (n=724) ...
+[  23.7s]   H8 done. sample coinbase_sret_60s fire mean=0.000094, ctrl mean=0.000064
+[  23.7s] H10: computing trade-size burst features ...
+[  23.8s]   H10 done. fire max_sell_size_15s mean=127.29, ctrl mean=122.51
+[  23.8s] H9: loading L25 books for un-explained slugs (this can take a few min) ...
+[  23.8s]   loading 447 slugs ...
+[  51.1s]   loaded 894 (slug, outcome) book streams
+[  51.2s]   H9 done. fire ask_top5_frac mean=0.330, ctrl mean=0.303
+[  51.2s]   H9 done. fire best_ask_frac mean=0.094, ctrl mean=0.094
+[  51.2s] H12: time-of-day buckets ...
+[  51.2s]   H12 done. fire hour distribution:
+utc_hour
+0     13
+1     21
+2     18
+3     21
+4     24
+5     11
+6      8
+7     22
+8     14
+9     25
+10    14
+11    23
+12    13
+13    16
+14    19
+15    35
+16    25
+17    21
+18    16
+19    17
+20     6
+21     6
+22    21
+23    11
+[  51.2s] H13: time-since-last-own-MAKER-fill on SAME side (sub-bucket) ...
+[  51.2s]   H13 done. fire maker_lt5=0.229 ctrl=0.214
+[  51.2s] H14: sub-second sell volume ...
+[  51.2s]   H14 done. fire sell_vol_1s mean=30.26, ctrl mean=24.54
+[  51.2s] H15: pair_ask_sum / sum_ask_sz bands ...
+[  51.2s]   H15 done. fire pas band hist: [('h15_pas_lt_098', np.float64(0.0)), ('h15_pas_098_100', np.float64(0.0)), ('h15_pas_100_102', np.float64(0.8809523809523809)), ('h15_pas_102_105', np.float64(0.10476190476190476)), ('h15_pas_gt_105', np.float64(0.014285714285714285))]
+[  51.2s] saving enriched v6 features ...
+[  51.3s]   saved C:\Users\alexandre bandarra\Desktop\global\strategy_lab\wallet_hunt\cache\0xeebde7a0_taker_decode\v6_features.parquet rows=1144
+[  51.3s] 
+=== H8-H15 lift tests on V3 un-explained subset ===
+
+[  51.3s] 
+=== COMPOSITE RULE EVALUATION on FULL pool ===
+[  51.3s] re-enriching FULL pool (fe_all, ce_all) for composite test ...
+[  51.3s]   enriching fe_all (V1-unexplained pool) ...
+[  51.4s]   enriching ce_all ...
+[  51.5s]   fe_all_e n=807  ce_all_e n=1002
+[  51.5s] V2 baseline coverage on V1-unexplained pool: fire 387/807 (0.480), ctrl 278/1002
+[  51.5s] V2 baseline coverage on FULL pool (incl disc-captured upstream): fire 387/1349 (0.287)
+[  51.5s] V2 TOTAL FULL coverage: fire=929/1349 = 0.689, ctrl=677/1401 = 0.483
+[  51.5s] 
+=== leftover-on-winner check ===
+[  51.5s]   resolutions: cols=['market_id', 'slug', 'ticker', 'timeframe', 'slot_start_us', 'slot_end_us', 'outcome', 'strike_price', 'strike_ts_us', 'settlement_price', 'settle_ts_us', 'delta_price', 'price_source'] rows=24438
+[  51.5s]   fe_un (V3-unexplained) win rate: 0.638 n=420 (NaN=0)
+[  51.5s]   fe_all (V1-unexplained) win rate: 0.623
+[  51.5s]   V2-captured (in V1-un pool) win rate: 0.607 n=387
+[  51.5s]   V2-un (residual) win rate:        0.638 n=420
+[  51.6s] saved C:\Users\alexandre bandarra\Desktop\global\strategy_lab\wallet_hunt\cache\0xeebde7a0_taker_decode\v6_summary.json
+[  51.6s] total runtime 51.6s

@@ -1,80 +1,42 @@
 # Momo Re-run on 2026-05-06 dataset — HOLD baseline (25-level entry books)
 
-**Generated:** 2026-05-06
-**Inputs:** `data/v4/refresh_2026_05_06/{markets_full, market_resolutions_full, klines_full, tier1_entries/*.parquet}.csv`
-**Strategy:** momo top-q90 |ret_2m| gate → 25-level ASK walk for $25 → HOLD to chainlink. 2% fee on profit.
+**Generated:** 2026-05-06 22:50 UTC  
+**Source:** `data/v4/refresh_2026_05_06/`  
+**Strategy:** momo gate (q90 |ret_2m|, 14d trailing) → top-25 ASK walk → $25 notional → HOLD to chainlink.  
+**Fee model:** 2% on profit only.
 
-## ⚠️ Two material findings — read before drawing conclusions
+## Pipeline counts
 
-### Finding 1 — Production's `ret_2m` anchor is wrong by 60 seconds
+- universe (resolved markets): **9618**
+- with finite ret_2m: **9618**
+- below q90 gate: **7471**
+- skipped (no entry book): **178**, (spread): **234**, (thin): **5**, (no thresh): **894**
+- **fires: 836**
 
-The `market_resolutions_full.csv` schema changed: previously had `window_start_unix` + `outcome_up`; now only `slug` + `outcome` (Up/Down).
+## Per-cell HOLD
 
-Sanity-tested (`_sanity_outcome.py`): outcome aligns 95.8% with anchor `(slug_ws-60 → slug_ws+window-60)`. Strike is at `slug_ws-60`, NOT `slug_ws`. Slug-ws sits 1 minute INTO the market.
+| cell | n | wins | hit% | pnl_total | pnl_mean | pnl_std | sharpe | pnl_per_$1 | avg_vwap | dt_entry_us p̄ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| BTC_15m | 105 | 105 | 100.0 | $+1808.81 | $+17.2268 | 12.52 | 1.38 | $+0.6891 | 0.6323 | 312,780 |
+| BTC_5m | 241 | 190 | 78.8 | $+1318.02 | $+5.4690 | 23.93 | 0.23 | $+0.2188 | 0.6770 | 101,302 |
+| ETH_15m | 81 | 80 | 98.8 | $+1387.19 | $+17.1258 | 14.81 | 1.16 | $+0.6850 | 0.6316 | 1,031,456 |
+| ETH_5m | 202 | 175 | 86.6 | $+2207.86 | $+10.9300 | 28.48 | 0.38 | $+0.4372 | 0.6963 | 501,356 |
+| SOL_15m | 53 | 53 | 100.0 | $+963.75 | $+18.1840 | 14.72 | 1.24 | $+0.7274 | 0.6277 | 1,581,660 |
+| SOL_5m | 154 | 128 | 83.1 | $+815.37 | $+5.2946 | 22.61 | 0.23 | $+0.2118 | 0.7255 | 969,551 |
 
-That means the prior backtest (`extended_backtest.csv`) was effectively computing `ret_2m = log(close@(strike+120) / close@strike)` because its `window_start_unix` column was the strike time = `slug_ws-60`. **The new dataset doesn't expose this — you have to subtract 60 from `slug_ws`** to get the equivalent anchor.
+## Comparison vs prior `extended_backtest.csv` (HOLD column)
 
-Hit rate at q90 gate top-decile, by anchor:
+Prior run (May 6 morning): 1,151 trades total, +$13,481 across 6 cells.
+This run: **836** trades total, **$+8500.99**.
+Differences attributable to:
+- updated resolution data (post-shadow-deploy markets included)
+- 25-level entry books (was already 25-level — should be ~identical)
+- threshold recompute on fresh 14d windows
 
-| Anchor (BTC_5m) | top-decile hit% | matches prior backtest? |
-|---|---:|---|
-| `(slug_ws → slug_ws+120)` (= what production currently does) | **50%** | ❌ random |
-| `(slug_ws-60 → slug_ws+60)` (= prior backtest semantics) | **89%** | ✅ matches |
+## Next phases (HEDGE / SELL with 25-level exits)
 
-Production's `MomoStrategy._build_signal_aux` documents `ret_2m = log(close@ws+120 / close@ws)` using `slot.btc_close_at_ws = BTC@(slug_ws)`. Per the empirical test, **this is the wrong anchor**. Switching to `(slug_ws-60 → slug_ws+60)` could lift live hit rate from 58% → 89%.
-
-### Finding 2 — Even with correct anchor, vwap is too high to print money
-
-With anchor fixed:
-
-| cell | n | wins | hit% | pnl_total | pnl_mean | avg_vwap |
-|---|---:|---:|---:|---:|---:|---:|
-| BTC_5m | 184 | 163 | 88.6% | −$129.62 | −$0.70 | **0.911** |
-| BTC_15m | 63 | 45 | 71.4% | −$170.57 | −$2.71 | **0.785** |
-| ETH_5m | 143 | 133 | 93.0% | +$22.23 | +$0.16 | 0.924 |
-| ETH_15m | 54 | 44 | 81.5% | +$24.16 | +$0.45 | 0.803 |
-| SOL_5m | 118 | 110 | 93.2% | −$23.85 | −$0.20 | 0.938 |
-| SOL_15m | 45 | 35 | 77.8% | −$44.26 | −$0.98 | 0.810 |
-| **TOTAL** | **607** | **530** | **87.3%** | **−$321.93** | — | — |
-
-Break-even hurdle: `hit% > vwap`. With vwap=0.91, you need >91% hit to make money. Most cells are at hit=88-93% — borderline.
-
-Compare to **prior backtest** (extended_backtest.csv): BTC_5m vwap=0.694, +$4,705 over 325 trades. Same dataset (same tier1 parquets), same anchor (matched), but **vwap is much lower in prior backtest**.
-
-**Root cause investigation needed.** Two hypotheses:
-
-(a) **Different entry-book timing.** Tier1 in this refresh has `target_ts_us = slug_ws+120s`. Maybe prior backtest used an OLDER tier1 with target=strike+120s=`slug_ws+60s` (60s earlier — book hadn't absorbed yet). The 60s of additional book-absorption explains vwap drift from 0.69 → 0.91.
-
-(b) **Production REST lag is the alpha source, not Binance lag.** Production fetches book via REST → 1-2s stale book reflecting pre-absorption prices (vwap=0.50). VPS2 WS-ingested L25 books are real-time → already absorbed (vwap=0.91). If true, the alpha exists ONLY in REST-stale fetches and Phase-2 WS migration would KILL the strategy.
-
-Production live shadow data shows entries at vwap 0.46-0.55 → consistent with (b) and rules out (a) as the only explanation.
-
-## What to do next
-
-Before running tests 1-4 from the prior plan, **decide the anchor question**:
-
-1. Pull two production trade slugs (e.g. trade #16 BTC_5m DOWN at 05:01:14 UTC, ent_px=0.4682) and find the corresponding tier1 entry book row in `btc_entries_at_t120.parquet`. If the parquet's `ask0` for the Down outcome at that slug ≠ 0.4682, then VPS2 books are **systematically different** from REST books at same timestamp → confirms hypothesis (b) → strategy alpha is REST-lag.
-
-2. Check `dt_abs` percentiles per asset: median 91ms BTC, 462ms ETH, 810ms SOL. Books are within ~1s of target, NOT systematically late.
-
-3. If hypothesis (b) is confirmed, the entire research pipeline should use REST-style book snapshots, not VPS2 WS books. The 25-level WS books are the WRONG dataset for backtesting this strategy.
-
-## Pipeline counts (current run)
-
-- universe (resolved markets, BTC/ETH/SOL × 5m/15m): 9618
-- with finite ret_2m: 9618
-- below q90 gate (14d trailing): 7830
-- skipped (no entry book / spread / thin / no thresh): 481
-- **fires: 607**
-
-## Files
-- script: `strategy_lab/meta_classifier/momo_rerun_l25_hold.py`
-- per-trade: `strategy_lab/results/meta_classifier/momo_rerun_l25_hold_per_trade.csv`
-- aggregated: `strategy_lab/results/meta_classifier/momo_rerun_l25_hold.csv`
-- sanity scripts: `_sanity_outcome.py`, `_sanity_gate.py`, `_sanity_vwap.py`
-
-## Recommended next step
-
-Resolve hypothesis (b) before running tests 1-4. If alpha is REST-lag-driven, all four tests need redesign (they assume WS-precision is "better" — it's actually different). If alpha is real microstructure, then proceed with WS L25 streaming.
-
-Quick test: cross-reference 5 production live trade slugs against tier1 parquet `ask0` at same `(slug, outcome)` key. Match within $0.05 → microstructure real. Diverge by $0.30+ → REST-lag alpha.
+HOLD-only here. HEDGE/SELL paths require book snapshots during the holding window
+(buckets 13-29 for 5m, 13-89 for 15m). The raw L25 gzipped CSVs in `refresh_2026_05_06/`
+contain microsecond snapshots — Phase 2 will stream-aggregate these into
+per-(slug, bucket, outcome) 25-level snapshots, then HEDGE/SELL/anchor-sweep tests
+can run on the precision exit data.

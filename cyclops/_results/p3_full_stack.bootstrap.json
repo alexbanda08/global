@@ -1,0 +1,11 @@
+{
+  "n_trades": 53,
+  "observed_mean_pnl": 4.335057196990466,
+  "ci_lower": -2.0502403363036357,
+  "ci_upper": 10.93379396366687,
+  "n_boot": 20000,
+  "alpha": 0.05,
+  "frac_negative_draws": 0.09435,
+  "csv": "cyclops\\_results\\p3_full_stack.csv",
+  "verdict": "FAIL"
+}

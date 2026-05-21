@@ -1,0 +1,60 @@
+
+=== Build features: BTC 5m setup=1_5m_ws120 ===
+  [BTC 5m 1_5m_ws120] batch 1/4  slugs=500  +500rows  80.0s
+C:\Users\alexandre bandarra\Desktop\global\data\v4\canonical\load.py:286: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  for (sl, oc), grp in df.groupby(["slug", "outcome"], sort=False):
+  [BTC 5m 1_5m_ws120] batch 2/4  slugs=500  +1000rows  55.0s
+  [BTC 5m 1_5m_ws120] batch 3/4  slugs=500  +1500rows  52.1s
+  [BTC 5m 1_5m_ws120] batch 4/4  slugs=500  +2000rows  50.9s
+   built 2000 feature rows in 238s
+
+=== Build features: ETH 5m setup=1_5m_ws120 ===
+  [ETH 5m 1_5m_ws120] batch 1/4  slugs=500  +500rows  15.0s
+C:\Users\alexandre bandarra\Desktop\global\data\v4\canonical\load.py:286: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  for (sl, oc), grp in df.groupby(["slug", "outcome"], sort=False):
+  [ETH 5m 1_5m_ws120] batch 2/4  slugs=500  +1000rows  11.3s
+  [ETH 5m 1_5m_ws120] batch 3/4  slugs=500  +1500rows  11.2s
+  [ETH 5m 1_5m_ws120] batch 4/4  slugs=500  +2000rows  12.4s
+   built 2000 feature rows in 50s
+
+=== Build features: SOL 5m setup=1_5m_ws120 ===
+  [SOL 5m 1_5m_ws120] batch 1/4  slugs=500  +500rows  11.5s
+C:\Users\alexandre bandarra\Desktop\global\data\v4\canonical\load.py:286: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  for (sl, oc), grp in df.groupby(["slug", "outcome"], sort=False):
+  [SOL 5m 1_5m_ws120] batch 2/4  slugs=500  +1000rows  6.1s
+  [SOL 5m 1_5m_ws120] batch 3/4  slugs=500  +1500rows  8.0s
+  [SOL 5m 1_5m_ws120] batch 4/4  slugs=500  +2000rows  7.7s
+   built 2000 feature rows in 33s
+
+=== Build features: BTC 5m setup=2_5m_late ===
+  [BTC 5m 2_5m_late] batch 1/4  slugs=500  +500rows  47.0s
+C:\Users\alexandre bandarra\Desktop\global\data\v4\canonical\load.py:286: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  for (sl, oc), grp in df.groupby(["slug", "outcome"], sort=False):
+  [BTC 5m 2_5m_late] batch 2/4  slugs=500  +1000rows  43.2s
+  [BTC 5m 2_5m_late] batch 3/4  slugs=500  +1500rows  39.1s
+  [BTC 5m 2_5m_late] batch 4/4  slugs=500  +2000rows  38.9s
+   built 2000 feature rows in 168s
+
+=== Build features: ETH 5m setup=2_5m_late ===
+  [ETH 5m 2_5m_late] batch 1/4  slugs=500  +500rows  10.0s
+C:\Users\alexandre bandarra\Desktop\global\data\v4\canonical\load.py:286: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  for (sl, oc), grp in df.groupby(["slug", "outcome"], sort=False):
+  [ETH 5m 2_5m_late] batch 2/4  slugs=500  +1000rows  11.0s
+  [ETH 5m 2_5m_late] batch 3/4  slugs=500  +1500rows  13.1s
+  [ETH 5m 2_5m_late] batch 4/4  slugs=500  +2000rows  10.0s
+   built 2000 feature rows in 44s
+
+=== Build features: SOL 5m setup=2_5m_late ===
+  [SOL 5m 2_5m_late] batch 1/4  slugs=500  +500rows  6.9s
+C:\Users\alexandre bandarra\Desktop\global\data\v4\canonical\load.py:286: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  for (sl, oc), grp in df.groupby(["slug", "outcome"], sort=False):
+  [SOL 5m 2_5m_late] batch 2/4  slugs=500  +1000rows  10.1s
+  [SOL 5m 2_5m_late] batch 3/4  slugs=500  +1500rows  6.2s
+  [SOL 5m 2_5m_late] batch 4/4  slugs=500  +2000rows  7.4s
+   built 2000 feature rows in 31s
+
+=== Build features: BTC 15m setup=3_15m_late60 ===
+  [BTC 15m 3_15m_late60] batch 1/4  slugs=500  +500rows  32.5s
+C:\Users\alexandre bandarra\Desktop\global\data\v4\canonical\load.py:286: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  for (sl, oc), grp in df.groupby(["slug", "outcome"], sort=False):
+  [BTC 15m 3_15m_late60] batch 2/4  slugs=500  +1000rows  29.0s

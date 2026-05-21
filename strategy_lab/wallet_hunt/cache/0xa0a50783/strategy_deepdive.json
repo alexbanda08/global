@@ -1,0 +1,87 @@
+{
+  "short": "0xa0a50783",
+  "n_buys": 432,
+  "n_sells": 165,
+  "n_resolved_slugs_in_sample": 7,
+  "buy_wr": 0.6065,
+  "mean_entry_px": 0.4741,
+  "median_entry_px": 0.46,
+  "mean_shares": 18.62,
+  "median_shares": 5.0,
+  "total_usd_deployed_in_sample": 3785.75,
+  "realized_pnl_hold_in_sample": 2287.74,
+  "pnl_per_$_deployed": 0.6043,
+  "side_breakdown": {
+    "Up": {
+      "n": 170,
+      "wr": 0.0,
+      "mean_entry_px": 0.4469,
+      "mean_shares": 10.79,
+      "total_usd_in": 790.11,
+      "realized_pnl_hold": -821.39
+    },
+    "Down": {
+      "n": 262,
+      "wr": 1.0,
+      "mean_entry_px": 0.4918,
+      "mean_shares": 23.7,
+      "total_usd_in": 2995.63,
+      "realized_pnl_hold": 3109.13
+    }
+  },
+  "by_entry_price_bucket": {
+    "(0.2, 0.3]": {
+      "n": 33,
+      "wr": 0.9394,
+      "mean_entry": 0.2524,
+      "edge_pp": 68.7,
+      "pnl_hold": 602.34
+    },
+    "(0.3, 0.4]": {
+      "n": 24,
+      "wr": 0.0,
+      "mean_entry": 0.3887,
+      "edge_pp": -38.87,
+      "pnl_hold": -180.46
+    },
+    "(0.4, 0.5]": {
+      "n": 241,
+      "wr": 0.4025,
+      "mean_entry": 0.4603,
+      "edge_pp": -5.78,
+      "pnl_hold": 741.3
+    },
+    "(0.5, 0.6]": {
+      "n": 134,
+      "wr": 1.0,
+      "mean_entry": 0.569,
+      "edge_pp": 43.1,
+      "pnl_hold": 1124.57
+    }
+  },
+  "binance_signal_correlation": {
+    "n_with_binance": 432,
+    "matches_binance_pct": 0.6065,
+    "wr_when_match": 1.0,
+    "wr_when_contrary": 0.0
+  },
+  "fire_offset_seconds": {
+    "mean": 212.4,
+    "median": 151.0,
+    "p10": 86.0,
+    "p90": 295.0
+  },
+  "slug_density": {
+    "n_slugs": 7,
+    "median_fires_per_slug": 42,
+    "p90_fires_per_slug": 126,
+    "frac_slugs_both_sides": 0.0
+  },
+  "top_counterparties": {
+    "0xe111180000d2663c0091e4f400237545b87b996b": 0.942,
+    "0xab03f377164c3726d498e56f7a9398cd8eb74494": 0.005,
+    "0x14026373da58fabe45e2bf73a915a5d4b3a6e35b": 0.005,
+    "0xe9076a87c5ed90ef16e6fe6529c943baeca0cff6": 0.005,
+    "0x5158f4654de31b60eb4d1973a6eb5aa27c9d7df4": 0.002
+  }
+}

@@ -1,0 +1,69 @@
+
+=== BTC 5m ===
+  universe: 6110 markets
+  trades loaded: 24,002,995 rows  (60.2s)
+  building per-slug index from 12,234,736 Up trades...
+  indexed 6886 slugs with Up trades  (125.6s)
+  signals computed  (125.9s)
+  cvd_obs stats: mean=128.0 std=541.9 min=-1279.7 max=19689.4 nonzero=4802/6110
+
+--- per-threshold sweep ---
+asset  threshold  n_fires  hit_rate  pnl_flat_0.5  n_up  n_down
+  BTC          0     4802    0.4996       -1299.5  4743      59
+  BTC         50     2577    0.5134        1063.5  2562      15
+  BTC        100     1683    0.5110         495.0  1678       5
+  BTC        200      857    0.5251         850.0   854       3
+  BTC        500      242    0.5372         385.0   241       1
+  BTC       1000       88    0.5455         176.0    87       1
+
+=== ETH 5m ===
+  universe: 6110 markets
+  trades loaded: 6,042,172 rows  (16.9s)
+  building per-slug index from 3,079,453 Up trades...
+  indexed 6852 slugs with Up trades  (37.7s)
+  signals computed  (37.9s)
+  cvd_obs stats: mean=21.9 std=61.5 min=-457.4 max=1606.5 nonzero=3354/6110
+
+--- per-threshold sweep ---
+asset  threshold  n_fires  hit_rate  pnl_flat_0.5  n_up  n_down
+  ETH          0     3354    0.4982       -1135.5  3319      35
+  ETH         50      783    0.5287         918.0   781       2
+  ETH        100      294    0.5442         570.0   293       1
+  ETH        200       98    0.5408         173.5    97       1
+  ETH        500       13    0.3846         -77.5    13       0
+  ETH       1000        4    0.5000          -1.0     4       0
+
+=== SOL 5m ===
+  universe: 6110 markets
+  trades loaded: 2,677,331 rows  (7.8s)
+  building per-slug index from 1,407,630 Up trades...
+  indexed 6840 slugs with Up trades  (23.1s)
+  signals computed  (23.1s)
+  cvd_obs stats: mean=6.7 std=17.6 min=-19.2 max=282.1 nonzero=2061/6110
+
+--- per-threshold sweep ---
+asset  threshold  n_fires  hit_rate  pnl_flat_0.5  n_up  n_down
+  SOL          0     2061    0.5051           4.5  2015      46
+  SOL         50      210    0.5476         442.5   210       0
+  SOL        100       37    0.4595         -83.5    37       0
+  SOL        200        3    0.3333         -25.5     3       0
+  SOL        500        0       NaN           0.0     0       0
+  SOL       1000        0       NaN           0.0     0       0
+C:\Users\alexandre bandarra\Desktop\global\strategy_lab\discovery_2026_05_16\strat_A1_cvd_5m.py:162: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  agg = combined.groupby("threshold").apply(
+
+=== A1 COMBINED (all assets) ===
+ threshold  n_fires  hit_rate  pnl_flat_0.5
+         0  10217.0  0.500250       -2430.5
+        50   3570.0  0.518767        2424.0
+       100   2014.0  0.514900         981.5
+       200    958.0  0.526105         998.0
+       500    255.0  0.529420         307.5
+      1000     92.0  0.543522         175.0
+
+=== A1 NO-LOOKAHEAD EXAMPLES (max trade ts_us must be < fire_us) ===
+  BTC slug=btc-updown-5m-1777290900 ws_s=1777290600 fire_us=1777290720000000 n_used=9 max_trade_ts_us=1777290698000000 OK=True
+  BTC slug=btc-updown-5m-1777291200 ws_s=1777290900 fire_us=1777291020000000 n_used=8 max_trade_ts_us=1777290988000000 OK=True
+  BTC slug=btc-updown-5m-1777291500 ws_s=1777291200 fire_us=1777291320000000 n_used=8 max_trade_ts_us=1777291292000000 OK=True
+
+Wrote: C:\Users\alexandre bandarra\Desktop\global\strategy_lab\discovery_2026_05_16\_A1_per_asset_threshold.csv

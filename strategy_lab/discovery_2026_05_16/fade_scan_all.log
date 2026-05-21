@@ -1,0 +1,63 @@
+Loading trading events...
+  13,002 resolution events with valid slot_start_us
+Loading L25 books for all assets...
+  BTC: 1537 slugs...
+    -> 3074 (slug,outcome) keys in 34s
+  ETH: 1482 slugs...
+    -> 2964 (slug,outcome) keys in 11s
+  SOL: 1653 slugs...
+    -> 3306 (slug,outcome) keys in 9s
+Computing INVERSE fills for all events...
+  computed 10844 inverse trades in 1s (83.4% of events had valid L25 inverse fill)
+
+=== Scanning all (sleeve_id, signal, hour_bucket) cuts ===
+\nFound 59 positive-inverse cuts; 27 with perm p<0.10
+\n=== TOP 30 fade cuts (perm p<0.10) ===
+sleeve_id                                    sig   hour    n    hit      pnl     ppt    swing      p
+---------------------------------------------------------------------------------------------------------
+poly_updown_btc_15m_volume_INV_NIGHT          UP  06-11   55  74.5% $  +646 $+11.75 $ +1352  0.000
+poly_updown_eth_5m_volume_INV_NIGHT           UP  06-11  116  61.2% $  +603 $+5.19 $ +1377  0.010
+poly_updown_btc_5m_momo_HEDGE               DOWN  18-23   42  78.6% $  +522 $+12.44 $ +1117  0.000
+poly_updown_btc_5m_momo_HOLD                DOWN  18-23   42  78.6% $  +522 $+12.44 $ +1122  0.000
+poly_updown_btc_5m_volume_INV_NIGHT           UP  06-11  144  56.9% $  +480 $+3.33 $ +1087  0.060
+poly_updown_btc_5m_momo_SELL                DOWN  18-23   42  76.2% $  +471 $+11.21 $ +1065  0.000
+poly_updown_sol_5m_sniper_INV                 UP  00-05   36  75.0% $  +425 $+11.80 $  +910  0.004
+poly_updown_eth_5m_sniper_DOWN_INV            UP  00-05   34  67.6% $  +312 $+9.18 $  +652  0.014
+poly_updown_sol_15m_volume_INV_NIGHT        DOWN  06-11   34  67.6% $  +258 $+7.58 $  +585  0.034
+poly_updown_btc_5m_momo_v2_HEDGE            DOWN  12-17   51  62.7% $  +247 $+4.85 $  +419  0.078
+poly_updown_eth_15m_volume_INV_NIGHT          UP  06-11   38  63.2% $  +233 $+6.13 $  +519  0.076
+poly_updown_btc_15m_sniper                  DOWN  12-17   44  63.6% $  +227 $+5.16 $  +445  0.084
+poly_updown_btc_5m_momo_SELL                  UP  00-05   31  64.5% $  +218 $+7.02 $  +454  0.070
+poly_updown_btc_5m_momo_HEDGE                 UP  00-05   31  64.5% $  +218 $+7.02 $  +454  0.064
+poly_updown_btc_15m_sniper                    UP  18-23   27  66.7% $  +208 $+7.70 $  +371  0.056
+poly_updown_sol_5m_sniper                   DOWN  18-23   41  63.4% $  +207 $+5.05 $  +410  0.082
+poly_updown_btc_5m_momo_v2_HOLD             DOWN  12-17   45  62.2% $  +203 $+4.51 $  +474  0.094
+poly_updown_eth_5m_momo_v2_HEDGE            DOWN  12-17   30  66.7% $  +200 $+6.66 $  +436  0.054
+poly_updown_eth_5m_momo_v2_HOLD             DOWN  12-17   30  66.7% $  +200 $+6.66 $  +460  0.056
+poly_updown_eth_5m_momo_SELL                  UP  12-17   40  62.5% $  +196 $+4.90 $  +447  0.084
+poly_updown_eth_5m_momo_HEDGE                 UP  12-17   40  62.5% $  +196 $+4.90 $  +444  0.094
+poly_updown_eth_5m_momo_HOLD                  UP  12-17   40  62.5% $  +196 $+4.90 $  +455  0.096
+poly_updown_btc_5m_momo_v2_HEDGE            DOWN  18-23   36  63.9% $  +195 $+5.42 $  +473  0.066
+poly_updown_btc_5m_momo_HOLD                  UP  00-05   32  62.5% $  +193 $+6.02 $  +406  0.092
+poly_updown_eth_5m_momo_HEDGE               DOWN  12-17   33  63.6% $  +186 $+5.62 $  +318  0.068
+poly_updown_btc_5m_momo_v2_SELL             DOWN  00-05   31  64.5% $  +181 $+5.83 $  +506  0.068
+poly_updown_btc_5m_momo_v2_HEDGE            DOWN  00-05   31  64.5% $  +181 $+5.83 $  +480  0.074
+\n=== Total fade alpha (perm p<0.10 cuts only) ===
+  total inverse PnL: $+7922.24
+  total swing vs current: $+17238.26
+  total trades: 1196
+
+=== KEEP candidates — same-side performance, real L25 ===
+                                        n    live_pnl  live_win
+sleeve_id                                                      
+poly_updown_sol_5m_momo_SELL          240  636.029569  0.562500
+poly_updown_sol_5m_momo_HEDGE         242  488.908651  0.557851
+poly_updown_sol_5m_momo_HOLD          240  450.539743  0.554167
+poly_updown_btc_15m_sniper            234  280.573817  0.495726
+poly_updown_eth_15m_volume_INV_NIGHT  315  156.376372  0.530159
+poly_updown_sol_5m_momo_v2_HOLD       198  149.538940  0.530303
+poly_updown_eth_5m_sniper             317   70.907623  0.495268
+poly_updown_sol_5m_v4                 146   32.585941  0.554795
+poly_updown_eth_5m_momo_SELL          217   20.753110  0.483871
+poly_updown_sol_5m_v3_1               166   11.902358  0.536145
+\nTotal KEEP PnL (live): $+2298.12

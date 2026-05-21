@@ -1,4 +1,20 @@
 """
+DEPRECATED FEE MODEL — DO NOT QUOTE PnL FROM THIS FILE FORWARD.
+
+This file uses the legacy `FEE_RATE = 0.02` ("2% on profit only, winning leg")
+approximation. The real Polymarket fee is:
+
+    fee = C × feeRate × p × (1 − p)
+
+charged on EVERY fill (not just the winner). For crypto markets feeRate = 0.07.
+Use `strategy_lab/fees.py` (`poly_fee_usd`, `poly_maker_rebate_usd`) instead.
+
+Kept here for historical reproducibility only. Numbers produced by this file
+diverge materially from real Polymarket settlements — re-run via
+`engine_v2.fill_at_book` + `fees.poly_fee_usd` before any decision.
+"""
+
+"""
 polymarket_signal_grid_realfills.py — orderbook-realistic fill version of signal_grid_v2.
 
 Same logic, same signal (sig_ret5m_q20), same exit (hedge-hold @ rev_bp=5),

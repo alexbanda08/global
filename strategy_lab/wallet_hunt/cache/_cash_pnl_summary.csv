@@ -1,0 +1,2 @@
+short,n_usdc_transfers,time_first,time_last,span_days,trading_in,trading_out,net_trading_pnl,capital_in,capital_out,net_capital,net_cash_pnl,n_open_positions,open_position_value,winning_unclaimed_value,total_pnl,total_pnl_per_day,pnl_per_day,pnl_best_day,pnl_worst_day,n_days_positive,n_days_negative
+0xb27bc932,2365,2026-05-20 02:05:06+00:00,2026-05-20 14:45:02+00:00,0.53,12485.37,12985.82,-500.45,0.0,4.22,-4.22,-504.67,0,0.0,0.0,-504.67,-952.21,-500.45,-500.45,-500.45,0,1

@@ -40,21 +40,21 @@ NOTE: Phase 9 TFI parquet only exists locally for BTC (`btc_trade_flow_v1.parque
 
 | Gate | n | hit% | total PnL ($) | mean PnL | ROI/trade | Sharpe | hedged | thin | no_book |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| BTC_only — ALL | 454 | 85.5 | $+4931.64 | $+10.8626 | +42.65% | +21.31 | 158 | 1 | 13 |
-| BTC_only — 5m | 328 | 87.5 | $+3947.13 | $+12.0339 | +47.83% | +17.17 | 89 | 1 | 7 |
-| BTC_only — 15m | 126 | 80.2 | $+984.51 | $+7.8136 | +29.16% | +38.75 | 69 | 0 | 6 |
-| BTC_P9_orig — ALL | 340 | 76.2 | $+514.90 | $+1.5144 | +8.12% | +13.49 | 87 | 1 | 14 |
-| BTC_P9_orig — 5m | 209 | 83.7 | $+110.21 | $+0.5273 | +2.84% | +4.48 | 30 | 1 | 8 |
-| BTC_P9_orig — 15m | 131 | 64.1 | $+404.69 | $+3.0893 | +16.54% | +14.03 | 57 | 0 | 6 |
-| BTC_P9_resid — ALL | 339 | 69.6 | $+177.13 | $+0.5225 | +5.04% | +3.92 | 85 | 1 | 15 |
-| BTC_P9_resid — 5m | 206 | 75.2 | $-256.86 | $-1.2469 | -3.27% | -8.53 | 29 | 1 | 9 |
-| BTC_P9_resid — 15m | 133 | 60.9 | $+433.99 | $+3.2631 | +17.91% | +13.21 | 56 | 0 | 6 |
-| ETH_only — ALL | 453 | 89.0 | $+3569.98 | $+7.8807 | +30.78% | +43.52 | 169 | 0 | 15 |
-| ETH_only — 5m | 328 | 89.6 | $+2742.09 | $+8.3600 | +33.04% | +34.42 | 98 | 0 | 9 |
-| ETH_only — 15m | 125 | 87.2 | $+827.89 | $+6.6231 | +24.85% | +42.94 | 71 | 0 | 6 |
-| SOL_only — ALL | 436 | 84.9 | $+3972.93 | $+9.1122 | +36.72% | +44.13 | 154 | 0 | 32 |
-| SOL_only — 5m | 325 | 87.7 | $+3232.05 | $+9.9448 | +40.52% | +37.33 | 94 | 0 | 10 |
-| SOL_only — 15m | 111 | 76.6 | $+740.87 | $+6.6745 | +25.61% | +30.88 | 60 | 0 | 22 |
+| BTC_only — ALL | 463 | 63.5 | $-42.10 | $-0.0909 | +2.76% | -1.69 | 195 | 1 | 5 |
+| BTC_only — 5m | 330 | 69.7 | $-86.57 | $-0.2623 | +1.52% | -4.35 | 119 | 1 | 4 |
+| BTC_only — 15m | 133 | 48.1 | $+44.47 | $+0.3344 | +5.85% | +3.01 | 76 | 0 | 1 |
+| BTC_P9_orig — ALL | 340 | 68.2 | $+141.04 | $+0.4148 | +6.63% | +3.70 | 97 | 1 | 14 |
+| BTC_P9_orig — 5m | 209 | 78.0 | $+84.00 | $+0.4019 | +3.47% | +3.58 | 39 | 1 | 8 |
+| BTC_P9_orig — 15m | 131 | 52.7 | $+57.04 | $+0.4354 | +11.68% | +1.90 | 58 | 0 | 6 |
+| BTC_P9_resid — ALL | 335 | 56.1 | $+554.79 | $+1.6561 | +13.96% | +4.62 | 84 | 0 | 20 |
+| BTC_P9_resid — 5m | 180 | 68.9 | $+786.36 | $+4.3686 | +16.94% | +7.27 | 16 | 0 | 12 |
+| BTC_P9_resid — 15m | 155 | 41.3 | $-231.57 | $-1.4940 | +10.50% | -4.70 | 68 | 0 | 8 |
+| ETH_only — ALL | 452 | 65.9 | $+168.83 | $+0.3735 | +3.46% | +8.35 | 188 | 0 | 16 |
+| ETH_only — 5m | 327 | 73.4 | $+139.54 | $+0.4267 | +3.02% | +9.63 | 115 | 0 | 12 |
+| ETH_only — 15m | 125 | 46.4 | $+29.28 | $+0.2343 | +4.61% | +2.08 | 73 | 0 | 4 |
+| SOL_only — ALL | 445 | 63.1 | $-363.51 | $-0.8169 | +0.28% | -13.99 | 178 | 0 | 24 |
+| SOL_only — 5m | 321 | 68.8 | $-295.82 | $-0.9215 | -0.69% | -14.56 | 112 | 0 | 8 |
+| SOL_only — 15m | 124 | 48.4 | $-67.69 | $-0.5459 | +2.79% | -4.20 | 66 | 0 | 16 |
 
 ---
 
@@ -81,9 +81,9 @@ NOTE: Phase 9 TFI parquet only exists locally for BTC (`btc_trade_flow_v1.parque
 
 | Asset | Trades | avg_vwap_e (entry slippage) | avg_levels_touched | underfilled | unhedged_losses | unhedged_loss_$ | hedged | thin_skipped | no_book_skipped |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| BTC | 454 | $0.7093 | 1.23 | 0 | 16 | $-400.00 | 158 | 1 | 13 |
-| ETH | 453 | $0.7509 | 1.59 | 2 | 8 | $-200.00 | 169 | 0 | 15 |
-| SOL | 436 | $0.7428 | 2.74 | 3 | 10 | $-250.00 | 154 | 0 | 32 |
+| BTC | 463 | $0.8573 | 1.12 | 0 | 4 | $-100.00 | 195 | 1 | 5 |
+| ETH | 452 | $0.8799 | 1.33 | 2 | 2 | $-50.00 | 188 | 0 | 16 |
+| SOL | 445 | $0.8745 | 1.92 | 0 | 6 | $-150.00 | 178 | 0 | 24 |
 
 **Reading**:
 - `avg_vwap_e` > $0.50 confirms entries cross the mid (real ask, not assumed mid).
@@ -96,11 +96,11 @@ NOTE: Phase 9 TFI parquet only exists locally for BTC (`btc_trade_flow_v1.parque
 ## VERDICT
 
 **Asset-momentum gate (top-10% \|asset_ret_2m\|, entry t+120s, real fills, hedge-hold):**
-- BTC_only: n=454  hit=85.5%  total $+4931.64  ROI +42.65%/trade  Sharpe +21.31
-- ETH_only: n=453  hit=89.0%  total $+3569.98  ROI +30.78%/trade  Sharpe +43.52
-- SOL_only: n=436  hit=84.9%  total $+3972.93  ROI +36.72%/trade  Sharpe +44.13
+- BTC_only: n=463  hit=63.5%  total $-42.10  ROI +2.76%/trade  Sharpe -1.69
+- ETH_only: n=452  hit=65.9%  total $+168.83  ROI +3.46%/trade  Sharpe +8.35
+- SOL_only: n=445  hit=63.1%  total $-363.51  ROI +0.28%/trade  Sharpe -13.99
 
 **BTC Phase 9 head-to-head:**
-- BTC_P9_orig:  n=340  hit=76.2%  total $+514.90  ROI +8.12%/trade
-- BTC_P9_resid: n=339  hit=69.6%  total $+177.13  ROI +5.04%/trade
-- BTC_only:     n=454  hit=85.5%  total $+4931.64  ROI +42.65%/trade  ← **dominant**
+- BTC_P9_orig:  n=340  hit=68.2%  total $+141.04  ROI +6.63%/trade
+- BTC_P9_resid: n=335  hit=56.1%  total $+554.79  ROI +13.96%/trade
+- BTC_only:     n=463  hit=63.5%  total $-42.10  ROI +2.76%/trade  ← **dominant**

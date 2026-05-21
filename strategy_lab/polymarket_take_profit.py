@@ -1,4 +1,20 @@
 """
+DEPRECATED FEE MODEL — DO NOT QUOTE PnL FROM THIS FILE FORWARD.
+
+This file uses the legacy `FEE_RATE = 0.02` ("2% on profit only, winning leg")
+approximation. The real Polymarket fee is:
+
+    fee = C × feeRate × p × (1 − p)
+
+charged on EVERY fill (not just the winner). For crypto markets feeRate = 0.07.
+Use `strategy_lab/fees.py` (`poly_fee_usd`, `poly_maker_rebate_usd`) instead.
+
+Kept here for historical reproducibility only. Numbers produced by this file
+diverge materially from real Polymarket settlements — re-run via
+`engine_v2.fill_at_book` + `fees.poly_fee_usd` before any decision.
+"""
+
+"""
 polymarket_take_profit.py — STANDALONE: take-profit exit at fixed target return.
 
 Hypothesis (user idea):

@@ -1,0 +1,26 @@
+{
+  "PAT+ACC-M-t210-COMBO": {
+    "n_slugs_with_activity": 2786,
+    "mean_pnl": 30.08285842137568,
+    "median_pnl": 17.499955633538306,
+    "sum_pnl": 83810.84356195264,
+    "pct_positive": 72.11055276381909,
+    "stddev": 44.99863656979487
+  },
+  "PAT+ACC-M-t210-AGG": {
+    "n_slugs_with_activity": 2778,
+    "mean_pnl": 30.683185878797357,
+    "median_pnl": 18.245585971046438,
+    "sum_pnl": 85237.89037129906,
+    "pct_positive": 73.68610511159108,
+    "stddev": 46.38778463799497
+  },
+  "PAT+ACC-M-t210-sz10-f30": {
+    "n_slugs_with_activity": 2802,
+    "mean_pnl": 25.128282860320528,
+    "median_pnl": 15.567028621663814,
+    "sum_pnl": 70409.44857461812,
+    "pct_positive": 68.12990720913633,
+    "stddev": 35.50842047828895
+  }
+}

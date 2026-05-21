@@ -1,0 +1,85 @@
+Loading VPS3 events ...
+  BTC 5m resolutions: 3819  unique slugs: 1117
+
+  sleeve-direction rows after collapse: 2603
+  per-slug consensus rows: 1117
+
+========================================================================
+A) Vote distribution across 14 BTC 5m sleeves
+========================================================================
+{1: 676, 2: 45, 3: 154, 4: 95, 5: 7, 6: 87, 7: 27, 8: 6, 9: 11, 10: 3, 12: 6}
+
+    n_sleeves majority  count
+0           1     Down    336
+1           1       Up    340
+2           2     Down      8
+3           2      Tie     26
+4           2       Up     11
+5           3     Down     78
+6           3       Up     76
+7           4     Down     43
+8           4      Tie      1
+9           4       Up     51
+10          5     Down      4
+11          5       Up      3
+12          6     Down     23
+13          6      Tie      1
+14          6       Up     63
+15          7     Down      7
+16          7       Up     20
+17          8     Down      2
+18          8       Up      4
+19          9     Down      2
+20          9       Up      9
+21         10     Down      1
+22         10       Up      2
+23         12     Down      1
+24         12      Tie      1
+25         12       Up      4
+
+========================================================================
+B) Consensus-vote strategies ($1 stake, 2% legacy fee)
+========================================================================
+                                strategy      n      WR     brk     edge    mean$1     sum$1
+----------------------------------------------------------------------------------------
+                      ALL_markets_majority   1088  50.09%  50.50%  -0.41pp  $-0.0165  $-17.92
+                        strength>=0.6_n>=5    145  49.66%  50.61%  -0.95pp  $-0.0288  $-4.18
+                        strength>=0.7_n>=5    139  49.64%  50.61%  -0.97pp  $-0.0291  $-4.04
+                        strength>=0.8_n>=5    139  49.64%  50.61%  -0.97pp  $-0.0291  $-4.04
+                        strength>=0.9_n>=5    109  49.54%  50.53%  -0.99pp  $-0.0271  $-2.96
+                        strength>=1.0_n>=5    108  49.07%  50.52%  -1.45pp  $-0.0359  $-3.87
+                n_sleeves>=8_strength>=0.8     20  50.00%  50.80%  -0.80pp  $-0.0270  $-0.54
+               n_sleeves>=10_strength>=0.8      7  71.43%  50.89%  +20.54pp  $+0.3778  $+2.64
+               n_sleeves>=12_strength>=0.8      5  60.00%  50.50%  +9.50pp  $+0.1649  $+0.82
+
+========================================================================
+C) Consensus vote + Cyclops S7 cross
+========================================================================
+  Cyclops S7 fires: 238
+  consensus slugs in Cyclops: 36
+  consensus slugs NOT in Cyclops: 1081
+
+  In Cyclops + consensus agrees with Cyclops: 15
+  In Cyclops + consensus disagrees: 21
+
+  Cyclops S7 fires stratified by sleeve-consensus agreement:
+            sleeves_AGREE_with_cyclops  n=  15  WR= 0.800  mean=$+0.2679  sum=$+4.02
+         sleeves_DISAGREE_with_cyclops  n=  21  WR= 0.810  mean=$+0.2533  sum=$+5.32
+                        no_sleeve_data  n= 202  WR= 0.589  mean=$+0.0324  sum=$+6.54
+
+  Filtered: Cyclops fires + sleeves agree + strength >= X:
+    strength>=0.6  n=  15  WR= 0.800  mean=$+0.2679  sum=$+4.02
+    strength>=0.7  n=  15  WR= 0.800  mean=$+0.2679  sum=$+4.02
+    strength>=0.8  n=  14  WR= 0.786  mean=$+0.2554  sum=$+3.57
+
+========================================================================
+D) Cyclops + consensus expansion
+========================================================================
+  Concept: fire when EITHER Cyclops fires OR sleeves have strong
+  consensus. We need entry vwap for non-Cyclops slugs.
+
+  Cyclops universe (S7) total: $+15.88 @ $1 stake
+
+    consensus-only(strength>=0.7,n>=6): n= 125  WR=50.40%  brk=50.63%  edge=-0.23pp  mean=$-0.0126  sum=$-1.57
+    consensus-only(strength>=0.8,n>=6): n= 125  WR=50.40%  brk=50.63%  edge=-0.23pp  mean=$-0.0126  sum=$-1.57
+    consensus-only(strength>=0.9,n>=6): n= 101  WR=49.50%  brk=50.54%  edge=-1.03pp  mean=$-0.0268  sum=$-2.71

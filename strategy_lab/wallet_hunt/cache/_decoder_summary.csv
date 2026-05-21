@@ -1,0 +1,6 @@
+short,n_fills,n_legs,n_markets,n_5m,n_15m,maker_pct,buy_pct,med_offset,archetype,confidence,notes,n_resolved_markets,pnl_net_total,pnl_net_per_market
+0x04b6d7e9,54835,529,265,391,138,98.1,1.9,119,MINT_AND_SELL,0.966,only_sell_legs=68%  paired_mint_signal=57%,265,-29807.07,-112.4795
+0x89b5cdaa,32317,2122,1500,1563,559,100.0,0.0,161,MINT_AND_SELL,1.0,only_sell_legs=100%  paired_mint_signal=100%,1410,-7555.18,-5.3583
+0xce25e214,35271,767,384,433,334,29.4,70.6,254,ACTIVE_CHURNER,0.961,both_sides_legs=96%  med_captured_spread=$-0.0180  (no clear spread edge),353,-14560.24,-41.2471
+0xcfb103c3,47031,855,428,855,0,10.0,90.0,110,ACTIVE_CHURNER,0.996,both_sides_legs=100%  med_captured_spread=$-0.0155  (no clear spread edge),376,-32306.34,-85.9211
+0xeebde7a0,109660,1681,870,1232,449,55.6,44.4,179,ACTIVE_CHURNER,0.536,both_sides_legs=54%  med_captured_spread=$-0.0020  (no clear spread edge),776,-41735.56,-53.7829

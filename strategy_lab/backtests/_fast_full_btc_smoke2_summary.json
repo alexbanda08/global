@@ -1,0 +1,10 @@
+{
+  "ACC-M-sz20": {
+    "n_slugs_with_activity": 25,
+    "mean_pnl": -1.583676311267063,
+    "median_pnl": -9.730028190681457,
+    "sum_pnl": -39.591907781676575,
+    "pct_positive": 44.0,
+    "stddev": 9.61310823891146
+  }
+}

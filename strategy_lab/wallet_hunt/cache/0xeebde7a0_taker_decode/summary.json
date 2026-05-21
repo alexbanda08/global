@@ -1,0 +1,18 @@
+{
+  "n_taker_in_sample": 1823,
+  "n_taker_total_btc5m": 142702,
+  "n_slugs_sampled": 600,
+  "pct_rebal": 0.41689522764673614,
+  "pct_rebal_strong": 0.41415249588590236,
+  "pct_inv_bought_zero": 0.16017553483269337,
+  "pct_other_long": 0.7509599561162918,
+  "ask_drop_60s_median_cents": 1.9999995827674866,
+  "pct_ask_drop_gt_1c": 0.5375754251234229,
+  "pct_ask_drop_gt_3c": 0.4569391113549095,
+  "pct_ask_drop_gt_5c": 0.37904552934722985,
+  "pair_ask_sum_median": 1.010000005364418,
+  "pct_pair_arb_open": 0.0,
+  "pct_pair_arb_2c": 0.0,
+  "pct_pair_arb_5c": 0.0,
+  "pct_pair_no_arb": 0.016456390565002744
+}

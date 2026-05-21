@@ -1,0 +1,58 @@
+{
+  "ACC-M-sz5": {
+    "n_slugs_with_activity": 1594,
+    "mean_pnl": -0.6103410602328952,
+    "median_pnl": -2.4325070476703643,
+    "sum_pnl": -972.8836500112351,
+    "pct_positive": 36.70012547051443,
+    "stddev": 2.374933715516232
+  },
+  "ACC-M-sz20": {
+    "n_slugs_with_activity": 1594,
+    "mean_pnl": -2.4824380246946642,
+    "median_pnl": -9.730028190681457,
+    "sum_pnl": -3957.006211363295,
+    "pct_positive": 36.70012547051443,
+    "stddev": 9.462335412457039
+  },
+  "ACC-M-sz50": {
+    "n_slugs_with_activity": 1594,
+    "mean_pnl": -6.339552974933576,
+    "median_pnl": -24.325070476703644,
+    "sum_pnl": -10105.24744204412,
+    "pct_positive": 36.70012547051443,
+    "stddev": 23.527670273517078
+  },
+  "ACC-M-sz100": {
+    "n_slugs_with_activity": 1594,
+    "mean_pnl": -13.2216674819589,
+    "median_pnl": -48.65014095340729,
+    "sum_pnl": -21075.337966242485,
+    "pct_positive": 36.70012547051443,
+    "stddev": 46.48211484175872
+  },
+  "PAT+ACC-M": {
+    "n_slugs_with_activity": 2984,
+    "mean_pnl": 9.572834345066655,
+    "median_pnl": 7.870950331903541,
+    "sum_pnl": 28565.337685678896,
+    "pct_positive": 73.19034852546918,
+    "stddev": 15.427693957289842
+  },
+  "MAS-pre30": {
+    "n_slugs_with_activity": 6110,
+    "mean_pnl": 0.01190199603557373,
+    "median_pnl": 0.0,
+    "sum_pnl": 72.72119577735549,
+    "pct_positive": 25.597381342062192,
+    "stddev": 1.4137168086932193
+  },
+  "ACC-PC": {
+    "n_slugs_with_activity": 1594,
+    "mean_pnl": -2.4824380246946642,
+    "median_pnl": -9.730028190681457,
+    "sum_pnl": -3957.006211363295,
+    "pct_positive": 36.70012547051443,
+    "stddev": 9.462335412457039
+  }
+}

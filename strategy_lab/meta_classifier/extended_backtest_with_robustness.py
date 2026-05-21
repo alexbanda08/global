@@ -1,3 +1,19 @@
+"""
+DEPRECATED FEE MODEL — DO NOT QUOTE PnL FROM THIS FILE FORWARD.
+
+This file uses the legacy `FEE_RATE = 0.02` ("2% on profit only, winning leg")
+approximation. The real Polymarket fee is:
+
+    fee = C × feeRate × p × (1 − p)
+
+charged on EVERY fill (not just the winner). For crypto markets feeRate = 0.07.
+Use `strategy_lab/fees.py` (`poly_fee_usd`, `poly_maker_rebate_usd`) instead.
+
+Kept here for historical reproducibility only. Numbers produced by this file
+diverge materially from real Polymarket settlements — re-run via
+`engine_v2.fill_at_book` + `fees.poly_fee_usd` before any decision.
+"""
+
 """Extended backtest + permutation + walkforward — momentum strategy on 15,370 markets.
 
 Inputs (all from VPS2 data refresh 2026-05-06):
@@ -102,28 +118,37 @@ def load_klines() -> dict[str, pd.DataFrame]:
     return out
 
 
+_ASOF_CACHE: dict[int, tuple[np.ndarray, np.ndarray]] = {}
+
+
+def _ensure_asof_cache(k1m: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
+    """Compute (end_us, closes) once per kline DataFrame and cache by id.
+
+    Avoids re-allocating a 4 MiB int64 array on every asof() call (was OOMing
+    after ~50k calls under memory pressure).
+    """
+    key = id(k1m)
+    cached = _ASOF_CACHE.get(key)
+    if cached is not None:
+        return cached
+    end_us = (k1m["ts_s"].to_numpy(dtype="int64") + 60) * 1_000_000
+    closes = k1m["price_close"].to_numpy(dtype=float)
+    _ASOF_CACHE[key] = (end_us, closes)
+    return end_us, closes
+
+
 def asof(k1m: pd.DataFrame, ts: int) -> float:
     """End-time-indexed asof: returns price_close of the most recent
     1MIN bar whose CLOSE TIME has already happened by ``ts``.
 
-    Bug fix 2026-05-06: previous version used bar OPEN time as the index,
-    which returned a bar whose price_close was up to 60s in the FUTURE
-    of the query timestamp. For 5m markets, that meant the last 5
-    monitoring buckets (bucket 25-29 at ws+250..ws+290) read the
-    resolution-time price (ws+300) when computing rev_bp — i.e., the
-    backtest could "see the answer" during the last 50s of every market.
-
-    Effect of bug: HEDGE/SELL backtest PnL inflated by ~$2-6/trade
-    depending on cell. Verified by `verify_lookahead_bug.py`.
-
-    The strict implementation: target = ts × 1e6 (microseconds),
-    bar end_us = (ts_s + 60) × 1e6 for 1MIN bars. Find largest bar
-    where end_us ≤ target. That guarantees the bar has CLOSED before ts.
+    Bug fix 2026-05-06: end-time-indexed (was bar-open-time → 50s lookahead).
+    Perf fix 2026-05-07: cache (end_us, closes) per DataFrame to avoid 4 MiB
+    temp allocation on every call.
     """
-    end_us = (k1m.ts_s.astype("int64") + 60).values * 1_000_000
+    end_us, closes = _ensure_asof_cache(k1m)
     target_us = int(ts) * 1_000_000
     idx = int(np.searchsorted(end_us, target_us, side="right")) - 1
-    return float("nan") if idx < 0 else float(k1m.price_close.iloc[idx])
+    return float("nan") if idx < 0 else float(closes[idx])
 
 
 def load_tier1_entries(asset: str) -> dict:

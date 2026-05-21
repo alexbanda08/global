@@ -1,0 +1,87 @@
+=== Path B GA: filter-learning on production events ===
+[loading] production events...
+  total events: 58,701
+  window: 2026-05-06 23:06:00.702382+00:00 → 2026-05-19 22:45:39.383514+00:00
+  unique cells (sleeve_id,signal,hour_bucket,dow_group): 899
+  train: 12,092 (2026-05-06 23:06:00.702382+00:00 → 2026-05-15 09:40:41.113382+00:00)
+  val  : 32,060 (2026-05-15 09:45:58.781922+00:00 → 2026-05-17 08:25:40.001611+00:00)
+  held : 14,549 (2026-05-17 08:25:44.012964+00:00 → 2026-05-19 22:45:39.383514+00:00)
+
+[cells] building cell index on full universe...
+  159 cells with n>=40
+
+[baseline] greedy best-per-cell:
+  KEEP-all total: $-3458.66
+  INVERT-all total: $-7132.71
+  BEST per-cell total: $+28924.47
+  chosen actions: KEEP=74 INVERT=53 SKIP=32
+[Path B GA] n_cells = 159
+  conservative baseline: 32 cells passed train+val co-positive filter
+  CONSERVATIVE baseline: train $+4164 (n=1276)  val $+4431 (n=785)  HELD $-1294 (n=548 wr=0.451)  [active cells: 32]
+[Path B] gen   0  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen   1  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen   2  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (1.0s)
+[Path B] gen   3  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (1.1s)
+[Path B] gen   4  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen   5  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen   6  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.8s)
+[Path B] gen   7  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (1.0s)
+[Path B] gen   8  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen   9  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  10  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (1.0s)
+[Path B] gen  11  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  12  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.8s)
+[Path B] gen  13  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.8s)
+[Path B] gen  14  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (1.0s)
+[Path B] gen  15  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  16  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  17  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  18  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  19  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  20  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (1.0s)
+[Path B] gen  21  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  22  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  23  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  24  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  25  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.8s)
+[Path B] gen  26  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  27  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  28  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (1.0s)
+[Path B] gen  29  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  30  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (1.0s)
+[Path B] gen  31  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  32  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (1.0s)
+[Path B] gen  33  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (0.9s)
+[Path B] gen  34  train_pnl=$   +4164 (n=1276 wr=0.580)  val_pnl=$   +4431 (n= 785 wr=0.637)  [K=17 I=15 S=127]  (1.0s)
+[Path B] gen  35  train_pnl=$   +8684 (n=2687 wr=0.578)  val_pnl=$   +3523 (n=4807 wr=0.490)  [K=27 I=26 S=106]  (1.0s)
+[Path B] gen  36  train_pnl=$   +8684 (n=2687 wr=0.578)  val_pnl=$   +3523 (n=4807 wr=0.490)  [K=27 I=26 S=106]  (0.9s)
+[Path B] gen  37  train_pnl=$   +8684 (n=2687 wr=0.578)  val_pnl=$   +3523 (n=4807 wr=0.490)  [K=27 I=26 S=106]  (0.9s)
+[Path B] gen  38  train_pnl=$   +8684 (n=2687 wr=0.578)  val_pnl=$   +3523 (n=4807 wr=0.490)  [K=27 I=26 S=106]  (0.9s)
+[Path B] gen  39  train_pnl=$   +8684 (n=2687 wr=0.578)  val_pnl=$   +3523 (n=4807 wr=0.490)  [K=27 I=26 S=106]  (0.9s)
+[Path B] gen  40  train_pnl=$   +8684 (n=2687 wr=0.578)  val_pnl=$   +3523 (n=4807 wr=0.490)  [K=27 I=26 S=106]  (1.2s)
+[Path B] gen  41  train_pnl=$   +8684 (n=2687 wr=0.578)  val_pnl=$   +3523 (n=4807 wr=0.490)  [K=27 I=26 S=106]  (1.3s)
+[Path B] gen  42  train_pnl=$   +8684 (n=2687 wr=0.578)  val_pnl=$   +3523 (n=4807 wr=0.490)  [K=27 I=26 S=106]  (1.3s)
+[Path B] gen  43  train_pnl=$   +8684 (n=2687 wr=0.578)  val_pnl=$   +3523 (n=4807 wr=0.490)  [K=27 I=26 S=106]  (1.2s)
+[Path B] gen  44  train_pnl=$   +8684 (n=2687 wr=0.578)  val_pnl=$   +3523 (n=4807 wr=0.490)  [K=27 I=26 S=106]  (1.2s)
+[Path B] gen  45  train_pnl=$   +8684 (n=2687 wr=0.578)  val_pnl=$   +3523 (n=4807 wr=0.490)  [K=27 I=26 S=106]  (1.1s)
+[Path B] gen  46  train_pnl=$   +8684 (n=2687 wr=0.578)  val_pnl=$   +3523 (n=4807 wr=0.490)  [K=27 I=26 S=106]  (1.1s)
+[Path B] gen  47  train_pnl=$   +8258 (n=2590 wr=0.576)  val_pnl=$   +2378 (n=6836 wr=0.507)  [K=27 I=23 S=109]  (1.1s)
+[Path B] gen  48  train_pnl=$   +8258 (n=2590 wr=0.576)  val_pnl=$   +2378 (n=6836 wr=0.507)  [K=27 I=23 S=109]  (1.3s)
+[Path B] gen  49  train_pnl=$   +8258 (n=2590 wr=0.576)  val_pnl=$   +2378 (n=6836 wr=0.507)  [K=27 I=23 S=109]  (1.4s)
+[Path B] gen  50  train_pnl=$   +8258 (n=2590 wr=0.576)  val_pnl=$   +2378 (n=6836 wr=0.507)  [K=27 I=23 S=109]  (1.5s)
+[Path B] gen  51  train_pnl=$   +8258 (n=2590 wr=0.576)  val_pnl=$   +2378 (n=6836 wr=0.507)  [K=27 I=23 S=109]  (1.4s)
+[Path B] gen  52  train_pnl=$   +8258 (n=2590 wr=0.576)  val_pnl=$   +2378 (n=6836 wr=0.507)  [K=27 I=23 S=109]  (1.2s)
+[Path B] gen  53  train_pnl=$   +8258 (n=2590 wr=0.576)  val_pnl=$   +2378 (n=6836 wr=0.507)  [K=27 I=23 S=109]  (1.2s)
+[Path B] gen  54  train_pnl=$   +8258 (n=2590 wr=0.576)  val_pnl=$   +2378 (n=6836 wr=0.507)  [K=27 I=23 S=109]  (1.2s)
+[Path B] gen  55  train_pnl=$   +8279 (n=2551 wr=0.579)  val_pnl=$   +1671 (n=7682 wr=0.521)  [K=25 I=25 S=109]  (1.2s)
+[Path B] gen  56  train_pnl=$   +8279 (n=2551 wr=0.579)  val_pnl=$   +1671 (n=7682 wr=0.521)  [K=25 I=25 S=109]  (1.1s)
+[Path B] gen  57  train_pnl=$   +8279 (n=2551 wr=0.579)  val_pnl=$   +1671 (n=7682 wr=0.521)  [K=25 I=25 S=109]  (1.0s)
+[Path B] gen  58  train_pnl=$   +8279 (n=2551 wr=0.579)  val_pnl=$   +1671 (n=7682 wr=0.521)  [K=25 I=25 S=109]  (1.0s)
+[Path B] gen  59  train_pnl=$   +8279 (n=2551 wr=0.579)  val_pnl=$   +1671 (n=7682 wr=0.521)  [K=25 I=25 S=109]  (1.0s)
+
+[Path B] HELD-OUT on best gene: n=548 wr=0.451 pnl=$-1294 sharpe=-16.32  active_cells=32
+
+[Path B] run dir: C:\Users\alexandre bandarra\Desktop\global\strategy_lab\ga_optimizer\runs\path_b_1779265143
+  best train pnl: $+4164.10
+  best val   pnl: $+4430.95
+  held-out   pnl: $-1294.37

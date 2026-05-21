@@ -1,0 +1,26 @@
+{
+  "PAT+ACC-M": {
+    "n_slugs_with_activity": 3020,
+    "mean_pnl": 9.431271802673958,
+    "median_pnl": 7.631474972672952,
+    "sum_pnl": 28482.440844075354,
+    "pct_positive": 73.01324503311258,
+    "stddev": 15.419311891604629
+  },
+  "PAT+ACC-M-t5-COMBO": {
+    "n_slugs_with_activity": 2999,
+    "mean_pnl": 13.665651894978668,
+    "median_pnl": 8.254292405235741,
+    "sum_pnl": 40983.29003304103,
+    "pct_positive": 76.25875291763921,
+    "stddev": 31.167902265509646
+  },
+  "PAT+ACC-M-t210-COMBO": {
+    "n_slugs_with_activity": 2786,
+    "mean_pnl": 30.08285842137568,
+    "median_pnl": 17.499955633538306,
+    "sum_pnl": 83810.84356195264,
+    "pct_positive": 72.11055276381909,
+    "stddev": 44.99863656979487
+  }
+}

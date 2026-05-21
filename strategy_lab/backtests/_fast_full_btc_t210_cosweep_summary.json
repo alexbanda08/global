@@ -1,0 +1,50 @@
+{
+  "PAT+ACC-M-t210": {
+    "n_slugs_with_activity": 2802,
+    "mean_pnl": 21.44287971783626,
+    "median_pnl": 14.80717184192356,
+    "sum_pnl": 60082.9489693772,
+    "pct_positive": 67.98715203426124,
+    "stddev": 29.39282505331756
+  },
+  "PAT+ACC-M-t210-pc097": {
+    "n_slugs_with_activity": 2778,
+    "mean_pnl": 22.150215903979436,
+    "median_pnl": 16.10079000290394,
+    "sum_pnl": 61533.29978125488,
+    "pct_positive": 68.07055435565155,
+    "stddev": 29.54425714046493
+  },
+  "PAT+ACC-M-t210-pc098": {
+    "n_slugs_with_activity": 2786,
+    "mean_pnl": 21.964840972777722,
+    "median_pnl": 15.823315688019404,
+    "sum_pnl": 61194.046950158736,
+    "pct_positive": 68.12634601579325,
+    "stddev": 29.481072862581463
+  },
+  "PAT+ACC-M-t210-pc099": {
+    "n_slugs_with_activity": 2797,
+    "mean_pnl": 21.687975413896073,
+    "median_pnl": 15.340669862644672,
+    "sum_pnl": 60661.26723266732,
+    "pct_positive": 68.07293528780836,
+    "stddev": 29.424466972260497
+  },
+  "PAT+ACC-M-t210-f30": {
+    "n_slugs_with_activity": 2802,
+    "mean_pnl": 28.108950687746837,
+    "median_pnl": 16.588917007584502,
+    "sum_pnl": 78761.27982706664,
+    "pct_positive": 70.05710206995003,
+    "stddev": 41.627688576294375
+  },
+  "PAT+ACC-M-t210-sz50": {
+    "n_slugs_with_activity": 2802,
+    "mean_pnl": 27.821851524740893,
+    "median_pnl": 16.06104408814562,
+    "sum_pnl": 77956.82797232398,
+    "pct_positive": 70.27123483226268,
+    "stddev": 40.489676833325646
+  }
+}

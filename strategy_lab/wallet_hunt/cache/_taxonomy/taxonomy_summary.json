@@ -1,0 +1,154 @@
+{
+  "0x89b5cdaa": {
+    "wallet_addr": "0x89b5cdaaa4866c1e738406712012a630b4078beb",
+    "n_tx": 100193,
+    "counts": {
+      "CLOB-BID-FILL": 92598,
+      "RELAY-OUT": 4717,
+      "P2P-TRANSFER": 1661,
+      "CLOB-ASK-FILL": 851,
+      "BURN-REDEEM": 211,
+      "OTHER": 147,
+      "PUSD-MISC": 7,
+      "EXT-WITHDRAWAL": 1
+    },
+    "pct": {
+      "CLOB-BID-FILL": 92.42,
+      "RELAY-OUT": 4.71,
+      "P2P-TRANSFER": 1.66,
+      "CLOB-ASK-FILL": 0.85,
+      "BURN-REDEEM": 0.21,
+      "OTHER": 0.15,
+      "PUSD-MISC": 0.01,
+      "EXT-WITHDRAWAL": 0.0
+    },
+    "notional": {
+      "BURN-REDEEM": 0.0,
+      "CLOB-ASK-FILL": 12467.77,
+      "CLOB-BID-FILL": 6338348.44,
+      "EXT-WITHDRAWAL": 5.0,
+      "OTHER": 19413.97,
+      "P2P-TRANSFER": 14077.99,
+      "PUSD-MISC": 5044.28,
+      "RELAY-OUT": 845017.47
+    },
+    "tc_usdc": {
+      "BURN-REDEEM": 0.0,
+      "CLOB-ASK-FILL": 0.0,
+      "CLOB-BID-FILL": 5262996.26,
+      "EXT-WITHDRAWAL": 0.0,
+      "OTHER": 0.0,
+      "P2P-TRANSFER": 0.0,
+      "PUSD-MISC": 0.0,
+      "RELAY-OUT": 0.0
+    },
+    "first_ts": "2026-05-11T21:58:51.000Z",
+    "last_ts": "2026-05-16T09:59:38.000Z"
+  },
+  "0x04b6d7e9": {
+    "wallet_addr": "0x04b6d7e930cf9e493c5e6ef24b496294f95594c8",
+    "n_tx": 98043,
+    "counts": {
+      "CLOB-BID-FILL": 92699,
+      "P2P-TRANSFER": 4443,
+      "RELAY-OUT": 515,
+      "CLOB-MIXED": 344,
+      "OTHER": 39,
+      "PUSD-MISC": 3
+    },
+    "pct": {
+      "CLOB-BID-FILL": 94.55,
+      "P2P-TRANSFER": 4.53,
+      "RELAY-OUT": 0.53,
+      "CLOB-MIXED": 0.35,
+      "OTHER": 0.04,
+      "PUSD-MISC": 0.0
+    },
+    "notional": {
+      "CLOB-BID-FILL": 22530927.17,
+      "CLOB-MIXED": 255756.56,
+      "OTHER": 0.0,
+      "P2P-TRANSFER": 42925.69,
+      "PUSD-MISC": 6913.61,
+      "RELAY-OUT": 1235540.27
+    },
+    "tc_usdc": {
+      "CLOB-BID-FILL": 21388837.33,
+      "CLOB-MIXED": 244998.06,
+      "OTHER": 0.0,
+      "P2P-TRANSFER": 0.0,
+      "PUSD-MISC": 0.0,
+      "RELAY-OUT": 0.0
+    },
+    "first_ts": "2026-05-13T15:11:35.000Z",
+    "last_ts": "2026-05-16T08:45:36.000Z"
+  },
+  "0xeebde7a0": {
+    "wallet_addr": "0xeebde7a0e019a63e6b476eb425505b7b3e6eba30",
+    "n_tx": 57068,
+    "counts": {
+      "CLOB-BID-FILL": 39193,
+      "CLOB-MIXED": 16595,
+      "RELAY-OUT": 555,
+      "P2P-TRANSFER": 420,
+      "OTHER": 303,
+      "PUSD-MISC": 2
+    },
+    "pct": {
+      "CLOB-BID-FILL": 68.68,
+      "CLOB-MIXED": 29.08,
+      "RELAY-OUT": 0.97,
+      "P2P-TRANSFER": 0.74,
+      "OTHER": 0.53,
+      "PUSD-MISC": 0.0
+    },
+    "notional": {
+      "CLOB-BID-FILL": 18868241.92,
+      "CLOB-MIXED": 67550377.97,
+      "OTHER": 368689.67,
+      "P2P-TRANSFER": 19480.15,
+      "PUSD-MISC": 936.16,
+      "RELAY-OUT": 630995.23
+    },
+    "tc_usdc": {
+      "CLOB-BID-FILL": 18500440.73,
+      "CLOB-MIXED": 67269695.56,
+      "OTHER": 0.0,
+      "P2P-TRANSFER": 0.0,
+      "PUSD-MISC": 0.0,
+      "RELAY-OUT": 0.0
+    },
+    "first_ts": "2026-05-15T08:34:16.000Z",
+    "last_ts": "2026-05-16T10:01:56.000Z"
+  },
+  "0xf7f0b0b1": {
+    "wallet_addr": "0xf7f0b0b1e9c0fe02ccad926916ee31aef74b912c",
+    "n_tx": 2256,
+    "counts": {
+      "CLOB-BID-FILL": 1862,
+      "RELAY-OUT": 291,
+      "P2P-TRANSFER": 95,
+      "PUSD-MISC": 8
+    },
+    "pct": {
+      "CLOB-BID-FILL": 82.54,
+      "RELAY-OUT": 12.9,
+      "P2P-TRANSFER": 4.21,
+      "PUSD-MISC": 0.35
+    },
+    "notional": {
+      "CLOB-BID-FILL": 12373.01,
+      "P2P-TRANSFER": 275.13,
+      "PUSD-MISC": 2141.06,
+      "RELAY-OUT": 11500.91
+    },
+    "tc_usdc": {
+      "CLOB-BID-FILL": 0.0,
+      "P2P-TRANSFER": 0.0,
+      "PUSD-MISC": 0.0,
+      "RELAY-OUT": 0.0
+    },
+    "first_ts": "2026-05-13T00:35:05.000Z",
+    "last_ts": "2026-05-16T13:30:39.000Z"
+  }
+}

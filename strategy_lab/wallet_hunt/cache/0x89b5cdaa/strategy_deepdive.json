@@ -1,0 +1,115 @@
+{
+  "short": "0x89b5cdaa",
+  "n_buys": 365,
+  "n_sells": 232,
+  "n_resolved_slugs_in_sample": 22,
+  "buy_wr": 0.5836,
+  "mean_entry_px": 0.5258,
+  "median_entry_px": 0.51,
+  "mean_shares": 24.45,
+  "median_shares": 14.14,
+  "total_usd_deployed_in_sample": 4804.64,
+  "realized_pnl_hold_in_sample": 75.04,
+  "pnl_per_$_deployed": 0.0156,
+  "side_breakdown": {
+    "Up": {
+      "n": 152,
+      "wr": 0.0,
+      "mean_entry_px": 0.5387,
+      "mean_shares": 25.61,
+      "total_usd_in": 2116.77,
+      "realized_pnl_hold": -2183.32
+    },
+    "Down": {
+      "n": 213,
+      "wr": 1.0,
+      "mean_entry_px": 0.5167,
+      "mean_shares": 23.61,
+      "total_usd_in": 2687.88,
+      "realized_pnl_hold": 2258.36
+    }
+  },
+  "by_entry_price_bucket": {
+    "(0.1, 0.2]": {
+      "n": 2,
+      "wr": 1.0,
+      "mean_entry": 0.192,
+      "edge_pp": 80.8,
+      "pnl_hold": 12.48
+    },
+    "(0.2, 0.3]": {
+      "n": 6,
+      "wr": 0.6667,
+      "mean_entry": 0.2728,
+      "edge_pp": 39.38,
+      "pnl_hold": 66.46
+    },
+    "(0.3, 0.4]": {
+      "n": 13,
+      "wr": 1.0,
+      "mean_entry": 0.3123,
+      "edge_pp": 68.77,
+      "pnl_hold": 160.83
+    },
+    "(0.4, 0.5]": {
+      "n": 138,
+      "wr": 0.9855,
+      "mean_entry": 0.4981,
+      "edge_pp": 48.74,
+      "pnl_hold": 1475.48
+    },
+    "(0.5, 0.6]": {
+      "n": 161,
+      "wr": 0.2609,
+      "mean_entry": 0.5296,
+      "edge_pp": -26.88,
+      "pnl_hold": -1170.99
+    },
+    "(0.6, 0.7]": {
+      "n": 27,
+      "wr": 0.0,
+      "mean_entry": 0.6552,
+      "edge_pp": -65.52,
+      "pnl_hold": -564.77
+    },
+    "(0.7, 0.8]": {
+      "n": 11,
+      "wr": 0.8182,
+      "mean_entry": 0.7527,
+      "edge_pp": 6.55,
+      "pnl_hold": 48.98
+    },
+    "(0.8, 0.9]": {
+      "n": 7,
+      "wr": 1.0,
+      "mean_entry": 0.8386,
+      "edge_pp": 16.14,
+      "pnl_hold": 46.58
+    }
+  },
+  "binance_signal_correlation": {
+    "n_with_binance": 365,
+    "matches_binance_pct": 0.5836,
+    "wr_when_match": 1.0,
+    "wr_when_contrary": 0.0
+  },
+  "fire_offset_seconds": {
+    "mean": 187.1,
+    "median": 151.0,
+    "p10": 38.0,
+    "p90": 347.0
+  },
+  "slug_density": {
+    "n_slugs": 22,
+    "median_fires_per_slug": 7,
+    "p90_fires_per_slug": 45,
+    "frac_slugs_both_sides": 0.4091
+  },
+  "top_counterparties": {
+    "0xe111180000d2663c0091e4f400237545b87b996b": 0.849,
+    "0x4eeea30915e363164382c56aeaab544e29ae54a2": 0.008,
+    "0x20d2309cd92b797ae7ca175ed828ed8a27fbe29d": 0.005,
+    "0x80541ef250719f168fe653ccbdb7f3bb6544925e": 0.003,
+    "0x52fe24237fd4dcbb801451a44e9f41dbe8e6d598": 0.003
+  }
+}

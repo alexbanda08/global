@@ -69,3 +69,12 @@ local.settings.json
 
 # Local log files
 /logs/
+
+# === Raw shadow / migration data dumps (regenerable from VPS, large) ===
+/migration_ireland_shadow_*/
+/shadow_logs/
+/shadow_logs_l25/
+/data/v4/refresh_*/
+/data/v4/canonical/orderbook_l25/
+/data/v4/canonical/trades_polymarket/
+/data/v4/canonical/*.parquet

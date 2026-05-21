@@ -1,0 +1,116 @@
+Backtest plan: 39 slugs, 10 strategies (pat)
+  [1/39] btc-updown-15m-1778769000 (Up) ACC-M-sz20=+8.41 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.00 PAT-sz20-c1.01=-0.29 PAT-sz50-c1.00=+0.00 PAT-sz100-c1.00=+0.00 PAT-sz20-c1.00-thin500=+0.00 PAT+ACC-M-sz20-c1.00=+8.41  5620ms
+  [2/39] btc-updown-15m-1778769900 (Up) ACC-M-sz20=+1.25 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.12 PAT-sz20-c1.01=-0.24 PAT-sz50-c1.00=+0.12 PAT-sz100-c1.00=+0.12 PAT-sz20-c1.00-thin500=+0.00 PAT+ACC-M-sz20-c1.00=+1.37  5141ms
+  [3/39] btc-updown-15m-1778770800 (Up) ACC-M-sz20=+2.58 PAT-sz20-c97=+0.70 PAT-sz20-c98=+0.70 PAT-sz20-c99=+0.81 PAT-sz20-c1.00=+0.86 PAT-sz20-c1.01=+0.83 PAT-sz50-c1.00=+0.94 PAT-sz100-c1.00=+1.08 PAT-sz20-c1.00-thin500=+0.86 PAT+ACC-M-sz20-c1.00=+3.44  5500ms
+  [4/39] btc-updown-15m-1778771700 (Up) ACC-M-sz20=-5.84 PAT-sz20-c97=+1.14 PAT-sz20-c98=+1.14 PAT-sz20-c99=+1.14 PAT-sz20-c1.00=+1.26 PAT-sz20-c1.01=+1.06 PAT-sz50-c1.00=+1.81 PAT-sz100-c1.00=+1.81 PAT-sz20-c1.00-thin500=+1.26 PAT+ACC-M-sz20-c1.00=-4.59  5458ms
+  [5/39] btc-updown-15m-1778772600 (Up) ACC-M-sz20=+6.96 PAT-sz20-c97=+1.11 PAT-sz20-c98=+1.11 PAT-sz20-c99=+1.11 PAT-sz20-c1.00=+1.14 PAT-sz20-c1.01=+1.12 PAT-sz50-c1.00=+1.15 PAT-sz100-c1.00=+1.15 PAT-sz20-c1.00-thin500=+0.00 PAT+ACC-M-sz20-c1.00=+8.11  5030ms
+  [6/39] btc-updown-15m-1778773500 (Up) ACC-M-sz20=-3.04 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.00 PAT-sz20-c1.01=-0.73 PAT-sz50-c1.00=+0.00 PAT-sz100-c1.00=+0.00 PAT-sz20-c1.00-thin500=+0.00 PAT+ACC-M-sz20-c1.00=-3.04  4869ms
+  [7/39] btc-updown-15m-1778774400 (Up) ACC-M-sz20=+6.51 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.01 PAT-sz20-c1.01=-0.23 PAT-sz50-c1.00=+0.01 PAT-sz100-c1.00=+0.01 PAT-sz20-c1.00-thin500=+0.00 PAT+ACC-M-sz20-c1.00=+6.52  5339ms
+  [8/39] btc-updown-15m-1778775300 (Up) ACC-M-sz20=+3.02 PAT-sz20-c97=+1.76 PAT-sz20-c98=+1.76 PAT-sz20-c99=+1.83 PAT-sz20-c1.00=+1.43 PAT-sz20-c1.01=+1.73 PAT-sz50-c1.00=+2.49 PAT-sz100-c1.00=+4.26 PAT-sz20-c1.00-thin500=+0.72 PAT+ACC-M-sz20-c1.00=+4.45  5195ms
+  [9/39] btc-updown-15m-1778776200 (Down) ACC-M-sz20=+1.54 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.28 PAT-sz20-c99=+0.28 PAT-sz20-c1.00=+0.28 PAT-sz20-c1.01=-0.12 PAT-sz50-c1.00=+0.28 PAT-sz100-c1.00=+0.28 PAT-sz20-c1.00-thin500=+0.28 PAT+ACC-M-sz20-c1.00=+1.82  5106ms
+  [10/39] btc-updown-15m-1778777100 (Up) ACC-M-sz20=+5.92 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.15 PAT-sz20-c1.01=-1.19 PAT-sz50-c1.00=+0.15 PAT-sz100-c1.00=+0.15 PAT-sz20-c1.00-thin500=+0.15 PAT+ACC-M-sz20-c1.00=+6.07  5188ms
+  [11/39] btc-updown-15m-1778778000 (Down) ACC-M-sz20=+4.52 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.00 PAT-sz20-c1.01=-0.28 PAT-sz50-c1.00=+0.00 PAT-sz100-c1.00=+0.00 PAT-sz20-c1.00-thin500=+0.00 PAT+ACC-M-sz20-c1.00=+4.52  5131ms
+  [12/39] btc-updown-15m-1778778900 (Down) ACC-M-sz20=-2.27 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.00 PAT-sz20-c1.01=-0.71 PAT-sz50-c1.00=+0.00 PAT-sz100-c1.00=+0.00 PAT-sz20-c1.00-thin500=+0.00 PAT+ACC-M-sz20-c1.00=-2.27  5052ms
+  [13/39] btc-updown-15m-1778779800 (Up) ACC-M-sz20=-2.49 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.12 PAT-sz20-c1.01=-0.04 PAT-sz50-c1.00=+0.12 PAT-sz100-c1.00=+0.12 PAT-sz20-c1.00-thin500=+0.09 PAT+ACC-M-sz20-c1.00=-2.37  4974ms
+  [14/39] btc-updown-15m-1778780700 (Up) ACC-M-sz20=+5.46 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.00 PAT-sz20-c1.01=-0.44 PAT-sz50-c1.00=+0.00 PAT-sz100-c1.00=+0.00 PAT-sz20-c1.00-thin500=+0.00 PAT+ACC-M-sz20-c1.00=+5.46  4904ms
+  [15/39] btc-updown-15m-1778781600 (Up) ACC-M-sz20=+13.46 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.13 PAT-sz20-c1.01=-0.22 PAT-sz50-c1.00=+0.33 PAT-sz100-c1.00=+0.39 PAT-sz20-c1.00-thin500=+0.13 PAT+ACC-M-sz20-c1.00=+13.59  5137ms
+  [16/39] btc-updown-15m-1778782500 (Up) ACC-M-sz20=-7.15 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.09 PAT-sz20-c1.01=-0.43 PAT-sz50-c1.00=+0.09 PAT-sz100-c1.00=+0.09 PAT-sz20-c1.00-thin500=+0.09 PAT+ACC-M-sz20-c1.00=-7.06  5180ms
+  [17/39] btc-updown-15m-1778783400 (Down) ACC-M-sz20=-7.93 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.03 PAT-sz20-c1.01=-0.75 PAT-sz50-c1.00=+0.04 PAT-sz100-c1.00=+0.06 PAT-sz20-c1.00-thin500=+0.03 PAT+ACC-M-sz20-c1.00=-7.90  4859ms
+  [18/39] btc-updown-15m-1778784300 (Up) ACC-M-sz20=+10.68 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.60 PAT-sz20-c1.00=+0.37 PAT-sz20-c1.01=-0.29 PAT-sz50-c1.00=+0.45 PAT-sz100-c1.00=+0.52 PAT-sz20-c1.00-thin500=+0.37 PAT+ACC-M-sz20-c1.00=+11.04  5086ms
+  [19/39] btc-updown-15m-1778785200 (Down) ACC-M-sz20=-9.80 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.30 PAT-sz20-c1.00=+0.34 PAT-sz20-c1.01=+0.29 PAT-sz50-c1.00=+0.79 PAT-sz100-c1.00=+1.55 PAT-sz20-c1.00-thin500=+0.34 PAT+ACC-M-sz20-c1.00=-9.46  5026ms
+  [20/39] btc-updown-15m-1778786100 (Down) ACC-M-sz20=-3.65 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.00 PAT-sz20-c1.01=-0.55 PAT-sz50-c1.00=+0.00 PAT-sz100-c1.00=+0.00 PAT-sz20-c1.00-thin500=+0.00 PAT+ACC-M-sz20-c1.00=-3.65  4886ms
+  [21/39] btc-updown-15m-1778787000 (Up) ACC-M-sz20=+7.67 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.07 PAT-sz20-c1.01=-0.19 PAT-sz50-c1.00=+0.07 PAT-sz100-c1.00=+0.07 PAT-sz20-c1.00-thin500=+0.07 PAT+ACC-M-sz20-c1.00=+7.73  4932ms
+  [22/39] btc-updown-15m-1778787900 (Down) ACC-M-sz20=+2.87 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.09 PAT-sz20-c1.01=-0.10 PAT-sz50-c1.00=+0.09 PAT-sz100-c1.00=+0.09 PAT-sz20-c1.00-thin500=+0.09 PAT+ACC-M-sz20-c1.00=+2.96  5160ms
+  [23/39] btc-updown-15m-1778821200 (Up) ACC-M-sz20=+3.15 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.65 PAT-sz20-c1.00=+0.65 PAT-sz20-c1.01=-0.55 PAT-sz50-c1.00=+1.13 PAT-sz100-c1.00=+1.15 PAT-sz20-c1.00-thin500=+0.65 PAT+ACC-M-sz20-c1.00=+3.80  5076ms
+  [24/39] btc-updown-15m-1778822100 (Down) ACC-M-sz20=-0.55 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.17 PAT-sz20-c1.01=-0.05 PAT-sz50-c1.00=+0.22 PAT-sz100-c1.00=+0.22 PAT-sz20-c1.00-thin500=+0.17 PAT+ACC-M-sz20-c1.00=-0.38  4998ms
+  [25/39] btc-updown-15m-1778823000 (Down) ACC-M-sz20=+7.93 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.00 PAT-sz20-c1.01=-0.75 PAT-sz50-c1.00=+0.00 PAT-sz100-c1.00=+0.00 PAT-sz20-c1.00-thin500=+0.00 PAT+ACC-M-sz20-c1.00=+7.93  4850ms
+  [26/39] btc-updown-15m-1778823900 (Down) ACC-M-sz20=-7.30 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.17 PAT-sz20-c1.00=+0.17 PAT-sz20-c1.01=-0.18 PAT-sz50-c1.00=+0.17 PAT-sz100-c1.00=+0.17 PAT-sz20-c1.00-thin500=+0.17 PAT+ACC-M-sz20-c1.00=-7.14  4944ms
+  [27/39] btc-updown-15m-1778824800 (Up) ACC-M-sz20=+7.89 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.00 PAT-sz20-c1.01=-0.69 PAT-sz50-c1.00=+0.00 PAT-sz100-c1.00=+0.00 PAT-sz20-c1.00-thin500=+0.00 PAT+ACC-M-sz20-c1.00=+7.89  5013ms
+  [28/39] btc-updown-15m-1778825700 (Up) ACC-M-sz20=+5.66 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.35 PAT-sz20-c1.00=+0.37 PAT-sz20-c1.01=-0.15 PAT-sz50-c1.00=+0.72 PAT-sz100-c1.00=+0.72 PAT-sz20-c1.00-thin500=+0.37 PAT+ACC-M-sz20-c1.00=+6.02  5063ms
+  [29/39] btc-updown-15m-1778826600 (Up) ACC-M-sz20=-3.35 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.02 PAT-sz20-c1.01=-0.51 PAT-sz50-c1.00=+0.02 PAT-sz100-c1.00=+0.02 PAT-sz20-c1.00-thin500=+0.02 PAT+ACC-M-sz20-c1.00=-3.33  4815ms
+  [30/39] btc-updown-15m-1778838300 (Up) ACC-M-sz20=-2.65 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.19 PAT-sz20-c1.00=+0.30 PAT-sz20-c1.01=+0.30 PAT-sz50-c1.00=+0.30 PAT-sz100-c1.00=+0.30 PAT-sz20-c1.00-thin500=+0.11 PAT+ACC-M-sz20-c1.00=-2.34  5157ms
+  [31/39] btc-updown-15m-1778839200 (Up) ACC-M-sz20=-2.65 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.10 PAT-sz20-c1.01=-0.05 PAT-sz50-c1.00=+0.10 PAT-sz100-c1.00=+0.10 PAT-sz20-c1.00-thin500=+0.10 PAT+ACC-M-sz20-c1.00=-2.55  5475ms
+  [32/39] btc-updown-15m-1778840100 (Down) ACC-M-sz20=-6.55 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.00 PAT-sz20-c1.01=+0.00 PAT-sz50-c1.00=+0.00 PAT-sz100-c1.00=+0.00 PAT-sz20-c1.00-thin500=+0.00 PAT+ACC-M-sz20-c1.00=-6.55  5566ms
+  [33/39] btc-updown-15m-1778841000 (Up) ACC-M-sz20=+0.42 PAT-sz20-c97=+0.38 PAT-sz20-c98=+0.38 PAT-sz20-c99=+0.38 PAT-sz20-c1.00=+0.38 PAT-sz20-c1.01=-0.20 PAT-sz50-c1.00=+0.38 PAT-sz100-c1.00=+0.38 PAT-sz20-c1.00-thin500=+0.38 PAT+ACC-M-sz20-c1.00=+0.80  5389ms
+  [34/39] btc-updown-15m-1778841900 (Up) ACC-M-sz20=+0.89 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.51 PAT-sz20-c99=+0.51 PAT-sz20-c1.00=+0.57 PAT-sz20-c1.01=-0.05 PAT-sz50-c1.00=+1.08 PAT-sz100-c1.00=+1.08 PAT-sz20-c1.00-thin500=+0.57 PAT+ACC-M-sz20-c1.00=+1.45  5214ms
+  [35/39] btc-updown-15m-1778842800 (Down) ACC-M-sz20=-1.21 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.00 PAT-sz20-c1.01=-0.27 PAT-sz50-c1.00=+0.00 PAT-sz100-c1.00=+0.00 PAT-sz20-c1.00-thin500=+0.00 PAT+ACC-M-sz20-c1.00=-1.21  4884ms
+  [36/39] btc-updown-15m-1778843700 (Down) ACC-M-sz20=-7.09 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.00 PAT-sz20-c1.01=-0.70 PAT-sz50-c1.00=+0.00 PAT-sz100-c1.00=+0.00 PAT-sz20-c1.00-thin500=+0.00 PAT+ACC-M-sz20-c1.00=-7.09  4892ms
+  [37/39] btc-updown-15m-1778844600 (Up) ACC-M-sz20=+12.89 PAT-sz20-c97=+0.47 PAT-sz20-c98=+0.47 PAT-sz20-c99=+0.47 PAT-sz20-c1.00=+0.47 PAT-sz20-c1.01=-0.17 PAT-sz50-c1.00=+0.47 PAT-sz100-c1.00=+0.47 PAT-sz20-c1.00-thin500=+0.47 PAT+ACC-M-sz20-c1.00=+13.36  4974ms
+  [38/39] btc-updown-15m-1778845500 (Down) ACC-M-sz20=+12.11 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.00 PAT-sz20-c1.01=+0.00 PAT-sz50-c1.00=+0.00 PAT-sz100-c1.00=+0.00 PAT-sz20-c1.00-thin500=+0.00 PAT+ACC-M-sz20-c1.00=+12.11  5105ms
+  [39/39] btc-updown-15m-1778846400 (Down) ACC-M-sz20=-0.03 PAT-sz20-c97=+0.00 PAT-sz20-c98=+0.00 PAT-sz20-c99=+0.00 PAT-sz20-c1.00=+0.04 PAT-sz20-c1.01=-0.88 PAT-sz50-c1.00=+0.04 PAT-sz100-c1.00=+0.04 PAT-sz20-c1.00-thin500=+0.04 PAT+ACC-M-sz20-c1.00=+0.01  4990ms
+
+================================================================================
+SUMMARY (39 slugs, 200s)
+================================================================================
+{
+  "ACC-M-sz20": {
+    "mean_pnl": 1.4926832325247148,
+    "median_pnl": 1.249594602999494,
+    "sum_pnl": 58.21464606846388,
+    "pct_positive": 56.41025641025641,
+    "stddev": 6.228408991000655
+  },
+  "PAT-sz20-c97": {
+    "mean_pnl": 0.14264103624182065,
+    "median_pnl": 0.0,
+    "sum_pnl": 5.563000413431005,
+    "pct_positive": 15.384615384615385,
+    "stddev": 0.38702592736999397
+  },
+  "PAT-sz20-c98": {
+    "mean_pnl": 0.16291263817754967,
+    "median_pnl": 0.0,
+    "sum_pnl": 6.353592888924437,
+    "pct_positive": 20.51282051282051,
+    "stddev": 0.3903593163683171
+  },
+  "PAT-sz20-c99": {
+    "mean_pnl": 0.22570001566893233,
+    "median_pnl": 0.0,
+    "sum_pnl": 8.802300611088361,
+    "pct_positive": 35.8974358974359,
+    "stddev": 0.4083730214469021
+  },
+  "PAT-sz20-c1.00": {
+    "mean_pnl": 0.24887991117002464,
+    "median_pnl": 0.09726002477645868,
+    "sum_pnl": 9.706316535630961,
+    "pct_positive": 69.23076923076923,
+    "stddev": 0.3654367641848181
+  },
+  "PAT-sz20-c1.01": {
+    "mean_pnl": -0.17100427249719138,
+    "median_pnl": -0.2157204480755306,
+    "sum_pnl": -6.669166627390464,
+    "pct_positive": 15.384615384615385,
+    "stddev": 0.5690377690504201
+  },
+  "PAT-sz50-c1.00": {
+    "mean_pnl": 0.34735106609004374,
+    "median_pnl": 0.09726002477645868,
+    "sum_pnl": 13.546691577511705,
+    "pct_positive": 69.23076923076923,
+    "stddev": 0.5520696041080474
+  },
+  "PAT-sz100-c1.00": {
+    "mean_pnl": 0.420171122446238,
+    "median_pnl": 0.09726002477645868,
+    "sum_pnl": 16.38667377540328,
+    "pct_positive": 69.23076923076923,
+    "stddev": 0.7872762783428626
+  },
+  "PAT-sz20-c1.00-thin500": {
+    "mean_pnl": 0.19232042734832908,
+    "median_pnl": 0.08580034814477,
+    "sum_pnl": 7.500496666584834,
+    "pct_positive": 61.53846153846154,
+    "stddev": 0.2863406910260437
+  },
+  "PAT+ACC-M-sz20-c1.00": {
+    "mean_pnl": 1.7415631436947392,
+    "median_pnl": 1.4521050581827057,
+    "sum_pnl": 67.92096260409483,
+    "pct_positive": 58.97435897435898,
+    "stddev": 6.258407114427349
+  }
+}

@@ -1,0 +1,146 @@
+  [ 50] profit/all  407ms
+  [ 50] profit/30d  388ms
+  [ 50] profit/7d  381ms
+  [ 50] profit/1d  369ms
+  [ 50] volume/all  388ms
+  [ 50] volume/30d  387ms
+  [ 50] volume/7d  420ms
+  [ 50] volume/1d  392ms
+
+================================================================================
+TOTAL leaderboard rows: 400, unique wallets: 250
+================================================================================
+
+--- TOP 10 profit / 1d ---
+ rank                                                pseudonym                               proxy_wallet       amount
+    1                                               bossoskil1 0xa5ea13a81d2b7e8e424b182bdc1db08e756bd96a 98052.636968
+    2                                        LaBradfordSmith22 0x9495425feeb0c250accb89275c97587011b19a27 91371.004671
+    3                                                  coon777 0x19254b55e7c48e88baab9e62cc218223a6544654 69674.338107
+    4 0x5234c8687FbC415e8c255b3a90AFa8CF47de4c4F-1777743586273 0x5234c8687fbc415e8c255b3a90afa8cf47de4c4f 69490.376207
+    5 0x5966Db1fE50763C9e3C014d756369BAd07E1F804-1777648534241 0x5966db1fe50763c9e3c014d756369bad07e1f804 60627.951663
+    6                                                   rustin 0xaa075924e1dc7cff3b9fab67401126338c4d2125 31101.722488
+    7                                                 benwyatt 0x1117eade222413335b7ec959e5b48c1d3dbc3532 30831.441292
+    8                                              surfandturf 0x9f2fe025f84839ca81dd8e0338892605702d2ca8 28297.270473
+    9                                                Borntorun 0xd959b6925d3d3391a40c1a85dd3d8916ef16daf7 21419.586940
+   10                                                weflyhigh 0x03e8a544e97eeff5753bc1e90d46e5ef22af1697 20486.754353
+
+--- TOP 10 profit / 30d ---
+ rank                                                pseudonym                               proxy_wallet       amount
+    1                                               bossoskil1 0xa5ea13a81d2b7e8e424b182bdc1db08e756bd96a 3.073877e+06
+    2                                                  tubeyou 0x1887879a1bda615e88f280b582514c7d54e2678a 2.751059e+06
+    3                                              surfandturf 0x9f2fe025f84839ca81dd8e0338892605702d2ca8 2.620203e+06
+    4 0x492442EaB586F242B53bDa933fD5dE859c8A3782-1766317541188 0x492442eab586f242b53bda933fd5de859c8a3782 2.018422e+06
+    5                                                   Pestle 0x241f846866c2de4fb67cdb0ca6b963d85e56ef50 1.756849e+06
+    6                                        LaBradfordSmith22 0x9495425feeb0c250accb89275c97587011b19a27 1.713748e+06
+    7                                                beachboy4 0xc2e7800b5af46e6093872b177b7a5e7f0563be51 1.665170e+06
+    8 0x2a2C53bD278c04DA9962Fcf96490E17F3DfB9Bc1-1772479215461 0x2a2c53bd278c04da9962fcf96490e17f3dfb9bc1 1.636784e+06
+    9                                                swisstony 0x204f72f35326db932158cba6adff0b9a1da95e14 1.317681e+06
+   10                                                      RN1 0x2005d16a84ceefa912d4e380cd32e7ff827875ea 1.127007e+06
+
+--- TOP 10 profit / 7d ---
+ rank                                                pseudonym                               proxy_wallet        amount
+    1                                             Sassy-Bucket 0x4bff30af91642dc7d2b19a8664378fe55c45fc26 248941.494679
+    2                                             caicai888888 0x2d7be5170a8026c18709eaea1027c7f12e8ce2ce 211649.850542
+    3                                            mentionmarket 0xc3acf5878a03523d09a3ac859943445d7baeb964 190478.806226
+    4                                         SemyonMarmeladov 0x37e4728b3c4607fb2b3b205386bb1d1fb1a8c991 185007.346895
+    5 0x3DFb153c197D4C19D3B31c1ecD2c7B6860eeabAf-1722957908185 0x3dfb153c197d4c19d3b31c1ecd2c7b6860eeabaf 170407.497878
+    6                                                 Feromont 0xabb89972b21b304c1bed2bf26f35c8741ac9bba3 166126.708442
+    7                                                     gmpm 0x14964aefa2cd7caff7878b3820a690a03c5aa429 159169.221421
+    8                                                 VPenguin 0xfbf3d501e88815464642d0e913f15379c3eeb218 146189.273861
+    9                                              downtownfee 0xbee54d90051720e27921dc6874f02d646ffca636 133134.487735
+   10                                                 justwins 0xa2cced8bfae7d645f7f437fb76becf2fcbb70cbc 129464.133719
+
+--- TOP 10 profit / all ---
+ rank    pseudonym                               proxy_wallet       amount
+    1        Theo4 0x56687bf447db6ffa42ffe2204a05edaa20f55839 2.205393e+07
+    2    Fredi9999 0x1f2dd6d473f3e824cd2f8a89d9c69fb96f6ad0cf 1.661951e+07
+    3       kch123 0x6a72f61820b26b1fe4d956e17b6dc2a1ea3033ee 1.258113e+07
+    4          RN1 0x2005d16a84ceefa912d4e380cd32e7ff827875ea 9.075782e+06
+    5   Len9311238 0x78b9ac44a6d7d7a076c14e0ad518b301b63c6b76 8.709973e+06
+    6    swisstony 0x204f72f35326db932158cba6adff0b9a1da95e14 8.292636e+06
+    7       zxgngl 0xd235973291b2b75ff4070e9c0b01728c520b0f29 7.807266e+06
+    8     RepTrump 0x863134d00841b2e200492805a01e1e2f5defaa53 7.532410e+06
+    9 PrincessCaro 0x8119010a6e589062aa03583bb3f39ca632d9f887 6.083643e+06
+   10 walletmobile 0xe9ad918c7678cd38b12603a762e638a5d1ee7091 5.942685e+06
+
+--- TOP 10 volume / 1d ---
+ rank                                                pseudonym                               proxy_wallet       amount
+    1                                     alwayslatetotheparty 0xb687f00464e33934f5d591f224e71c3559ecaee5 1.426440e+06
+    2                                              c0O0OLI0O03 0xfedc381bf3fb5d20433bb4a0216b15dbbc5c6398 8.335053e+05
+    3                                             gloriafoster 0x5d189e816b4149be00977c1a3c8840374aec4972 8.156845e+05
+    4                                               FullPicks1 0x9b1e0334569aa1768a07705a859686aad58e82c9 6.451613e+05
+    5                                                asjabaasj 0xa7a8c1fd4bfff08ea30214efa7efaf75d7c6580c 5.078192e+05
+    6                                              surfandturf 0x9f2fe025f84839ca81dd8e0338892605702d2ca8 4.833922e+05
+    7                                              Countryside 0xbddf61af533ff524d27154e589d2d7a81510c684 3.792117e+05
+    8                                     ferrariChampions2026 0xfe787d2da716d60e8acff57fb87eb13cd4d10319 3.577629e+05
+    9 0x2c335066FE58fe9237c3d3Dc7b275C2a034a0563-1759935795465 0x2c335066fe58fe9237c3d3dc7b275c2a034a0563 3.252240e+05
+   10                                                swisstony 0x204f72f35326db932158cba6adff0b9a1da95e14 3.228744e+05
+
+--- TOP 10 volume / 30d ---
+ rank                                                pseudonym                               proxy_wallet       amount
+    1                                                      RN1 0x2005d16a84ceefa912d4e380cd32e7ff827875ea 7.683034e+07
+    2                                                swisstony 0x204f72f35326db932158cba6adff0b9a1da95e14 7.575960e+07
+    3                                                  poorsob 0x2785e7022dc20757108204b13c08cea8613b70ae 7.205569e+07
+    4                                     ferrariChampions2026 0xfe787d2da716d60e8acff57fb87eb13cd4d10319 6.099097e+07
+    5                                              Countryside 0xbddf61af533ff524d27154e589d2d7a81510c684 6.073954e+07
+    6                                        LaBradfordSmith22 0x9495425feeb0c250accb89275c97587011b19a27 5.663692e+07
+    7                                                 tripping 0x6480542954b70a674a74bd1a6015dec362dc8dc5 4.821117e+07
+    8                                   ArmageddonRewardsBilly 0xc8ab97a9089a9ff7e6ef0688e6e591a066946418 4.665045e+07
+    9 0x2a2C53bD278c04DA9962Fcf96490E17F3DfB9Bc1-1772479215461 0x2a2c53bd278c04da9962fcf96490e17f3dfb9bc1 4.537158e+07
+   10                                              mooseborzoi 0x84cfffc3f16dcc353094de30d4a45226eccd2f63 4.169892e+07
+
+--- TOP 10 volume / 7d ---
+ rank                                                pseudonym                               proxy_wallet       amount
+    1                                         everydaymortgage 0x91eee6b7cea1916214daebec3b92b7513079c5b8 1.198472e+07
+    2                                                swisstony 0x204f72f35326db932158cba6adff0b9a1da95e14 1.166764e+07
+    3                                        LaBradfordSmith22 0x9495425feeb0c250accb89275c97587011b19a27 9.604092e+06
+    4 0x2c335066FE58fe9237c3d3Dc7b275C2a034a0563-1759935795465 0x2c335066fe58fe9237c3d3dc7b275c2a034a0563 8.486498e+06
+    5                                     ferrariChampions2026 0xfe787d2da716d60e8acff57fb87eb13cd4d10319 8.328837e+06
+    6                                              Countryside 0xbddf61af533ff524d27154e589d2d7a81510c684 7.841369e+06
+    7                                              mooseborzoi 0x84cfffc3f16dcc353094de30d4a45226eccd2f63 7.750558e+06
+    8                                                      RN1 0x2005d16a84ceefa912d4e380cd32e7ff827875ea 7.031461e+06
+    9                                                asjabaasj 0xa7a8c1fd4bfff08ea30214efa7efaf75d7c6580c 6.901821e+06
+   10                                           pizzabillgates 0xa77105bb4d2d4d200b0133a2036222353831162d 6.893724e+06
+
+--- TOP 10 volume / all ---
+ rank                                                pseudonym                               proxy_wallet       amount
+    1                                                swisstony 0x204f72f35326db932158cba6adff0b9a1da95e14 7.854169e+08
+    2                                                 tripping 0x6480542954b70a674a74bd1a6015dec362dc8dc5 6.798870e+08
+    3                                             risk-manager 0xa61ef8773ec2e821962306ca87d4b57e39ff0abd 6.561487e+08
+    4                                                      RN1 0x2005d16a84ceefa912d4e380cd32e7ff827875ea 5.618740e+08
+    5                                                   gmanas 0xe90bec87d9ef430f27f9dcfe72c34b76967d5da2 5.290477e+08
+    6                                               cigarettes 0xd218e474776403a330142299f7796e8ba32eb5c9 5.010068e+08
+    7 0x492442EaB586F242B53bDa933fD5dE859c8A3782-1766317541188 0x492442eab586f242b53bda933fd5de859c8a3782 4.924916e+08
+    8 0x2a2C53bD278c04DA9962Fcf96490E17F3DfB9Bc1-1772479215461 0x2a2c53bd278c04da9962fcf96490e17f3dfb9bc1 4.766118e+08
+    9                                                ImJustKen 0x9d84ce0306f8551e02efef1680475fc0f1dc1344 4.746427e+08
+   10                                           InfiniteCrypt0 0x9c667a1d1c1337c6dca9d93241d386e4ed346b66 4.574716e+08
+
+================================================================================
+NEW WALLETS not in our catalog: 249
+================================================================================
+                              proxy_wallet                                                pseudonym  appearances  best_rank   profit_all   profit_30d     profit_7d    profit_1d   volume_all
+0x204f72f35326db932158cba6adff0b9a1da95e14                                                swisstony            7          1 8.292636e+06 1.317681e+06 119552.464108          NaN 7.854169e+08
+0x9495425feeb0c250accb89275c97587011b19a27                                        LaBradfordSmith22            7          2 3.659039e+06 1.713748e+06  67506.720461 91371.004671          NaN
+0x2005d16a84ceefa912d4e380cd32e7ff827875ea                                                      RN1            6          1 9.075782e+06 1.127007e+06           NaN          NaN 5.618740e+08
+0x9f2fe025f84839ca81dd8e0338892605702d2ca8                                              surfandturf            6          3 3.970417e+06 2.620203e+06  37993.712029 28297.270473          NaN
+0xa5ea13a81d2b7e8e424b182bdc1db08e756bd96a                                               bossoskil1            6          1          NaN 3.073877e+06 104559.319269 98052.636968 2.093027e+08
+0x2a2c53bd278c04da9962fcf96490e17f3dfb9bc1 0x2a2C53bD278c04DA9962Fcf96490E17F3DfB9Bc1-1772479215461            5          8 4.227459e+06 1.636784e+06  35183.728142          NaN 4.766118e+08
+0xfbf3d501e88815464642d0e913f15379c3eeb218                                                 VPenguin            5          8          NaN 3.228197e+05 146189.273861          NaN          NaN
+0xfe787d2da716d60e8acff57fb87eb13cd4d10319                                     ferrariChampions2026            5          4          NaN 8.871939e+05  47057.950920          NaN          NaN
+0xc2e7800b5af46e6093872b177b7a5e7f0563be51                                                beachboy4            4          7 5.102273e+06 1.665170e+06           NaN          NaN 2.214932e+08
+0x507e52ef684ca2dd91f90a9d26d149dd3288beae                                     GamblingIsAllYouNeed            4         12 4.895341e+06          NaN           NaN          NaN 4.288533e+08
+0x3dfb153c197d4c19d3b31c1ecd2c7b6860eeabaf 0x3DFb153c197D4C19D3B31c1ecD2c7B6860eeabAf-1722957908185            4          5          NaN 3.395220e+05 170407.497878  6866.085049          NaN
+0x5234c8687fbc415e8c255b3a90afa8cf47de4c4f 0x5234c8687FbC415e8c255b3a90AFa8CF47de4c4F-1777743586273            4          4          NaN 2.876512e+05  94558.098569 69490.376207          NaN
+0x5268527977f700f9bf9b6d5cd843859e4e70135d                                            HomeRunHazard            4         12          NaN          NaN           NaN 12517.057925          NaN
+0x5966db1fe50763c9e3c014d756369bad07e1f804 0x5966Db1fE50763C9e3C014d756369BAd07E1F804-1777648534241            4          5          NaN 9.709704e+05 114279.817097 60627.951663          NaN
+0x84cfffc3f16dcc353094de30d4a45226eccd2f63                                              mooseborzoi            4          7          NaN          NaN 104995.129853          NaN          NaN
+0xabb89972b21b304c1bed2bf26f35c8741ac9bba3                                                 Feromont            4          6          NaN 3.425282e+05 166126.708442 11477.305630          NaN
+0xbddf61af533ff524d27154e589d2d7a81510c684                                              Countryside            4          5          NaN          NaN           NaN          NaN 2.463982e+08
+0xc8ab97a9089a9ff7e6ef0688e6e591a066946418                                   ArmageddonRewardsBilly            4          8          NaN          NaN           NaN  7346.746045 3.945540e+08
+0x6a72f61820b26b1fe4d956e17b6dc2a1ea3033ee                                                   kch123            3          3 1.258113e+07 5.356576e+05           NaN          NaN 2.903919e+08
+0x1887879a1bda615e88f280b582514c7d54e2678a                                                  tubeyou            3          2 2.751059e+06 2.751059e+06           NaN          NaN          NaN
+0x19254b55e7c48e88baab9e62cc218223a6544654                                                  coon777            3          3          NaN 3.114356e+05 121845.697447 69674.338107          NaN
+0x1e7792acc779a6af8304bd7991ff31d16d468c33                                           THEdirkdiggler            3         24          NaN          NaN  76626.970494 10295.424702          NaN
+0x2663daca3cecf3767ca1c3b126002a8578a8ed1f                                          Q96s3kwozynxpau            3         15          NaN          NaN           NaN          NaN 3.113064e+08
+0x2785e7022dc20757108204b13c08cea8613b70ae                                                  poorsob            3          3          NaN          NaN           NaN 13096.619686 2.354955e+08
+0x2c335066fe58fe9237c3d3dc7b275c2a034a0563 0x2c335066FE58fe9237c3d3Dc7b275C2a034a0563-1759935795465            3          4          NaN 4.260407e+05           NaN          NaN          NaN

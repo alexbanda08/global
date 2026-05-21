@@ -1,0 +1,125 @@
+Backtest plan: 48 slugs, 10 strategies (big)
+  [1/48] btc-updown-5m-1778769300 (Up) ACC-M-sz20=+1.32 ACC-M-sz50=+10.64 ACC-M-sz100=+16.90 ACC-M-sz200=+16.90 ACC-M-sz50-tight=+10.64 ACC-M-sz50-loose=+18.53 ACC-M-sz50-mergehot=+10.64 MAS-pre50=+2.35 MAS-pre200-tight=-12.22 MAS-pre500=-27.44  6304ms
+  [2/48] btc-updown-5m-1778771700 (Up) ACC-M-sz20=+14.38 ACC-M-sz50=+24.41 ACC-M-sz100=+44.57 ACC-M-sz200=+39.62 ACC-M-sz50-tight=+24.41 ACC-M-sz50-loose=+20.86 ACC-M-sz50-mergehot=+24.41 MAS-pre50=+0.35 MAS-pre200-tight=+21.50 MAS-pre500=+17.61  6635ms
+  [3/48] btc-updown-5m-1778772300 (Down) ACC-M-sz20=+7.87 ACC-M-sz50=+24.40 ACC-M-sz100=+66.37 ACC-M-sz200=+74.57 ACC-M-sz50-tight=+24.40 ACC-M-sz50-loose=+28.63 ACC-M-sz50-mergehot=+24.40 MAS-pre50=-0.10 MAS-pre200-tight=-8.30 MAS-pre500=-9.21  6344ms
+  [4/48] btc-updown-5m-1778772600 (Down) ACC-M-sz20=+15.76 ACC-M-sz50=+16.61 ACC-M-sz100=+1.50 ACC-M-sz200=+14.05 ACC-M-sz50-tight=+16.61 ACC-M-sz50-loose=-0.90 ACC-M-sz50-mergehot=+16.61 MAS-pre50=+1.95 MAS-pre200-tight=+1.45 MAS-pre500=+34.98  6313ms
+  [5/48] btc-updown-5m-1778772900 (Down) ACC-M-sz20=-0.77 ACC-M-sz50=-8.56 ACC-M-sz100=-7.94 ACC-M-sz200=-25.45 ACC-M-sz50-tight=-3.91 ACC-M-sz50-loose=-15.14 ACC-M-sz50-mergehot=-8.56 MAS-pre50=+0.30 MAS-pre200-tight=-8.65 MAS-pre500=-1.28  6537ms
+  [6/48] btc-updown-5m-1778773200 (Up) ACC-M-sz20=+1.08 ACC-M-sz50=+0.51 ACC-M-sz100=-1.71 ACC-M-sz200=-18.51 ACC-M-sz50-tight=-0.53 ACC-M-sz50-loose=+4.64 ACC-M-sz50-mergehot=+0.51 MAS-pre50=-6.78 MAS-pre200-tight=-17.91 MAS-pre500=-23.35  6400ms
+  [7/48] btc-updown-5m-1778773500 (Up) ACC-M-sz20=-7.16 ACC-M-sz50=-7.17 ACC-M-sz100=-7.17 ACC-M-sz200=-51.98 ACC-M-sz50-tight=-7.17 ACC-M-sz50-loose=-13.52 ACC-M-sz50-mergehot=-7.17 MAS-pre50=+0.65 MAS-pre200-tight=-8.02 MAS-pre500=+11.54  6331ms
+  [8/48] btc-updown-5m-1778773800 (Up) ACC-M-sz20=+3.05 ACC-M-sz50=+5.65 ACC-M-sz100=+5.32 ACC-M-sz200=+4.64 ACC-M-sz50-tight=-1.34 ACC-M-sz50-loose=+9.92 ACC-M-sz50-mergehot=+5.65 MAS-pre50=+0.53 MAS-pre200-tight=-9.34 MAS-pre500=-40.12  6286ms
+  [9/48] btc-updown-5m-1778774100 (Up) ACC-M-sz20=-0.80 ACC-M-sz50=-10.11 ACC-M-sz100=-7.79 ACC-M-sz200=-7.58 ACC-M-sz50-tight=-7.51 ACC-M-sz50-loose=-3.96 ACC-M-sz50-mergehot=-10.11 MAS-pre50=+0.30 MAS-pre200-tight=-2.01 MAS-pre500=-2.24  6508ms
+  [10/48] btc-updown-5m-1778775000 (Up) ACC-M-sz20=+9.62 ACC-M-sz50=+11.49 ACC-M-sz100=+41.82 ACC-M-sz200=+5.65 ACC-M-sz50-tight=-6.54 ACC-M-sz50-loose=+12.08 ACC-M-sz50-mergehot=+11.49 MAS-pre50=+3.38 MAS-pre200-tight=+3.64 MAS-pre500=+16.23  6539ms
+  [11/48] btc-updown-5m-1778775600 (Up) ACC-M-sz20=-13.92 ACC-M-sz50=-8.49 ACC-M-sz100=-0.65 ACC-M-sz200=+6.66 ACC-M-sz50-tight=-8.49 ACC-M-sz50-loose=+4.09 ACC-M-sz50-mergehot=-8.49 MAS-pre50=-1.39 MAS-pre200-tight=-3.12 MAS-pre500=-38.30  6391ms
+  [12/48] btc-updown-5m-1778775900 (Up) ACC-M-sz20=+2.28 ACC-M-sz50=+8.98 ACC-M-sz100=+4.30 ACC-M-sz200=-5.14 ACC-M-sz50-tight=+8.98 ACC-M-sz50-loose=+6.33 ACC-M-sz50-mergehot=+8.98 MAS-pre50=+2.15 MAS-pre200-tight=-0.82 MAS-pre500=-3.08  6312ms
+  [13/48] btc-updown-5m-1778776200 (Down) ACC-M-sz20=+10.76 ACC-M-sz50=+7.85 ACC-M-sz100=+18.33 ACC-M-sz200=+30.15 ACC-M-sz50-tight=+7.77 ACC-M-sz50-loose=+11.62 ACC-M-sz50-mergehot=+7.85 MAS-pre50=+2.03 MAS-pre200-tight=+0.92 MAS-pre500=-9.97  6551ms
+  [14/48] btc-updown-5m-1778776800 (Up) ACC-M-sz20=+3.06 ACC-M-sz50=+6.43 ACC-M-sz100=+12.06 ACC-M-sz200=+15.52 ACC-M-sz50-tight=+6.43 ACC-M-sz50-loose=+6.43 ACC-M-sz50-mergehot=+6.43 MAS-pre50=-10.63 MAS-pre200-tight=-22.31 MAS-pre500=-31.18  6780ms
+  [15/48] btc-updown-5m-1778777100 (Down) ACC-M-sz20=-0.65 ACC-M-sz50=-1.60 ACC-M-sz100=+9.02 ACC-M-sz200=+8.67 ACC-M-sz50-tight=+1.89 ACC-M-sz50-loose=+0.56 ACC-M-sz50-mergehot=-1.60 MAS-pre50=+0.64 MAS-pre200-tight=-1.04 MAS-pre500=-50.49  8153ms
+  [16/48] btc-updown-5m-1778777400 (Down) ACC-M-sz20=+2.97 ACC-M-sz50=+17.74 ACC-M-sz100=+33.89 ACC-M-sz200=+65.86 ACC-M-sz50-tight=+16.45 ACC-M-sz50-loose=+13.30 ACC-M-sz50-mergehot=+17.74 MAS-pre50=+2.94 MAS-pre200-tight=-15.09 MAS-pre500=-6.28  7600ms
+  [17/48] btc-updown-5m-1778780100 (Up) ACC-M-sz20=+13.15 ACC-M-sz50=+7.10 ACC-M-sz100=+26.97 ACC-M-sz200=+35.43 ACC-M-sz50-tight=+5.85 ACC-M-sz50-loose=+38.91 ACC-M-sz50-mergehot=+7.10 MAS-pre50=+3.82 MAS-pre200-tight=+9.65 MAS-pre500=+19.95  6764ms
+  [18/48] btc-updown-5m-1778780400 (Up) ACC-M-sz20=+4.00 ACC-M-sz50=+9.64 ACC-M-sz100=+28.14 ACC-M-sz200=+76.13 ACC-M-sz50-tight=+9.64 ACC-M-sz50-loose=-2.48 ACC-M-sz50-mergehot=+9.64 MAS-pre50=-2.31 MAS-pre200-tight=+5.46 MAS-pre500=-37.43  6130ms
+  [19/48] btc-updown-5m-1778781000 (Down) ACC-M-sz20=+3.03 ACC-M-sz50=+9.12 ACC-M-sz100=+1.53 ACC-M-sz200=+18.17 ACC-M-sz50-tight=+9.12 ACC-M-sz50-loose=+13.68 ACC-M-sz50-mergehot=+9.12 MAS-pre50=-0.15 MAS-pre200-tight=+17.11 MAS-pre500=+0.52  6333ms
+  [20/48] btc-updown-5m-1778781300 (Down) ACC-M-sz20=-1.13 ACC-M-sz50=-10.68 ACC-M-sz100=-39.50 ACC-M-sz200=-50.04 ACC-M-sz50-tight=-6.10 ACC-M-sz50-loose=-11.63 ACC-M-sz50-mergehot=-10.68 MAS-pre50=+1.62 MAS-pre200-tight=-0.23 MAS-pre500=-10.65  6552ms
+  [21/48] btc-updown-5m-1778781600 (Down) ACC-M-sz20=-0.98 ACC-M-sz50=-4.83 ACC-M-sz100=-11.25 ACC-M-sz200=-11.60 ACC-M-sz50-tight=-4.83 ACC-M-sz50-loose=-4.86 ACC-M-sz50-mergehot=-4.83 MAS-pre50=+2.20 MAS-pre200-tight=-22.46 MAS-pre500=-11.75  6433ms
+  [22/48] btc-updown-5m-1778781900 (Up) ACC-M-sz20=+1.10 ACC-M-sz50=+3.38 ACC-M-sz100=-24.87 ACC-M-sz200=-11.01 ACC-M-sz50-tight=+3.38 ACC-M-sz50-loose=+3.38 ACC-M-sz50-mergehot=+3.38 MAS-pre50=+0.75 MAS-pre200-tight=-9.39 MAS-pre500=-21.43  6035ms
+  [23/48] btc-updown-5m-1778782500 (Up) ACC-M-sz20=+0.84 ACC-M-sz50=+13.26 ACC-M-sz100=+30.63 ACC-M-sz200=+28.25 ACC-M-sz50-tight=+7.53 ACC-M-sz50-loose=+0.50 ACC-M-sz50-mergehot=+13.26 MAS-pre50=-1.80 MAS-pre200-tight=-0.53 MAS-pre500=+14.96  6557ms
+  [24/48] btc-updown-5m-1778782800 (Up) ACC-M-sz20=+13.56 ACC-M-sz50=+22.54 ACC-M-sz100=+34.07 ACC-M-sz200=+126.26 ACC-M-sz50-tight=+23.27 ACC-M-sz50-loose=+8.20 ACC-M-sz50-mergehot=+22.54 MAS-pre50=+4.74 MAS-pre200-tight=+22.35 MAS-pre500=+29.96  6438ms
+  [25/48] btc-updown-5m-1778783100 (Down) ACC-M-sz20=+3.18 ACC-M-sz50=-3.04 ACC-M-sz100=-1.14 ACC-M-sz200=+4.99 ACC-M-sz50-tight=-3.04 ACC-M-sz50-loose=+0.77 ACC-M-sz50-mergehot=-3.04 MAS-pre50=+0.39 MAS-pre200-tight=+6.08 MAS-pre500=+20.73  6573ms
+  [26/48] btc-updown-5m-1778783400 (Down) ACC-M-sz20=-4.41 ACC-M-sz50=-2.90 ACC-M-sz100=-17.64 ACC-M-sz200=+1.69 ACC-M-sz50-tight=-17.40 ACC-M-sz50-loose=-4.77 ACC-M-sz50-mergehot=-2.90 MAS-pre50=+0.50 MAS-pre200-tight=-1.39 MAS-pre500=-12.57  6421ms
+  [27/48] btc-updown-5m-1778783700 (Up) ACC-M-sz20=-8.53 ACC-M-sz50=-12.86 ACC-M-sz100=-14.99 ACC-M-sz200=-6.57 ACC-M-sz50-tight=-2.29 ACC-M-sz50-loose=-7.84 ACC-M-sz50-mergehot=-12.86 MAS-pre50=-2.19 MAS-pre200-tight=+0.55 MAS-pre500=-10.14  5972ms
+  [28/48] btc-updown-5m-1778784000 (Down) ACC-M-sz20=-3.36 ACC-M-sz50=-13.45 ACC-M-sz100=-10.67 ACC-M-sz200=-28.74 ACC-M-sz50-tight=-13.45 ACC-M-sz50-loose=-8.75 ACC-M-sz50-mergehot=-13.45 MAS-pre50=+2.89 MAS-pre200-tight=-6.30 MAS-pre500=+1.96  6327ms
+  [29/48] btc-updown-5m-1778784300 (Up) ACC-M-sz20=-0.70 ACC-M-sz50=-17.83 ACC-M-sz100=-13.00 ACC-M-sz200=+9.25 ACC-M-sz50-tight=-17.83 ACC-M-sz50-loose=-3.36 ACC-M-sz50-mergehot=-17.83 MAS-pre50=+1.83 MAS-pre200-tight=+7.85 MAS-pre500=-28.01  6494ms
+  [30/48] btc-updown-5m-1778784600 (Down) ACC-M-sz20=+1.64 ACC-M-sz50=-7.08 ACC-M-sz100=+6.80 ACC-M-sz200=-15.44 ACC-M-sz50-tight=-7.08 ACC-M-sz50-loose=+9.98 ACC-M-sz50-mergehot=-7.08 MAS-pre50=-5.18 MAS-pre200-tight=+7.29 MAS-pre500=-38.45  6325ms
+  [31/48] btc-updown-5m-1778784900 (Up) ACC-M-sz20=-3.24 ACC-M-sz50=-8.65 ACC-M-sz100=-6.53 ACC-M-sz200=-6.53 ACC-M-sz50-tight=-8.65 ACC-M-sz50-loose=-16.06 ACC-M-sz50-mergehot=-8.65 MAS-pre50=-4.10 MAS-pre200-tight=-24.31 MAS-pre500=-40.45  6537ms
+  [32/48] btc-updown-5m-1778785200 (Up) ACC-M-sz20=-3.70 ACC-M-sz50=-4.07 ACC-M-sz100=-4.41 ACC-M-sz200=-5.08 ACC-M-sz50-tight=-4.07 ACC-M-sz50-loose=-8.79 ACC-M-sz50-mergehot=-4.07 MAS-pre50=-0.40 MAS-pre200-tight=-4.63 MAS-pre500=-13.74  6116ms
+  [33/48] btc-updown-5m-1778785500 (Down) ACC-M-sz20=+11.30 ACC-M-sz50=+31.69 ACC-M-sz100=+14.83 ACC-M-sz200=+146.59 ACC-M-sz50-tight=+40.38 ACC-M-sz50-loose=+37.24 ACC-M-sz50-mergehot=+31.69 MAS-pre50=+0.15 MAS-pre200-tight=+7.10 MAS-pre500=+17.17  6557ms
+  [34/48] btc-updown-5m-1778785800 (Down) ACC-M-sz20=+6.50 ACC-M-sz50=-0.52 ACC-M-sz100=+2.52 ACC-M-sz200=+2.10 ACC-M-sz50-tight=-0.52 ACC-M-sz50-loose=+20.18 ACC-M-sz50-mergehot=-0.52 MAS-pre50=+0.31 MAS-pre200-tight=+27.28 MAS-pre500=+46.43  6560ms
+  [35/48] btc-updown-5m-1778786100 (Up) ACC-M-sz20=-5.99 ACC-M-sz50=-20.23 ACC-M-sz100=-1.03 ACC-M-sz200=-61.78 ACC-M-sz50-tight=-20.23 ACC-M-sz50-loose=-19.74 ACC-M-sz50-mergehot=-20.23 MAS-pre50=-2.82 MAS-pre200-tight=+10.75 MAS-pre500=+20.16  6114ms
+  [36/48] btc-updown-5m-1778786400 (Down) ACC-M-sz20=+13.57 ACC-M-sz50=+12.22 ACC-M-sz100=+14.56 ACC-M-sz200=+19.26 ACC-M-sz50-tight=+12.22 ACC-M-sz50-loose=+42.66 ACC-M-sz50-mergehot=+12.22 MAS-pre50=+3.80 MAS-pre200-tight=-4.11 MAS-pre500=+14.28  6279ms
+  [37/48] btc-updown-5m-1778786700 (Down) ACC-M-sz20=+2.40 ACC-M-sz50=+4.13 ACC-M-sz100=+5.91 ACC-M-sz200=+2.95 ACC-M-sz50-tight=+4.13 ACC-M-sz50-loose=-10.96 ACC-M-sz50-mergehot=+4.13 MAS-pre50=-3.07 MAS-pre200-tight=-21.48 MAS-pre500=-50.26  6025ms
+  [38/48] btc-updown-5m-1778787000 (Up) ACC-M-sz20=-4.78 ACC-M-sz50=-15.09 ACC-M-sz100=-14.03 ACC-M-sz200=+1.15 ACC-M-sz50-tight=-15.09 ACC-M-sz50-loose=-15.09 ACC-M-sz50-mergehot=-15.09 MAS-pre50=+0.70 MAS-pre200-tight=-17.96 MAS-pre500=-15.86  6061ms
+  [39/48] btc-updown-5m-1778787300 (Down) ACC-M-sz20=-1.14 ACC-M-sz50=-3.52 ACC-M-sz100=+2.33 ACC-M-sz200=+11.39 ACC-M-sz50-tight=+1.87 ACC-M-sz50-loose=+4.11 ACC-M-sz50-mergehot=-3.52 MAS-pre50=-5.72 MAS-pre200-tight=-16.31 MAS-pre500=-22.54  6211ms
+  [40/48] btc-updown-5m-1778787600 (Up) ACC-M-sz20=+0.32 ACC-M-sz50=+4.12 ACC-M-sz100=-4.55 ACC-M-sz200=-23.69 ACC-M-sz50-tight=+4.12 ACC-M-sz50-loose=+6.73 ACC-M-sz50-mergehot=+4.12 MAS-pre50=+0.45 MAS-pre200-tight=+10.34 MAS-pre500=-2.20  5941ms
+  [41/48] btc-updown-5m-1778787900 (Down) ACC-M-sz20=+2.71 ACC-M-sz50=+8.46 ACC-M-sz100=+27.29 ACC-M-sz200=+30.40 ACC-M-sz50-tight=+8.46 ACC-M-sz50-loose=+8.46 ACC-M-sz50-mergehot=+8.46 MAS-pre50=+0.20 MAS-pre200-tight=-38.92 MAS-pre500=-42.31  6246ms
+  [42/48] btc-updown-5m-1778788200 (Up) ACC-M-sz20=+5.72 ACC-M-sz50=+14.26 ACC-M-sz100=+5.32 ACC-M-sz200=-7.76 ACC-M-sz50-tight=+12.81 ACC-M-sz50-loose=+10.74 ACC-M-sz50-mergehot=+14.26 MAS-pre50=+5.26 MAS-pre200-tight=+25.73 MAS-pre500=+19.40  6344ms
+  [43/48] btc-updown-5m-1778788500 (Down) ACC-M-sz20=-0.69 ACC-M-sz50=-6.57 ACC-M-sz100=-15.96 ACC-M-sz200=-34.75 ACC-M-sz50-tight=-6.57 ACC-M-sz50-loose=-2.37 ACC-M-sz50-mergehot=-6.57 MAS-pre50=-10.05 MAS-pre200-tight=-16.31 MAS-pre500=-39.56  6558ms
+  [44/48] btc-updown-5m-1778788800 (Up) ACC-M-sz20=+3.60 ACC-M-sz50=+8.49 ACC-M-sz100=+16.65 ACC-M-sz200=+29.23 ACC-M-sz50-tight=+1.92 ACC-M-sz50-loose=+8.49 ACC-M-sz50-mergehot=+8.49 MAS-pre50=+3.01 MAS-pre200-tight=+6.64 MAS-pre500=-18.29  6329ms
+  [45/48] btc-updown-5m-1778789100 (Down) ACC-M-sz20=-0.58 ACC-M-sz50=-12.74 ACC-M-sz100=+21.69 ACC-M-sz200=-55.61 ACC-M-sz50-tight=-12.74 ACC-M-sz50-loose=+12.77 ACC-M-sz50-mergehot=-12.74 MAS-pre50=+0.55 MAS-pre200-tight=+11.29 MAS-pre500=+21.99  6261ms
+  [46/48] btc-updown-5m-1778789400 (Down) ACC-M-sz20=-1.52 ACC-M-sz50=+17.49 ACC-M-sz100=+5.80 ACC-M-sz200=+15.46 ACC-M-sz50-tight=+17.49 ACC-M-sz50-loose=+4.28 ACC-M-sz50-mergehot=+17.49 MAS-pre50=+0.35 MAS-pre200-tight=-3.14 MAS-pre500=+3.72  6211ms
+  [47/48] btc-updown-5m-1778789700 (Down) ACC-M-sz20=-3.97 ACC-M-sz50=-25.91 ACC-M-sz100=-67.13 ACC-M-sz200=-114.25 ACC-M-sz50-tight=-25.91 ACC-M-sz50-loose=-25.91 ACC-M-sz50-mergehot=-25.91 MAS-pre50=-0.15 MAS-pre200-tight=-3.86 MAS-pre500=-19.12  6258ms
+  [48/48] btc-updown-5m-1778790000 (Down) ACC-M-sz20=-3.64 ACC-M-sz50=+4.58 ACC-M-sz100=+0.24 ACC-M-sz200=-22.00 ACC-M-sz50-tight=+4.58 ACC-M-sz50-loose=+0.62 ACC-M-sz50-mergehot=+4.58 MAS-pre50=+7.46 MAS-pre200-tight=-3.01 MAS-pre500=+22.08  6537ms
+
+================================================================================
+SUMMARY (48 slugs, 311s)
+================================================================================
+{
+  "ACC-M-sz20": {
+    "mean_pnl": 1.8145081639667866,
+    "median_pnl": 1.0902002207522017,
+    "sum_pnl": 87.09639187040575,
+    "pct_positive": 56.25,
+    "stddev": 6.327557161445701
+  },
+  "ACC-M-sz50": {
+    "mean_pnl": 2.069198996341513,
+    "median_pnl": 3.7489113207146545,
+    "sum_pnl": 99.32155182439263,
+    "pct_positive": 54.166666666666664,
+    "stddev": 12.72418567686772
+  },
+  "ACC-M-sz100": {
+    "mean_pnl": 4.737518737772687,
+    "median_pnl": 2.4251874261853885,
+    "sum_pnl": 227.40089941308898,
+    "pct_positive": 58.333333333333336,
+    "stddev": 22.19498535881236
+  },
+  "ACC-M-sz200": {
+    "mean_pnl": 5.7805962742096035,
+    "median_pnl": 3.7987981719135107,
+    "sum_pnl": 277.46862116206097,
+    "pct_positive": 58.333333333333336,
+    "stddev": 43.7382936477788
+  },
+  "ACC-M-sz50-tight": {
+    "mean_pnl": 1.7304615417885147,
+    "median_pnl": 1.8766882968921834,
+    "sum_pnl": 83.06215400584871,
+    "pct_positive": 52.083333333333336,
+    "stddev": 12.939146559474036
+  },
+  "ACC-M-sz50-loose": {
+    "mean_pnl": 4.011614514154531,
+    "median_pnl": 4.097611532021844,
+    "sum_pnl": 192.55749667941748,
+    "pct_positive": 62.5,
+    "stddev": 14.597174637144096
+  },
+  "ACC-M-sz50-mergehot": {
+    "mean_pnl": 2.069198996341514,
+    "median_pnl": 3.7489113207146545,
+    "sum_pnl": 99.32155182439266,
+    "pct_positive": 54.166666666666664,
+    "stddev": 12.724185676867716
+  },
+  "MAS-pre50": {
+    "mean_pnl": 0.035386315378652,
+    "median_pnl": 0.4186592486555476,
+    "sum_pnl": 1.698543138175296,
+    "pct_positive": 66.66666666666666,
+    "stddev": 3.4942911208785166
+  },
+  "MAS-pre200-tight": {
+    "mean_pnl": -2.08721340608327,
+    "median_pnl": -1.6970771145811199,
+    "sum_pnl": -100.18624349199695,
+    "pct_positive": 39.58333333333333,
+    "stddev": 13.700533347303267
+  },
+  "MAS-pre500": {
+    "mean_pnl": -7.167238070753779,
+    "median_pnl": -9.587791888161377,
+    "sum_pnl": -344.0274273961814,
+    "pct_positive": 37.5,
+    "stddev": 24.312372235648446
+  }
+}

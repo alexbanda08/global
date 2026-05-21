@@ -1,0 +1,30 @@
+=== GA: sleeve=momo_5m asset=BTC pop=30 gens=10 ===
+[loading] resolutions...
+  BTC 5m: 7,183 markets
+  sampled to 2,000
+[loading] L25 books for BTC...
+  loaded 4000 (slug,side) keys in 88s
+[loading] binance klines for BTC...
+  48,251 1MIN bars
+[GA] train: 2026-04-24 01:40 → 2026-05-12 04:57
+[GA] valid: 2026-05-12 04:57  → 2026-05-17 09:19
+[GA] held : 2026-05-17 09:19 → 2026-05-19 23:30
+[GA] seeded 4 known + 26 random = 30 individuals
+  gen   0  [VAL] n=   4 win=0.000 pnl=$+0
+[GA] gen   0  best_train_fit=0.6026  pnl=$+306  n=  61  win=0.574  mean_fit=-733333333.3784  (1s)
+[GA] gen   1  best_train_fit=0.6026  pnl=$+306  n=  61  win=0.574  mean_fit=-366666666.8131  (1s)
+[GA] gen   2  best_train_fit=0.6509  pnl=$+274  n=  63  win=0.667  mean_fit=-166666666.5916  (1s)
+[GA] gen   3  best_train_fit=0.6956  pnl=$+539  n= 134  win=0.582  mean_fit=-266666666.5056  (1s)
+[GA] gen   4  best_train_fit=0.6956  pnl=$+539  n= 134  win=0.582  mean_fit=-99999999.8687  (1s)
+  gen   5  [VAL] n=  66 win=0.455 pnl=$-208
+[GA] gen   5  best_train_fit=0.7051  pnl=$+692  n= 251  win=0.562  mean_fit=-99999999.6497  (1s)
+[GA] gen   6  best_train_fit=0.7051  pnl=$+692  n= 251  win=0.562  mean_fit=-199999999.8732  (1s)
+[GA] gen   7  best_train_fit=0.7460  pnl=$+973  n= 248  win=0.581  mean_fit=-100000000.1673  (1s)
+[GA] gen   8  best_train_fit=0.7664  pnl=$+846  n= 126  win=0.635  mean_fit=-133333333.0770  (1s)
+[GA] gen   9  best_train_fit=0.7679  pnl=$+1043  n= 168  win=0.607  mean_fit=-99999999.9718  (1s)
+
+[GA] final held-out eval on top-3 by training fitness...
+  top 1: held_n= 17 held_pnl=$+0 held_win=0.000  |  train_pnl=$+1043  valid_pnl=$-121  full_pnl=$+1206
+  top 2: held_n=  0 held_pnl=$+0 held_win=0.000  |  train_pnl=$+846  valid_pnl=$+2  full_pnl=$+847
+
+[GA] DONE. results saved to C:\Users\alexandre bandarra\Desktop\global\strategy_lab\ga_optimizer\runs\BTC_momo_5m_1779236547
