@@ -1,6 +1,8 @@
 # Project context — root
 
-**Last data refresh:** 2026-05-15. **Window:** Apr 24 → May 15 02:55 UTC (21 days, 23,553 chainlink-resolved markets). See `strategy_lab/reports/DATA_INVENTORY_2026_05_15.md` for the full inventory + next-session quick-start.
+**Last data refresh:** 2026-05-21 20:17 UTC. **Window:** Apr 24 → May 21 20:10 UTC (~28 days, 30,750 chainlink-resolved markets). Refresh pipeline: `migration_2026_05_21/{pull_delta_vps3_2026_05_21.sh, convert_and_merge.py, merge_to_canonical.py}` + L25 path added to `data/v4/canonical/load.py`. F7 sleeve deployment window (2026-05-20 19:57 → 2026-05-21 20:10) is now in canonical, 1,128 BTC/ETH/SOL resolutions with L25 + klines + chainlink RTDS coverage.
+
+**Most recent session handoff:** `strategy_lab/reports/HANDOFF_2026_05_22_MOMO_F7_MARKOV.md` — 5 deploy sleeves verified at production parity (legacy 2%-on-profit fee, ws_s F7 anchor, WS-only books); 7/11 TV-spec shadow sleeves pass. Read this first for current backtest state + next steps.
 
 ---
 
@@ -77,23 +79,23 @@ See `data/v4/canonical/README.md` for full schema, conventions, and refresh inst
   `slug_to_ws_s(slug, tf)`, `add_ws_s(df)`, `ret_2m_at_ws(end_us, prices, ws_s)`,
   and `fire_us = (ws_s + 120) * 1_000_000`. Anchoring on `slot_start` instead =
   lookahead → backtest hit rate inflates 25–40 pp (~85% vs ~50% live).
-- 🚨 **F7 RSI in POST-HOC ANALYSIS scripts**: anchor at the same time the LIVE
-  controller sampled it, NOT at the resolution event's `at_ts`. The previous
-  agent's analysis script (`strategy_lab/meta_classifier/momo_12cells_f7.py:36`)
-  set `ws_s = at_ts // 1e9` where `at_ts` is the resolution event time (= slot_end);
-  re-scoring shadow trades with RSI at slot_end gives fake 80-99% WR on the
-  cells where the bet outcome already moved binance enough to swing RSI sign
-  (v1 sol_15m showed 69/70 wins, near-perfect, under that anchor). LIVE F7 PnL
-  on VPS3 IS REAL (chainlink-resolved fills); only the post-hoc re-scoring is
-  inflated. For ANY post-hoc filter recomputation that joins external CEX kline
-  data to poly resolutions, sample RSI at the LIVE fire time (`fire_us = ws_s + 120`),
-  not at `at_ts` of the resolution event. Verify via the
-  `strategy_lab/meta_classifier/_verify_f7_anchor.py` pattern: re-score the same
-  shadow under multiple anchor choices and compare to the live `is_f7` flag from
-  `strategy_lab/markov_filter/_results/post_f7_real_compare_v2/fires_with_gates.csv`.
-  Note: this verification requires klines fresher than the F7 sleeve deployment
-  date — pull fresh canonical klines if `data/v4/canonical/_klines.parquet` ends
-  before the F7 window you're scoring.
+- 🚨 **F7 RSI anchor = `ws_s = slot_start − window_s`** — VERIFIED 2026-05-21 via
+  `_match_live_f7_v2.py` against 1,331 production fires from `fires_with_gates.csv`,
+  using **version-aware ws_s derivation** (v1 fires at ws_s+120, v2 at ws_s+60):
+    - rsi_at_ws_s:       **94.67%** match ✓ THIS IS THE ANCHOR (per source code)
+    - rsi_at_fire_us:    92.41% (works for v2 because fire is only 60s from ws_s)
+    - rsi_at_slot_start: 83.70% (post-fire)
+  Source-of-truth: `/opt/tradingvenue/backend/app/engine/poly_updown_loop.py`
+  function `build_bar_context_t_plus_120/60`: fetches 15 closes at offsets
+  `[-840, -780, ..., -60, 0]` from `ws_s`; the LAST close is at `ws_s`.
+  Production RSI is **simple-mean Wilder** (NOT exponential), confirmed by source
+  comment in `rsi.py`. My implementation matches.
+  An earlier verifier (`_match_live_f7.py`, NOT v2) was version-unaware — subtracted
+  120 from all fires; that biased v2 fires' "ws_s" by 60s and falsely concluded
+  fire_us was the live anchor. The CORRECT verifier is `_match_live_f7_v2.py`.
+  Post-hoc analysis scripts that join external CEX kline data to poly resolutions
+  MUST anchor at ws_s (NOT at_ts of resolution events). Requires klines fresher
+  than the F7 window being scored.
 - **Outcome resolution = Chainlink Data Streams.** Never derive Up/Down from binance close. Either use `outcome` flag from canonical resolutions (already chainlink-derived) or compute from `chainlink_rtds.parquet` strike vs settlement.
 - **Binance is the SIGNAL source**, matching production momo controller. Coinbase / Kraken / OKX are alternative venues for ablation tests.
 - **`asof_strict(end_us, prices, target_us)`** returns close of bar that ENDED at-or-before `target_us`. Causal. Use this for all kline lookups.
@@ -107,33 +109,46 @@ See `data/v4/canonical/README.md` for full schema, conventions, and refresh inst
   pnl  = hold_pnl(fill, won=won, cfg=cfg)
   ```
   Real Polymarket fee at vwap=0.69, 48% hit costs ~$0.43/trade extra vs legacy. See `strategy_lab/reports/HANDOFF_2026_05_16_LIVE_MIMIC_GAPS.md` and `strategy_lab/engine_v2.py` smoke output.
-- 🚨 **Polymarket fee formula** (canonical — `strategy_lab/fees.py`):
-  ```
-  fee = C × feeRate × p × (1 − p)
-  ```
-  where `C` = shares filled, `p` = fill price ∈ [0,1], `feeRate` is a
-  per-market constant from Gamma's `feeSchedule.rate`. For crypto up-down
-  (BTC/ETH/SOL 5m/15m): `feeRate = 0.07` (700 bps). The fee is NOT a flat
-  7% — at p=0.5 the effective rate is 1.75% of share value; at p=0.85 it's
-  1.05%. Always look up feeRate from market metadata for non-crypto venues
-  (`feerate_for_market_bps(bps)` in fees.py).
-- **Maker side**: makers pay $0 in fees and RECEIVE a rebate as INCOME on
-  every limit fill:
-  ```
-  rebate = C × feeRate × p × (1 − p) × rebate_share
-  rebate_share = 0.20  (crypto) | 0.25 (other fee-enabled)
-  ```
-- **Legacy 2%-on-profit fee model is WRONG.** 43 historical files
-  (`polymarket_*.py`, `data/v4/canonical/_*.py`, `meta_classifier/*.py`,
-  `discovery_2026_05_16/*.py`, `cyclops/conventions.py`,
-  `ga_optimizer/path_b/{events,full_window_analysis,validate_tier_a_realfill}.py`)
-  have been flagged with a `DEPRECATED FEE MODEL` banner. Their PnL
-  numbers are historical artifacts only — re-run via `engine_v2.fill_at_book`
-  + `fees.poly_fee_usd` before quoting any number forward.
+- 🚨 **Polymarket fee model used by production = 2% on profit only (winning leg)** —
+  VERIFIED 2026-05-22 against 25,900 `poly_updown_resolution` events in canonical:
+  - LOST trades: `pnl_usd = -entry_qty × entry_price` exactly (median diff = 0 from
+    naive-no-fee). **No fee on losing leg.**
+  - WON trades: `pnl_usd = entry_qty × (1 - entry_price) × 0.98` exactly (median
+    diff = 0 from legacy 2%-on-profit).
+  The "real curve" `0.07 × p × (1-p)` formula in `strategy_lab/fees.py` is from
+  Polymarket's general docs but does NOT match what production actually charges
+  on the BTC/ETH/SOL up-down crypto markets we trade — those are effectively
+  on the legacy "2% on winning leg only" rule. Either `feeRate` is 0 for these
+  markets, or `feesEnabled` is false at the contract level. For ANY backtest
+  comparison to production shadow PnL, use `engine_v2.LegacyConfig` (2%-on-
+  profit-only). Use `poly_taker_curve` only for hypothetical "what if Polymarket
+  flips on real fees" analysis.
+- **Maker side**: in PRINCIPLE makers pay $0 and receive a rebate as INCOME on
+  every limit fill via `rebate = C × feeRate × p × (1 − p) × rebate_share`,
+  but on the crypto up-down markets where production momo runs, `feeRate` is
+  effectively 0 (per the 2%-on-profit-only verification above) so no rebates
+  are accruing. The mint-and-sell strategy spec assumes rebates are active —
+  re-validate before deploying live (check Polymarket account dashboard for
+  monthly rebate payouts).
+- **PnL accounting reconciliation (2026-05-22 verification)**: the "DEPRECATED FEE
+  MODEL" banner on 43 historical files turns out to OVER-CORRECT. Production
+  CURRENTLY uses 2%-on-profit-only (see the fee bullet above), so the old files
+  were actually right about production behavior. The "real curve" rewrite that
+  charges fees on both legs is a hypothetical model for if/when Polymarket
+  switches their fee rules. For now: trust the legacy 2%-on-profit numbers when
+  comparing to production shadow PnL.
 - **Outcome truth — two sources both work**:
   - `outcome` column (chainlink-derived) — present in canonical, default.
   - `clob_winner` column (Polymarket actual settlement) — opt in via `load_resolutions(..., with_clob_winner=True)`. Cache at `data/v4/canonical/clob_resolutions_cache.parquet`. So far 300/300 agreement with chainlink on tested rows. For backtests whose payoff IS what Polymarket pays out, this is the right truth; chainlink stays as an audit channel.
-- **Live-WS vs REST staleness**: production momo fires at `slug_ws+120s` right after a high-vol binance print; Polymarket REST `/book` lags VPS2 WS L25 by **$0.19-0.32** at that moment. Our backtest already uses WS truth — TV agent must migrate production to WS to match. Sniper / v3 / v4 / inverse / volume sleeves fire at bar-close, REST-WS gap <$0.04 — safe to deploy live. See `strategy_lab/reports/MOMO_REST_LAG_VS_MICROSTRUCTURE.md`.
+- **Live-WS vs REST staleness — RESOLVED 2026-05-21**: production tradingvenue
+  is on **WS-only book reads (Tier-1 WS BookMirror)** per Phase 18.6 Wave 1.
+  Live logs verified 2026-05-21 22:55 UTC: every `paper.book_fetched` event has
+  `source: "ws_mirror"` from `wss://ws-subscriptions-clob.polymarket.com/ws/market`.
+  CLOB REST is now Tier-2 fallback (only when WS mirror is empty for a token);
+  Storedata DB is Tier-3 disaster-fallback with CRITICAL alert. Historical
+  REST-WS gap of $0.19-0.32 (see `MOMO_REST_LAG_VS_MICROSTRUCTURE.md`) no longer
+  affects live PnL. Our canonical L25 backtests now use the same book truth as
+  production — apples-to-apples comparison is possible.
 - 🔬 **Wallet-strategy decoder is built** — pulls full chain history for any Polymarket wallet via Alchemy `getAssetTransfers`, computes cash PnL + open positions, decodes trigger conditions by joining each fire to L25 book / binance klines / chainlink RTDS at the exact second. See `strategy_lab/wallet_hunt/` and **`strategy_lab/reports/HANDOFF_WALLET_DECODER_2026_05_16.md`** for usage. Already decoded: **mint-and-sell strategy** is the trigger behind all 3 profitable up-down wallets we've found so far ($10k–$344k/day, identical signature). The live-deploy spec is at `strategy_lab/reports/MINT_AND_SELL_LIVE_SPEC_2026_05_16.md`.
 - 🚨 **`mint_and_sell_scan.py` legacy bug**: treated maker fee as "80% of taker fee" instead of `fee=$0 + rebate income`. PnL estimates from that scanner are understated ~30-50%. Use the canonical formula above. Fix pending.
 

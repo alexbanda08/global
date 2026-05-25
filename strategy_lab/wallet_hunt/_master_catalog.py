@@ -188,6 +188,77 @@ def classify(row: dict) -> str:
     return "unknown"
 
 
+def _enrich_with_pm_portfolio(fp: pd.DataFrame) -> pd.DataFrame:
+    """Fix #6 — add lb-api / data-api columns as canonical lifetime PnL.
+
+    For each wallet, pulls:
+        pm_lifetime_profit / pm_30d_profit / pm_7d_profit  — lb-api/profit
+        pm_30d_volume                                       — lb-api/volume
+        pm_current_value, pm_n_open_positions               — data-api
+        pm_maker_rebate_share                               — activity tape
+
+    Responses are cached under cache/_pm_portfolio/<short>/.
+    """
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    try:
+        from polymarket_api import (
+            fetch_lb_profit, fetch_lb_volume,
+            fetch_value, fetch_positions, fetch_activity,
+            activity_to_df, lb_amount, value_amount,
+        )
+        from cash_pnl import maker_rebate_share
+    except Exception as e:
+        print(f"  (skipping pm_portfolio enrichment: {e})")
+        return fp
+
+    # Map short -> full address from lb_api_canonical
+    try:
+        from lb_api_canonical import ADDR_MAP
+    except Exception:
+        ADDR_MAP = {}
+
+    pm_rows = []
+    for short in fp.index:
+        full = ADDR_MAP.get(short)
+        if not full:
+            # fall back to trades.parquet
+            tp = CACHE / short / "trades.parquet"
+            if tp.exists():
+                try:
+                    t = pd.read_parquet(tp)
+                    if "proxyWallet" in t.columns and len(t):
+                        full = str(t.iloc[0].proxyWallet).lower()
+                except Exception:
+                    pass
+        if not full:
+            pm_rows.append({"short": short})
+            continue
+        try:
+            lb = fetch_lb_profit(full)
+            vol = fetch_lb_volume(full)
+            val = fetch_value(full)
+            pos = fetch_positions(full)
+            act_dict = fetch_activity(full)
+            df_act = activity_to_df(act_dict)
+            pm_rows.append({
+                "short": short,
+                "pm_lifetime_profit": lb_amount(lb, "all"),
+                "pm_30d_profit": lb_amount(lb, "30d"),
+                "pm_7d_profit": lb_amount(lb, "7d"),
+                "pm_30d_volume": lb_amount(vol, "30d"),
+                "pm_current_value": value_amount(val),
+                "pm_n_open_positions": len(pos) if isinstance(pos, list) else 0,
+                "pm_maker_rebate_share": round(maker_rebate_share(df_act), 4),
+            })
+        except Exception as e:
+            print(f"  pm-portfolio fetch failed for {short}: {e}")
+            pm_rows.append({"short": short})
+
+    pm_df = pd.DataFrame(pm_rows).set_index("short")
+    return fp.join(pm_df, how="left")
+
+
 def main():
     # 1. Build fingerprint rows
     rows = []
@@ -207,20 +278,35 @@ def main():
 
     pnl_csv = CACHE / "_cash_pnl_summary.csv"
     if pnl_csv.exists():
-        pn = pd.read_csv(pnl_csv).set_index("short")[
-            ["span_days", "trading_in", "trading_out", "net_trading_pnl",
-             "capital_in", "capital_out", "net_capital", "net_cash_pnl",
-             "total_pnl", "total_pnl_per_day", "n_days_positive",
-             "n_days_negative", "n_open_positions", "open_position_value"]
-        ]
-        fp = fp.join(pn, how="left")
+        try:
+            pn_full = pd.read_csv(pnl_csv).set_index("short")
+            wanted = ["span_days", "trading_in", "trading_out", "net_trading_pnl",
+                      "capital_in", "capital_out", "net_capital", "net_cash_pnl",
+                      "total_pnl", "total_pnl_per_day", "n_days_positive",
+                      "n_days_negative", "n_open_positions", "open_position_value"]
+            keep = [c for c in wanted if c in pn_full.columns]
+            if keep:
+                fp = fp.join(pn_full[keep], how="left")
+        except Exception as e:
+            print(f"  (legacy cash_pnl_summary skip: {e})")
 
     # 3. Classify
     fp["strategy"] = fp.apply(lambda r: classify(r.to_dict()), axis=1)
 
-    # 4. Reorder columns
+    # 3b. Fix #6 — enrich with Polymarket-official PnL from lb-api and
+    # activity-tape rebate share. Truth column for lifetime PnL.
+    fp = _enrich_with_pm_portfolio(fp)
+
+    # 4. Reorder columns — `pm_lifetime_profit` is the canonical truth.
     col_order = [
-        "strategy", "total_pnl", "total_pnl_per_day", "span_days",
+        "strategy",
+        # Polymarket OFFICIAL — these are the truth columns (Fix #6).
+        "pm_lifetime_profit", "pm_30d_profit", "pm_7d_profit",
+        "pm_30d_volume",
+        "pm_maker_rebate_share",
+        "pm_current_value", "pm_n_open_positions",
+        # Legacy Alchemy decoder columns (under-report; kept for back-compat).
+        "total_pnl", "total_pnl_per_day", "span_days",
         "first_external_usd", "first_any_usd", "first_any_asset",
         "first_external_from", "first_external_ts",
         "n_transfers", "n_mints_onchain", "n_burns_onchain",
@@ -247,20 +333,25 @@ def main():
 
     # 6. Strategy clusters
     print("=" * 80)
-    print("Strategy classification summary")
+    print("Strategy classification summary (using OFFICIAL pm_lifetime_profit)")
     print("=" * 80)
     for strat, sub in fp.groupby("strategy"):
-        total_pnl = sub.total_pnl.sum()
+        # Prefer pm_lifetime_profit when available; fall back to legacy total_pnl
+        pm_col = (sub.get("pm_lifetime_profit")
+                  if "pm_lifetime_profit" in sub.columns else None)
+        truth = pm_col if pm_col is not None else sub.get("total_pnl")
+        total_pnl = pd.to_numeric(truth, errors="coerce").sum()
         n_wallets = len(sub)
-        print(f"\n[{strat}]  n={n_wallets}  total_pnl=${total_pnl:,.0f}")
+        print(f"\n[{strat}]  n={n_wallets}  pm_lifetime_profit_sum=${total_pnl:,.0f}")
         for s, r in sub.iterrows():
-            pnl_day = r.get("total_pnl_per_day", float("nan"))
-            print(f"  {s}  span={r.get('span_days', '?')}d  "
-                  f"pnl=${r.get('total_pnl', 0):,.0f}  "
-                  f"$/day=${pnl_day:,.0f}  "
+            pm_lt = r.get("pm_lifetime_profit", float("nan"))
+            pm_30d = r.get("pm_30d_profit", float("nan"))
+            rebate = r.get("pm_maker_rebate_share", float("nan"))
+            print(f"  {s}  pm_lifetime=${pm_lt:,.0f}  "
+                  f"pm_30d=${pm_30d:,.0f}  "
+                  f"rebate_share={rebate:.4f}  "
                   f"buy_pct={r.get('buy_pct', 0):.2f}  "
-                  f"sum_asks={r.get('sum_asks_mean', 0):.4f}  "
-                  f"own_ask={r.get('own_ask_mean', 0):.3f}")
+                  f"sum_asks={r.get('sum_asks_mean', 0):.4f}")
 
     # 7. Funder clusters
     print("\n" + "=" * 80)

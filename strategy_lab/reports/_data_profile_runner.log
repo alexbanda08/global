@@ -1,0 +1,209 @@
+
+========================================================================
+TASK 1: 1s binance klines
+========================================================================
+load_klines_1s() loaded in 3.6s
+shape: (11384517, 16)
+cols: ['symbol_id', 'period_id', 'source', 'time_period_start_us', 'time_period_end_us', 'price_open', 'price_high', 'price_low', 'price_close', 'volume_traded', 'trades_count', 'quote_volume', 'time_open_us', 'time_close_us', 'taker_buy_base', 'taker_buy_quote']
+dtypes:
+symbol_id                object
+period_id                object
+source                   object
+time_period_start_us      int64
+time_period_end_us        int64
+price_open              float64
+price_high              float64
+price_low               float64
+price_close             float64
+volume_traded           float64
+trades_count              int64
+quote_volume            float64
+time_open_us            float64
+time_close_us           float64
+taker_buy_base          float64
+taker_buy_quote         float64
+
+HEAD:
+               symbol_id period_id          source  time_period_start_us  time_period_end_us  price_open  price_high  price_low  price_close  volume_traded  trades_count   quote_volume  time_open_us  time_close_us  taker_buy_base  taker_buy_quote
+0  BINANCE_SPOT_BTC_USDT      1SEC  binance-vision      1775520000000000    1775520000999999    68853.66    68853.66   68835.18     68835.18        0.72882           432   50179.652171           NaN            NaN             NaN              NaN
+1  BINANCE_SPOT_ETH_USDT      1SEC  binance-vision      1775520000000000    1775520000999999     2107.16     2107.16    2106.40      2106.41       10.57370           349   22277.500365           NaN            NaN             NaN              NaN
+2  BINANCE_SPOT_SOL_USDT      1SEC  binance-vision      1775520000000000    1775520000999999       80.03       80.03      79.99        79.99      202.26300           107   16184.298900           NaN            NaN             NaN              NaN
+3  BINANCE_SPOT_BTC_USDT      1SEC  binance-vision      1775520001000000    1775520001999999    68835.18    68835.18   68825.85     68825.85        0.72560           246   49942.671989           NaN            NaN             NaN              NaN
+4  BINANCE_SPOT_ETH_USDT      1SEC  binance-vision      1775520001000000    1775520001999999     2106.40     2106.40    2105.75      2105.75       17.00980           271   35823.331460           NaN            NaN             NaN              NaN
+5  BINANCE_SPOT_SOL_USDT      1SEC  binance-vision      1775520001000000    1775520001999999       79.99       79.99      79.99        79.99       16.08100            18    1286.319190           NaN            NaN             NaN              NaN
+6  BINANCE_SPOT_BTC_USDT      1SEC  binance-vision      1775520002000000    1775520002999999    68825.85    68825.85   68820.70     68820.71        0.54615           127   37587.136079           NaN            NaN             NaN              NaN
+7  BINANCE_SPOT_SOL_USDT      1SEC  binance-vision      1775520002000000    1775520002999999       79.98       79.99      79.98        79.99        2.00100             4     160.047940           NaN            NaN             NaN              NaN
+8  BINANCE_SPOT_ETH_USDT      1SEC  binance-vision      1775520002000000    1775520002999999     2105.76     2106.08    2105.76      2106.08       53.34940           252  112350.683737           NaN            NaN             NaN              NaN
+9  BINANCE_SPOT_SOL_USDT      1SEC  binance-vision      1775520003000000    1775520003999999       79.98       79.99      79.98        79.99        1.79300             2     143.405520           NaN            NaN             NaN              NaN
+
+time range (UTC):
+  min = 2026-04-07 00:00:00+00:00
+  max = 2026-05-21 20:17:32+00:00
+  span = 44.85 days
+
+per-symbol_id row counts:
+symbol_id
+BINANCE_SPOT_BTC_USDT    3794841
+BINANCE_SPOT_ETH_USDT    3794840
+BINANCE_SPOT_SOL_USDT    3794836
+
+per-source row counts:
+source
+binance-vision     7776000
+binance-spot-ws    3608517
+
+per-asset coverage span (BTC/ETH/SOL):
+   BTC: n=3,794,841  2026-04-07 00:00:00+00:00 -> 2026-05-21 20:17:32+00:00
+   ETH: n=3,794,840  2026-04-07 00:00:00+00:00 -> 2026-05-21 20:17:32+00:00
+   SOL: n=3,794,836  2026-04-07 00:00:00+00:00 -> 2026-05-21 20:17:32+00:00
+
+1s gap histogram per asset (BTC):
+  diff_s value_counts (top 10):
+time_period_start_us
+1.0     3794796
+8.0           4
+56.0          3
+68.0          3
+10.0          3
+9.0           2
+53.0          2
+63.0          2
+67.0          2
+66.0          2
+  n_diffs=3794840, =1s: 3794796 (100.00%), >1s: 44 (0.00%)
+  max gap (s): 76589.0
+  gaps >5s: 44
+  gaps >60s: 15
+  ETH: 1s_pct=100.00%  max_gap_s=76589.0  gaps>5s=44  gaps>60s=15
+  SOL: 1s_pct=100.00%  max_gap_s=76589.0  gaps>5s=44  gaps>60s=15
+
+Volume column check:
+  volume-ish cols: ['volume_traded', 'trades_count', 'quote_volume']
+    time_period_start_us  price_open  price_high  price_low  price_close  volume_traded  trades_count  quote_volume
+0       1775520000000000    68853.66    68853.66   68835.18     68835.18        0.72882           432  50179.652171
+3       1775520001000000    68835.18    68835.18   68825.85     68825.85        0.72560           246  49942.671989
+6       1775520002000000    68825.85    68825.85   68820.70     68820.71        0.54615           127  37587.136079
+11      1775520003000000    68820.70    68820.71   68820.70     68820.70        0.16005            24  11014.754555
+12      1775520004000000    68820.71    68820.71   68820.70     68820.70        0.23417            29  16115.743420
+
+========================================================================
+TASK 4: slot timing on one example fire
+========================================================================
+fills.csv shape: (11681, 22)
+fills.csv cols: ['asset', 'tf', 'cell', 'strategy', 'f7_mode', 'slug', 'ws_s', 'signal', 'outcome', 'won', 'fire_us', 'vwap', 'shares', 'usd', 'fee_in', 'best_ask', 'bid0', 'pnl', 'markov_pass_w20_1m_voladaptive', 'markov_pass_w20_1m_fixed', 'markov_pass_w20_5m_voladaptive', 'markov_pass_w20_5m_fixed']
+fills.csv dtypes:
+asset                              object
+tf                                 object
+cell                               object
+strategy                           object
+f7_mode                            object
+slug                               object
+ws_s                                int64
+signal                             object
+outcome                            object
+won                                  bool
+fire_us                             int64
+vwap                              float64
+shares                            float64
+usd                               float64
+fee_in                            float64
+best_ask                          float64
+bid0                              float64
+pnl                               float64
+markov_pass_w20_1m_voladaptive       bool
+markov_pass_w20_1m_fixed             bool
+markov_pass_w20_5m_voladaptive       bool
+markov_pass_w20_5m_fixed             bool
+
+HEAD:
+  asset  tf    cell strategy f7_mode                      slug        ws_s signal outcome    won           fire_us  vwap     shares   usd  fee_in  best_ask  bid0      pnl  markov_pass_w20_1m_voladaptive  markov_pass_w20_1m_fixed  markov_pass_w20_5m_voladaptive  markov_pass_w20_5m_fixed
+0   BTC  5m  btc_5m  momo_v1     off  btc-updown-5m-1776889500  1776889200   DOWN      Up  False  1776889320000000  0.47  53.191489  25.0  0.9275      0.47  0.46 -25.9275                           False                      True                           False                     False
+1   BTC  5m  btc_5m  momo_v1     off  btc-updown-5m-1776899100  1776898800   DOWN      Up  False  1776898920000000  0.50  50.000000  25.0  0.8750      0.50  0.49 -25.8750                           False                     False                           False                     False
+2   BTC  5m  btc_5m  momo_v1     off  btc-updown-5m-1776900300  1776900000   DOWN      Up  False  1776900120000000  0.50  50.000000  25.0  0.8750      0.50  0.49 -25.8750                           False                     False                           False                     False
+
+  strategy.unique(): ['momo_v1', 'momo_v2', 'sniper']
+  tf.unique(): ['15m', '5m']
+  asset.unique(): ['BTC', 'ETH', 'SOL']
+
+  strategies in fills: ['momo_v1', 'momo_v2', 'sniper']
+
+Example fire (row 0):
+asset                                                  BTC
+tf                                                      5m
+cell                                                btc_5m
+strategy                                           momo_v1
+f7_mode                                                off
+slug                              btc-updown-5m-1776889500
+ws_s                                            1776889200
+signal                                                DOWN
+outcome                                                 Up
+won                                                  False
+fire_us                                   1776889320000000
+vwap                                                  0.47
+shares                                           53.191489
+usd                                                   25.0
+fee_in                                              0.9275
+best_ask                                              0.47
+bid0                                                  0.46
+pnl                                               -25.9275
+markov_pass_w20_1m_voladaptive                       False
+markov_pass_w20_1m_fixed                              True
+markov_pass_w20_5m_voladaptive                       False
+markov_pass_w20_5m_fixed                             False
+
+  slug         = btc-updown-5m-1776889500
+  tf           = 5m, window_s = 300
+  slot_start   = 1776889500 (2026-04-22 20:25:00+00:00)
+  slot_end     = 1776889800 (2026-04-22 20:30:00+00:00)
+  ws_s         = 1776889200 (2026-04-22 20:20:00+00:00) [SIGNAL ANCHOR]
+  fire_us (v1) = 1776889320000000 (2026-04-22 20:22:00+00:00)
+
+========================================================================
+TASK 2: L25 books on 100 random BTC slugs
+========================================================================
+BTC 5m non-F7 fires: 3930
+sampled 100 unique BTC slugs
+loading L25 (subsample_1hz=True) for 100 BTC slugs...
+L25 load took 12.4s; got 200 (slug, outcome) entries
+  samples-per-(slug,outcome) within [ws_s, slot_end] (span=600s):
+    mean   = 324.9
+    median = 334.0
+    p10/p25/p50/p75/p90 = 260/298/334/356/377
+    min/max = 193/440
+    n_zero = 0 of 200 entries
+
+========================================================================
+TASK 3: cross-coverage of 1s klines + L25 + polymarket trades on F7-off 5m fires
+========================================================================
+(a) 1s binance kline coverage [fire_us-300s, fire_us+300s]
+(b) L25 book coverage [fire_us, slot_end]
+(c) polymarket trade coverage for slug
+
+  BTC: 3930 F7-off 5m fires
+    (a) kline-1s any in window: 95.4% (>=100 samples: 95.4%)
+        kline_count median=601, mean=572 (full=600)
+        L25 check on 300 unique slugs (subset)...
+        L25 load took 15.6s
+    (b) L25 any-sample in [fire_us, slot_end]: 100.0% (of 300 slug sample)
+    (c) polymarket trades for slug: 92.3% (of 300 slug sample)
+  ETH: 2737 F7-off 5m fires
+    (a) kline-1s any in window: 94.4% (>=100 samples: 94.3%)
+        kline_count median=601, mean=566 (full=600)
+        L25 check on 300 unique slugs (subset)...
+        L25 load took 7.1s
+    (b) L25 any-sample in [fire_us, slot_end]: 100.0% (of 300 slug sample)
+    (c) polymarket trades for slug: 92.0% (of 300 slug sample)
+  SOL: 1863 F7-off 5m fires
+    (a) kline-1s any in window: 92.5% (>=100 samples: 92.3%)
+        kline_count median=601, mean=552 (full=600)
+        L25 check on 300 unique slugs (subset)...
+        L25 load took 3.8s
+    (b) L25 any-sample in [fire_us, slot_end]: 100.0% (of 300 slug sample)
+    (c) polymarket trades for slug: 88.3% (of 300 slug sample)
+
+========================================================================
+RESULTS SUMMARY
+========================================================================
+{'BTC': {'kline_cov_pct': 95.39999999999999, 'l25_cov_pct': 100.0, 'trade_cov_pct': 92.33333333333333, 'fires_checked': 1500, 'slugs_checked': 300}, 'ETH': {'kline_cov_pct': 94.39999999999999, 'l25_cov_pct': 100.0, 'trade_cov_pct': 92.0, 'fires_checked': 1500, 'slugs_checked': 300}, 'SOL': {'kline_cov_pct': 92.46666666666667, 'l25_cov_pct': 100.0, 'trade_cov_pct': 88.33333333333333, 'fires_checked': 1500, 'slugs_checked': 300}}
+
+DONE

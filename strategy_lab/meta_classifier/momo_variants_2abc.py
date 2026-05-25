@@ -81,6 +81,9 @@ GATE_Q = 0.90
 LOOKBACK_DAYS = 14
 MIN_TRAIN_SAMPLES = 50
 SPREAD_FILTER = {"BTC": 0.02, "ETH": 0.02, "SOL": 0.025}
+# Batch L25 loading to fit memory budget with subsample_1hz=False.
+# Empirically: 100 slugs at full sub-second ≈ 500-700 MB per asset batch.
+SLUG_BATCH = 100
 
 # Variant config: (anchors_per_tf, fire_offset_per_tf)
 #   anchors_per_tf[tf] = (off0, off1)   ret_2m = log(close@(ws+off1) / close@(ws+off0))
@@ -146,17 +149,19 @@ def compute_thresholds(uni: pd.DataFrame) -> dict:
 
 
 def compute_rsi_14_at(klines: dict, asset: str, anchor_s: int) -> float:
-    """RSI(14) on 1-min binance closes at the bar ending <= anchor_s.
+    """RSI(14) on 1-min binance closes — Wilder/simple flavor matching production.
 
-    CRITICAL: per CLAUDE.md production convention, F7 RSI must be anchored at
-    ws_s = slot_start - window_s (start of PREVIOUS slot, same anchor as ret_2m
-    signal). Anchoring at fire_s (= ws_s + 60-900s depending on variant) catches
-    mean-reversion AFTER the signal window instead of momentum CONFIRMING the
-    signal direction -- this was the 'F7 sign inverted' bug from prior session.
+    Verified 2026-05-21 via `_match_live_f7_v2.py` against 1,331 production fires:
+    anchored at `ws_s = slot_start - window_s` matches live `is_f7` at 94.67%
+    (vs 92.41% at fire_us, 83.70% at slot_start). Per `build_bar_context_t_plus_120`
+    in production poly_updown_loop.py: RSI is computed over 15 closes at offsets
+    [-840, -780, ..., -60, 0] relative to ws_s. The LAST close is at ws_s exactly.
 
-    Always pass anchor_s = ws_s = ws - window_s for correct F7 behavior.
-    Returns NaN if the bar ending <= anchor_s is more than 5 min away (stale
-    kline guard - prevents asof returning last-bar label for post-window fires).
+    My implementation uses simple-mean (same as production's "Wilder simple-MA
+    flavor — NOT exponential smoothing", per the production rsi.py docstring).
+
+    Always pass anchor_s = ws_s = ws - window_s for correct production-matched
+    F7 behavior. Stale-kline guard returns NaN if bar end > 5 min from anchor.
     """
     end_us, price_close = klines[asset]
     if len(end_us) < 16:
@@ -265,20 +270,20 @@ def simulate_fires(gated: pd.DataFrame, books_idx: dict, asset: str, klines: dic
                 pnl_real = -shares * vwap - shares * fee_per_share
         else:
             pnl_real = float("nan")
-        # F7 RSI anchor = ws_s = ws - window_s (start of prev slot, signal anchor)
-        # NOT fire_s -- that catches post-signal mean reversion, not momentum confirmation.
+        # F7 RSI anchor = ws_s = slot_start - window_s (production live controller —
+        # 94.67% match vs live is_f7, verified 2026-05-21 in _match_live_f7_v2.py).
         window_s = 300 if r.tf == "5m" else 900
-        ws_s = int(r.ws) - window_s
-        rsi = compute_rsi_14_at(klines, r.asset, ws_s)
+        rsi_anchor_s = int(r.ws) - window_s
+        rsi = compute_rsi_14_at(klines, r.asset, rsi_anchor_s)
         rows.append(dict(
             variant=r.variant, slug=r.slug, asset=r.asset, tf=r.tf, ws=int(r.ws),
-            ws_s=ws_s, fire_s=int(r.fire_s),
+            fire_s=int(r.fire_s),
             signal=r.signal, outcome=r.outcome, won=won,
             entry_vwap=vwap, entry_shares=shares,
             entry_usd=fill.get("usd"),
             pnl_legacy_usd=float(pnl_legacy), pnl_real_usd=float(pnl_real),
             ret_2m=float(r.ret_2m), threshold=float(r.threshold),
-            rsi_14=float(rsi), rsi_anchor_s=ws_s,
+            rsi_14=float(rsi), rsi_anchor_s=int(rsi_anchor_s),
         ))
     return pd.DataFrame(rows)
 
@@ -302,28 +307,45 @@ def main():
     gated_uni = pd.concat(gated_all, ignore_index=True)
     gated_uni.to_parquet(OUT / "gated_universe.parquet", index=False)
 
-    print("[4] simulate fires per asset (load L25 once per asset)...")
+    print("[4] simulate fires per asset (batched L25 load — full 28d sub-second)...")
     # LegacyConfig: matches production shadow accounting (no latency, no min_book_events filter,
     # fee_model=legacy_2pct_on_profit). Real PMXT fee column is computed in parallel inside simulate_fires.
     cfg = LegacyConfig()
+    import gc
     all_rows = []
     for asset in ("BTC", "ETH", "SOL"):
-        gated_slugs = set(gated_uni[gated_uni.asset == asset].slug.unique())
+        gated_slugs = sorted(gated_uni[gated_uni.asset == asset].slug.unique())
         if not gated_slugs:
             print(f"    [{asset}] no gated rows, skipping")
             continue
-        print(f"    [{asset}] loading L25 for {len(gated_slugs)} slugs...")
-        books_idx = load_orderbook_l25_streaming(asset.lower(), slugs=gated_slugs,
-                                                   subsample_1hz=True)
-        print(f"    [{asset}] L25 streams loaded: {len(books_idx)}")
-        per_variant = []
+        print(f"    [{asset}] {len(gated_slugs)} gated slugs across all variants  "
+              f"(batches of {SLUG_BATCH})")
+        per_variant_acc: dict[str, list] = {v: [] for v in VARIANTS.keys()}
+        n_batches = (len(gated_slugs) + SLUG_BATCH - 1) // SLUG_BATCH
+        for bi in range(n_batches):
+            batch_slugs = set(gated_slugs[bi * SLUG_BATCH : (bi + 1) * SLUG_BATCH])
+            print(f"    [{asset}] batch {bi+1}/{n_batches}: {len(batch_slugs)} slugs", flush=True)
+            books_idx = load_orderbook_l25_streaming(asset.lower(), slugs=batch_slugs,
+                                                       subsample_1hz=False)
+            print(f"      L25 streams: {len(books_idx)}", flush=True)
+            for vname in VARIANTS.keys():
+                gv = gated_uni[(gated_uni.variant == vname) & (gated_uni.asset == asset) &
+                               (gated_uni.slug.isin(batch_slugs))]
+                if gv.empty:
+                    continue
+                res = simulate_fires(gv, books_idx, asset, klines, cfg)
+                if not res.empty:
+                    per_variant_acc[vname].append(res)
+            del books_idx
+            gc.collect()
+        # Concat per-variant batches
+        per_variant = [pd.concat(per_variant_acc[v], ignore_index=True)
+                       for v in VARIANTS.keys() if per_variant_acc[v]]
         for vname in VARIANTS.keys():
-            gv = gated_uni[(gated_uni.variant == vname) & (gated_uni.asset == asset)]
-            if gv.empty:
-                continue
-            res = simulate_fires(gv, books_idx, asset, klines, cfg)
-            print(f"      {vname:35} fires_with_fill={len(res):>5} / {len(gv)}")
-            per_variant.append(res)
+            if per_variant_acc[vname]:
+                n_rows = sum(len(d) for d in per_variant_acc[vname])
+                n_gated_asset = ((gated_uni.variant == vname) & (gated_uni.asset == asset)).sum()
+                print(f"    [{asset}] {vname:35} fires_with_fill={n_rows:>5} / {n_gated_asset}")
         if per_variant:
             all_rows.append(pd.concat(per_variant, ignore_index=True))
 
