@@ -1,0 +1,5 @@
+anchor_cat,n_sleeves,best_dpt,median_dpt,best_obj,median_obj
+early,392,15.92,7.58,230.25,73.36
+late,503,57.36,8.31,378.8,57.76
+pre-window,191,31.37,8.35,296.44,84.13
+pre-window+early,286,17.83,8.35,206.13,76.39

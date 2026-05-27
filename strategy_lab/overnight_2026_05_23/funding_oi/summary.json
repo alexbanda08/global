@@ -1,0 +1,22 @@
+{
+  "window_start": "2026-04-30T19:57:00+00:00",
+  "window_end": "2026-05-15T02:57:00+00:00",
+  "window_days": 14.291666666666666,
+  "n_fires": 30111,
+  "by_asset": {
+    "btc": 10507,
+    "eth": 10187,
+    "sol": 9417
+  },
+  "by_timeframe": {
+    "5m": 23141,
+    "15m": 6970
+  },
+  "n_rules_tested": 32,
+  "best_rule_avg_pnl": 17.71753130914684,
+  "best_rule_name": "L-A: bet UP | liq_short_60s > $100k",
+  "best_rule_n": 51,
+  "best_rule_wr": 0.6666666666666666,
+  "oos_pass_count": 4,
+  "wf_total": 10
+}

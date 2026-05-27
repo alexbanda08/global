@@ -99,7 +99,34 @@ This means **the entire ACC-M / ACC-H / ACC-PC stack inherits the wrong template
 - Literature (agent E): sum_asks rarely beats $1 after fees on liquid BTC/ETH/SOL up-down; PAT is structurally dead post-fee.
 - **Action**: disable on Ireland. The remaining PAT overlay inside ACC-M / ACC-H stays (it's a different code path).
 
-### 2.7 NEW: Binance-Directional Hold (BDH) — **BUILD (re-confirmed)**
+### 2.7 BDH — DEFERRED (directional, backtest negative on broad universe)
+
+**Final status 2026-05-21 late**: 5-cell backtest with full spec gate
+stack ran on ETH/SOL × 5m/15m + BTC 15m (BTC 5m already tested separately):
+
+- 20 fires total across 5 cells over 28 days. Combined mean −$1.23/fire.
+- Only BTC 15m (n=1) and ETH 15m (n=5) positive — sample sizes too small.
+- Combined with earlier BTC 5m result (−$14k over 19d on 97k fires
+  unfiltered): no cell qualifies for live shadow.
+
+Why the gate stack collapses > 99% of universe: UTC ∈ {22-02, 9-10} ∩
+|ret_60s| ≥ 0.25% is selective by design. Even with a 28d window, fewer
+than 30 fires per cell pass — too few for statistical confidence in any
+direction.
+
+Wallets ARE profitable ($1,640/day each per Polymarket API), but their
+edge is **slug-selection signal we can't decode from canonical data**.
+Per `F2_FINAL_VERDICT_2026_05_18.md` + the new backtest, decoding it
+needs:
+- Polymarket CLOB WS event tape (~100 GB/mo, not collected today)
+- Cross-exchange basis monitor
+
+**Action**: BDH is DEFERRED. Reallocate dev-time to the ACC-M template
+(the SAME wallets earn $2,793/day via maker pair-arb — that's the
+buildable path). Re-evaluate BDH only after CLOB WS infra is built.
+
+Backtest evidence:
+`migration_ireland_shadow_2026_05_21/bdh_research/BDH_GATE_BACKTEST_VERDICT.md`
 
 **Final verdict 2026-05-21 late** after portfolio audit using official Polymarket API. See `migration_ireland_shadow_2026_05_21/portfolio_audit/PORTFOLIO_AUDIT_REPORT.md`.
 

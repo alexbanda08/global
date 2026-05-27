@@ -1,0 +1,4 @@
+conviction_bucket,n_train_val,empirical_wr_train_val,median_vwap,stake_quarter_kelly,stake_half_kelly,stake_linear_conviction,stake_hybrid_deploy,lookalike_b,sleeve_id,core_gates,extra_gates
+0,13,0.8461538461538461,0.7300000190734863,5.0,5.271381543675889,5.0,5.271381543675889,0.36246571834862806,V6_S1_VWAP_3070,g_offset_early & g_above_1h_dailyvwap_with & g_tr_stack_full_with,g_vol_high & g_entry_vwap_in_30_70
+1,141,0.6453900709219859,0.5754098949707582,5.0,5.0,15.0,15.0,0.7231337287826839,V6_S1_VWAP_3070,g_offset_early & g_above_1h_dailyvwap_with & g_tr_stack_full_with,g_vol_high & g_entry_vwap_in_30_70
+2,64,0.703125,0.5583018904366331,5.0,5.0,25.0,25.0,0.7753227327128839,V6_S1_VWAP_3070,g_offset_early & g_above_1h_dailyvwap_with & g_tr_stack_full_with,g_vol_high & g_entry_vwap_in_30_70

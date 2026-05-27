@@ -1,0 +1,8 @@
+sleeve,shared,up_only,dn_only
+s15_5m|150-240|g_tr_above_ema800&g_tr_above_cloud&g_within_dev&g_tr_above_ema200,g_hurst_trending,g_flow_with_and_no_whale&g_tr_within_adr,
+s15_5m|60-150|g_tr_above_cloud&g_ribbon_agrees&g_bb_pos_with&g_cci_with,g_hurst_trending&g_tr_stack_with,g_ribbon_agrees,
+s15_5m|150-240|g_tr_above_ema800,g_hawkes_imbalance_with&g_hurst_trending,g_tight_ribbon,g_cci_with&g_tr_stack_with
+s15_5m|150-240|g_tr_stack_with&g_tr_above_ema200&g_ribbon_agrees&g_bb_pos_with,,g_hawkes_imbalance_with&g_ribbon_agrees,g_hurst_trending
+s15_5m|60-150|g_tr_above_ema50&g_ribbon_agrees,g_hurst_trending,,
+s6_5m|60-150|g_cci_with&g_tr_above_ema50&g_rf_with,,g_cci_with&g_ribbon_agrees&g_stoch_with&g_tr_within_adr,g_queue_top_high&g_vol_high
+s15_5m|60-150|g_tr_above_cloud&g_ribbon_agrees&g_tr_above_ema200&g_cci_with,g_hurst_trending,g_ribbon_agrees,g_stoch_with

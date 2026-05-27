@@ -1,0 +1,10 @@
+filter,full_pct,pct_180d,pct_90d,pct_30d
+original_BTC100_BTC50rising_breadth5/5,16.99,2.87,5.73,17.13
+original_BTC100_BTC50rising_breadth4/5,23.05,3.42,6.84,20.44
+original_BTC100_BTC50rising_breadth3/5,27.83,4.63,9.24,27.62
+relaxed_BTC100_breadth3/5,32.39,4.63,9.24,27.62
+relaxed_BTC100_breadth2/5,38.29,4.63,9.24,27.62
+relaxed_BTC100only,46.73,5.18,9.24,27.62
+relaxed_BTC50only,51.05,25.9,30.5,65.19
+very_loose_breadth_only_3/5,44.39,23.96,28.47,56.91
+very_loose_breadth_only_2/5,52.77,26.83,33.64,69.06

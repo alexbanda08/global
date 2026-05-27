@@ -1,0 +1,74 @@
+[
+  [
+    "FUND-formula",
+    "perps_simulator_funding.py",
+    "?",
+    "funding_pnl = -pos * size * cl[i] * fund[i]"
+  ],
+  [
+    "HMM-good",
+    "hmm_adaptive.py",
+    "?",
+    "train_X_raw.mean / std used = forward-only OK"
+  ],
+  [
+    "INVVOL-warmup",
+    "run_leverage_audit.py",
+    "?",
+    "window=500 means first 500 bars use min_periods fallback"
+  ],
+  [
+    "V52-static-weights",
+    "run_v52_hl_gates.py",
+    "?",
+    "V41 sleeve 60% + 4 diversifiers @ 10% each \u2014 fixed, no rebalance learning"
+  ],
+  [
+    "HL-funding-bucketing",
+    "hl_data.py",
+    "?",
+    "uses floor(4h) \u2014 confirms 4-hour-aligned bucket (correct for HL hourly funding)"
+  ],
+  [
+    "V52-variant-map-line",
+    "run_v52_hl_gates.py",
+    36,
+    "V41_VARIANT_MAP = {"
+  ],
+  [
+    "V52-div-specs-line",
+    "run_v52_hl_gates.py",
+    50,
+    "DIV_SPECS = ["
+  ],
+  [
+    "V52-div-specs-line",
+    "run_v52_hl_gates.py",
+    91,
+    "spec = next(s for s in DIV_SPECS if s[0] == name)"
+  ],
+  [
+    "VP-impl-line",
+    "v50_new_signals.py",
+    160,
+    "def sig_volume_profile_rot(df: pd.DataFrame,"
+  ],
+  [
+    "XSM-rising-test",
+    "v23_low_dd_xsm.py",
+    178,
+    "if btc_ma_fast.iloc[i] < btc_ma_fast.iloc[i - 24]:  # 1-day flat/down"
+  ],
+  [
+    "XSM-breadth-test",
+    "v23_low_dd_xsm.py",
+    187,
+    "if breadth < mf_breadth_min:"
+  ],
+  [
+    "FUND-sign-OK",
+    "perps_simulator_funding.py",
+    "\u2014",
+    "verified: pos=+1 fund>0 => pnl<0 (long pays). Correct."
+  ]
+]

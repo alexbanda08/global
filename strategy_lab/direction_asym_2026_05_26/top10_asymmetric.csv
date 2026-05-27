@@ -1,0 +1,11 @@
+sleeve,direction,stack,n_stack_train,WR_train,dpt_train,sum_train,n_stack_lock,WR_lock,dpt_lock,sum_lock,p_lock,n_base_train,WR_base_train,dpt_base_train,sum_base_train,n_base_lock,WR_base_lock,dpt_base_lock,sum_base_lock,deployable
+s15_5m|60-150|g_tr_above_ema50&g_ribbon_agrees,UP,g_hurst_trending,601,0.8569,2.57,1544.68,1543,0.7926,4.94,7622.68,0.0,1094,0.7843,0.591,646.76,2743,0.6956,1.208,3313.96,True
+s15_5m|60-150|g_tr_above_ema50&g_ribbon_agrees,DOWN,g_hurst_trending,637,0.8776,3.197,2036.24,1491,0.7746,4.905,7313.15,0.0,1088,0.7941,1.531,1665.52,2755,0.6955,1.699,4680.62,True
+s15_5m|150-240|g_tr_above_ema800&g_tr_above_cloud&g_within_dev&g_tr_above_ema200,DOWN,g_hurst_trending,557,0.9677,0.976,543.41,1426,0.8345,3.292,4694.8,0.0,842,0.9311,0.234,196.85,2049,0.8136,1.757,3600.06,True
+s15_5m|60-150|g_tr_above_cloud&g_ribbon_agrees&g_bb_pos_with&g_cci_with,DOWN,g_hurst_trending&g_tr_stack_with,741,0.8529,2.144,1588.77,191,0.8377,5.264,1005.36,0.0,1341,0.7726,0.397,532.38,2439,0.7208,1.638,3994.3,True
+s15_5m|150-240|g_tr_stack_with&g_tr_above_ema200&g_ribbon_agrees&g_bb_pos_with,DOWN,g_hurst_trending,906,0.9029,2.047,1854.98,737,0.8453,1.319,972.26,0.028,1542,0.847,1.024,1579.41,993,0.8107,0.087,86.45,True
+s15_5m|150-240|g_tr_above_ema800,UP,g_hurst_trending&g_hawkes_imbalance_with&g_tight_ribbon,996,0.9187,1.505,1498.82,200,0.86,4.495,898.91,0.002,1631,0.8909,0.435,709.01,2997,0.688,3.299,9888.17,True
+s6_5m|60-150|g_cci_with&g_tr_above_ema50&g_rf_with,UP,g_tr_within_adr&g_stoch_with&g_ribbon_agrees&g_cci_with,677,0.901,5.383,3644.31,398,0.7111,1.885,750.25,0.036,1407,0.7925,2.022,2844.38,2076,0.6777,1.422,2951.66,True
+s15_5m|150-240|g_tr_above_ema800,DOWN,g_hurst_trending&g_tr_stack_with&g_hawkes_imbalance_with&g_cci_with,886,0.9255,1.252,1109.27,199,0.8291,3.206,638.0,0.03,1669,0.8856,0.409,682.51,3052,0.7058,1.182,3606.62,True
+s15_5m|60-150|g_tr_above_cloud&g_ribbon_agrees&g_tr_above_ema200&g_cci_with,DOWN,g_hurst_trending&g_stoch_with,578,0.8772,2.122,1226.71,193,0.8083,3.238,625.01,0.002,1028,0.8103,0.512,526.59,2052,0.7208,0.968,1986.57,True
+s15_5m|60-150|g_tr_above_cloud&g_ribbon_agrees&g_bb_pos_with&g_cci_with,UP,g_hurst_trending&g_tr_stack_with&g_ribbon_agrees,737,0.8453,2.42,1783.52,153,0.8431,4.048,619.34,0.0,1392,0.7737,0.599,833.32,2080,0.7274,0.647,1346.35,True

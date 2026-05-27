@@ -1,0 +1,528 @@
+[
+  {
+    "sleeve_id": "v6_c1_off60_hurst_mpskew_bb_band",
+    "offset": 60,
+    "required": [
+      "g_bb_pos_with",
+      "g_mp_skew_with",
+      "g_hurst_trending",
+      "g_entry_vwap_in_band"
+    ],
+    "extra": [
+      "g_tr_above_ema50",
+      "g_tr_above_ema200",
+      "g_tr_above_cloud",
+      "g_tr_stack_with",
+      "g_ribbon_agrees",
+      "g_rf_with",
+      "g_cci_with",
+      "g_sms_liq_reclaim_with",
+      "g_sms_no_liquidity_above",
+      "g_tr_in_active_session",
+      "g_regime_ranging_at_ws"
+    ],
+    "n_required": 4,
+    "n_extra": 11,
+    "m_train": {
+      "n": 40,
+      "wr": 0.65,
+      "sum": 228.787120747924,
+      "dpt": 5.7196780186981,
+      "dd": -161.03821493806726,
+      "loss_streak": 5,
+      "sharpe": 7.18885695448823,
+      "active_days": 14
+    },
+    "m_val": {
+      "n": 40,
+      "wr": 0.675,
+      "sum": 211.19772250832244,
+      "dpt": 5.279943062708061,
+      "dd": -112.43098744701938,
+      "loss_streak": 4,
+      "sharpe": 19.807727539152886,
+      "active_days": 5
+    },
+    "m_lock_const": {
+      "n": 82,
+      "wr": 0.8170731707317073,
+      "sum": 1157.8394933989175,
+      "dpt": 14.119993821938019,
+      "dd": -50.0,
+      "loss_streak": 2,
+      "sharpe": 118.13539596683898,
+      "active_days": 3
+    },
+    "sum_k_lock_full": 340.4821329430835,
+    "sum_k25_lock": 231.56789867978353,
+    "sum_lin_lock": 964.7715425077688,
+    "dd_k_lock": -12.352474383212382,
+    "mean_stake_full": 6.216393747731627,
+    "min_stake_full": 5.0,
+    "max_stake_full": 11.676801110053587,
+    "mean_stake_k25": 5.0,
+    "mean_stake_lin": 21.38580931263858,
+    "bp_lock": 0.0,
+    "stake_table": [
+      {
+        "extra_passing": 8,
+        "conviction": 0.727,
+        "n_train": 10,
+        "p_train": 0.6,
+        "median_vwap": 0.5416,
+        "kelly25_stake": 5.0,
+        "full_kelly_stake": 5.0,
+        "linear_stake": 19.55,
+        "example_won_full_kelly": 4.15,
+        "example_lost_full_kelly": -5.0
+      },
+      {
+        "extra_passing": 9,
+        "conviction": 0.818,
+        "n_train": 16,
+        "p_train": 0.625,
+        "median_vwap": 0.5775,
+        "kelly25_stake": 5.0,
+        "full_kelly_stake": 5.0,
+        "linear_stake": 21.36,
+        "example_won_full_kelly": 3.59,
+        "example_lost_full_kelly": -5.0
+      },
+      {
+        "extra_passing": 10,
+        "conviction": 0.909,
+        "n_train": 9,
+        "p_train": 0.6667,
+        "median_vwap": 0.6009,
+        "kelly25_stake": 5.0,
+        "full_kelly_stake": 5.0,
+        "linear_stake": 23.18,
+        "example_won_full_kelly": 3.25,
+        "example_lost_full_kelly": -5.0
+      }
+    ]
+  },
+  {
+    "sleeve_id": "v6_c2_off60_hurst_mpskew_bb_band_narrow",
+    "offset": 60,
+    "required": [
+      "g_bb_pos_with",
+      "g_sms_no_liquidity_above",
+      "g_hurst_trending",
+      "g_entry_vwap_in_band_narrow"
+    ],
+    "extra": [
+      "g_tr_above_ema50",
+      "g_tr_above_ema200",
+      "g_tr_above_cloud",
+      "g_tr_stack_with",
+      "g_ribbon_agrees",
+      "g_rf_with",
+      "g_cci_with",
+      "g_mp_skew_with",
+      "g_sms_liq_reclaim_with",
+      "g_tr_in_active_session",
+      "g_regime_ranging_at_ws"
+    ],
+    "n_required": 4,
+    "n_extra": 11,
+    "m_train": {
+      "n": 22,
+      "wr": 0.7727272727272727,
+      "sum": 352.2795492139372,
+      "dpt": 16.01270678245169,
+      "dd": -50.0,
+      "loss_streak": 2,
+      "sharpe": 15.743070684005875,
+      "active_days": 11
+    },
+    "m_val": {
+      "n": 23,
+      "wr": 0.6521739130434783,
+      "sum": 280.5745774514225,
+      "dpt": 12.198894671800979,
+      "dd": -53.273582410286,
+      "loss_streak": 2,
+      "sharpe": 22.273414436954198,
+      "active_days": 5
+    },
+    "m_lock_const": {
+      "n": 48,
+      "wr": 0.75,
+      "sum": 749.581695174435,
+      "dpt": 15.616285316134062,
+      "dd": -50.0,
+      "loss_streak": 2,
+      "sharpe": 72.72444620666431,
+      "active_days": 3
+    },
+    "sum_k_lock_full": 379.9787622893763,
+    "sum_k25_lock": 149.91633903488702,
+    "sum_lin_lock": 617.3116880721295,
+    "dd_k_lock": -21.94138730260766,
+    "mean_stake_full": 11.987871492521519,
+    "min_stake_full": 5.0,
+    "max_stake_full": 17.820242636232837,
+    "mean_stake_k25": 5.0,
+    "mean_stake_lin": 20.87121212121212,
+    "bp_lock": 0.0,
+    "stake_table": [
+      {
+        "extra_passing": 8,
+        "conviction": 0.727,
+        "n_train": 7,
+        "p_train": 0.5714,
+        "median_vwap": 0.5112,
+        "kelly25_stake": 5.0,
+        "full_kelly_stake": 5.0,
+        "linear_stake": 19.55,
+        "example_won_full_kelly": 4.69,
+        "example_lost_full_kelly": -5.0
+      },
+      {
+        "extra_passing": 9,
+        "conviction": 0.818,
+        "n_train": 6,
+        "p_train": 0.8333,
+        "median_vwap": 0.4228,
+        "kelly25_stake": 5.0,
+        "full_kelly_stake": 17.72,
+        "linear_stake": 21.36,
+        "example_won_full_kelly": 23.7,
+        "example_lost_full_kelly": -17.72
+      }
+    ]
+  },
+  {
+    "sleeve_id": "v6_c3_off60_cloud_ribbon_mpskew_hurst",
+    "offset": 60,
+    "required": [
+      "g_tr_above_cloud",
+      "g_ribbon_agrees",
+      "g_mp_skew_with",
+      "g_hurst_trending"
+    ],
+    "extra": [
+      "g_tr_above_ema50",
+      "g_tr_above_ema200",
+      "g_tr_stack_with",
+      "g_rf_with",
+      "g_bb_pos_with",
+      "g_cci_with",
+      "g_sms_liq_reclaim_with",
+      "g_sms_no_liquidity_above",
+      "g_tr_in_active_session",
+      "g_regime_ranging_at_ws",
+      "g_entry_vwap_in_band_wide"
+    ],
+    "n_required": 4,
+    "n_extra": 11,
+    "m_train": {
+      "n": 187,
+      "wr": 0.786096256684492,
+      "sum": 269.03304971730427,
+      "dpt": 1.438679410252964,
+      "dd": -146.54723415850225,
+      "loss_streak": 3,
+      "sharpe": 6.133358969276863,
+      "active_days": 17
+    },
+    "m_val": {
+      "n": 129,
+      "wr": 0.8372093023255814,
+      "sum": 550.7907326076486,
+      "dpt": 4.269695601609679,
+      "dd": -75.36325733825976,
+      "loss_streak": 2,
+      "sharpe": 22.694704355777905,
+      "active_days": 5
+    },
+    "m_lock_const": {
+      "n": 165,
+      "wr": 0.8363636363636363,
+      "sum": 1393.1269156849835,
+      "dpt": 8.443193428393839,
+      "dd": -92.80672687600816,
+      "loss_streak": 2,
+      "sharpe": 118.65800813897395,
+      "active_days": 3
+    },
+    "sum_k_lock_full": 703.3971178830375,
+    "sum_k25_lock": 279.96323154902905,
+    "sum_lin_lock": 1156.29396973727,
+    "dd_k_lock": -36.850424630542705,
+    "mean_stake_full": 8.939553053927543,
+    "min_stake_full": 5.0,
+    "max_stake_full": 21.707824384700977,
+    "mean_stake_k25": 5.005589671313848,
+    "mean_stake_lin": 21.011019283746556,
+    "bp_lock": 0.0,
+    "stake_table": [
+      {
+        "extra_passing": 7,
+        "conviction": 0.636,
+        "n_train": 12,
+        "p_train": 0.9167,
+        "median_vwap": 0.8074,
+        "kelly25_stake": 5.0,
+        "full_kelly_stake": 14.0,
+        "linear_stake": 17.73,
+        "example_won_full_kelly": 3.27,
+        "example_lost_full_kelly": -14.0
+      },
+      {
+        "extra_passing": 8,
+        "conviction": 0.727,
+        "n_train": 63,
+        "p_train": 0.8095,
+        "median_vwap": 0.7929,
+        "kelly25_stake": 5.0,
+        "full_kelly_stake": 5.0,
+        "linear_stake": 19.55,
+        "example_won_full_kelly": 1.28,
+        "example_lost_full_kelly": -5.0
+      },
+      {
+        "extra_passing": 9,
+        "conviction": 0.818,
+        "n_train": 88,
+        "p_train": 0.7955,
+        "median_vwap": 0.771,
+        "kelly25_stake": 5.0,
+        "full_kelly_stake": 5.0,
+        "linear_stake": 21.36,
+        "example_won_full_kelly": 1.46,
+        "example_lost_full_kelly": -5.0
+      },
+      {
+        "extra_passing": 10,
+        "conviction": 0.909,
+        "n_train": 20,
+        "p_train": 0.6,
+        "median_vwap": 0.6679,
+        "kelly25_stake": 5.0,
+        "full_kelly_stake": 5.0,
+        "linear_stake": 23.18,
+        "example_won_full_kelly": 2.44,
+        "example_lost_full_kelly": -5.0
+      }
+    ]
+  },
+  {
+    "sleeve_id": "v6_c4_off60_ema200_cci_mpskew_hurst",
+    "offset": 60,
+    "required": [
+      "g_tr_above_ema200",
+      "g_cci_with",
+      "g_mp_skew_with",
+      "g_hurst_trending"
+    ],
+    "extra": [
+      "g_tr_above_ema50",
+      "g_tr_above_cloud",
+      "g_tr_stack_with",
+      "g_rf_with",
+      "g_bb_pos_with",
+      "g_ribbon_agrees",
+      "g_sms_liq_reclaim_with",
+      "g_sms_no_liquidity_above",
+      "g_tr_in_active_session",
+      "g_regime_ranging_at_ws",
+      "g_entry_vwap_in_band_wide"
+    ],
+    "n_required": 4,
+    "n_extra": 11,
+    "m_train": {
+      "n": 186,
+      "wr": 0.7903225806451613,
+      "sum": 284.5276178324228,
+      "dpt": 1.5297183754431332,
+      "dd": -147.7742845156704,
+      "loss_streak": 3,
+      "sharpe": 6.299923540103783,
+      "active_days": 17
+    },
+    "m_val": {
+      "n": 125,
+      "wr": 0.832,
+      "sum": 442.98742000547094,
+      "dpt": 3.5438993600437674,
+      "dd": -75.36325733825979,
+      "loss_streak": 2,
+      "sharpe": 27.227431042908595,
+      "active_days": 5
+    },
+    "m_lock_const": {
+      "n": 154,
+      "wr": 0.8376623376623377,
+      "sum": 1198.9892128093873,
+      "dpt": 7.7856442390219955,
+      "dd": -79.12900779462964,
+      "loss_streak": 2,
+      "sharpe": 118.64519613087208,
+      "active_days": 3
+    },
+    "sum_k_lock_full": 579.6781822275061,
+    "sum_k25_lock": 241.13569097390987,
+    "sum_lin_lock": 1004.513583852713,
+    "dd_k_lock": -20.84030403400459,
+    "mean_stake_full": 8.52858380357421,
+    "min_stake_full": 5.0,
+    "max_stake_full": 21.707824384700977,
+    "mean_stake_k25": 5.005988933550551,
+    "mean_stake_lin": 21.115702479338843,
+    "bp_lock": 0.0,
+    "stake_table": [
+      {
+        "extra_passing": 7,
+        "conviction": 0.636,
+        "n_train": 12,
+        "p_train": 0.9167,
+        "median_vwap": 0.8074,
+        "kelly25_stake": 5.0,
+        "full_kelly_stake": 14.0,
+        "linear_stake": 17.73,
+        "example_won_full_kelly": 3.27,
+        "example_lost_full_kelly": -14.0
+      },
+      {
+        "extra_passing": 8,
+        "conviction": 0.727,
+        "n_train": 65,
+        "p_train": 0.8154,
+        "median_vwap": 0.7901,
+        "kelly25_stake": 5.0,
+        "full_kelly_stake": 5.0,
+        "linear_stake": 19.55,
+        "example_won_full_kelly": 1.3,
+        "example_lost_full_kelly": -5.0
+      },
+      {
+        "extra_passing": 9,
+        "conviction": 0.818,
+        "n_train": 87,
+        "p_train": 0.7931,
+        "median_vwap": 0.7727,
+        "kelly25_stake": 5.0,
+        "full_kelly_stake": 5.0,
+        "linear_stake": 21.36,
+        "example_won_full_kelly": 1.44,
+        "example_lost_full_kelly": -5.0
+      },
+      {
+        "extra_passing": 10,
+        "conviction": 0.909,
+        "n_train": 20,
+        "p_train": 0.6,
+        "median_vwap": 0.6679,
+        "kelly25_stake": 5.0,
+        "full_kelly_stake": 5.0,
+        "linear_stake": 23.18,
+        "example_won_full_kelly": 2.44,
+        "example_lost_full_kelly": -5.0
+      }
+    ]
+  },
+  {
+    "sleeve_id": "v6_c5_off120_v5winner_verify",
+    "offset": 120,
+    "required": [
+      "g_tr_above_ema200",
+      "g_mp_skew_with",
+      "g_sms_liq_reclaim_with",
+      "g_tr_in_active_session"
+    ],
+    "extra": [
+      "g_tr_above_ema50",
+      "g_tr_above_cloud",
+      "g_tr_stack_with",
+      "g_rf_with",
+      "g_bb_pos_with",
+      "g_ribbon_agrees",
+      "g_cci_with",
+      "g_sms_no_liquidity_above",
+      "g_hurst_trending",
+      "g_regime_ranging_at_ws"
+    ],
+    "n_required": 4,
+    "n_extra": 10,
+    "m_train": {
+      "n": 67,
+      "wr": 0.8955223880597015,
+      "sum": 206.7346449153884,
+      "dpt": 3.0855917151550507,
+      "dd": -55.90040157206139,
+      "loss_streak": 1,
+      "sharpe": 10.324406142824337,
+      "active_days": 15
+    },
+    "m_val": {
+      "n": 28,
+      "wr": 0.8214285714285714,
+      "sum": 62.101543997599094,
+      "dpt": 2.217912285628539,
+      "dd": -65.81422583216627,
+      "loss_streak": 1,
+      "sharpe": 7.0778041517818915,
+      "active_days": 5
+    },
+    "m_lock_const": {
+      "n": 25,
+      "wr": 0.88,
+      "sum": 162.33686715209564,
+      "dpt": 6.493474686083825,
+      "dd": -25.0,
+      "loss_streak": 1,
+      "sharpe": 44.17521204370776,
+      "active_days": 3
+    },
+    "sum_k_lock_full": 124.94207981412941,
+    "sum_k25_lock": 33.33892063922805,
+    "sum_lin_lock": 141.08783507811034,
+    "dd_k_lock": -25.0,
+    "mean_stake_full": 15.301059964267452,
+    "min_stake_full": 5.0,
+    "max_stake_full": 25.0,
+    "mean_stake_k25": 5.4,
+    "mean_stake_lin": 21.32,
+    "bp_lock": 0.0,
+    "stake_table": [
+      {
+        "extra_passing": 7,
+        "conviction": 0.7,
+        "n_train": 11,
+        "p_train": 1.0,
+        "median_vwap": 0.7878,
+        "kelly25_stake": 6.25,
+        "full_kelly_stake": 25.0,
+        "linear_stake": 19.0,
+        "example_won_full_kelly": 6.6,
+        "example_lost_full_kelly": -25.0
+      },
+      {
+        "extra_passing": 8,
+        "conviction": 0.8,
+        "n_train": 46,
+        "p_train": 0.8478,
+        "median_vwap": 0.8573,
+        "kelly25_stake": 5.0,
+        "full_kelly_stake": 5.0,
+        "linear_stake": 21.0,
+        "example_won_full_kelly": 0.82,
+        "example_lost_full_kelly": -5.0
+      },
+      {
+        "extra_passing": 9,
+        "conviction": 0.9,
+        "n_train": 6,
+        "p_train": 1.0,
+        "median_vwap": 0.9287,
+        "kelly25_stake": 6.25,
+        "full_kelly_stake": 25.0,
+        "linear_stake": 23.0,
+        "example_won_full_kelly": 1.88,
+        "example_lost_full_kelly": -25.0
+      }
+    ]
+  }
+]

@@ -1,0 +1,66 @@
+### POST-AUDIT BUG FIXES — 2026-05-26
+### Round 7 audit (BB + CC) found 3 bugs across the backtest pipeline.
+
+================================================================
+Bug #1 (HIGH): Fire-count inflation (20 offsets vs 9 canonical)
+File: strategy_lab/full_window_validation_v2.py
+================================================================
+
+BEFORE:
+    offsets_5m = [15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180,
+                  195, 210, 225, 240, 255, 270, 285, 300]
+    offsets_15m = [60, 120, 180, 240, 300, 360, 420, 480, 540, 600, 660, 720, 780, 840]
+
+AFTER:
+    # AUDIT-FIX: use canonical 9-offset 5m grid {30,60,...,270} matching s15_joined_all.parquet
+    offsets_5m = [30, 60, 90, 120, 150, 180, 210, 240, 270]
+    offsets_15m = [60, 120, 240, 360, 480, 600, 720, 840]   # matches v15m_joined_all.parquet
+
+================================================================
+Bug #2 (MEDIUM): Regime panel — ts_us = bar START causes leak
+File: strategy_lab/meta_classifier/build_regime_panel.py — resample_to_bar()
+================================================================
+
+BEFORE:
+    agg = out.groupby("slot_us").agg(...).reset_index().rename(columns={"slot_us": "ts_us"})
+    # ts_us == bar START; close/ADX/regime_label computed on full closed bar
+    # merge_asof(backward) picks current slot whose features include 0-300s of future
+
+AFTER:
+    agg = out.groupby("slot_us").agg(...).reset_index()
+    bar_us = minutes * 60_000_000
+    agg["slot_start_us"] = agg["slot_us"]
+    agg["ts_us"] = agg["slot_us"] + bar_us - 1   # bar END (inclusive last microsecond)
+    # Now merge_asof backward picks the latest CLOSED bar - strictly causal.
+
+================================================================
+Bug #3 (MEDIUM): SMS panel — same leak pattern
+File: strategy_lab/meta_classifier/compute_sms_panel.py — resample_1s_to_bar()
+================================================================
+
+BEFORE:
+    bars["ts_us"] = (bars["dt"].astype("int64") // 1_000).astype("int64")   # bar START
+
+AFTER:
+    bar_us = int(freq_s) * 1_000_000
+    bars["slot_start_us"] = (bars["dt"].astype("int64") // 1_000).astype("int64")
+    bars["ts_us"] = bars["slot_start_us"] + bar_us - 1   # bar END
+
+================================================================
+Bug #4 (HIGH, DEFLATING): PP-R6 scaling 28/32 instead of 28/3.96
+Files: strategy_lab/overlap_audit_2026_05_26/04_final_manifest.py
+       strategy_lab/overlap_audit_2026_05_26/01_build_fire_matrix.py
+================================================================
+
+BEFORE:
+    marg_28d  = marg_df['pnl_legacy_usd'].sum() * (28/32)   # 0.875x
+    deploy_28d = deploy_sum * (28/32)
+    summary['sum_pnl_28d'] = summary['sum_pnl'] * (28.0 / 32.0)
+
+AFTER:
+    # fired_by_sleeve.parquet covers May 21 - May 25 = 3.96d, NOT 32d.
+    marg_28d  = marg_df['pnl_legacy_usd'].sum() * (28/3.96)   # 7.07x
+    deploy_28d = deploy_sum * (28/3.96)
+    summary['sum_pnl_28d'] = summary['sum_pnl'] * (28.0 / 3.96)
+
+Net scaling correction factor: 8.07x UPWARD (previously under-stated).

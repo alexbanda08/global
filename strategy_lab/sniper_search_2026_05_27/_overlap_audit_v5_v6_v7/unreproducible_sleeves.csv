@@ -1,0 +1,4 @@
+sleeve_id,reason
+SOL_15M_HOD_EU_OFF60_240_RF_TR_VWAP30_70_V6,missing gates: ['g_entry_vwap_in_30_70']
+BTC_15M_V7_PLUS_ETH_SLOPE,missing gates: ['g_eth_slope_with']
+BTC_15M_V7_PLUS_PARENT_1H_RANGING,missing gates: ['g_parent_1h_ranging']

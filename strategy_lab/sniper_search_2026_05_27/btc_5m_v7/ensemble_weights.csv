@@ -1,0 +1,16 @@
+gate,weight
+g_slot_end_ofi_with,13.656260403062658
+g_hurst_strong_trending,9.032722391366754
+g_hurst_regime_with,7.945948114231694
+g_hl_liq_cascade_with,6.696442760993104
+g_queue_top_high,6.253049665664068
+g_tr_above_ema800,5.108049539696136
+g_hawkes_imbalance_with,4.6392738095221375
+g_trend_slope_strong_with,4.623361996340913
+g_tr_above_ema200,3.8995378903116773
+g_hurst_trending,3.880420265800799
+g_within_dev,2.226072460777939
+g_mp_change_with,1.8547580251984108
+g_rf_with,1.5967662073744338
+g_ribbon_agrees,1.5453541953796779
+g_lm_high_stat,1.2918901664000004

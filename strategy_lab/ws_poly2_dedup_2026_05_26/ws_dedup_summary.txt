@@ -1,0 +1,13 @@
+WS-poly2 Dedup Summary (2026-05-26)
+=====================================
+
+WS-poly2 raw naive sum (no dedup) full 32d: $105273  28d: $92114
+  TT's lockbox raw: $61981 (4d)
+
+Mode A (PRIMARY GREEDY) full: $69077 / 28d  (7 sleeves)
+Mode B (UNION) full: $69077 / 28d  (7 sleeves)
+Mode C (UNANIMITY) full: $23037 / 28d
+
+PP-R6 AND primary 28d: $19023
+Combined AND+WS deploy 28d: $67584
+Lift vs PP-R6 alone: $48561

@@ -1,0 +1,43 @@
+rule,gate,n,wr,avg_pnl,sum_pnl
+L-C: bet UP | liq_imbalance_60s > +0.5,baseline,221,0.5610859728506787,2.071953438313022,457.90170986717783
+L-C: bet UP | liq_imbalance_60s > +0.5,g_funding_extreme_against,19,0.5263157894736842,8.448447333555201,160.5204993375488
+L-C: bet UP | liq_imbalance_60s > +0.5,g_oi_rising_with,104,0.6442307692307693,1.3313902087627818,138.46458171132932
+L-C: bet UP | liq_imbalance_60s > +0.5,g_recent_liq_cascade_with,85,0.6352941176470588,8.534439862510467,725.4273883133897
+L-C: bet UP | liq_imbalance_60s > +0.5,g_basis_with,21,0.6190476190476191,3.4864224880541004,73.2148722491361
+L-C: bet UP | liq_imbalance_60s > +0.5,g_basis_extreme_against,4,1.0,6.03135984003037,24.12543936012148
+OI-A: bet DOWN | OI rising & price down,baseline,2863,0.5829549423681453,1.6991617185397083,4864.700000179185
+OI-A: bet DOWN | OI rising & price down,g_funding_extreme_against,537,0.5847299813780261,1.0561627757353023,567.1594105698573
+OI-A: bet DOWN | OI rising & price down,g_oi_rising_with,2863,0.5829549423681453,1.6991617185397083,4864.700000179185
+OI-A: bet DOWN | OI rising & price down,g_recent_liq_cascade_with,0,,,0.0
+OI-A: bet DOWN | OI rising & price down,g_basis_with,2438,0.5520918785890074,1.7216942428096096,4197.490563969828
+OI-A: bet DOWN | OI rising & price down,g_basis_extreme_against,39,0.8717948717948718,1.6109334074737158,62.82640289147491
+OI-D: bet WITH price | oi_pct_1h > 0.5%,baseline,3273,0.5740910479682249,1.17492023919387,3845.5139428815364
+OI-D: bet WITH price | oi_pct_1h > 0.5%,g_funding_extreme_against,394,0.6015228426395939,3.90764715565114,1539.612979326549
+OI-D: bet WITH price | oi_pct_1h > 0.5%,g_oi_rising_with,3273,0.5740910479682249,1.17492023919387,3845.5139428815364
+OI-D: bet WITH price | oi_pct_1h > 0.5%,g_recent_liq_cascade_with,24,0.8333333333333334,2.7176086112718085,65.2226066705234
+OI-D: bet WITH price | oi_pct_1h > 0.5%,g_basis_with,1145,0.5406113537117904,1.220215906705733,1397.1472131780642
+OI-D: bet WITH price | oi_pct_1h > 0.5%,g_basis_extreme_against,39,0.7948717948717948,0.5028786861432074,19.61226875958509
+OI-A: bet UP | OI rising & price up,baseline,4507,0.5600177501664078,1.0549594275132912,4754.7021398024035
+OI-A: bet UP | OI rising & price up,g_funding_extreme_against,514,0.5992217898832685,4.694548635967097,2412.9979988870878
+OI-A: bet UP | OI rising & price up,g_oi_rising_with,4507,0.5600177501664078,1.0549594275132912,4754.7021398024035
+OI-A: bet UP | OI rising & price up,g_recent_liq_cascade_with,26,0.8461538461538461,2.9280129433709705,76.12833652764523
+OI-A: bet UP | OI rising & price up,g_basis_with,361,0.5096952908587258,-0.9167016235511343,-330.92928610195946
+OI-A: bet UP | OI rising & price up,g_basis_extreme_against,43,0.6976744186046512,-2.6902368477116045,-115.680184451599
+F-B2: bet UP | funding_z < -2.0,baseline,478,0.5523012552301255,0.12863012340232574,61.4851989863117
+F-B2: bet UP | funding_z < -2.0,g_funding_extreme_against,478,0.5523012552301255,0.12863012340232574,61.4851989863117
+F-B2: bet UP | funding_z < -2.0,g_oi_rising_with,175,0.5885714285714285,4.555134456224239,797.1485298392417
+F-B2: bet UP | funding_z < -2.0,g_recent_liq_cascade_with,0,,,0.0
+F-B2: bet UP | funding_z < -2.0,g_basis_with,7,0.14285714285714285,-7.428571428571429,-52.0
+F-B2: bet UP | funding_z < -2.0,g_basis_extreme_against,4,1.0,6.010105081691245,24.04042032676498
+B-C: bet UP | basis_change_60s > +1bps,baseline,2956,0.49627875507442487,-0.04478768205672222,-132.39238815967087
+B-C: bet UP | basis_change_60s > +1bps,g_funding_extreme_against,378,0.5502645502645502,3.1324740523600396,1184.075191792095
+B-C: bet UP | basis_change_60s > +1bps,g_oi_rising_with,1463,0.50580997949419,-0.1769265777353611,-258.8435832268333
+B-C: bet UP | basis_change_60s > +1bps,g_recent_liq_cascade_with,27,0.7037037037037037,20.35002664307705,549.4507193630803
+B-C: bet UP | basis_change_60s > +1bps,g_basis_with,478,0.38493723849372385,-4.061794418422145,-1941.5377320057853
+B-C: bet UP | basis_change_60s > +1bps,g_basis_extreme_against,2,0.5,-11.718085106382977,-23.436170212765955
+F-D: bet UP | funding<0 (shorts paying),baseline,3243,0.5041628122109159,-0.4646929870680949,-1506.999357061832
+F-D: bet UP | funding<0 (shorts paying),g_funding_extreme_against,1855,0.5234501347708895,0.492734972363783,914.0233737348175
+F-D: bet UP | funding<0 (shorts paying),g_oi_rising_with,1476,0.5257452574525745,0.9292212679548782,1371.5305915014003
+F-D: bet UP | funding<0 (shorts paying),g_recent_liq_cascade_with,18,0.5555555555555556,-3.833560687654862,-69.00409237778752
+F-D: bet UP | funding<0 (shorts paying),g_basis_with,41,0.1951219512195122,-9.630501160356305,-394.85054757460847
+F-D: bet UP | funding<0 (shorts paying),g_basis_extreme_against,41,0.8048780487804879,2.230148473282946,91.43608740460078

@@ -1,0 +1,67 @@
+====================================================================================================
+V8 BTC 15m: ORIG (BUGGY 25x) vs CORRECTED ($25 stake)
+====================================================================================================
+
+--- Rank 1: g_btc_sol_confluence_5m_with+g_liq_shock_against (off=600 dir=DOWN) ---
+  n_full              :   57  (unchanged)
+  WR_full             : 61.40%   (unchanged: corr=61.40%)
+  $/tr_full   ORIG: $  +239.184  ->  CORR: $    +9.567   ratio=25.00x
+  sum_full    ORIG: $  +13633.48  ->  CORR: $    +545.34   ratio=25.00x
+  DD_full     ORIG: $   -5963.49  ->  CORR: $    -238.54   ratio=25.00x
+  LS_full     ORIG:    3  ->  CORR:    3   (unchanged)
+  p_full      ORIG: 0.1133  ->  CORR: 0.1205
+  proj_32d    ORIG: $  +19832.09  ->  CORR: $    +793.28   ratio=25.00x
+  proj_honest ORIG: $  +13645.50  ->  CORR: $    +545.82   ratio=25.00x
+
+--- Rank 2: g_xa_unanimity_5m_with+g_liq_shock_against (off=600 dir=DOWN) ---
+  n_full              :   48  (unchanged)
+  WR_full             : 64.58%   (unchanged: corr=64.58%)
+  $/tr_full   ORIG: $  +277.059  ->  CORR: $   +11.082   ratio=25.00x
+  sum_full    ORIG: $  +13298.82  ->  CORR: $    +531.95   ratio=25.00x
+  DD_full     ORIG: $   -4694.55  ->  CORR: $    -187.78   ratio=25.00x
+  LS_full     ORIG:    3  ->  CORR:    3   (unchanged)
+  p_full      ORIG: 0.1213  ->  CORR: 0.1230
+  proj_32d    ORIG: $  +13680.88  ->  CORR: $    +547.24   ratio=25.00x
+  proj_honest ORIG: $  +13310.54  ->  CORR: $    +532.42   ratio=25.00x
+
+--- Rank 3: g_btc_eth_confluence_5m_with+g_di_agrees+g_liq_shock_against (off=600 dir=DOWN) ---
+  n_full              :   36  (unchanged)
+  WR_full             : 69.44%   (unchanged: corr=69.44%)
+  $/tr_full   ORIG: $  +362.107  ->  CORR: $   +14.484   ratio=25.00x
+  sum_full    ORIG: $  +13035.86  ->  CORR: $    +521.43   ratio=25.00x
+  DD_full     ORIG: $   -1807.59  ->  CORR: $     -72.30   ratio=25.00x
+  LS_full     ORIG:    2  ->  CORR:    2   (unchanged)
+  p_full      ORIG: 0.0867  ->  CORR: 0.0815
+  proj_32d    ORIG: $  +25236.19  ->  CORR: $   +1009.45   ratio=25.00x
+  proj_honest ORIG: $  +13047.34  ->  CORR: $    +521.89   ratio=25.00x
+
+--- Rank 4: g_btc_eth_divergence+g_stoch_with+g_vol_contracting (off=720 dir=UP) ---
+  n_full              :  113  (unchanged)
+  WR_full             : 84.96%   (unchanged: corr=84.96%)
+  $/tr_full   ORIG: $   +42.914  ->  CORR: $    +1.717   ratio=25.00x
+  sum_full    ORIG: $   +4849.24  ->  CORR: $    +193.97   ratio=25.00x
+  DD_full     ORIG: $   -1799.30  ->  CORR: $     -71.97   ratio=25.00x
+  LS_full     ORIG:    2  ->  CORR:    2   (unchanged)
+  p_full      ORIG: 0.1274  ->  CORR: 0.1295
+  proj_32d    ORIG: $  +16305.44  ->  CORR: $    +652.22   ratio=25.00x
+  proj_honest ORIG: $   +4853.51  ->  CORR: $    +194.14   ratio=25.00x
+
+--- Rank 5: g_grandparent_1h_slope_strong_with+g_stoch_with+g_vol_high (off=720 dir=UP) ---
+  n_full              :   37  (unchanged)
+  WR_full             : 86.49%   (unchanged: corr=86.49%)
+  $/tr_full   ORIG: $  +129.997  ->  CORR: $    +5.200   ratio=25.00x
+  sum_full    ORIG: $   +4809.90  ->  CORR: $    +192.40   ratio=25.00x
+  DD_full     ORIG: $   -1250.00  ->  CORR: $     -50.00   ratio=25.00x
+  LS_full     ORIG:    2  ->  CORR:    2   (unchanged)
+  p_full      ORIG: 0.0942  ->  CORR: 0.1055
+  proj_32d    ORIG: $  +15773.49  ->  CORR: $    +630.94   ratio=25.00x
+  proj_honest ORIG: $   +4814.14  ->  CORR: $    +192.57   ratio=25.00x
+
+
+====================================================================================================
+KEY TAKEAWAY
+====================================================================================================
+Original V8 script multiplied pnl_legacy_usd by 25.0 in metrics()
+But pnl_legacy_usd was ALREADY built with NOTIONAL=25.0 in full_window_validation_v2.py
+=> All original $/tr, sum, DD, proj_* numbers were 25x INFLATED ($625 effective stake)
+WR, n, loss_streak, bootstrap_p (scale-invariant) — UNCHANGED

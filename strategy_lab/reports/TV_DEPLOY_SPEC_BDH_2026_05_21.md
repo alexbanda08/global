@@ -1,6 +1,69 @@
 # TV Deploy Spec — BDH (Binance-Directional Hold) — 2026-05-21
 
-# ✅ STATUS: BUILD (real alpha confirmed, sizing revised)
+# 🏷 CATEGORY: DIRECTIONAL TAKER (not maker-arb)
+
+BDH is a pure directional taker that contrarian-trades binance momentum.
+**It belongs alongside the production momo / sniper / V3 / volume sleeves**,
+not in the maker-arb suite (ACC-M / ACC-H / ACC-PC / MAS / PAT-SHADOW).
+
+Mechanically: one TAKE at best_ask, hold to resolution, no maker BIDs,
+no MERGE, no paired inventory. Same structural family as the production
+momo controller (`poly_updown_loop.py`) but with a contrarian signal
+rather than the momentum signal momo uses.
+
+Wallet template (F2 cluster `0x9dae874a` + `0xa0a50783`) confirmed
+profitable per official Polymarket API (+$1,640/day + $1,453/day on 30d).
+
+# 🛑 STATUS: DEFER — backtest does NOT support broad-universe deploy
+
+Multi-asset backtest with full spec gate stack completed 2026-05-21 late.
+**No cell qualifies for live shadow** under the build criteria
+(mean ≥ +$0.30/fire AND n ≥ 30 AND total > 0).
+
+Per-cell result (5 cells, one fire per slug at ws_s+90s, 28d canonical):
+
+| cell | n_fires | win_rate | mean $/fire | total $ | sharpe |
+|---|---:|---:|---:|---:|---:|
+| BTC 15m | 1 | 1.000 | +$15.30 | +$15.30 | n/a |
+| ETH 5m | 8 | 0.625 | −$6.18 | −$49.41 | −1.04 |
+| ETH 15m | 5 | 0.800 | +$4.47 | +$22.34 | +0.57 |
+| SOL 5m | 6 | 0.667 | −$2.15 | −$12.90 | −0.24 |
+| SOL 15m | 0 | — | — | $0 | — |
+| **Combined** | **20** | **0.65** | **−$1.23** | **−$24.67** | n/a |
+
+Earlier BTC 5m result (separate sampling, 97k fires unfiltered): **−$14k** over 19d.
+
+The full gate stack (UTC ∈ {22,23,0,1,2,9,10} ∩ |ret_60s| ≥ 0.0025) collapses
+> 99% of the canonical universe. Across 5 cells × 28 days we get 20 fires
+total — way under the statistical-significance threshold. Even where mean
+PnL is positive (BTC 15m, ETH 15m), n is too small to claim edge.
+
+The wallet template ($1,640/day each on 30d, official Polymarket API) IS
+real alpha — but the wallets use a **slug-selection signal we can't
+reconstruct from canonical data alone**. Per `F2_FINAL_VERDICT_2026_05_18.md`,
+that signal requires:
+- Polymarket CLOB WS event tape (~100 GB/mo, not collected on Ireland today)
+- Cross-exchange basis monitor (binance↔OKX↔Kraken cross-print analysis)
+
+**Action**: DO NOT build BDH as a sleeve right now. Two paths forward:
+
+1. **Defer indefinitely** — accept that this template requires data infra
+   we don't have. Reallocate dev-time to ACC-M template (which IS earning
+   $2,793/day on the same wallets via maker pair-arb).
+2. **Build the data infra first** — collect Polymarket CLOB WS event tape
+   on VPS2 + cross-exchange basis monitor on VPS3. Estimated 2-3 dev-weeks.
+   Then re-attempt slug-selection decode. Only worth it if no other strategy
+   has higher expected ROI on the same dev-time.
+
+The rest of this document is preserved as the build spec for IF the data
+infra path is taken. Right now it is NOT actionable.
+
+(Backtest evidence: `migration_ireland_shadow_2026_05_21/bdh_research/BDH_GATE_BACKTEST_VERDICT.md`,
+per-cell CSVs in same dir.)
+
+---
+
+(historical build spec follows — do not implement)
 
 **Update 2026-05-21 late × 2.** Portfolio audit using official Polymarket API confirms BDH wallets ARE profitable:
 

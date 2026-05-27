@@ -1,0 +1,9 @@
+{
+  "universe": "ETH 15m (v3)",
+  "n_fires": 39546,
+  "splits": "{'33D': {'train': \"(Timestamp('2026-04-24 00:00:00+0000', tz='UTC'), Timestamp('2026-05-15 00:00:00+0000', tz='UTC'))\", 'val': \"(Timestamp('2026-05-15 00:00:00+0000', tz='UTC'), Timestamp('2026-05-22 00:00:00+0000', tz='UTC'))\", 'lock': \"(Timestamp('2026-05-22 00:00:00+0000', tz='UTC'), Timestamp('2026-05-26 00:00:00+0000', tz='UTC'))\"}, '31D': {'train': \"(Timestamp('2026-04-24 00:00:00+0000', tz='UTC'), Timestamp('2026-05-15 00:00:00+0000', tz='UTC'))\", 'val': \"(Timestamp('2026-05-15 00:00:00+0000', tz='UTC'), Timestamp('2026-05-21 00:00:00+0000', tz='UTC'))\", 'lock': \"(Timestamp('2026-05-21 00:00:00+0000', tz='UTC'), Timestamp('2026-05-25 00:00:00+0000', tz='UTC'))\"}, '28D': {'train': \"(Timestamp('2026-04-28 00:00:00+0000', tz='UTC'), Timestamp('2026-05-14 00:00:00+0000', tz='UTC'))\", 'val': \"(Timestamp('2026-05-14 00:00:00+0000', tz='UTC'), Timestamp('2026-05-20 00:00:00+0000', tz='UTC'))\", 'lock': \"(Timestamp('2026-05-20 00:00:00+0000', tz='UTC'), Timestamp('2026-05-25 00:00:00+0000', tz='UTC'))\"}, '22D': {'train': \"(Timestamp('2026-05-01 00:00:00+0000', tz='UTC'), Timestamp('2026-05-14 00:00:00+0000', tz='UTC'))\", 'val': \"(Timestamp('2026-05-14 00:00:00+0000', tz='UTC'), Timestamp('2026-05-18 00:00:00+0000', tz='UTC'))\", 'lock': \"(Timestamp('2026-05-18 00:00:00+0000', tz='UTC'), Timestamp('2026-05-22 00:00:00+0000', tz='UTC'))\"}}",
+  "n_useful_gates": 57,
+  "n_stacks_evaluated": 120,
+  "n_passing_sniper": 9,
+  "n_near_misses": 15
+}

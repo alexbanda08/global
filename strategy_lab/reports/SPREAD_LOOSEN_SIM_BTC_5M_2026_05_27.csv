@@ -1,0 +1,9 @@
+sleeve_id,gates,n_020,wr_020,mean_dpt_020,total_pnl_020,max_dd_020,t_stat_020,n_025,wr_025,mean_dpt_025,total_pnl_025,max_dd_025,t_stat_025,d_n,d_n_pct,d_wr,d_dpt,d_total_pnl,n_borderline_added
+poly_sniper_v5_btc_5m_ts_mpskew_s6_0_60,g_mp_skew_with,6291,0.5064,-1.1682,-7349.15,7686.54,-3.203,6334,0.5054,-1.1731,-7430.12,7686.54,-3.238,43,0.007,-0.001,-0.0049,-80.97,43
+poly_sniper_v5_btc_5m_ts_mpskew_any_off30,g_mp_skew_with,2455,0.5079,-1.9261,-4728.64,5966.46,-3.661,2482,0.5073,-1.9204,-4766.5,5966.46,-3.69,27,0.011,-0.0006,0.0057,-37.86,27
+poly_sniper_v5_btc_5m_parent15m_slope_ts_mpnx_v7,g_parent_15m_slope_with+g_trend_slope_strong_with+g_mp_no_extreme,441,0.7143,4.9921,2201.5,222.28,3.774,442,0.7127,4.9695,2196.5,222.28,3.765,1,0.002,-0.0016,-0.0226,-5.0,1
+poly_sniper_v5_btc_5m_slotend_ofi_ts_v7,g_slot_end_ofi_with+g_trend_slope_strong_with,568,0.9472,2.1679,1231.38,78.01,3.829,568,0.9472,2.1679,1231.38,78.01,3.829,0,0.0,0.0,0.0,0.0,0
+poly_sniper_v5_btc_5m_parent15m_notrang_ts_mpskew_v7,g_parent_15m_not_ranging+g_trend_slope_strong_with+g_mp_skew_with,561,0.5187,-5.3346,-2992.73,3187.12,-5.133,562,0.5178,-5.334,-2997.73,3187.12,-5.142,1,0.002,-0.0009,0.0006,-5.0,1
+poly_sniper_v5_btc_5m_l_1hrf_imb5_rf_v8,g_1h_rf_with+g_imb5_strong_with+g_rf_with,1509,0.7369,4.6555,7025.09,805.31,4.658,1518,0.7365,4.6277,7024.88,805.31,4.657,9,0.006,-0.0004,-0.0278,-0.21,9
+poly_sniper_v5_btc_5m_l_1hrf_imb5_ribbon_v8,g_1h_rf_with+g_imb5_strong_with+g_ribbon_agrees,1509,0.7886,4.2568,6423.56,425.0,7.556,1518,0.7879,4.2301,6421.31,425.0,7.552,9,0.006,-0.0007,-0.0267,-2.25,9
+poly_sniper_v5_btc_5m_q_parent15mslope_ts_imb5_v8,g_parent_15m_slope_with+g_trend_slope_strong_with+g_imb5_strong_with,657,0.723,6.1999,4073.31,913.37,4.669,660,0.7227,6.1656,4069.33,913.37,4.664,3,0.005,-0.0003,-0.0343,-3.98,3

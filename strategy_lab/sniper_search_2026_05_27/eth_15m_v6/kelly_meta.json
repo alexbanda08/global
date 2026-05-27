@@ -1,0 +1,329 @@
+{
+  "V6_S1_VWAP_3070": {
+    "core": [
+      "g_offset_early",
+      "g_above_1h_dailyvwap_with",
+      "g_tr_stack_full_with"
+    ],
+    "extras": [
+      "g_vol_high",
+      "g_entry_vwap_in_30_70"
+    ],
+    "bucket_stats": [
+      {
+        "conviction_bucket": 0,
+        "n_train_val": 13,
+        "empirical_wr_train_val": 0.8461538461538461,
+        "median_vwap": 0.7300000190734863,
+        "stake_quarter_kelly": 5.0,
+        "stake_half_kelly": 5.271381543675889,
+        "stake_linear_conviction": 5.0,
+        "stake_hybrid_deploy": 5.271381543675889,
+        "lookalike_b": 0.36246571834862806
+      },
+      {
+        "conviction_bucket": 1,
+        "n_train_val": 141,
+        "empirical_wr_train_val": 0.6453900709219859,
+        "median_vwap": 0.5754098949707582,
+        "stake_quarter_kelly": 5.0,
+        "stake_half_kelly": 5.0,
+        "stake_linear_conviction": 15.0,
+        "stake_hybrid_deploy": 15.0,
+        "lookalike_b": 0.7231337287826839
+      },
+      {
+        "conviction_bucket": 2,
+        "n_train_val": 64,
+        "empirical_wr_train_val": 0.703125,
+        "median_vwap": 0.5583018904366331,
+        "stake_quarter_kelly": 5.0,
+        "stake_half_kelly": 5.0,
+        "stake_linear_conviction": 25.0,
+        "stake_hybrid_deploy": 25.0,
+        "lookalike_b": 0.7753227327128839
+      }
+    ],
+    "sum_const_lock": 278.73915361864096,
+    "sum_quarter_kelly_lock": 55.747830723728185,
+    "sum_half_kelly_lock": 55.95507483885593,
+    "sum_linear_lock": 278.73915361864096,
+    "sum_hybrid_lock": 278.73915361864096,
+    "sum_const_full": 685.9996881398326,
+    "sum_quarter_kelly_full": 137.19993762796656,
+    "sum_half_kelly_full": 138.52480038815412,
+    "sum_linear_full": 685.9996881398326,
+    "sum_hybrid_full": 685.9996881398326,
+    "n_lock": 26,
+    "n_full": 90,
+    "sum_core_const_lock": 25.619767202190133,
+    "sum_core_quarter_kelly_lock": 5.1239534404380365,
+    "sum_core_hybrid_lock": 130.2466949122558,
+    "sum_core_linear_lock": 129.93743140767526,
+    "sum_core_const_full": 1448.0492828103415,
+    "sum_core_quarter_kelly_full": 289.60985656206833,
+    "sum_core_hybrid_full": 1125.4208716132443,
+    "sum_core_linear_full": 1125.191390182214,
+    "n_core_lock": 88,
+    "n_core_full": 467
+  },
+  "V6_S1_PW_TREND_SLOPE": {
+    "core": [
+      "g_offset_early",
+      "g_above_1h_dailyvwap_with",
+      "g_tr_stack_full_with"
+    ],
+    "extras": [
+      "g_vol_high",
+      "g_pw_trend_slope_with"
+    ],
+    "bucket_stats": [
+      {
+        "conviction_bucket": 0,
+        "n_train_val": 69,
+        "empirical_wr_train_val": 0.6666666666666666,
+        "median_vwap": 0.592532132366649,
+        "stake_quarter_kelly": 5.0,
+        "stake_half_kelly": 5.0,
+        "stake_linear_conviction": 5.0,
+        "stake_hybrid_deploy": 5.0,
+        "lookalike_b": 0.673918743757836
+      },
+      {
+        "conviction_bucket": 1,
+        "n_train_val": 104,
+        "empirical_wr_train_val": 0.6442307692307693,
+        "median_vwap": 0.5682827013860562,
+        "stake_quarter_kelly": 5.0,
+        "stake_half_kelly": 5.0,
+        "stake_linear_conviction": 15.0,
+        "stake_hybrid_deploy": 15.0,
+        "lookalike_b": 0.7444938084684871
+      },
+      {
+        "conviction_bucket": 2,
+        "n_train_val": 45,
+        "empirical_wr_train_val": 0.7555555555555555,
+        "median_vwap": 0.5600000023841858,
+        "stake_quarter_kelly": 5.0,
+        "stake_half_kelly": 5.4761904377933375,
+        "stake_linear_conviction": 25.0,
+        "stake_hybrid_deploy": 25.0,
+        "lookalike_b": 0.7699999925494194
+      }
+    ],
+    "sum_const_lock": 202.87678409494404,
+    "sum_quarter_kelly_lock": 40.5753568189888,
+    "sum_half_kelly_lock": 44.948206423179215,
+    "sum_linear_lock": 202.87678409494404,
+    "sum_hybrid_lock": 202.87678409494404,
+    "sum_const_full": 542.5361065234772,
+    "sum_quarter_kelly_full": 108.50722130469548,
+    "sum_half_kelly_full": 122.00999417312343,
+    "sum_linear_full": 542.5361065234772,
+    "sum_hybrid_full": 542.5361065234772,
+    "n_lock": 18,
+    "n_full": 63,
+    "sum_core_const_lock": 25.619767202190133,
+    "sum_core_quarter_kelly_lock": 5.1239534404380365,
+    "sum_core_hybrid_lock": 142.11949539056627,
+    "sum_core_linear_lock": 142.11949539056627,
+    "sum_core_const_full": 1448.0492828103415,
+    "sum_core_quarter_kelly_full": 289.60985656206833,
+    "sum_core_hybrid_full": 895.1191370705071,
+    "sum_core_linear_full": 895.6987584198649,
+    "n_core_lock": 88,
+    "n_core_full": 467
+  },
+  "V6_S1_DOWN_ONLY": {
+    "core": [
+      "g_offset_early",
+      "g_above_1h_dailyvwap_with",
+      "g_tr_stack_full_with"
+    ],
+    "extras": [
+      "g_vol_high",
+      "g_dir_down"
+    ],
+    "bucket_stats": [
+      {
+        "conviction_bucket": 0,
+        "n_train_val": 78,
+        "empirical_wr_train_val": 0.5769230769230769,
+        "median_vwap": 0.5761083394677493,
+        "stake_quarter_kelly": 5.0,
+        "stake_half_kelly": 5.0,
+        "stake_linear_conviction": 5.0,
+        "stake_hybrid_deploy": 5.0,
+        "lookalike_b": 0.7210689359320768
+      },
+      {
+        "conviction_bucket": 1,
+        "n_train_val": 114,
+        "empirical_wr_train_val": 0.7192982456140351,
+        "median_vwap": 0.5813666940455944,
+        "stake_quarter_kelly": 5.0,
+        "stake_half_kelly": 5.0,
+        "stake_linear_conviction": 15.0,
+        "stake_hybrid_deploy": 15.0,
+        "lookalike_b": 0.7056830809835528
+      },
+      {
+        "conviction_bucket": 2,
+        "n_train_val": 26,
+        "empirical_wr_train_val": 0.7692307692307693,
+        "median_vwap": 0.5466976090291926,
+        "stake_quarter_kelly": 5.0,
+        "stake_half_kelly": 6.0654446835213065,
+        "stake_linear_conviction": 25.0,
+        "stake_hybrid_deploy": 25.0,
+        "lookalike_b": 0.8125814633436047
+      }
+    ],
+    "sum_const_lock": 176.35959783522188,
+    "sum_quarter_kelly_lock": 35.27191956704438,
+    "sum_half_kelly_lock": 41.60274385799438,
+    "sum_linear_lock": 176.35959783522188,
+    "sum_hybrid_lock": 176.35959783522188,
+    "sum_const_full": 403.52822900877885,
+    "sum_quarter_kelly_full": 80.70564580175576,
+    "sum_half_kelly_full": 99.74646431812246,
+    "sum_linear_full": 403.52822900877885,
+    "sum_hybrid_full": 403.52822900877885,
+    "n_lock": 17,
+    "n_full": 43,
+    "sum_core_const_lock": 25.619767202190133,
+    "sum_core_quarter_kelly_lock": 5.1239534404380365,
+    "sum_core_hybrid_lock": 179.0683108328743,
+    "sum_core_linear_lock": 179.0683108328743,
+    "sum_core_const_full": 1448.0492828103415,
+    "sum_core_quarter_kelly_full": 289.60985656206833,
+    "sum_core_hybrid_full": 938.7049486693704,
+    "sum_core_linear_full": 938.7049486693704,
+    "n_core_lock": 88,
+    "n_core_full": 467
+  },
+  "V6_S5_PW_TREND_SLOPE": {
+    "core": [
+      "g_offset_early",
+      "g_above_1h_dailyvwap_with",
+      "g_tr_stack_full_with"
+    ],
+    "extras": [
+      "g_pw_trend_slope_with"
+    ],
+    "bucket_stats": [
+      {
+        "conviction_bucket": 0,
+        "n_train_val": 216,
+        "empirical_wr_train_val": 0.6851851851851852,
+        "median_vwap": 0.5899999737739563,
+        "stake_quarter_kelly": 5.0,
+        "stake_half_kelly": 5.0,
+        "stake_linear_conviction": 5.0,
+        "stake_hybrid_deploy": 5.0,
+        "lookalike_b": 0.6810170229862798
+      },
+      {
+        "conviction_bucket": 1,
+        "n_train_val": 165,
+        "empirical_wr_train_val": 0.6545454545454545,
+        "median_vwap": 0.5681025321130607,
+        "stake_quarter_kelly": 5.0,
+        "stake_half_kelly": 5.0,
+        "stake_linear_conviction": 25.0,
+        "stake_hybrid_deploy": 25.0,
+        "lookalike_b": 0.7450407181867051
+      }
+    ],
+    "sum_const_lock": 250.63315163164077,
+    "sum_quarter_kelly_lock": 50.12663032632816,
+    "sum_half_kelly_lock": 50.12663032632816,
+    "sum_linear_lock": 250.63315163164077,
+    "sum_hybrid_lock": 250.63315163164077,
+    "sum_const_full": 732.2944600465978,
+    "sum_quarter_kelly_full": 146.45889200931958,
+    "sum_half_kelly_full": 146.22901223680037,
+    "sum_linear_full": 732.2944600465978,
+    "sum_hybrid_full": 732.2944600465978,
+    "n_lock": 41,
+    "n_full": 211,
+    "sum_core_const_lock": 237.01373541174365,
+    "sum_core_quarter_kelly_lock": 47.40274708234874,
+    "sum_core_hybrid_lock": 247.9092683876614,
+    "sum_core_linear_lock": 247.9092683876614,
+    "sum_core_const_full": 1448.0492828103415,
+    "sum_core_quarter_kelly_full": 289.60985656206833,
+    "sum_core_hybrid_full": 875.9714284925574,
+    "sum_core_linear_full": 875.4454245993467,
+    "n_core_lock": 76,
+    "n_core_full": 467
+  },
+  "V5_S3_REPL": {
+    "core": [
+      "g_offset_early",
+      "g_above_1h_dailyvwap_with"
+    ],
+    "extras": [
+      "g_rf_aged",
+      "g_ribbon_slope_with"
+    ],
+    "bucket_stats": [
+      {
+        "conviction_bucket": 0,
+        "n_train_val": 1019,
+        "empirical_wr_train_val": 0.5024533856722276,
+        "median_vwap": 0.47079169849522945,
+        "stake_quarter_kelly": 5.0,
+        "stake_half_kelly": 5.0,
+        "stake_linear_conviction": 5.0,
+        "stake_hybrid_deploy": 5.0,
+        "lookalike_b": 1.1016000008758235
+      },
+      {
+        "conviction_bucket": 1,
+        "n_train_val": 1028,
+        "empirical_wr_train_val": 0.603112840466926,
+        "median_vwap": 0.5222378200058422,
+        "stake_quarter_kelly": 5.0,
+        "stake_half_kelly": 5.0,
+        "stake_linear_conviction": 15.0,
+        "stake_hybrid_deploy": 15.0,
+        "lookalike_b": 0.8965396960125118
+      },
+      {
+        "conviction_bucket": 2,
+        "n_train_val": 119,
+        "empirical_wr_train_val": 0.6134453781512605,
+        "median_vwap": 0.5600000023841858,
+        "stake_quarter_kelly": 5.0,
+        "stake_half_kelly": 5.0,
+        "stake_linear_conviction": 25.0,
+        "stake_hybrid_deploy": 25.0,
+        "lookalike_b": 0.7699999925494194
+      }
+    ],
+    "sum_const_lock": 109.41385810594272,
+    "sum_quarter_kelly_lock": 21.882771621188542,
+    "sum_half_kelly_lock": 21.882771621188542,
+    "sum_linear_lock": 109.41385810594272,
+    "sum_hybrid_lock": 109.41385810594272,
+    "sum_const_full": 519.9007837508568,
+    "sum_quarter_kelly_full": 103.9801567501714,
+    "sum_half_kelly_full": 112.39588878894688,
+    "sum_linear_full": 519.9007837508568,
+    "sum_hybrid_full": 519.9007837508568,
+    "n_lock": 22,
+    "n_full": 141,
+    "sum_core_const_lock": 1506.948321310079,
+    "sum_core_quarter_kelly_lock": 301.38966426201586,
+    "sum_core_hybrid_lock": 748.9458747850607,
+    "sum_core_linear_lock": 748.9458747850607,
+    "sum_core_const_full": 6364.933051389414,
+    "sum_core_quarter_kelly_full": 1272.9866102778833,
+    "sum_core_hybrid_full": 3401.294385397938,
+    "sum_core_linear_full": 3401.5719984044836,
+    "n_core_lock": 356,
+    "n_core_full": 2522
+  }
+}
