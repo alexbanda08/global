@@ -24,8 +24,15 @@ it on a genuine different-window OOS. Stop hunting direction.**
     broad), longer holds decay, $/tr peaks exactly at +45/+60. Oracle pathmax (+$18.5) is a transient inter-sample
     spike, untradeable at 10Hz (possible future tick-level trailing study). Both scalp knobs now pinned at optimum
     (entry=delta_bps §D-1, exit=+45/+60); remaining gate is live fires + different-window OOS, not in-sample tuning.
-  - 🔴 OPEN GATE: offline forward window still thin/flat → needs **≥200 LIVE forward fires + the different-window
-    OOS** before real capital.
+  - ✅ **DIFFERENT-WINDOW OOS PASSED 2026-06-05** (`SCALP_OOS_PASS_2026_06_05.md`): on Mar 30→Apr 21 (disjoint
+    from the Apr22–Jun4 search), gated cell CI>0 on ALL THREE coins — BTC +$2.38/tr (CI [0.62,4.09]), ETH +$1.92
+    ([0.53,3.33]), SOL +$2.16 ([1.03,3.25]). Used aliplayer BBO (slot-aligned, full pre-slot → valid +5s fire) +
+    full 1s + resolutions_hf. Caveat: BBO top-of-book fill (no L25 walk), slightly optimistic. The §D-2 gate is
+    CLEARED. Validation chain now: in-sample + DSR + live-shadow + disjoint-OOS all positive.
+    **+ DOGE OOS-validated 2026-06-05** (after 1s backfill to Apr21): gated +$1.40/tr CI [0.19,2.61] on Apr6–21
+    → validated universe now BTC/ETH/SOL/DOGE. BNB positive but thin/underpowered (n=22). Time-of-day 22–02
+    boost is BTC/ETH/SOL-specific (didn't replicate on DOGE/BNB). XRP/HYPE still blocked on data.
+  - 🔴 REMAINING GATE: only **≥200 LIVE forward fires + live-wallet CI** now stands before real (small) capital.
 - **DISAGR-HAWKES SOL 5m DN** (`mp_skew<0 ∧ imb5_diff>0 ∧ hawkes_imb<−0.2`) — the only cross-feature survivor of
   production fills (+$3.70/tr, clean fill-selection). Spec'd as shadow sleeve
   (`TV_AGENT_SPEC_SHADOW_DISAGR_HAWKES_SOL5M_2026_06_03.md`). Unconfirmed forward.
