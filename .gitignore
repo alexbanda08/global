@@ -96,3 +96,7 @@ cyclops/_results/*.log
 cyclops/_results/*.txt
 **/_results/*.csv
 **/_results/*.jsonl
+
+# === HF token (read) — local only ===
+telonex/.hf_token
+.hf_token

@@ -1,0 +1,4 @@
+[ali] 06:29:46 markets map: 104,668 market_ids
+[ali] 06:29:46 1408 orderbook partition files
+[ali] 06:44:11   orderbook 100/1408  counts={'bnb': '70M', 'btc': '557M'}
+[ali] 06:44:50   orderbook 200/1408  counts={'bnb': '70M', 'btc': '588M'}

@@ -1,0 +1,11 @@
+sleeve_id,n,wr,sum_pnl,mean_pnl,n_up,n_down,wr_up,wr_down,ep_med,ep_p10,ep_p90,qty_med,hedged
+shadow_poly_updown_ALL_5m_phase1_kelly,625,52.8,1728.8,2.766,303,322,52.5,53.1,0.51,0.494,0.534,150.0,0
+shadow_poly_updown_ALL_5m_S3_prewindow,219,54.8,288.0,1.315,100,119,54.0,55.5,0.51,0.5,0.527,50.0,0
+poly_sniper_v5_sol_5m_rf_tr_partial_mid,210,67.6,37.3,0.177,0,0,,,,,,,0
+poly_sniper_v5_sol_5m_btcf7_f7overb_ema800_vwap_v7,113,68.1,33.9,0.3,0,0,,,,,,,0
+poly_sniper_v5_sol_5m_j_2asset_trending_cci_rf_ema200_v8,122,76.2,31.8,0.261,0,0,,,,,,,0
+poly_sniper_v5_btc_15m_ema50_ema800_off600_down,36,77.8,23.3,0.647,0,0,,,,,,,0
+poly_sniper_v5_sol_5m_cci_f7_mfi_partial_vwap_v6,31,77.4,21.9,0.707,0,0,,,,,,,0
+poly_sniper_v5_sol_5m_f7_mfi_ema200_vwap_v6,193,68.9,16.9,0.088,0,0,,,,,,,0
+poly_sniper_v5_btc_5m_l_1hrf_imb5_ribbon_v8,1,100.0,2.7,2.686,0,0,,,,,,,0
+poly_sniper_v5_btc_5m_q_parent15mslope_ts_imb5_v8,492,70.7,-259.8,-0.528,0,0,,,,,,,0

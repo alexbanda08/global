@@ -87,6 +87,10 @@ class EngineConfig:
     min_book_events: int = 0       # 0 disables; PMXT default = 25
     # Book staleness:
     max_book_staleness_us: int = DEFAULT_MAX_BOOK_STALENESS_US
+    # Per-trade transaction/gas cost (USD). Subtracted once per entry leg in hold_pnl,
+    # and once per entry + once per exit leg in sell_pnl.
+    # Default 0.0 = no tx cost (legacy/live-mimic behaviour preserved).
+    tx_cost_usd: float = 0.0
 
 
 @dataclass(frozen=True)
@@ -115,6 +119,31 @@ class LiveMimicConfig(EngineConfig):
     apply_latency_to_entry: bool = True
     apply_latency_to_exit: bool = True
     min_book_events: int = 25
+
+
+@dataclass(frozen=True)
+class RealisticConfig(EngineConfig):
+    """Conservative stress-test config. Use this to bound downside risk.
+
+    Fee model: poly_taker_curve (feeRate=0.07, i.e. 0.07*p*(1-p) per share on
+    EVERY fill including losers). NOTE — as of 2026-05-22 CLAUDE.md verification,
+    production crypto-updown markets ACTUALLY charge only 2%-on-profit (legacy
+    model), meaning feeRate is effectively 0. This config uses the full curve
+    deliberately as a conservative stress test for "what if Polymarket enforces
+    real fees". Do NOT confuse with production reality.
+
+    tx_cost_usd: 1 cent per leg (≈ gas / execution cost estimate). Subtracted
+    at entry in hold_pnl/sell_pnl, and again at exit in sell_pnl.
+
+    Otherwise matches LiveMimicConfig: 85ms latency, min_book_events=25.
+    """
+    name: str = "realistic"
+    fee_model: str = "poly_taker_curve"
+    latency_ms: float = 85.0
+    apply_latency_to_entry: bool = True
+    apply_latency_to_exit: bool = True
+    min_book_events: int = 25
+    tx_cost_usd: float = 0.01   # ~1 cent gas/execution cost per trade leg
 
 
 # ---------------------------------------------------------------------------
@@ -208,7 +237,7 @@ def fill_at_book(
     spread_filter: float | None = None,
     notional_usd: float | None = None,
 ) -> dict | None:
-    """Live-mimic taker fill: latency-shifted strict-asof book → walk for notional.
+    """Live-mimic taker fill: latency-shifted strict-asof book ->walk for notional.
 
     Returns dict with keys: vwap, shares, usd, fee_in, levels, ts_us, dt_us, ask0, bid0
     Or None if: no book / stale book / spread too wide / under-filled.
@@ -220,6 +249,17 @@ def fill_at_book(
         lookup_us = int(fire_us) + int(cfg.latency_ms * 1_000)
     else:
         lookup_us = int(fire_us)
+
+    # BUG FIX (2026-05-30): min_book_events was declared in EngineConfig and set to 25
+    # in LiveMimicConfig/RealisticConfig but was never enforced here. Markets with < 25
+    # snapshots passed through silently. Now enforced: count events in a 120s window
+    # ending at lookup_us (covers the slot duration).
+    if cfg.min_book_events > 0:
+        window_start_us = lookup_us - 120_000_000  # 120s look-back window
+        n_events = book_event_count(books_idx, slug_or_mid, outcome,
+                                    window_start_us, lookup_us)
+        if n_events < cfg.min_book_events:
+            return None
 
     book = find_book_strict(books_idx, slug_or_mid, outcome, lookup_us,
                             max_staleness_us=cfg.max_book_staleness_us)
@@ -259,22 +299,26 @@ def hold_pnl(fill: dict, *, won: bool, cfg: EngineConfig) -> float:
     """P&L from holding a $`fill['usd']` long position to settlement.
 
     Settlement = $1.00 if won, $0.00 if lost.
+
+    cfg.tx_cost_usd is subtracted once (entry leg). Settlement/redemption has
+    no separate tx cost — only the entry order touches the chain.
     """
     shares = float(fill["shares"])
     usd_in = float(fill["usd"])
+    tx = float(getattr(cfg, "tx_cost_usd", 0.0))
     if won:
         gross = shares * 1.0 - usd_in
         if cfg.fee_model == "poly_taker_curve":
             # entry fee already charged at fill (fee_in). Settlement has no fee.
-            return gross - float(fill.get("fee_in", 0.0))
+            return gross - float(fill.get("fee_in", 0.0)) - tx
         else:  # legacy_2pct_on_profit
-            return gross - (gross * cfg.legacy_fee_pct if gross > 0 else 0.0)
+            return gross - (gross * cfg.legacy_fee_pct if gross > 0 else 0.0) - tx
     # lost
     if cfg.fee_model == "poly_taker_curve":
         # paid entry fee + lost the principal
-        return -usd_in - float(fill.get("fee_in", 0.0))
+        return -usd_in - float(fill.get("fee_in", 0.0)) - tx
     else:
-        return -usd_in     # legacy: no fee on loss
+        return -usd_in - tx     # legacy: no fee on loss, but tx still applies
 
 
 def sell_at_bid_partial(bid_p, bid_s, shares: float) -> tuple[float, float, float]:
@@ -307,14 +351,51 @@ def sell_pnl(
 
     Entry cost = fill['usd'] (already paid + entry fee if poly_taker_curve).
     Sell leg charges its own fee on `sell_usd` notional via the curve.
+
+    cfg.tx_cost_usd is subtracted twice: once for entry, once for the sell leg.
+    Both orders touch the chain as separate transactions.
     """
     usd_in = float(fill["usd"])
+    tx = float(getattr(cfg, "tx_cost_usd", 0.0))
     if cfg.fee_model == "poly_taker_curve":
         fee_out = float(sell_shares) * poly_taker_fee_per_share(sell_vwap, cfg.poly_fee_rate)
-        return float(sell_usd) - usd_in - float(fill.get("fee_in", 0.0)) - fee_out
+        return float(sell_usd) - usd_in - float(fill.get("fee_in", 0.0)) - fee_out - 2 * tx
     else:
         profit = float(sell_usd) - usd_in
-        return profit - (profit * cfg.legacy_fee_pct if profit > 0 else 0.0)
+        return profit - (profit * cfg.legacy_fee_pct if profit > 0 else 0.0) - 2 * tx
+
+
+# ---------------------------------------------------------------------------
+# Backward-compat alias — several callers import sell_pnl_partial
+# ---------------------------------------------------------------------------
+
+def sell_pnl_partial(
+    fill: dict,
+    books_idx: dict,
+    slug_or_mid: str,
+    outcome: str,
+    exit_us: int,
+    *,
+    cfg: EngineConfig,
+) -> float | None:
+    """Convenience wrapper: look up bid side at exit_us, walk, call sell_pnl.
+
+    Returns None if no valid book at exit_us. This alias exists so callers can
+    `from engine_v2 import sell_pnl_partial` without ImportError.
+    """
+    if cfg.apply_latency_to_exit and cfg.latency_ms > 0:
+        lookup_us = int(exit_us) + int(cfg.latency_ms * 1_000)
+    else:
+        lookup_us = int(exit_us)
+    book = find_book_strict(books_idx, slug_or_mid, outcome, lookup_us,
+                            max_staleness_us=cfg.max_book_staleness_us)
+    if book is None:
+        return None
+    bp, bsz = book["bp"], book["bsz"]
+    sell_vwap, sell_shares, sell_usd = sell_at_bid_partial(bp, bsz, float(fill["shares"]))
+    if sell_shares <= 0:
+        return None
+    return sell_pnl(fill, sell_vwap, sell_shares, sell_usd, cfg=cfg)
 
 
 # ---------------------------------------------------------------------------
@@ -326,16 +407,19 @@ if __name__ == "__main__":
     fill_legacy = {"shares": 36.2, "usd": 25.0, "vwap": 0.69, "fee_in": 0.0}
     fill_lm     = {"shares": 36.2, "usd": 25.0, "vwap": 0.69,
                    "fee_in": 36.2 * poly_taker_fee_per_share(0.69)}
+    fill_real   = fill_lm  # same fill dict; RealisticConfig uses same fee curve
 
     print(f"=== fee_in (poly curve at p=0.69):  ${fill_lm['fee_in']:.4f}")
     print(f"    (vs legacy fee_in: ${fill_legacy['fee_in']:.4f})")
 
     print("\n--- HOLD pnl, won ---")
-    print(f"  legacy:    ${hold_pnl(fill_legacy, won=True,  cfg=LegacyConfig()):+.4f}")
-    print(f"  live_mimic ${hold_pnl(fill_lm,     won=True,  cfg=LiveMimicConfig()):+.4f}")
+    print(f"  legacy:     ${hold_pnl(fill_legacy, won=True,  cfg=LegacyConfig()):+.4f}")
+    print(f"  live_mimic: ${hold_pnl(fill_lm,     won=True,  cfg=LiveMimicConfig()):+.4f}")
+    print(f"  realistic:  ${hold_pnl(fill_real,   won=True,  cfg=RealisticConfig()):+.4f}")
     print("\n--- HOLD pnl, lost ---")
-    print(f"  legacy:    ${hold_pnl(fill_legacy, won=False, cfg=LegacyConfig()):+.4f}")
-    print(f"  live_mimic ${hold_pnl(fill_lm,     won=False, cfg=LiveMimicConfig()):+.4f}")
+    print(f"  legacy:     ${hold_pnl(fill_legacy, won=False, cfg=LegacyConfig()):+.4f}")
+    print(f"  live_mimic: ${hold_pnl(fill_lm,     won=False, cfg=LiveMimicConfig()):+.4f}")
+    print(f"  realistic:  ${hold_pnl(fill_real,   won=False, cfg=RealisticConfig()):+.4f}")
 
     # EV at p=0.69, hit=48% (corrected momo number)
     hit = 0.481
@@ -343,11 +427,20 @@ if __name__ == "__main__":
                 (1-hit) * hold_pnl(fill_legacy, won=False, cfg=LegacyConfig())
     ev_lm     = hit * hold_pnl(fill_lm, won=True, cfg=LiveMimicConfig()) + \
                 (1-hit) * hold_pnl(fill_lm, won=False, cfg=LiveMimicConfig())
+    ev_real   = hit * hold_pnl(fill_real, won=True, cfg=RealisticConfig()) + \
+                (1-hit) * hold_pnl(fill_real, won=False, cfg=RealisticConfig())
     print(f"\n--- EV at vwap=0.69, hit=48.1% (corrected momo number) ---")
-    print(f"  legacy:    ${ev_legacy:+.4f}/trade")
-    print(f"  live_mimic ${ev_lm:+.4f}/trade")
-    print(f"  delta:     ${ev_lm - ev_legacy:+.4f}/trade  ← what real fees cost")
+    print(f"  legacy:     ${ev_legacy:+.4f}/trade  (production reality: 2%-on-profit)")
+    print(f"  live_mimic: ${ev_lm:+.4f}/trade  (poly_taker_curve, no tx cost)")
+    print(f"  realistic:  ${ev_real:+.4f}/trade  (poly_taker_curve + $0.01 tx)")
+    print(f"  delta lm-legacy:   ${ev_lm   - ev_legacy:+.4f}/trade  <-real fee cost")
+    print(f"  delta real-legacy: ${ev_real  - ev_legacy:+.4f}/trade  <-fee + tx cost")
+    print(f"  delta real-lm:     ${ev_real  - ev_lm:+.4f}/trade  <-pure tx cost ($0.01)")
 
     print("\n--- latency demo ---")
-    print(f"  effective_fill_ms (live_mimic): {LiveMimicConfig().latency_ms}ms")
-    print(f"  fire_us=1778342400000000 → lookup_us={1778342400000000 + int(LiveMimicConfig().latency_ms*1000)}")
+    print(f"  effective_fill_ms (live_mimic/realistic): {LiveMimicConfig().latency_ms}ms")
+    print(f"  fire_us=1778342400000000 ->lookup_us={1778342400000000 + int(LiveMimicConfig().latency_ms*1000)}")
+    print(f"\n--- RealisticConfig params ---")
+    rc = RealisticConfig()
+    print(f"  fee_model={rc.fee_model}, latency_ms={rc.latency_ms}, "
+          f"min_book_events={rc.min_book_events}, tx_cost_usd=${rc.tx_cost_usd}")

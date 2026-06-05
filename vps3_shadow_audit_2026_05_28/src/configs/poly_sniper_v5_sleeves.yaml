@@ -1,0 +1,891 @@
+# Phase 35 — sniper-v5 16-sleeve registry.
+#
+# Operator-editable mirror of:
+#   backend/app/strategies/polymarket/sniper_v5_sleeves.py SNIPER_V5_SLEEVES
+#
+# Source-of-truth: SHADOW_DEPLOY_SPEC_2026_05_27.md §4 + §5 +
+# .planning/phases/35-*/35-CONTEXT.md `### 16 sleeves` table.
+#
+# All sleeves paper_only=true / mode=shadow at deploy (Phase 35).
+# Live promotion is explicitly deferred (CONTEXT.md Deferred §6).
+#
+# IMPORTANT: a structural test (backend/tests/strategies/polymarket/
+# sniper_v5/test_sleeves.py) asserts this YAML and the Python tuple
+# agree on sleeve_id ordering + asset + tf + direction + offsets +
+# spread_filter + gate-name list. If you edit one, edit the other,
+# or the test will catch the divergence.
+
+sleeves:
+  # 01 — BTC 5m BOTH offsets=30 + S6 precondition
+  - sleeve_id: poly_sniper_v5_btc_5m_ts_mpskew_s6_0_60
+    asset: BTC
+    tf: 5m
+    direction: BOTH
+    offsets: [30]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    s6_precondition: true
+    gates:
+      - g_trend_slope_strong_with(BTC,5m)
+      - g_mp_skew_with
+
+  # 02 — BTC 5m BOTH offsets=30
+  - sleeve_id: poly_sniper_v5_btc_5m_ts_mpskew_any_off30
+    asset: BTC
+    tf: 5m
+    direction: BOTH
+    offsets: [30]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_trend_slope_strong_with(BTC,5m)
+      - g_mp_skew_with
+
+  # 03 — ETH 5m BOTH offsets=120
+  - sleeve_id: poly_sniper_v5_eth_5m_tr200_mp_sms_active_off120
+    asset: ETH
+    tf: 5m
+    direction: BOTH
+    offsets: [120]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_above_ema200(ETH)
+      - g_mp_skew_with
+      - g_sms_liq_reclaim_with(ETH,5m)
+      - g_tr_in_active_session(ETH)
+
+  # 04 — ETH 5m BOTH offsets=120
+  - sleeve_id: poly_sniper_v5_eth_5m_tr200_mp_mpnx_sms_off120
+    asset: ETH
+    tf: 5m
+    direction: BOTH
+    offsets: [120]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_above_ema200(ETH)
+      - g_mp_skew_with
+      - g_mp_no_extreme
+      - g_sms_liq_reclaim_with(ETH,5m)
+
+  # 05 — ETH 5m BOTH offsets=120
+  - sleeve_id: poly_sniper_v5_eth_5m_cloud_mp_sms_active_off120
+    asset: ETH
+    tf: 5m
+    direction: BOTH
+    offsets: [120]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_above_cloud(ETH)
+      - g_mp_skew_with
+      - g_sms_liq_reclaim_with(ETH,5m)
+      - g_tr_in_active_session(ETH)
+
+  # 06 — SOL 5m UP-ONLY offsets=30,60,90 (sleeve 06 special case — strict depth)
+  - sleeve_id: poly_sniper_v5_sol_5m_depth_up_hod_session
+    asset: SOL
+    tf: 5m
+    direction: UP
+    offsets: [30, 60, 90]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_depth_250_strict
+      - g_dir_up
+      - g_hod_us_afternoon
+      - g_tr_in_active_session(SOL)
+
+  # 07 — SOL 5m BOTH offsets=90,120,150,180
+  - sleeve_id: poly_sniper_v5_sol_5m_rf_tr_pp_mid
+    asset: SOL
+    tf: 5m
+    direction: BOTH
+    offsets: [90, 120, 150, 180]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_rf_strict_align(SOL)
+      - g_tr_above_ema200(SOL)
+      - g_tr_above_pp(SOL)
+      - g_tr_partial_stack_with(SOL)
+
+  # 08 — SOL 5m BOTH offsets=90,120,150,180
+  - sleeve_id: poly_sniper_v5_sol_5m_rf_tr_partial_mid
+    asset: SOL
+    tf: 5m
+    direction: BOTH
+    offsets: [90, 120, 150, 180]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_rf_strict_align(SOL)
+      - g_tr_partial_stack_with(SOL)
+
+  # 09 — BTC 15m DOWN-ONLY offsets=600
+  - sleeve_id: poly_sniper_v5_btc_15m_ts_trstack_off600_down
+    asset: BTC
+    tf: 15m
+    direction: DOWN
+    offsets: [600]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_dir_down
+      - g_tr_stack_full_with(BTC)
+      - g_trend_slope_with(BTC,15m)
+
+  # 10 — BTC 15m UP-ONLY offsets=480
+  - sleeve_id: poly_sniper_v5_btc_15m_regime_trstack_off480_up
+    asset: BTC
+    tf: 15m
+    direction: UP
+    offsets: [480]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_dir_up
+      - g_regime_stack_with(BTC,15m)
+      - g_tr_stack_full_with(BTC)
+
+  # 11 — BTC 15m DOWN-ONLY offsets=600
+  - sleeve_id: poly_sniper_v5_btc_15m_mpskew_trstack_off600_down
+    asset: BTC
+    tf: 15m
+    direction: DOWN
+    offsets: [600]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_dir_down
+      - g_mp_skew_strong_with
+      - g_tr_stack_full_with(BTC)
+
+  # 12 — BTC 15m DOWN-ONLY offsets=600
+  - sleeve_id: poly_sniper_v5_btc_15m_ema50_ema800_off600_down
+    asset: BTC
+    tf: 15m
+    direction: DOWN
+    offsets: [600]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_dir_down
+      - g_tr_above_ema50(BTC)
+      - g_tr_above_ema800(BTC)
+
+  # 13 — ETH 15m BOTH offsets=0,30,60
+  - sleeve_id: poly_sniper_v5_eth_15m_trstack_vwap_vol_offearly
+    asset: ETH
+    tf: 15m
+    direction: BOTH
+    offsets: [0, 30, 60]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_stack_full_with(ETH)
+      - g_above_1h_dailyvwap_with(ETH)
+      - g_offset_early
+      - g_vol_high(ETH,15m)
+
+  # 14 — ETH 15m BOTH offsets=0,30,60
+  - sleeve_id: poly_sniper_v5_eth_15m_trstack_vwap_offearly
+    asset: ETH
+    tf: 15m
+    direction: BOTH
+    offsets: [0, 30, 60]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_stack_full_with(ETH)
+      - g_offset_early
+      - g_above_1h_dailyvwap_with(ETH)
+
+  # 15 — SOL 15m BOTH offsets=120,180,240 (5-gate stack — biggest in the registry)
+  - sleeve_id: poly_sniper_v5_sol_15m_trstack_vol_ribbon_ema_mid
+    asset: SOL
+    tf: 15m
+    direction: BOTH
+    offsets: [120, 180, 240]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_stack_full_with(SOL)
+      - g_vol_high(SOL,15m)
+      - g_ribbon_agrees(SOL)
+      - g_tr_above_ema200(SOL)
+      - g_tr_above_ema800(SOL)
+
+  # 16 — SOL 15m BOTH offsets=480,600,720,840 + $5 notional override
+  # (exploratory full-window edge — stays small per CONTEXT.md Deferred §2)
+  - sleeve_id: poly_sniper_v5_sol_15m_rfaged_trstack_late
+    asset: SOL
+    tf: 15m
+    direction: BOTH
+    offsets: [480, 600, 720, 840]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    notional_usd_override: 5.0
+    gates:
+      - g_rf_aged(SOL)
+      - g_tr_stack_full_with(SOL)
+      - g_tr_stack_with(SOL)
+
+  # ---------------------------------------------------------------
+  # V6 (14 sleeves) — SHADOW_DEPLOY_SPEC_V6_SELECTED_2026_05_27.md §4
+  # ---------------------------------------------------------------
+
+  # V6_01 — ETH 5m BOTH offset=60 — cloud + ribbon + mp + hurst
+  - sleeve_id: poly_sniper_v5_eth_5m_cloud_ribbon_mp_hurst_v6
+    asset: ETH
+    tf: 5m
+    direction: BOTH
+    offsets: [60]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_above_cloud(ETH)
+      - g_ribbon_agrees(ETH)
+      - g_mp_skew_with
+      - g_hurst_trending(ETH,5m)
+
+  # V6_02 — ETH 5m BOTH offset=120 — V5 replication
+  - sleeve_id: poly_sniper_v5_eth_5m_v5repl_off120_v6
+    asset: ETH
+    tf: 5m
+    direction: BOTH
+    offsets: [120]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_above_ema200(ETH)
+      - g_mp_skew_with
+      - g_sms_liq_reclaim_with(ETH,5m)
+      - g_tr_in_active_session(ETH)
+
+  # V6_03 — ETH 5m BOTH offset=60 — bb + mp + hurst + entry vwap band
+  - sleeve_id: poly_sniper_v5_eth_5m_bb_mp_hurst_band_v6
+    asset: ETH
+    tf: 5m
+    direction: BOTH
+    offsets: [60]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_bb_pos_with(ETH)
+      - g_mp_skew_with
+      - g_hurst_trending(ETH,5m)
+      - g_entry_vwap_in_band
+
+  # V6_04 — SOL 5m BOTH offsets 30..240 — CCI strong + F7 + MFI + partial stack + VWAP 45..85
+  - sleeve_id: poly_sniper_v5_sol_5m_cci_f7_mfi_partial_vwap_v6
+    asset: SOL
+    tf: 5m
+    direction: BOTH
+    offsets: [30, 60, 90, 120, 150, 180, 210, 240]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_cci_strong_with(SOL)
+      - g_f7_rsi_with(SOL)
+      - g_mfi_with(SOL)
+      - g_tr_partial_stack_with(SOL)
+      - g_vwap_in_45_85
+
+  # V6_05 — SOL 5m BOTH offsets 30..240 — F7 + mp_no_extreme_150 + ema200 + VWAP 55..80
+  - sleeve_id: poly_sniper_v5_sol_5m_f7_mp_ema200_vwap_v6
+    asset: SOL
+    tf: 5m
+    direction: BOTH
+    offsets: [30, 60, 90, 120, 150, 180, 210, 240]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_f7_rsi_with(SOL)
+      - g_mp_no_extreme_150
+      - g_tr_above_ema200(SOL)
+      - g_vwap_in_55_80
+
+  # V6_06 — SOL 5m BOTH offsets 30..240 — F7 + MFI + ema200 + VWAP 55..80
+  - sleeve_id: poly_sniper_v5_sol_5m_f7_mfi_ema200_vwap_v6
+    asset: SOL
+    tf: 5m
+    direction: BOTH
+    offsets: [30, 60, 90, 120, 150, 180, 210, 240]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_f7_rsi_with(SOL)
+      - g_mfi_with(SOL)
+      - g_tr_above_ema200(SOL)
+      - g_vwap_in_55_80
+
+  # V6_07 — ETH 15m BOTH offsets {0,30,60} — trstack_full + 1h_vwap + offset_early + vol_high + vwap 30..70
+  - sleeve_id: poly_sniper_v5_eth_15m_trstack_vwap_vol_offearly_band_v6
+    asset: ETH
+    tf: 15m
+    direction: BOTH
+    offsets: [0, 30, 60]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_stack_full_with(ETH)
+      - g_above_1h_dailyvwap_with(ETH)
+      - g_offset_early
+      - g_vol_high(ETH,15m)
+      - g_entry_vwap_in_30_70
+
+  # V6_08 — ETH 15m BOTH offsets {0,30,60} — pre-window trend_slope + V6_07 stack
+  - sleeve_id: poly_sniper_v5_eth_15m_pw_trendslope_trstack_offearly_v6
+    asset: ETH
+    tf: 15m
+    direction: BOTH
+    offsets: [0, 30, 60]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_stack_full_with(ETH)
+      - g_above_1h_dailyvwap_with(ETH)
+      - g_offset_early
+      - g_vol_high(ETH,15m)
+      - g_pw_trend_slope_with(ETH,15m)
+
+  # V6_09 — BTC 15m BOTH offset 600 — vwap premium + ema50 + mp_skew
+  - sleeve_id: poly_sniper_v5_btc_15m_vwapprem_ema50_mpskew_off600_v6
+    asset: BTC
+    tf: 15m
+    direction: BOTH
+    offsets: [600]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_vwap_premium
+      - g_tr_above_ema50(BTC)
+      - g_mp_skew_with
+
+  # V6_10 — BTC 15m DOWN-ONLY offset 600 — ema200 + mp_skew_strong + rf
+  - sleeve_id: poly_sniper_v5_btc_15m_ema200_mpskew_rf_off600_down_v6
+    asset: BTC
+    tf: 15m
+    direction: DOWN
+    offsets: [600]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_dir_down
+      - g_tr_above_ema200(BTC)
+      - g_mp_skew_strong_with
+      - g_rf_with(BTC)
+
+  # V6_11 — BTC 15m BOTH offset 840 — ema800 + ribbon_slope + hawkes (borderline)
+  - sleeve_id: poly_sniper_v5_btc_15m_ema800_ribslp_hawkes_off840_v6
+    asset: BTC
+    tf: 15m
+    direction: BOTH
+    offsets: [840]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_above_ema800(BTC)
+      - g_ribbon_slope_with(BTC)
+      - g_hawkes_imb_loose_with(BTC)
+
+  # V6_12 — SOL 15m BOTH offsets {60,120,240} — HOD EU + off_60_240 + RF + tr_stack + VWAP premium
+  - sleeve_id: poly_sniper_v5_sol_15m_hod_eu_off60_240_rf_tr_vwap80_v6
+    asset: SOL
+    tf: 15m
+    direction: BOTH
+    offsets: [60, 120, 240]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_hod_european_morning
+      - g_off_60_240
+      - g_rf_with(SOL)
+      - g_tr_stack_with(SOL)
+      - g_vwap_premium
+
+  # V6_13 — SOL 15m BOTH offsets {60,120,240} — HOD EU + off_60_240 + RF + tr_stack + VWAP [0.30,0.70]
+  - sleeve_id: poly_sniper_v5_sol_15m_hod_eu_off60_240_rf_tr_vwap30_70_v6
+    asset: SOL
+    tf: 15m
+    direction: BOTH
+    offsets: [60, 120, 240]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_hod_european_morning
+      - g_off_60_240
+      - g_rf_with(SOL)
+      - g_tr_stack_with(SOL)
+      - g_entry_vwap_in_30_70
+
+  # V6_14 — SOL 15m BOTH offsets ALL — HOD EU + tight ribbon + RF + tr_stack + VWAP premium @ $5 stake
+  - sleeve_id: poly_sniper_v5_sol_15m_hod_eu_tightrib_rf_tr_vwap80_v6
+    asset: SOL
+    tf: 15m
+    direction: BOTH
+    offsets: [60, 120, 180, 240, 300, 360, 480, 600, 720, 840]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    notional_usd_override: 5.0
+    gates:
+      - g_hod_european_morning
+      - g_rf_with(SOL)
+      - g_tight_ribbon(SOL)
+      - g_tr_stack_with(SOL)
+      - g_vwap_premium
+
+  # ---------------------------------------------------------------
+  # V7 (12 sleeves) — SHADOW_DEPLOY_SPEC_V7_SELECTED_2026_05_27.md §4
+  # ---------------------------------------------------------------
+
+  # V7_01 — BTC 5m BOTH offsets ALL — parent_15m slope + ts_strong + mp_no_extreme
+  - sleeve_id: poly_sniper_v5_btc_5m_parent15m_slope_ts_mpnx_v7
+    asset: BTC
+    tf: 5m
+    direction: BOTH
+    offsets: [30, 60, 90, 120, 150, 180, 210, 240, 270]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_parent_15m_slope_with(BTC)
+      - g_trend_slope_strong_with(BTC,5m)
+      - g_mp_no_extreme
+
+  # V7_02 — BTC 5m BOTH offsets {240,270} — slot_end OFI (STUB) + ts_strong  ⚠ EXPERIMENTAL
+  - sleeve_id: poly_sniper_v5_btc_5m_slotend_ofi_ts_v7
+    asset: BTC
+    tf: 5m
+    direction: BOTH
+    offsets: [240, 270]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_slot_end_ofi_with
+      - g_trend_slope_strong_with(BTC,5m)
+
+  # V7_03 — BTC 5m BOTH offsets ALL — parent_15m not_ranging + ts_strong + mp_skew
+  - sleeve_id: poly_sniper_v5_btc_5m_parent15m_notrang_ts_mpskew_v7
+    asset: BTC
+    tf: 5m
+    direction: BOTH
+    offsets: [30, 60, 90, 120, 150, 180, 210, 240, 270]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_parent_15m_not_ranging(BTC)
+      - g_trend_slope_strong_with(BTC,5m)
+      - g_mp_skew_with
+
+  # V7_04 — ETH 5m BOTH offset 60 — cloud + entry vwap band + hurst+mp combo
+  - sleeve_id: poly_sniper_v5_eth_5m_cloud_vwap_hurstmp_v7
+    asset: ETH
+    tf: 5m
+    direction: BOTH
+    offsets: [60]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_above_cloud(ETH)
+      - g_entry_vwap_in_band
+      - g_hurst_mp_trend_with(ETH)
+
+  # V7_05 — ETH 5m BOTH offset 60 — ema50 + hurst_trending + parent_15m ranging
+  - sleeve_id: poly_sniper_v5_eth_5m_ema50_hurst_parent15mrang_v7
+    asset: ETH
+    tf: 5m
+    direction: BOTH
+    offsets: [60]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_above_ema50(ETH)
+      - g_hurst_trending(ETH,5m)
+      - g_parent15m_ranging(ETH)
+
+  # V7_06 — ETH 5m BOTH offset 60 — V6_03 base + parent_15m ranging
+  - sleeve_id: poly_sniper_v5_eth_5m_v6c3_parent15mrang_v7
+    asset: ETH
+    tf: 5m
+    direction: BOTH
+    offsets: [60]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_above_cloud(ETH)
+      - g_ribbon_agrees(ETH)
+      - g_mp_skew_with
+      - g_hurst_trending(ETH,5m)
+      - g_parent15m_ranging(ETH)
+
+  # V7_07 — ETH 5m BOTH offset 90 — ema200 + entry vwap + regime_ranging@ws_s + xa_3source
+  - sleeve_id: poly_sniper_v5_eth_5m_ema200_vwap_regimerang_xa3_v7
+    asset: ETH
+    tf: 5m
+    direction: BOTH
+    offsets: [90]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_above_ema200(ETH)
+      - g_entry_vwap_in_band
+      - g_regime_ranging_at_ws(ETH)
+      - g_xa_3source_trend_with
+
+  # V7_08 — SOL 5m BOTH offsets ALL — BTC trend 30m + CCI extreme + hurst reverting
+  - sleeve_id: poly_sniper_v5_sol_5m_btctrend_cci_hurstrev_v7
+    asset: SOL
+    tf: 5m
+    direction: BOTH
+    offsets: [30, 60, 90, 120, 150, 180, 210, 240]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_btc_trend_30m_with
+      - g_cci_extreme_with(SOL)
+      - g_hurst_reverting(SOL,5m)
+
+  # V7_09 — SOL 5m BOTH offsets ALL — BTC F7 + SOL F7 overbought + ema800 + VWAP [0.45,0.85]  ⚠ EXPERIMENTAL
+  - sleeve_id: poly_sniper_v5_sol_5m_btcf7_f7overb_ema800_vwap_v7
+    asset: SOL
+    tf: 5m
+    direction: BOTH
+    offsets: [30, 60, 90, 120, 150, 180, 210, 240]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_btc_f7_with
+      - g_f7_v7_overbought(SOL)
+      - g_tr_above_ema800(SOL)
+      - g_vwap_in_45_85
+
+  # V7_10 — ETH 15m BOTH offsets {0,30,60} — V6_08 base + pw_btc_15m_trend
+  - sleeve_id: poly_sniper_v5_eth_15m_pi_btc15m_trend_v7
+    asset: ETH
+    tf: 15m
+    direction: BOTH
+    offsets: [0, 30, 60]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_stack_full_with(ETH)
+      - g_above_1h_dailyvwap_with(ETH)
+      - g_offset_early
+      - g_vol_high(ETH,15m)
+      - g_pw_btc_15m_trend_with
+
+  # V7_11 — SOL 15m BOTH offsets {60,120,240} — V6_12 base + BTC slope + BTC slope strong
+  - sleeve_id: poly_sniper_v5_sol_15m_btc_slope_pair_v7
+    asset: SOL
+    tf: 15m
+    direction: BOTH
+    offsets: [60, 120, 240]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_hod_european_morning
+      - g_off_60_240
+      - g_rf_with(SOL)
+      - g_tr_stack_with(SOL)
+      - g_vwap_premium
+      - g_BTC_slope_with
+      - g_BTC_slope_strong_with
+
+  # V7_12 — SOL 15m BOTH offsets {60,120,240} — V6_12 base + BTC tr_stack + ADX strong + vol low
+  - sleeve_id: poly_sniper_v5_sol_15m_btc_adx_btcvollow_v7
+    asset: SOL
+    tf: 15m
+    direction: BOTH
+    offsets: [60, 120, 240]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_hod_european_morning
+      - g_off_60_240
+      - g_rf_with(SOL)
+      - g_tr_stack_with(SOL)
+      - g_vwap_premium
+      - g_BTC_tr_stack
+      - g_BTC_adx_strong
+      - g_BTC_vol_low
+
+  # ---------------------------------------------------------------
+  # V8 (14 sleeves) — SHADOW_DEPLOY_SPEC_UNIFIED_V6_V7_V8_2026_05_27.md §4
+  # ---------------------------------------------------------------
+
+  # V8_01 — BTC 5m BOTH offsets ALL — 1h grandparent + imb5 + RF
+  - sleeve_id: poly_sniper_v5_btc_5m_l_1hrf_imb5_rf_v8
+    asset: BTC
+    tf: 5m
+    direction: BOTH
+    offsets: [30, 60, 90, 120, 150, 180, 210, 240, 270]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_grandparent_trend_with(BTC)
+      - g_imb5_strong_with
+      - g_rf_with(BTC)
+
+  # V8_02 — BTC 5m BOTH offsets ALL — 1h grandparent + imb5 + ribbon
+  - sleeve_id: poly_sniper_v5_btc_5m_l_1hrf_imb5_ribbon_v8
+    asset: BTC
+    tf: 5m
+    direction: BOTH
+    offsets: [30, 60, 90, 120, 150, 180, 210, 240, 270]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_grandparent_trend_with(BTC)
+      - g_imb5_strong_with
+      - g_ribbon_agrees(BTC)
+
+  # V8_03 — BTC 5m BOTH offsets ALL — parent 15m slope + ts strong + imb5 strong
+  - sleeve_id: poly_sniper_v5_btc_5m_q_parent15mslope_ts_imb5_v8
+    asset: BTC
+    tf: 5m
+    direction: BOTH
+    offsets: [30, 60, 90, 120, 150, 180, 210, 240, 270]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_parent_15m_slope_with(BTC)
+      - g_trend_slope_strong_with(BTC,5m)
+      - g_imb5_strong_with
+
+  # V8_04 — ETH 5m BOTH offset 60 — ema50 + hurst trending + 1h grandparent
+  - sleeve_id: poly_sniper_v5_eth_5m_l_ema50_hurst_grandparent_v8
+    asset: ETH
+    tf: 5m
+    direction: BOTH
+    offsets: [60]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_above_ema50(ETH)
+      - g_hurst_trending(ETH,5m)
+      - g_grandparent_trend_with(ETH)
+
+  # V8_05 — ETH 5m BOTH offset 120 — hurst regime + trend_slope + CCI + TOD EU/US window
+  - sleeve_id: poly_sniper_v5_eth_5m_k_hurst_ts_cci_tod_euus_v8
+    asset: ETH
+    tf: 5m
+    direction: BOTH
+    offsets: [120]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_hurst_regime_with(ETH,5m)
+      - g_trend_slope_with(ETH,5m)
+      - g_cci_with(ETH)
+      - g_tod_europe_us_window
+
+  # V8_06 — ETH 5m BOTH offset 60 — ema50 + hurst regime + 1h grandparent + Path Q
+  - sleeve_id: poly_sniper_v5_eth_5m_lq_ema50_hurst_grandparent_prev15m_v8
+    asset: ETH
+    tf: 5m
+    direction: BOTH
+    offsets: [60]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_above_ema50(ETH)
+      - g_hurst_regime_with(ETH,5m)
+      - g_grandparent_trend_with(ETH)
+      - g_q_prev15m_agrees(ETH)
+
+  # V8_07 — SOL 5m BOTH offsets ALL — BTC F7 against + CCI extreme + hurst reverting + MFI strong
+  - sleeve_id: poly_sniper_v5_sol_5m_btcf7against_cci_hurstrev_mfi_v8
+    asset: SOL
+    tf: 5m
+    direction: BOTH
+    offsets: [30, 60, 90, 120, 150, 180, 210, 240]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_btc_f7_against
+      - g_cci_extreme_with(SOL)
+      - g_hurst_reverting(SOL,5m)
+      - g_mfi_strong_with(SOL)
+
+  # V8_08 — SOL 5m BOTH offsets ALL — 2-asset either trending + CCI extreme + RF + ema200
+  - sleeve_id: poly_sniper_v5_sol_5m_j_2asset_trending_cci_rf_ema200_v8
+    asset: SOL
+    tf: 5m
+    direction: BOTH
+    offsets: [30, 60, 90, 120, 150, 180, 210, 240]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_2asset_either_trending_with
+      - g_cci_extreme_with(SOL)
+      - g_rf_with(SOL)
+      - g_tr_above_ema200(SOL)
+
+  # V8_09 — ETH 15m BOTH offsets {0,30,60} — V7_10 replicate (duplicate per spec §8)
+  - sleeve_id: poly_sniper_v5_eth_15m_baseline_v7_top_replicate_v8
+    asset: ETH
+    tf: 15m
+    direction: BOTH
+    offsets: [0, 30, 60]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_stack_full_with(ETH)
+      - g_above_1h_dailyvwap_with(ETH)
+      - g_offset_early
+      - g_vol_high(ETH,15m)
+      - g_pw_btc_15m_trend_with
+
+  # V8_10 — ETH 15m BOTH offsets {0,30,60} — V7_10 + pw_sol_15m_trend
+  - sleeve_id: poly_sniper_v5_eth_15m_pj_btc_and_sol_trend_sep_v8
+    asset: ETH
+    tf: 15m
+    direction: BOTH
+    offsets: [0, 30, 60]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_tr_stack_full_with(ETH)
+      - g_above_1h_dailyvwap_with(ETH)
+      - g_offset_early
+      - g_vol_high(ETH,15m)
+      - g_pw_btc_15m_trend_with
+      - g_pw_sol_15m_trend_with
+
+  # V8_11 — SOL 15m BOTH offsets {60,120,240} — V7_11 base + ETH 1h ADX strong (stability winner)
+  - sleeve_id: poly_sniper_v5_sol_15m_v7s5_plus_eth1h_adx_v8
+    asset: SOL
+    tf: 15m
+    direction: BOTH
+    offsets: [60, 120, 240]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_hod_european_morning
+      - g_off_60_240
+      - g_rf_with(SOL)
+      - g_tr_stack_with(SOL)
+      - g_BTC_slope_with
+      - g_BTC_slope_strong_with
+      - g_L_ETH_grandparent_adx_strong
+
+  # V8_12 — SOL 15m BOTH offsets {60,120,240} — V7_11 replicate (duplicate per spec §8)
+  - sleeve_id: poly_sniper_v5_sol_15m_v7_base_s5_slope_str_v8
+    asset: SOL
+    tf: 15m
+    direction: BOTH
+    offsets: [60, 120, 240]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_hod_european_morning
+      - g_off_60_240
+      - g_rf_with(SOL)
+      - g_tr_stack_with(SOL)
+      - g_BTC_slope_with
+      - g_BTC_slope_strong_with
+
+  # V8_13 — SOL 15m BOTH offsets {60,120,240} — V6 base + J BTC/ETH vol low + L ETH grandparent ADX
+  - sleeve_id: poly_sniper_v5_sol_15m_v6_j_btceth_vollow_l_ethadx_v8
+    asset: SOL
+    tf: 15m
+    direction: BOTH
+    offsets: [60, 120, 240]
+    spread_filter: 0.025
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_hod_european_morning
+      - g_off_60_240
+      - g_rf_with(SOL)
+      - g_tr_stack_with(SOL)
+      - g_J_btc_eth_vol_both_low
+      - g_L_ETH_grandparent_adx_strong
+
+  # V8_14 — BTC 15m UP-ONLY offset 720 — BTC/ETH divergence + Stoch + vol contracting
+  - sleeve_id: poly_sniper_v5_btc_15m_btceth_diverg_stoch_volcontr_v8
+    asset: BTC
+    tf: 15m
+    direction: UP
+    offsets: [720]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    gates:
+      - g_dir_up
+      - g_btc_eth_divergence
+      - g_stoch_with(BTC)
+      - g_vol_contracting(BTC,15m)
+
+  # 57 — HEDGE_LATE A/B variant of #12 (SHADOW_DEPLOY_SPEC_SLEEVE_H_HEDGELATE).
+  # Same entry/gates as poly_sniper_v5_btc_15m_ema50_ema800_off600_down;
+  # only exit_policy differs.
+  - sleeve_id: poly_sniper_v5_btc_15m_ema50_ema800_off600_down_H
+    asset: BTC
+    tf: 15m
+    direction: DOWN
+    offsets: [600]
+    spread_filter: 0.02
+    paper_only: true
+    mode: shadow
+    exit_policy: HEDGE_LATE
+    gates:
+      - g_dir_down
+      - g_tr_above_ema50(BTC)
+      - g_tr_above_ema800(BTC)

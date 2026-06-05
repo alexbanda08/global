@@ -1,0 +1,255 @@
+[
+  {
+    "candidate": "clob_only_xgb",
+    "n": 780,
+    "n_lock": 195,
+    "features_used": 22,
+    "entry_filter": "vwap055",
+    "exit_dt": 45,
+    "threshold": 0.7,
+    "all_dpt": 2.874,
+    "all_ci": [
+      1.632,
+      4.097
+    ],
+    "gated_n": 97,
+    "gated_dpt": 2.664,
+    "gated_ci": [
+      1.027,
+      4.266
+    ],
+    "lift": -0.211,
+    "gated_asset_mix": {
+      "BTC": 69,
+      "ETH": 28
+    },
+    "asset_confound": false,
+    "fitness": 0.0
+  },
+  {
+    "candidate": "indicators_only_xgb",
+    "n": 780,
+    "n_lock": 195,
+    "features_used": 37,
+    "entry_filter": "vwap055",
+    "exit_dt": 45,
+    "threshold": 0.575,
+    "all_dpt": 2.874,
+    "all_ci": [
+      1.647,
+      4.12
+    ],
+    "gated_n": 127,
+    "gated_dpt": 3.569,
+    "gated_ci": [
+      2.057,
+      5.1
+    ],
+    "lift": 0.695,
+    "gated_asset_mix": {
+      "BTC": 127,
+      "ETH": 0
+    },
+    "asset_confound": true,
+    "fitness": -0.943
+  },
+  {
+    "candidate": "clob+ind_noentry",
+    "n": 780,
+    "n_lock": 195,
+    "features_used": 59,
+    "entry_filter": "vwap055",
+    "exit_dt": 45,
+    "threshold": 0.625,
+    "all_dpt": 2.874,
+    "all_ci": [
+      1.646,
+      4.117
+    ],
+    "gated_n": 135,
+    "gated_dpt": 3.26,
+    "gated_ci": [
+      1.719,
+      4.834
+    ],
+    "lift": 0.386,
+    "gated_asset_mix": {
+      "BTC": 105,
+      "ETH": 30
+    },
+    "asset_confound": false,
+    "fitness": 1.719
+  },
+  {
+    "candidate": "all_xgb_e45",
+    "n": 780,
+    "n_lock": 195,
+    "features_used": 67,
+    "entry_filter": "vwap055",
+    "exit_dt": 45,
+    "threshold": 0.5,
+    "all_dpt": 2.874,
+    "all_ci": [
+      1.616,
+      4.151
+    ],
+    "gated_n": 129,
+    "gated_dpt": 3.167,
+    "gated_ci": [
+      1.621,
+      4.665
+    ],
+    "lift": 0.293,
+    "gated_asset_mix": {
+      "BTC": 105,
+      "ETH": 24
+    },
+    "asset_confound": false,
+    "fitness": 1.621
+  },
+  {
+    "candidate": "all_xgb_e60",
+    "n": 780,
+    "n_lock": 195,
+    "features_used": 67,
+    "entry_filter": "vwap055",
+    "exit_dt": 60,
+    "threshold": 0.675,
+    "all_dpt": 3.051,
+    "all_ci": [
+      1.78,
+      4.304
+    ],
+    "gated_n": 134,
+    "gated_dpt": 3.333,
+    "gated_ci": [
+      1.858,
+      4.757
+    ],
+    "lift": 0.282,
+    "gated_asset_mix": {
+      "BTC": 111,
+      "ETH": 23
+    },
+    "asset_confound": false,
+    "fitness": 1.858
+  },
+  {
+    "candidate": "all_logit",
+    "n": 780,
+    "n_lock": 195,
+    "features_used": 67,
+    "entry_filter": "vwap055",
+    "exit_dt": 45,
+    "threshold": 0.675,
+    "all_dpt": 2.874,
+    "all_ci": [
+      1.647,
+      4.096
+    ],
+    "gated_n": 67,
+    "gated_dpt": 3.65,
+    "gated_ci": [
+      1.399,
+      5.906
+    ],
+    "lift": 0.775,
+    "gated_asset_mix": {
+      "BTC": 59,
+      "ETH": 8
+    },
+    "asset_confound": false,
+    "fitness": 0.0
+  },
+  {
+    "candidate": "all_rf",
+    "n": 780,
+    "n_lock": 195,
+    "features_used": 67,
+    "entry_filter": "vwap055",
+    "exit_dt": 45,
+    "threshold": 0.675,
+    "all_dpt": 2.874,
+    "all_ci": [
+      1.683,
+      4.117
+    ],
+    "gated_n": 100,
+    "gated_dpt": 3.684,
+    "gated_ci": [
+      2.009,
+      5.359
+    ],
+    "lift": 0.81,
+    "gated_asset_mix": {
+      "BTC": 100,
+      "ETH": 0
+    },
+    "asset_confound": true,
+    "fitness": -0.991
+  },
+  {
+    "candidate": "all_xgb_broad",
+    "n": 2516,
+    "n_lock": 629,
+    "features_used": 67,
+    "entry_filter": "broad",
+    "exit_dt": 45,
+    "threshold": 0.575,
+    "all_dpt": 0.273,
+    "all_ci": [
+      -0.264,
+      0.81
+    ],
+    "gated_n": 246,
+    "gated_dpt": 0.869,
+    "gated_ci": [
+      -0.053,
+      1.799
+    ],
+    "lift": 0.596,
+    "gated_asset_mix": {
+      "BTC": 193,
+      "ETH": 53
+    },
+    "asset_confound": false,
+    "fitness": -0.053
+  },
+  {
+    "candidate": "all_xgb_deployed",
+    "n": 118,
+    "n_lock": 30,
+    "features_used": 67,
+    "entry_filter": "deployed",
+    "exit_dt": 45,
+    "fitness": -99,
+    "note": "too few dev rows"
+  },
+  {
+    "candidate": "clob_only_broad",
+    "n": 2516,
+    "n_lock": 629,
+    "features_used": 22,
+    "entry_filter": "broad",
+    "exit_dt": 45,
+    "threshold": 0.7,
+    "all_dpt": 0.273,
+    "all_ci": [
+      -0.26,
+      0.823
+    ],
+    "gated_n": 261,
+    "gated_dpt": -0.034,
+    "gated_ci": [
+      -0.919,
+      0.82
+    ],
+    "lift": -0.307,
+    "gated_asset_mix": {
+      "BTC": 169,
+      "ETH": 92
+    },
+    "asset_confound": false,
+    "fitness": -0.919
+  }
+]

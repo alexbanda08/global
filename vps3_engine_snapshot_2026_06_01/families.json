@@ -1,0 +1,956 @@
+{
+  "snv5_btc_5m": [
+    {
+      "sleeve_id": "poly_sniper_v5_btc_5m_q_parent15mslope_ts_imb5_v8",
+      "fires": 2371,
+      "wr": "0.687",
+      "pnl": 25.79
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_5m_l_1hrf_imb5_rf_v8",
+      "fires": 1638,
+      "wr": "0.722",
+      "pnl": -632.5
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_5m_l_1hrf_imb5_ribbon_v8",
+      "fires": 1299,
+      "wr": "0.751",
+      "pnl": -364.33
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_5m_parent15m_notrang_ts_mpskew_v7",
+      "fires": 983,
+      "wr": "0.732",
+      "pnl": -110.28
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_5m_down_b2_contrarian2k_v9",
+      "fires": 334,
+      "wr": "0.494",
+      "pnl": 69.82
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_5m_up_b2_contrarian2k_v9",
+      "fires": 319,
+      "wr": "0.558",
+      "pnl": 178.16
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_5m_ts_mpskew_any_off30",
+      "fires": 274,
+      "wr": "0.577",
+      "pnl": -106.97
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_5m_parent15m_slope_ts_mpnx_v7",
+      "fires": 64,
+      "wr": "0.609",
+      "pnl": 59.4
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_5m_a2_hlcascade100k_v9",
+      "fires": 25,
+      "wr": "0.520",
+      "pnl": 21.42
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_5m_up_a2_hlcascade50k_v9",
+      "fires": 16,
+      "wr": "0.438",
+      "pnl": 9.83
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_5m_ts_mpskew_s6_0_60",
+      "fires": 11,
+      "wr": "0.545",
+      "pnl": -4.43
+    }
+  ],
+  "shadow_updown": [
+    {
+      "sleeve_id": "shadow_poly_updown_ALL_5m_phase1_kelly",
+      "fires": 1185,
+      "wr": "0.509",
+      "pnl": -1779.98
+    },
+    {
+      "sleeve_id": "shadow_poly_updown_ALL_5m_S3_prewindow",
+      "fires": 421,
+      "wr": "0.511",
+      "pnl": -213.42
+    },
+    {
+      "sleeve_id": "shadow_poly_updown_btc_5m_fade_sniper",
+      "fires": 208,
+      "wr": "0.519",
+      "pnl": 7.95
+    },
+    {
+      "sleeve_id": "shadow_poly_updown_btc_5m_fade_momo_v2",
+      "fires": 187,
+      "wr": "0.481",
+      "pnl": -324.58
+    },
+    {
+      "sleeve_id": "shadow_poly_updown_sol_5m_fade_sniper",
+      "fires": 178,
+      "wr": "0.517",
+      "pnl": -132.22
+    },
+    {
+      "sleeve_id": "shadow_poly_updown_sol_5m_fade_momo_v2",
+      "fires": 169,
+      "wr": "0.479",
+      "pnl": -402.79
+    },
+    {
+      "sleeve_id": "shadow_poly_updown_ALL_5m_phase1_kelly_fe1000_V10",
+      "fires": 137,
+      "wr": "0.518",
+      "pnl": -49.92
+    },
+    {
+      "sleeve_id": "shadow_poly_updown_eth_15m_fade_sniper",
+      "fires": 122,
+      "wr": "0.533",
+      "pnl": 15.11
+    },
+    {
+      "sleeve_id": "shadow_poly_updown_sol_15m_fade_momo_v2",
+      "fires": 50,
+      "wr": "0.380",
+      "pnl": -383.46
+    },
+    {
+      "sleeve_id": "shadow_poly_updown_ALL_15m_S4_prewindow",
+      "fires": 25,
+      "wr": "0.720",
+      "pnl": 238.84
+    },
+    {
+      "sleeve_id": "shadow_poly_updown_btc_5m_momo_v2_fairedge500",
+      "fires": 16,
+      "wr": "0.438",
+      "pnl": -61.75
+    },
+    {
+      "sleeve_id": "shadow_poly_updown_sol_5m_momo_v1_m5v",
+      "fires": 10,
+      "wr": "0.400",
+      "pnl": -58.0
+    },
+    {
+      "sleeve_id": "shadow_poly_updown_sol_5m_momo_v2_cvd_macd",
+      "fires": 5,
+      "wr": "0.600",
+      "pnl": 19.24
+    },
+    {
+      "sleeve_id": "shadow_poly_updown_btc_15m_momo_v2_fairedge500_cvd30",
+      "fires": 3,
+      "wr": "0.667",
+      "pnl": 17.22
+    }
+  ],
+  "snv5_sol_5m": [
+    {
+      "sleeve_id": "poly_sniper_v5_sol_5m_f7_mfi_ema200_vwap_v6",
+      "fires": 608,
+      "wr": "0.688",
+      "pnl": -14.84
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_5m_rf_tr_partial_mid",
+      "fires": 552,
+      "wr": "0.704",
+      "pnl": 89.65
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_5m_b1_120s_250_v9",
+      "fires": 394,
+      "wr": "0.571",
+      "pnl": -0.41
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_5m_j_2asset_trending_cci_rf_ema200_v8",
+      "fires": 366,
+      "wr": "0.751",
+      "pnl": -13.35
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_5m_btcf7_f7overb_ema800_vwap_v7",
+      "fires": 342,
+      "wr": "0.672",
+      "pnl": 15.32
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_5m_b3_abs500_v9",
+      "fires": 186,
+      "wr": "0.500",
+      "pnl": -35.53
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_5m_b3_abs500_no_opp_v9",
+      "fires": 155,
+      "wr": "0.548",
+      "pnl": 61.01
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_5m_down_b1_flow250_v9",
+      "fires": 96,
+      "wr": "0.573",
+      "pnl": -22.87
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_5m_cci_f7_mfi_partial_vwap_v6",
+      "fires": 93,
+      "wr": "0.763",
+      "pnl": 36.0
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_5m_rf_tr_pp_mid",
+      "fires": 50,
+      "wr": "0.700",
+      "pnl": 0.74
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_5m_b1_polyflow_aligned_v9",
+      "fires": 31,
+      "wr": "0.742",
+      "pnl": 42.43
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_5m_down_b1_500_v9",
+      "fires": 9,
+      "wr": "0.889",
+      "pnl": 50.67
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_5m_depth_up_hod_session",
+      "fires": 3,
+      "wr": "0.333",
+      "pnl": -8.22
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_5m_f7_mp_ema200_vwap_v6",
+      "fires": 1,
+      "wr": "0.000",
+      "pnl": -5.0
+    }
+  ],
+  "updown_inverse": [
+    {
+      "sleeve_id": "poly_updown_btc_5m_volume_INV_NIGHT",
+      "fires": 525,
+      "wr": "0.478",
+      "pnl": -958.26
+    },
+    {
+      "sleeve_id": "poly_updown_eth_5m_volume_INV_NIGHT",
+      "fires": 524,
+      "wr": "0.490",
+      "pnl": -909.97
+    },
+    {
+      "sleeve_id": "poly_updown_sol_5m_volume_INV_NIGHT",
+      "fires": 494,
+      "wr": "0.464",
+      "pnl": -1571.71
+    },
+    {
+      "sleeve_id": "poly_updown_btc_15m_volume_INV_NIGHT",
+      "fires": 190,
+      "wr": "0.511",
+      "pnl": -99.31
+    },
+    {
+      "sleeve_id": "poly_updown_eth_15m_volume_INV_NIGHT",
+      "fires": 177,
+      "wr": "0.514",
+      "pnl": -95.36
+    },
+    {
+      "sleeve_id": "poly_updown_sol_15m_volume_INV_NIGHT",
+      "fires": 160,
+      "wr": "0.513",
+      "pnl": -134.09
+    }
+  ],
+  "snv5_eth_5m": [
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_ema50_hurst_parent15mrang_v7_vL",
+      "fires": 291,
+      "wr": "0.643",
+      "pnl": -18.31
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_bb_mp_hurst_band_v6_vL",
+      "fires": 261,
+      "wr": "0.697",
+      "pnl": 76.9
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_ema50_hurst_parent15mrang_v7",
+      "fires": 253,
+      "wr": "0.644",
+      "pnl": -1.9
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_bb_mp_hurst_band_v6",
+      "fires": 228,
+      "wr": "0.706",
+      "pnl": 80.36
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_cloud_vwap_hurstmp_v7_vL",
+      "fires": 220,
+      "wr": "0.686",
+      "pnl": 41.14
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_ema200_vwap_regimerang_xa3_v7",
+      "fires": 216,
+      "wr": "0.584",
+      "pnl": -107.06
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_cloud_ribbon_mp_hurst_v6_vL",
+      "fires": 202,
+      "wr": "0.733",
+      "pnl": 44.49
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_cloud_vwap_hurstmp_v7",
+      "fires": 191,
+      "wr": "0.696",
+      "pnl": 50.19
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_cloud_ribbon_mp_hurst_v6",
+      "fires": 173,
+      "wr": "0.734",
+      "pnl": 43.39
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_l_ema50_hurst_grandparent_v8",
+      "fires": 157,
+      "wr": "0.745",
+      "pnl": 156.51
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_v6c3_parent15mrang_v7_vL",
+      "fires": 118,
+      "wr": "0.661",
+      "pnl": -38.84
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_v6c3_parent15mrang_v7",
+      "fires": 102,
+      "wr": "0.667",
+      "pnl": -32.12
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_k_hurst_ts_cci_tod_euus_v8_vL",
+      "fires": 39,
+      "wr": "0.513",
+      "pnl": -50.6
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_tr200_mp_sms_active_off120",
+      "fires": 39,
+      "wr": "0.821",
+      "pnl": 17.52
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_v5repl_off120_v6",
+      "fires": 39,
+      "wr": "0.821",
+      "pnl": 17.52
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_k_hurst_ts_cci_tod_euus_v8",
+      "fires": 35,
+      "wr": "0.486",
+      "pnl": -55.89
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_cloud_mp_sms_active_off120",
+      "fires": 25,
+      "wr": "0.760",
+      "pnl": 2.35
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_lq_ema50_hurst_grandparent_prev15m_v8_vL",
+      "fires": 21,
+      "wr": "0.667",
+      "pnl": 10.02
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_lq_ema50_hurst_grandparent_prev15m_v8",
+      "fires": 17,
+      "wr": "0.706",
+      "pnl": 14.9
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_a2_hlcascade50k_v9",
+      "fires": 15,
+      "wr": "0.467",
+      "pnl": -21.86
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_up_a2_hlcascade25k_v9",
+      "fires": 11,
+      "wr": "0.364",
+      "pnl": -27.37
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_eth_5m_bb_mp_hurst_band_V10",
+      "fires": 3,
+      "wr": "0.000",
+      "pnl": -15.0
+    }
+  ],
+  "updown_v3v4": [
+    {
+      "sleeve_id": "poly_updown_sol_5m_v3_2",
+      "fires": 151,
+      "wr": "0.497",
+      "pnl": -177.91
+    },
+    {
+      "sleeve_id": "poly_updown_sol_5m_v3",
+      "fires": 123,
+      "wr": "0.472",
+      "pnl": -209.91
+    },
+    {
+      "sleeve_id": "poly_updown_sol_5m_v3_3",
+      "fires": 103,
+      "wr": "0.427",
+      "pnl": -321.49
+    },
+    {
+      "sleeve_id": "poly_updown_sol_5m_v3_1",
+      "fires": 101,
+      "wr": "0.436",
+      "pnl": -375.09
+    },
+    {
+      "sleeve_id": "poly_updown_btc_5m_v3_1",
+      "fires": 59,
+      "wr": "0.458",
+      "pnl": -119.52
+    },
+    {
+      "sleeve_id": "poly_updown_btc_5m_v4",
+      "fires": 45,
+      "wr": "0.400",
+      "pnl": -224.6
+    },
+    {
+      "sleeve_id": "poly_updown_eth_5m_v3",
+      "fires": 34,
+      "wr": "0.353",
+      "pnl": -181.46
+    },
+    {
+      "sleeve_id": "poly_updown_eth_5m_v3_2",
+      "fires": 27,
+      "wr": "0.296",
+      "pnl": -202.22
+    },
+    {
+      "sleeve_id": "poly_updown_eth_5m_v3_3",
+      "fires": 27,
+      "wr": "0.296",
+      "pnl": -202.22
+    },
+    {
+      "sleeve_id": "poly_updown_eth_5m_v3_1",
+      "fires": 20,
+      "wr": "0.350",
+      "pnl": -92.91
+    },
+    {
+      "sleeve_id": "poly_updown_eth_5m_v4",
+      "fires": 18,
+      "wr": "0.333",
+      "pnl": -89.87
+    }
+  ],
+  "snv5_btc_15m": [
+    {
+      "sleeve_id": "poly_sniper_v5_btc_15m_vwapprem_ema50_mpskew_off600_v6",
+      "fires": 129,
+      "wr": "0.899",
+      "pnl": 47.66
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_15m_ema50_ema800_off600_down",
+      "fires": 120,
+      "wr": "0.815",
+      "pnl": 172.75
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_15m_ema50_ema800_off600_down_H",
+      "fires": 101,
+      "wr": "0.920",
+      "pnl": 152.74
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_15m_ema800_ribslp_hawkes_off840_v6",
+      "fires": 59,
+      "wr": "0.482",
+      "pnl": -123.81
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_15m_ema200_mpskew_rf_off600_down_v6",
+      "fires": 56,
+      "wr": "0.875",
+      "pnl": 17.84
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_15m_mpskew_trstack_off600_down",
+      "fires": 42,
+      "wr": "0.952",
+      "pnl": 30.31
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_15m_ts_trstack_off600_down",
+      "fires": 33,
+      "wr": "0.909",
+      "pnl": 51.64
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_15m_btceth_diverg_stoch_volcontr_v8",
+      "fires": 14,
+      "wr": "0.643",
+      "pnl": -22.97
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_btc_15m_regime_trstack_off480_up",
+      "fires": 12,
+      "wr": "0.667",
+      "pnl": -8.59
+    }
+  ],
+  "updown_momo_v1": [
+    {
+      "sleeve_id": "poly_updown_eth_5m_momo_HOLD_f7",
+      "fires": 122,
+      "wr": "0.418",
+      "pnl": -533.5
+    },
+    {
+      "sleeve_id": "poly_updown_sol_5m_momo_HOLD_f7",
+      "fires": 112,
+      "wr": "0.473",
+      "pnl": -213.65
+    },
+    {
+      "sleeve_id": "poly_updown_btc_5m_momo_HOLD_f7",
+      "fires": 99,
+      "wr": "0.485",
+      "pnl": -92.02
+    },
+    {
+      "sleeve_id": "poly_updown_eth_5m_momo_SELL_f7",
+      "fires": 38,
+      "wr": "0.395",
+      "pnl": -171.16
+    },
+    {
+      "sleeve_id": "poly_updown_eth_5m_momo_HEDGE_f7",
+      "fires": 38,
+      "wr": "0.421",
+      "pnl": -173.75
+    },
+    {
+      "sleeve_id": "poly_updown_btc_15m_momo_HOLD_f7",
+      "fires": 35,
+      "wr": "0.571",
+      "pnl": 111.29
+    },
+    {
+      "sleeve_id": "poly_updown_sol_15m_momo_HOLD_f7",
+      "fires": 34,
+      "wr": "0.559",
+      "pnl": 83.45
+    },
+    {
+      "sleeve_id": "poly_updown_eth_15m_momo_HOLD_f7",
+      "fires": 33,
+      "wr": "0.545",
+      "pnl": 72.57
+    },
+    {
+      "sleeve_id": "poly_updown_sol_5m_momo_SELL_f7",
+      "fires": 28,
+      "wr": "0.357",
+      "pnl": -185.31
+    },
+    {
+      "sleeve_id": "poly_updown_sol_5m_momo_HEDGE_f7",
+      "fires": 28,
+      "wr": "0.357",
+      "pnl": -197.24
+    },
+    {
+      "sleeve_id": "poly_updown_btc_5m_momo_SELL_f7",
+      "fires": 26,
+      "wr": "0.346",
+      "pnl": -186.45
+    },
+    {
+      "sleeve_id": "poly_updown_btc_5m_momo_HEDGE_f7",
+      "fires": 26,
+      "wr": "0.346",
+      "pnl": -187.14
+    },
+    {
+      "sleeve_id": "poly_updown_eth_15m_momo_SELL_f7",
+      "fires": 11,
+      "wr": "0.455",
+      "pnl": 49.02
+    },
+    {
+      "sleeve_id": "poly_updown_eth_15m_momo_HEDGE_f7",
+      "fires": 11,
+      "wr": "0.545",
+      "pnl": 23.86
+    },
+    {
+      "sleeve_id": "poly_updown_sol_15m_momo_SELL_f7",
+      "fires": 9,
+      "wr": "0.556",
+      "pnl": 66.0
+    },
+    {
+      "sleeve_id": "poly_updown_sol_15m_momo_HEDGE_f7",
+      "fires": 9,
+      "wr": "0.667",
+      "pnl": 68.83
+    },
+    {
+      "sleeve_id": "poly_updown_btc_15m_momo_HEDGE_f7",
+      "fires": 8,
+      "wr": "0.875",
+      "pnl": 133.15
+    },
+    {
+      "sleeve_id": "poly_updown_btc_15m_momo_SELL_f7",
+      "fires": 8,
+      "wr": "0.750",
+      "pnl": 119.37
+    },
+    {
+      "sleeve_id": "poly_updown_btc_15m_momo_hod",
+      "fires": 6,
+      "wr": "0.667",
+      "pnl": 47.59
+    }
+  ],
+  "updown_momo_v2": [
+    {
+      "sleeve_id": "poly_updown_btc_5m_momo_v2_HOLD_f7",
+      "fires": 118,
+      "wr": "0.458",
+      "pnl": -274.67
+    },
+    {
+      "sleeve_id": "poly_updown_sol_5m_momo_v2_HOLD_f7",
+      "fires": 101,
+      "wr": "0.535",
+      "pnl": 94.31
+    },
+    {
+      "sleeve_id": "poly_updown_eth_5m_momo_v2_HOLD_f7",
+      "fires": 60,
+      "wr": "0.417",
+      "pnl": -280.32
+    },
+    {
+      "sleeve_id": "poly_updown_sol_5m_momo_v2_hod",
+      "fires": 33,
+      "wr": "0.455",
+      "pnl": -99.83
+    },
+    {
+      "sleeve_id": "poly_updown_btc_5m_momo_v2_SELL_f7",
+      "fires": 32,
+      "wr": "0.531",
+      "pnl": 103.1
+    },
+    {
+      "sleeve_id": "poly_updown_btc_5m_momo_v2_HEDGE_f7",
+      "fires": 32,
+      "wr": "0.469",
+      "pnl": 76.57
+    },
+    {
+      "sleeve_id": "poly_updown_sol_15m_momo_v2_HOLD_f7",
+      "fires": 32,
+      "wr": "0.563",
+      "pnl": 86.19
+    },
+    {
+      "sleeve_id": "poly_updown_sol_5m_momo_v2_SELL_f7",
+      "fires": 29,
+      "wr": "0.552",
+      "pnl": 114.99
+    },
+    {
+      "sleeve_id": "poly_updown_sol_5m_momo_v2_HEDGE_f7",
+      "fires": 29,
+      "wr": "0.586",
+      "pnl": 102.38
+    },
+    {
+      "sleeve_id": "poly_updown_eth_15m_momo_v2_HOLD_f7",
+      "fires": 28,
+      "wr": "0.607",
+      "pnl": 137.98
+    },
+    {
+      "sleeve_id": "poly_updown_btc_5m_momo_v2_hod_mtf",
+      "fires": 18,
+      "wr": "0.556",
+      "pnl": 49.79
+    },
+    {
+      "sleeve_id": "poly_updown_btc_15m_momo_v2_HOLD_f7",
+      "fires": 15,
+      "wr": "0.400",
+      "pnl": -77.03
+    },
+    {
+      "sleeve_id": "poly_updown_btc_15m_momo_v2_hod",
+      "fires": 14,
+      "wr": "0.500",
+      "pnl": -7.3
+    },
+    {
+      "sleeve_id": "poly_updown_sol_15m_momo_v2_hod",
+      "fires": 12,
+      "wr": "0.500",
+      "pnl": -5.65
+    },
+    {
+      "sleeve_id": "poly_updown_eth_15m_momo_v2_HEDGE_f7",
+      "fires": 11,
+      "wr": "0.727",
+      "pnl": 119.01
+    },
+    {
+      "sleeve_id": "poly_updown_sol_15m_momo_v2_HEDGE_f7",
+      "fires": 11,
+      "wr": "0.545",
+      "pnl": 25.74
+    },
+    {
+      "sleeve_id": "poly_updown_sol_15m_momo_v2_SELL_f7",
+      "fires": 11,
+      "wr": "0.455",
+      "pnl": 35.01
+    },
+    {
+      "sleeve_id": "poly_updown_eth_15m_momo_v2_hod",
+      "fires": 11,
+      "wr": "0.727",
+      "pnl": 123.57
+    },
+    {
+      "sleeve_id": "poly_updown_eth_15m_momo_v2_SELL_f7",
+      "fires": 11,
+      "wr": "0.636",
+      "pnl": 144.17
+    }
+  ],
+  "kalshi": [
+    {
+      "sleeve_id": "kalshi_sniper_btc_15m_ema50_ema800_off600_down",
+      "fires": 91,
+      "wr": "0.846",
+      "pnl": 145.09
+    },
+    {
+      "sleeve_id": "kalshi_sniper_btc_15m_ema50_ema800_off600_down_H",
+      "fires": 65,
+      "wr": "0.846",
+      "pnl": 113.57
+    },
+    {
+      "sleeve_id": "kalshi_sniper_all_15m_s4_prewindow",
+      "fires": 9,
+      "wr": "0.222",
+      "pnl": -24.76
+    }
+  ],
+  "updown_sniper_hod": [
+    {
+      "sleeve_id": "poly_updown_eth_5m_sniper_hod",
+      "fires": 87,
+      "wr": "0.448",
+      "pnl": -352.9
+    },
+    {
+      "sleeve_id": "poly_updown_btc_5m_sniper_hod",
+      "fires": 77,
+      "wr": "0.351",
+      "pnl": -436.22
+    },
+    {
+      "sleeve_id": "poly_updown_sol_5m_sniper_hod",
+      "fires": 73,
+      "wr": "0.521",
+      "pnl": -63.19
+    },
+    {
+      "sleeve_id": "poly_updown_eth_15m_sniper_hod",
+      "fires": 38,
+      "wr": "0.474",
+      "pnl": -3.7
+    },
+    {
+      "sleeve_id": "poly_updown_btc_15m_sniper_hod",
+      "fires": 37,
+      "wr": "0.405",
+      "pnl": -97.93
+    }
+  ],
+  "snv5_eth_15m": [
+    {
+      "sleeve_id": "poly_sniper_v5_eth_15m_trstack_vwap_offearly",
+      "fires": 74,
+      "wr": "0.486",
+      "pnl": -63.51
+    }
+  ],
+  "updown_vwap_off": [
+    {
+      "sleeve_id": "poly_updown_btc_5m_vwap_off240_m1v",
+      "fires": 17,
+      "wr": "0.353",
+      "pnl": -121.17
+    },
+    {
+      "sleeve_id": "poly_updown_eth_5m_vwap_off210_f7_m1v",
+      "fires": 12,
+      "wr": "0.583",
+      "pnl": 46.97
+    },
+    {
+      "sleeve_id": "poly_updown_btc_5m_vwap_off90_cross",
+      "fires": 7,
+      "wr": "0.429",
+      "pnl": -28.51
+    },
+    {
+      "sleeve_id": "poly_updown_sol_5m_vwap_off60",
+      "fires": 6,
+      "wr": "0.000",
+      "pnl": -152.29
+    },
+    {
+      "sleeve_id": "poly_updown_btc_5m_vwap_off60_f7_cross",
+      "fires": 2,
+      "wr": "0.000",
+      "pnl": -50.0
+    }
+  ],
+  "snv5_sol_15m": [
+    {
+      "sleeve_id": "poly_sniper_v5_sol_15m_hod_eu_tightrib_rf_tr_vwap80_v6",
+      "fires": 15,
+      "wr": "0.600",
+      "pnl": -19.64
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_15m_hod_eu_off60_240_rf_tr_vwap80_v6",
+      "fires": 6,
+      "wr": "0.667",
+      "pnl": -7.17
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_15m_rfaged_trstack_late",
+      "fires": 5,
+      "wr": "0.800",
+      "pnl": -0.06
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_15m_btc_adx_btcvollow_v7",
+      "fires": 5,
+      "wr": "0.800",
+      "pnl": -2.17
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_15m_rfaged_trstack_late_vL",
+      "fires": 4,
+      "wr": "0.750",
+      "pnl": -0.21
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_15m_v7_base_s5_slope_str_v8",
+      "fires": 2,
+      "wr": "0.500",
+      "pnl": -4.81
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_15m_v7s5_plus_eth1h_adx_v8",
+      "fires": 2,
+      "wr": "0.500",
+      "pnl": -4.81
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_15m_btc_slope_pair_v7",
+      "fires": 2,
+      "wr": "0.500",
+      "pnl": -4.81
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_15m_v6_j_btceth_vollow_l_ethadx_v8",
+      "fires": 2,
+      "wr": "0.500",
+      "pnl": -4.81
+    },
+    {
+      "sleeve_id": "poly_sniper_v5_sol_15m_hod_eu_off60_240_rf_tr_vwap30_70_v6",
+      "fires": 2,
+      "wr": "0.000",
+      "pnl": -10.0
+    }
+  ],
+  "fast_taker": [
+    {
+      "sleeve_id": "poly_fast_taker_b2_nomerge_btc_5m",
+      "fires": 4,
+      "wr": "0.250",
+      "pnl": -5.94
+    },
+    {
+      "sleeve_id": "poly_fast_taker_b2_nomerge_eth_5m",
+      "fires": 4,
+      "wr": "0.500",
+      "pnl": -1.43
+    },
+    {
+      "sleeve_id": "poly_fast_taker_lagv2_btc_5m",
+      "fires": 3,
+      "wr": "0.500",
+      "pnl": -35.46
+    },
+    {
+      "sleeve_id": "poly_fast_taker_lagv2_eth_5m",
+      "fires": 3,
+      "wr": "1.000",
+      "pnl": -11.65
+    },
+    {
+      "sleeve_id": "poly_fast_taker_lagv2_btc_15m",
+      "fires": 1,
+      "wr": "",
+      "pnl": -8.06
+    }
+  ]
+}

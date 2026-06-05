@@ -1,0 +1,35 @@
+{
+  "feature_order": [
+    "cur",
+    "profit",
+    "mom",
+    "elapsed",
+    "entry_vwap",
+    "delta_bps",
+    "a_BTC",
+    "tf_15m",
+    "ps",
+    "pd_",
+    "pds",
+    "pmar"
+  ],
+  "threshold": 0.6,
+  "checkpoints_s": [
+    30,
+    45,
+    60,
+    75,
+    90,
+    120
+  ],
+  "label_eps": 0.005,
+  "missing_defaults": {
+    "ps": 14.244393240005593,
+    "pd_": 14.028791060001822,
+    "pds": -0.2589826399998856,
+    "pmar": 994.0833333333334
+  },
+  "fee_for_eval": 0.015,
+  "trained_n": 14987,
+  "note": "sell held shares when calibrated P(hold)<threshold at a checkpoint; else hold to resolution"
+}

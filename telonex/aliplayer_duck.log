@@ -1,0 +1,24 @@
+[duck] 06:45:25 markets map: 104,668
+[duck] 06:45:25 coins: ['BNB', 'BTC', 'DOGE', 'ETH', 'HYPE', 'SOL', 'XRP']
+[duck] 06:45:34   BBO bnb: 69,615,001 rows (813MB) (8s)
+[duck] 06:55:49   BBO btc: 2,595,356,516 rows (9631MB) (615s)
+[duck] 06:56:42   BBO doge: 124,617,676 rows (509MB) (53s)
+[duck] 07:00:54   BBO eth: 757,513,601 rows (2854MB) (252s)
+[duck] 07:01:21   BBO hype: 80,174,317 rows (320MB) (28s)
+[duck] 07:04:25   BBO sol: 425,672,796 rows (1679MB) (184s)
+[duck] 07:06:09   BBO xrp: 339,411,670 rows (1337MB) (104s)
+[duck] 07:06:09   trades bnb: 190,207 rows (3MB) (0s)
+[duck] 07:06:15   trades btc: 6,337,378 rows (93MB) (6s)
+[duck] 07:06:15   trades doge: 241,449 rows (3MB) (0s)
+[duck] 07:06:20   trades eth: 7,517,334 rows (113MB) (4s)
+[duck] 07:06:20   trades hype: 143,223 rows (1MB) (0s)
+[duck] 07:06:26   trades sol: 4,017,830 rows (56MB) (6s)
+[duck] 07:06:26   trades xrp: 1,029,216 rows (16MB) (1s)
+[duck] 07:06:26 === DONE ===
+[duck] 07:06:26   bbo/bnb.parquet: 813MB
+[duck] 07:06:26   bbo/btc.parquet: 9631MB
+[duck] 07:06:26   bbo/doge.parquet: 509MB
+[duck] 07:06:26   bbo/eth.parquet: 2854MB
+[duck] 07:06:26   bbo/hype.parquet: 320MB
+[duck] 07:06:26   bbo/sol.parquet: 1679MB
+[duck] 07:06:26   bbo/xrp.parquet: 1337MB
