@@ -48,7 +48,7 @@ def merge_asset(a):
     delta_tbl = load_delta(gz); log(f"  {a}: delta {delta_tbl.num_rows:,} rows loaded")
     tmp = DTMP / f"{a}.parquet"
     if tmp.exists(): tmp.unlink()
-    writer = pq.ParquetWriter(str(tmp), SCHEMA, compression="snappy")
+    writer = pq.ParquetWriter(str(tmp), SCHEMA, compression="zstd")
     max_seen = {}; kept = 0; t0 = time.time()
     # source 1: canon (streamed), source 2: delta (batched)
     def stream_batches():

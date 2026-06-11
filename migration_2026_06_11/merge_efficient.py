@@ -75,7 +75,7 @@ def merge_table(name, canon_p, gz, keys, sort_cols, where="", on_d=False, delta_
       SELECT {c_cols} FROM read_parquet('{cp}') c ANTI JOIN _delta d ON {joincond}
       UNION ALL BY NAME
       SELECT {collist} FROM _delta
-    ) TO '{tmpf}' (FORMAT parquet, COMPRESSION snappy, ROW_GROUP_SIZE 500000)
+    ) TO '{tmpf}' (FORMAT parquet, COMPRESSION zstd, ROW_GROUP_SIZE 500000)
     """)
     sort_cols = [last_ts]  # only need the ts col for the max() report below
     total = con.execute(f"SELECT count(*) FROM read_parquet('{tmpf}')").fetchone()[0]
@@ -113,7 +113,7 @@ def full_replace(name, canon_p, gz, sort_col, where=""):
     canon_p = Path(canon_p); sch = schema(canon_p)
     sel = coerce_select(sch, str(gz).replace(chr(92),"/"), gz_cols(str(gz).replace(chr(92),"/")), where)
     tmp = canon_p.with_suffix(".tmp.parquet"); tmpf=str(tmp).replace(chr(92),"/")
-    con.execute(f'COPY (SELECT * FROM ({sel}) ORDER BY "{sort_col}") TO \'{tmpf}\' (FORMAT parquet, COMPRESSION snappy)')
+    con.execute(f'COPY (SELECT * FROM ({sel}) ORDER BY "{sort_col}") TO \'{tmpf}\' (FORMAT parquet, COMPRESSION zstd)')
     n=con.execute(f"SELECT count(*) FROM read_parquet('{tmpf}')").fetchone()[0]
     os.replace(tmpf, str(canon_p)); log(f"  {name}: {n:,} rows (replaced)")
 full_replace("resolutions", CANON/"resolutions.parquet", RAW/"market_resolutions_full.csv.gz", "slot_start_us")
@@ -166,7 +166,7 @@ COPY (
   WHERE sp IS NOT NULL AND lp IS NOT NULL AND (slot_start_us - sts) <= 60000000
         AND (slot_end_us - lts) <= 60000000 AND abs(lp-sp) > 1e-9
   ORDER BY slot_start_us
-) TO '{tmp}' (FORMAT parquet, COMPRESSION snappy)
+) TO '{tmp}' (FORMAT parquet, COMPRESSION zstd)
 """)
 n=con.execute(f"SELECT count(*) FROM read_parquet('{tmp}')").fetchone()[0]
 os.replace(tmp, str(CANON/"resolutions_from_rtds.parquet")); log(f"  resolutions_from_rtds: {n:,} rows")
