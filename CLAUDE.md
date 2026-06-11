@@ -1,5 +1,9 @@
 # Project context — root
 
+**🟢🚀 Canonical refresh 2026-06-11 ~06:21 UTC — NEW EFFICIENT PIPELINE (`migration_2026_06_11/*`).** Topped off every collector Jun 8→Jun 11 (~3 days). **Window now Apr 22 → Jun 11 06:21.** Max-ts: klines_1m 05:59 (644,927) / klines_1s 06:00 (70.32M) / chainlink_rtds 04:17 (11.49M, feed lags ~2h) / resolutions 04:55 (55,139) / resolutions_from_rtds 03:50 (51,031) / trades btc 44.71M·eth 11.77M·sol 5.22M (06:01) / trading_events_30d 2.38M / cex_futures klines 504,560·ticker 89.44M·trades 33.72M·liq 12,454 (06:04-06:21) / **L25 btc 83.62M (7.97GB,06:04)·eth 15.79M·sol 7.29M (06:06)**. **⏱️ ~18 min total (was 1-2h).** The win: **download was already incremental** (delta `\copy` via T_START); the cost was the pandas full-file merge. New `merge_efficient.py` = **DuckDB streaming merge reading the .gz deltas directly** (no pandas convert): per table, ANTI JOIN canon vs the small delta on the dedup key + UNION delta, **NO global ORDER BY** (loaders sort on read) → memory-light, no OOM (klines_1s 69M+672k in 23s; futures ticker 69M→89M in 36s). L25 stays pyarrow-streaming (`l25_merge_safe.py`, max_seen dedup) with **tmp on D: + cross-drive safe swap** (C: too tight for BTC's 8GB rewrite; only BTC needs ~9min). Shrink-guard (`total>=before`) aborts before any replace. Pulls: minimal ~3.5h overlap (T_START Jun 8 12:00), not the old hardcoded 4-day. Refresh dir + vps3 /tmp + D: tmp DELETED. ⚠️ **C: 6.9GB free (98%) — STILL TIGHT; the D:-swap handles BTC L25 but watch it.** HL NOT refreshed (still May 27/16 — separate pipeline). **Next refresh: bump T_START in the 3 `pull_*.sh` + re-run `merge_efficient.py` then `l25_merge_safe.py`.**
+
+**🟢 Canonical refresh 2026-06-08 ~16:51 UTC (top-off Jun4→Jun8, all collectors incl L25 + futures)** (`migration_2026_06_08/*`, cloned from 06_04, T_START Jun4 00:00). **Window now Apr 22 → Jun 8 16:51 (~47 days).** Max-ts: klines_1m 15:37 (630,731) / klines_1s 15:38 (69.65M) / chainlink_rtds 15:38 (10.97M) / resolutions 14:50 (53,056) / trades btc 44.64M·eth 11.75M·sol 5.21M / trading_events_30d 2.03M / cex_futures klines 390,894·ticker 69.20M·trades 27.81M·liq 10,879 / **L25 btc 82.45M (8.23GB,16:23)·eth 15.49M·sol 7.11M (16:28)**. Refresh dir + vps3 /tmp DELETED (single-source invariant). ⚠️ **Disk now 7.6GB free (97%) — BTC L25 merge needs ~8GB .tmp; CLEAR SPACE before next refresh.** Gotchas: disk hit 100% mid-L25-merge (cleared .tmp, retried); `merge_nonl25` OOMs on the 69M-row 1s-kline sort (run trades/events targeted separately); futures liquidations needed a manual \copy re-run.
+
 **🟢 1s-klines: DOGE/BNB extended to Apr 21 2026-06-05d** (`telonex/backfill_klines_1s_doge_bnb_apr.py` + `_fix1921.py`): DOGE+BNB Binance-spot 1s now **Jan 1 → Apr 21 2026** (9,590,400 rows each, every second, 0 gaps verified) — abuts their poly markets + aliplayer BBO (Apr 6-21), unlocking the 2 new-coin scalp OOS tests. klines_1s.parquet now **67.38M rows**. (Note: the `_apr.py` cap const was Apr 19 not Apr 22; `_fix1921.py` patched the missing 3 days.) **HYPE 1s NOT obtainable free for Apr 6-21:** HL API has no 1s interval (422) + shallow history; open HF datasets stop ≤Mar/Dec 2025; `gionuibk/hyperliquidL2Book-v2` is gated (403, request access); HL S3 archive `s3://hyperliquid-archive/market_data/<date>/<hr>/l2Book/HYPE.lz4` EXISTS (403=requester-pays) → L2-book→1s-mid buildable with AWS creds (~$1 egress). We already have HYPE **1m** (`hyperliquid_klines.parquet`, Jan 30→May 27).
 
 **🟢 1s-klines backfill DONE 2026-06-05c** (`telonex/backfill_klines_1s.py`): backfilled `canonical/klines_1s.parquet` with Binance Vision 1s spot klines for the Polymarket gap **Jan 1 → Apr 6 2026** (abuts existing Apr 7+), **all 6 Binance coins BTC/ETH/SOL/XRP/BNB/DOGE** (HYPE not on Binance). **15.0M → 64.78M rows (+49.77M; file 1.8GB on C:)**, 8,294,400 rows/coin (every second, zero gaps), no nulls/dups. **New 1s coverage:** BTC/ETH/SOL = **Jan 1 → now** (vision Jan1-May6 + live WS May7+, contiguous); **XRP/BNB/DOGE = Jan 1 → Apr 6 only** (vision; NOT collected live — so no 1s for these 3 in the Apr 22+ production poly window unless extended). Source col `binance-vision`, `period_id='1SEC'`; `time_open_us/time_close_us/taker_buy_base/taker_buy_quote` left NULL to match existing vision rows. Vision 1s history goes back to 2017-08 (BTC/ETH), 2020-08 (SOL) — extend further any time via the same script. Raw wiped (single-source invariant).
@@ -24,7 +28,7 @@
 
 Disk now: 29 GB free, 88% used (was 100% full pre-dedup). Repo total: 22 GB. **Window:** Apr 22 → May 27 13:35 UTC (~35.0 days for polymarket/binance/L25 stack; HL klines extend back to 2026-01-30, HL liqs back to 2025-05-25 — full year). Pipelines: `migration_2026_05_25/`, `migration_2026_05_26/`, plus `migration_2026_05_27/{pull_l25_topoff_2026_05_27.sh, pull_delta_nonl25_2026_05_27.sh, convert_l25_topoff.py, convert_nonl25.py, merge_nonl25_to_canonical.py, consolidate_l25_to_canonical.py, verify_all.py}` (HL refresh reuses `migration_2026_05_26/pull_hl_full.sh` + `convert_hl_to_canonical.py`). **All sources current through 2026-05-27 13:25-13:35 UTC.** L25 consolidated: BTC 67.14M / 6.27 GB / 751 row groups; ETH 12.57M / 1.36 GB / 146 row groups; SOL 5.63M / 586 MB / 68 row groups (writer-kept == metadata rows verified, no truncation). Non-L25 max-ts: klines_1m=13:31, klines_1s=13:32, chainlink_rtds=13:32, resolutions=13:25, resolutions_from_rtds=13:25 (37,039 rows post-rebuild), trades_polymarket BTC=13:32 / ETH=13:33 / SOL=13:33, trading_events_30d=13:33 (910,763 events, May 6 → May 27). HL klines=264,675 rows / max 13:34. HL liquidations_full=5,275,626 rows / max 13:35. The retired 30d-rolling-snapshot file `hyperliquid_liquidations_30d.parquet` is gone — `load_hyperliquid_liquidations` now filters the full file at read time. HL trades was NOT refreshed this round (still 30d rolling at 2026-05-16 — pull via the same column-fixed pipeline if needed). **L25 is now a single parquet per asset at `canonical/orderbook_l25/{btc,eth,sol}.parquet`** (BTC 6.16 GB / 65.99M rows; ETH 1.33 GB / 12.34M rows; SOL 575 MB / 5.53M rows), built via `ParquetWriter` with `row_group_size=200_000` (writer-kept == metadata.num_rows verified). `load_orderbook_l25_streaming` reads from the consolidated file (refresh_*/cache/ kept as audit + fallback). Non-L25 max-ts: klines_1m=17:35, klines_1s=17:36, chainlink_rtds=17:36, resolutions=17:25, resolutions_from_rtds=17:25 (36,157 rows post-rebuild), trades_polymarket BTC=17:36 / ETH=17:36 / SOL=17:37, trading_events_30d=17:37 (894,112 events, May 6 → May 26). `binance_metrics_v2` excluded permanently: VPS3 is geoblocked from Binance futures (collector dead since ~2026-04-26); spot klines unaffected. Full refresh playbook documented in `data/v4/canonical/README.md` (the old `build.py --step` interface is deprecated — use `migration_<TAG>/*` scripts).
 
-**Most recent session handoff:** `strategy_lab/reports/HANDOFF_2026_06_04_ML4T_DSR.md` — **READ THIS FIRST.** Multi-day ML scale-up + GPU sprint + ml4t/Deflated-Sharpe verdict. Threw everything at a *predictive* edge (ML, 8.8y Binance history, GPU deep nets/LSTM, 4.8M indicator combos, 387k scalp selectors, Kronos, kline→poly) and **formally proved with Deflated Sharpe that the ONLY real edge is the intra-window EXIT-SCALP (execution, not prediction)**: it passes DSR (pre-registered, prob 1.0, sig); the 387k scalp selectors DIE under realistic-variance DSR (0/20 conservative); 415 GPU architectures fail to beat the poly price (0/415); Kronos (real-poly OOS 52.9%, archived), GPU-LSTM (acc≈0.50), 4.8M-combo indicator sweep (only a weak daily-trend cluster, not poly) — all efficient/noise at scale. **ml4t toolkit (engineer/diagnostic/models) installed + validated on Py3.14 = go-forward rigor layer (DSR/PBO/CPCV).** NEXT: CPCV + meta-label the exit-scalp; different-window OOS (`validate_oos.py` + 6-month API w/ books+trades+klines); ≥200 live shadow fires; deploy 6 pending TV specs (425-retry, DISAGR-HAWKES sleeve, scalp +60→+45, entry_vwap band, Kalshi FOK→IOC, bleeder disables). Assets: 8.8y spot + 6y futures klines in `strategy_lab/autoresearch/_data/binance_vision[_deriv]/`; canonical → Jun 4 21:42; torch cu126/CUDA(RTX 3060)+vectorbt+ml4t all working on Py3.14. **GROUND-TRUTH RULE still applies.**
+**Most recent session handoff:** `strategy_lab/reports/HANDOFF_2026_06_06_OOS_KALSHI_AUDIT.md` — **READ THIS FIRST.** Scalp went OOS-validated on **5 coins** (BTC/ETH/SOL/DOGE/XRP, clean disjoint-window Mar30–Apr21, all gated CI>0 — §D-2 deflation gate CLEARED), via new 1s backfill + aliplayer BBO (`load_orderbook_bbo`). Time-of-day gate (exclude {12,17} UTC / 22–02 boost) also OOS-confirmed. NEW **Kalshi** data → canonical (`kalshi_markets/orderbook.parquet` + `load_kalshi_*`): **real Poly×Kalshi deep-dip arb** (set-cost<0.95 → net +2.7¢/set CI[+1.1,+4.2]; <0.90 → +6.6¢/set; 96% settlement agreement; profit drifts to Poly) — 🔴 GATED on unverified Kalshi ask-DEPTH. Two-host live audit: scalp spec-true on Ireland (live $1, btc_5m_d3) + VPS3 (full shadow fleet incl. new TOD/multi-coin sleeves), BUT 🔴 **live TP@0.65 LEAKS edge → TP stays OFF** (caps runners). ⚠️⚠️ **STOP SAGA — FINAL UPDATE 2026-06-10:** the 06-09 correction ("stop = validated edge +0.88, keep") was itself based on a BUGGY harness (outcome-as-price exit fallback + exit-size ignored). The **corrected-harness rerun REVERSES it: stop paired ON−OFF = −2.8/−3.2 SIG-NEGATIVE on every coin set**, and the maker-exit (+0.42) also flips dead, while the core open-scalp edge survives STRONGER (pooled +1.85 vs +0.93). See `BUGFIX_RERUN_RESULTS_2026_06_10.md` + `RETRO_MASTER_AUDIT_2026_06_10.md`. **RESOLVED 2026-06-11 (operator decision): stop REMOVED on ALL scalp sleeves, BOTH hosts (Ireland `1746efc`, VPS3 `6eaa154f`). Final scalp exit = PURE +60s TIME SELL (TP off, stop off). Entry config unchanged.** **NEXT #1: test maker-EXIT-with-taker-fallback** (exit-side selection is FAVORABLE, unlike the dead maker-entry). All else (meta-label, oracle-determinism[underpowered], cross-timeframe, favorite-longshot, maker-entry) efficient/dead. **GROUND-TRUTH RULE applies.** Prior: `HANDOFF_2026_06_04_ML4T_DSR.md` — Threw everything at a *predictive* edge (ML, 8.8y Binance history, GPU deep nets/LSTM, 4.8M indicator combos, 387k scalp selectors, Kronos, kline→poly) and **formally proved with Deflated Sharpe that the ONLY real edge is the intra-window EXIT-SCALP (execution, not prediction)**: it passes DSR (pre-registered, prob 1.0, sig); the 387k scalp selectors DIE under realistic-variance DSR (0/20 conservative); 415 GPU architectures fail to beat the poly price (0/415); Kronos (real-poly OOS 52.9%, archived), GPU-LSTM (acc≈0.50), 4.8M-combo indicator sweep (only a weak daily-trend cluster, not poly) — all efficient/noise at scale. **ml4t toolkit (engineer/diagnostic/models) installed + validated on Py3.14 = go-forward rigor layer (DSR/PBO/CPCV).** NEXT: CPCV + meta-label the exit-scalp; different-window OOS (`validate_oos.py` + 6-month API w/ books+trades+klines); ≥200 live shadow fires; deploy 6 pending TV specs (425-retry, DISAGR-HAWKES sleeve, scalp +60→+45, entry_vwap band, Kalshi FOK→IOC, bleeder disables). Assets: 8.8y spot + 6y futures klines in `strategy_lab/autoresearch/_data/binance_vision[_deriv]/`; canonical → Jun 4 21:42; torch cu126/CUDA(RTX 3060)+vectorbt+ml4t all working on Py3.14. **GROUND-TRUTH RULE still applies.**
 
 **Prior session handoff:** `strategy_lab/reports/HANDOFF_2026_06_03_SCALP_DEPLOY.md` — Found + validated + DEPLOYED the prior session's one real edge: the **intra-window EXIT-SCALP** — buy the lag-taker token cheap (`entry_vwap<0.55`) and **SELL on the book at +60s instead of holding to resolution** (sidesteps the priced-in trap). Survives walk-forward (+$2.98/tr t=6.33), direction permutation (p=0), and the worst-case fee (bootstrap CI [+1.63,+3.46] excludes 0). Now **16 shadow sleeves on VPS3** (`shadow_scalp_exit_{btc,eth}_{5m,15m}[_d3]_{v1,control_v1}`, δ≥5 @ $25 + δ≥3 @ $5). 🔴 KEY OPEN: the offline FORWARD window is still flat-negative (n<76) → needs **≥200 live forward fires + bootstrap CI>0 before any real capital**. Also this session: 215-sleeve fleet audit (net −$25.4k; 4 EDGE @ t≥2; 25 bleeders to KILL incl INV_NIGHT ×6); **LAGV2 always-UP bug FIXED** (50/50 live); Kalshi 409 → FOK-to-IOC fixed; the new-edge swarm killed 65 candidates (B1 VPIN/C4 CVD = priced-in trap, **WR≠edge**). **PARALLEL session handoff** (per-host live↔shadow parity divergence, RealisticConfig, judge-by-live-wallet): `strategy_lab/reports/HANDOFF_2026_06_03.md`. **GROUND-TRUTH RULE:** verify against actual event fields / live wallet before concluding (multiple mid-session conclusions were overturned). Prior: `HANDOFF_2026_06_01_AUDIT_LAGTAKER_FORENSICS.md`.
 Prior handoff: `HANDOFF_2026_05_22_MOMO_F7_MARKOV.md` (5 deploy sleeves at production parity).
@@ -32,6 +36,13 @@ Prior handoff: `HANDOFF_2026_05_22_MOMO_F7_MARKOV.md` (5 deploy sleeves at produ
 ---
 
 ## 🚀 Currently deployable strategies (2026-05-18)
+
+> ⚠️ **RIGOR-STALE WARNING (retro audit 2026-06-10, `strategy_lab/reports/RETRO_MASTER_AUDIT_2026_06_10.md` — READ IT):**
+> the two "deploy-ready" entries below predate the project's rigor layer (DSR/PBO, fill-haircut, 0.07 fee curve,
+> survivorship checks). **Cyclops S7 X1** (n=36, E0-era) never re-passed a modern fill/fee/DSR test. **Mint-and-sell V2**
+> is positive only on a post-hoc subset with an unexplained 200×–10,000× wallet-PnL gap. Treat BOTH as unvalidated
+> hypotheses, NOT deploy-ready. The retro also found the exit-scalp's OOS window is burned + an outcome-leak bug in the
+> scalp exit-fallback (`1.0 if won else 0.0`) → magnitude claims need the E1 re-validation package before scaling.
 
 Three strategy lines are in different states. **DO NOT confuse versions:**
 
@@ -194,3 +205,79 @@ See `data/v4/canonical/README.md` for full schema, conventions, and refresh inst
 - VPS2 (Contabo IPv6): polymarket collector (orderbook, trades, resolutions), coinbase/kraken/okx klines
 - VPS3 (185.190.143.7): tradingvenue engine + binance klines (live spot-ws + vision history) + chainlink RTDS oracle + production `trading.events`
 - Resolution-engine fix is owned by **storedata agent** (their plan: VPS2/VPS3 chainlink merge, derive re-run, TV events cross-check, chained-strike check, UMA decoder, unified v3 view). Until that lands, canonical filters out binance-resolved rows.
+
+---
+
+<!-- KARPATHY-GUIDELINES:start (source: github.com/multica-ai/andrej-karpathy-skills) -->
+## Behavioral Guidelines (Karpathy-Inspired)
+
+Behavioral guidelines to reduce common LLM coding mistakes. Merge with the project-specific instructions above. **Tradeoff:** these bias toward caution over speed. For trivial tasks, use judgment.
+
+### 1. Think Before Coding
+
+**Don't assume. Don't hide confusion. Surface tradeoffs.**
+
+Before implementing:
+- State your assumptions explicitly. If uncertain, ask.
+- If multiple interpretations exist, present them - don't pick silently.
+- If a simpler approach exists, say so. Push back when warranted.
+- If something is unclear, stop. Name what's confusing. Ask.
+
+### 2. Simplicity First
+
+**Minimum code that solves the problem. Nothing speculative.**
+
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- No "flexibility" or "configurability" that wasn't requested.
+- No error handling for impossible scenarios.
+- If you write 200 lines and it could be 50, rewrite it.
+
+Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+
+### 3. Surgical Changes
+
+**Touch only what you must. Clean up only your own mess.**
+
+When editing existing code:
+- Don't "improve" adjacent code, comments, or formatting.
+- Don't refactor things that aren't broken.
+- Match existing style, even if you'd do it differently.
+- If you notice unrelated dead code, mention it - don't delete it.
+
+When your changes create orphans:
+- Remove imports/variables/functions that YOUR changes made unused.
+- Don't remove pre-existing dead code unless asked.
+
+The test: Every changed line should trace directly to the user's request.
+
+### 4. Goal-Driven Execution
+
+**Define success criteria. Loop until verified.**
+
+Transform tasks into verifiable goals:
+- "Add validation" → "Write tests for invalid inputs, then make them pass"
+- "Fix the bug" → "Write a test that reproduces it, then make it pass"
+- "Refactor X" → "Ensure tests pass before and after"
+
+For multi-step tasks, state a brief plan:
+```
+1. [Step] → verify: [check]
+2. [Step] → verify: [check]
+3. [Step] → verify: [check]
+```
+
+Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+
+**These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
+<!-- KARPATHY-GUIDELINES:end -->
+
+## graphify
+
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+
+Rules:
+- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
+- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
+- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
