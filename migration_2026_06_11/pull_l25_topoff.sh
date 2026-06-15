@@ -1,7 +1,7 @@
 #!/bin/bash
 # L25 delta top-off from VPS3. T_START = 2026-06-08 12:00 UTC (L25 max ~Jun 8 16:23-16:28 -> ~4h overlap).
 set -euo pipefail
-T_START_US=1780920000000000          # 2026-06-08 12:00 UTC
+T_START_US=1781146800000000          # 2026-06-11 03:00 UTC
 TAG=2026_06_11
 DIR=/tmp/v3_l25_${TAG}
 echo "== L25 delta: $(date -u -d @${T_START_US:0:10}) -> NOW (tag ${TAG}) =="

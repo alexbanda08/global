@@ -2,7 +2,7 @@
 # Non-L25 delta top-off from VPS3. Minimal overlap: T_START = 2026-06-08 12:00 UTC
 # (canonical non-L25 max ~Jun 8 15:35-15:38 -> ~3.5h safety overlap, deduped on merge).
 set -euo pipefail
-T_START_US=1780920000000000          # 2026-06-08 12:00 UTC
+T_START_US=1781146800000000          # 2026-06-11 03:00 UTC
 TAG=2026_06_11
 DIR=/tmp/v3_delta_${TAG}
 echo "== non-L25 delta: $(date -u -d @${T_START_US:0:10}) -> NOW (tag ${TAG}) =="
