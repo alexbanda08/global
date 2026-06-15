@@ -1,0 +1,50 @@
+==============================================================================
+INDEPENDENT RE-VERIFICATION + BOUNDARY (Q=2,3)
+==============================================================================
+loading data for boundary cells...
+  loaded t=38s
+  running Q=2 fresh...
+
+Q= 2 [fresh] n=1569  ACCT_MAXDIFF=0.0000
+   OOS net: mean=+0.509 median=-0.088 CI95=[+0.291,+0.747] ex2=+0.444 ex5=+0.353 %pos=45.4%
+   resid=-2.28 paired=+2.33 pvs=0.992
+  running Q=3 fresh...
+
+Q= 3 [fresh] n=1569  ACCT_MAXDIFF=0.0000
+   OOS net: mean=+0.366 median=-0.095 CI95=[+0.160,+0.589] ex2=+0.303 ex5=+0.240 %pos=45.1%
+   resid=-2.47 paired=+2.36 pvs=0.992
+
+Q= 5 [cached] n=1569  ACCT_MAXDIFF=0.0000
+   OOS net: mean=+0.392 median=-0.173 CI95=[+0.173,+0.628] ex2=+0.329 ex5=+0.264 %pos=44.4%
+   resid=-2.46 paired=+2.34 pvs=0.991
+
+Q= 8 [cached] n=1569  ACCT_MAXDIFF=0.0000
+   OOS net: mean=+0.237 median=-0.367 CI95=[-0.018,+0.534] ex2=+0.145 ex5=+0.053 %pos=41.4%
+   resid=-2.52 paired=+2.22 pvs=0.992
+
+Q=12 [cached] n=1569  ACCT_MAXDIFF=0.0000
+   OOS net: mean=-0.063 median=-0.539 CI95=[-0.389,+0.321] ex2=-0.204 ex5=-0.299 %pos=39.0%
+   resid=-3.05 paired=+2.43 pvs=0.992
+
+Q=16 [cached] n=1569  ACCT_MAXDIFF=0.0000
+   OOS net: mean=-0.370 median=-0.622 CI95=[-0.716,+0.026] ex2=-0.509 ex5=-0.597 %pos=38.7%
+   resid=-3.03 paired=+2.08 pvs=0.993
+
+Q=20 [cached] n=1569  ACCT_MAXDIFF=0.0000
+   OOS net: mean=-0.687 median=-0.780 CI95=[-1.051,-0.284] ex2=-0.823 ex5=-0.905 %pos=37.5%
+   resid=-3.56 paired=+2.28 pvs=0.992
+
+==============================================================================
+CURVE (OOS net vs Q, independently re-derived)
+==============================================================================
+  Q= 2: mean=+0.509 med=-0.088 CI[+0.291,+0.747] ex2=+0.444 ex5=+0.353 %pos=45% resid=-2.28 -> GO
+  Q= 3: mean=+0.366 med=-0.095 CI[+0.160,+0.589] ex2=+0.303 ex5=+0.240 %pos=45% resid=-2.47 -> GO
+  Q= 5: mean=+0.392 med=-0.173 CI[+0.173,+0.628] ex2=+0.329 ex5=+0.264 %pos=44% resid=-2.46 -> GO
+  Q= 8: mean=+0.237 med=-0.367 CI[-0.018,+0.534] ex2=+0.145 ex5=+0.053 %pos=41% resid=-2.52 -> no
+  Q=12: mean=-0.063 med=-0.539 CI[-0.389,+0.321] ex2=-0.204 ex5=-0.299 %pos=39% resid=-3.05 -> no
+  Q=16: mean=-0.370 med=-0.622 CI[-0.716,+0.026] ex2=-0.509 ex5=-0.597 %pos=39% resid=-3.03 -> no
+  Q=20: mean=-0.687 med=-0.780 CI[-1.051,-0.284] ex2=-0.823 ex5=-0.905 %pos=38% resid=-3.56 -> no
+
+  ACCOUNTING CROSS-CHECK: max |re-derived − stored| over all cells = 0.00000 (PASS — engine accounting verified)
+  total t=152s
+==============================================================================

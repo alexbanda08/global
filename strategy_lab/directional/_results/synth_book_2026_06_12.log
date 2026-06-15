@@ -1,0 +1,54 @@
+
+=== BTC OOS 2026-03-30..2026-04-21: candidates(delta>=3) = 466 ===
+  filled gated: A=153 (skip 67%)  B=158 (skip 66%)  rescued(B-only)=5
+  A n= 153 $/tr=+1.798 t=+1.92 CI=[-0.063,+3.553]
+  B n= 158 $/tr=+1.887 t=+2.05 CI=[+0.021,+3.719]
+  B-only rescued       n=   5 $/tr=+4.637 t=+0.89 CI=[-5.288,+12.117]
+  mean(ev_A - ev_B) on 153 shared = +0.0000  (>0 => synth cheaper)
+
+=== ETH OOS 2026-03-30..2026-04-21: candidates(delta>=3) = 734 ===
+  filled gated: A=276 (skip 62%)  B=283 (skip 61%)  rescued(B-only)=7
+  A n= 276 $/tr=+1.474 t=+2.09 CI=[+0.095,+2.883]
+  B n= 283 $/tr=+1.742 t=+2.53 CI=[+0.385,+3.104]
+  B-only rescued       n=   7 $/tr=+8.377 t=+2.53 CI=[+3.684,+15.346]
+  mean(ev_A - ev_B) on 276 shared = +0.0000  (>0 => synth cheaper)
+
+=== SOL OOS 2026-03-30..2026-04-21: candidates(delta>=3) = 873 ===
+  filled gated: A=337 (skip 61%)  B=341 (skip 61%)  rescued(B-only)=4
+  A n= 337 $/tr=+2.216 t=+3.59 CI=[+0.985,+3.408]
+  B n= 341 $/tr=+2.398 t=+3.99 CI=[+1.238,+3.553]
+  B-only rescued       n=4 (few)
+  mean(ev_A - ev_B) on 337 shared = +0.0000  (>0 => synth cheaper)
+
+=== DOGE OOS 2026-04-06..2026-04-21: candidates(delta>=3) = 986 ===
+  filled gated: A=271 (skip 73%)  B=273 (skip 72%)  rescued(B-only)=2
+  A n= 271 $/tr=+0.200 t=+0.26 CI=[-1.276,+1.657]
+  B n= 273 $/tr=+0.203 t=+0.27 CI=[-1.269,+1.654]
+  B-only rescued       n=2 (few)
+  mean(ev_A - ev_B) on 271 shared = +0.0000  (>0 => synth cheaper)
+
+=== XRP OOS 2026-04-07..2026-04-21: candidates(delta>=3) = 609 ===
+  filled gated: A=222 (skip 64%)  B=227 (skip 63%)  rescued(B-only)=5
+  A n= 222 $/tr=+2.191 t=+2.90 CI=[+0.699,+3.632]
+  B n= 227 $/tr=+2.294 t=+3.07 CI=[+0.824,+3.682]
+  B-only rescued       n=   5 $/tr=+6.891 t=+1.45 CI=[-0.777,+16.121]
+  mean(ev_A - ev_B) on 222 shared = +0.0000  (>0 => synth cheaper)
+
+=== BNB OOS 2026-04-06..2026-04-21: candidates(delta>=3) = 290 ===
+  filled gated: A=46 (skip 84%)  B=46 (skip 84%)  rescued(B-only)=0
+  A n=  46 $/tr=+4.856 t=+2.46 CI=[+0.971,+8.582]
+  B n=  46 $/tr=+4.856 t=+2.46 CI=[+1.059,+8.718]
+  B-only rescued       n=0 (few)
+  mean(ev_A - ev_B) on 46 shared = +0.0000  (>0 => synth cheaper)
+
+==============================================================================
+POOLED (all coins, gated ev<0.55)
+  A (baseline lead-only)   n=1305 $/tr=+1.680 t=+5.16 CI=[+1.035,+2.325]
+  B (synthetic combined)   n=1328 $/tr=+1.813 t=+5.66 CI=[+1.174,+2.430]
+  B-only rescued fires     n=  23 $/tr=+5.947 t=+3.28 CI=[+2.591,+9.473]
+  mean(ev_A-ev_B) shared   +0.0000  (n=1305; >0 => synth got cheaper entry)
+
+VERDICT keys:
+  - B $/tr CI still > 0  AND  B-only rescued $/tr CI > 0  => synthetic depth = free edge, ADOPT.
+  - B-only rescued $/tr <= 0 (drags pooled)              => rescued books are junk, KEEP lead-only.
+  - mean(ev_A-ev_B) ~ 0 and rescued ~ 0                  => technique-2 inert on this tape, NO-OP.

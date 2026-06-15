@@ -1,0 +1,180 @@
+benchmark 20 min — feeds: rtds, pyth, lazer, arb(btc/eth/sol)
+[arb] btc 0x6ce18586 description: 'BTC / USD' via arb1.arbitrum.io
+[arb] eth 0x639Fe6ab description: 'ETH / USD' via arb1.arbitrum.io
+[arb] sol 0x24ceA4b8 description: 'SOL / USD' via arb1.arbitrum.io
+  t-19.8min rows=753
+  t-19.7min rows=1643
+  t-19.5min rows=2541
+  t-19.3min rows=3449
+[pyth] reconnect: Response ended prematurely
+  t-19.2min rows=4330
+  t-19.0min rows=5213
+  t-18.8min rows=6076
+  t-18.7min rows=6950
+  t-18.5min rows=7829
+  t-18.3min rows=8701
+  t-18.2min rows=9572
+  t-18.0min rows=10457
+  t-17.8min rows=11344
+  t-17.7min rows=12213
+  t-17.5min rows=13099
+  t-17.3min rows=13988
+  t-17.2min rows=14853
+  t-17.0min rows=15756
+  t-16.8min rows=16625
+  t-16.7min rows=17526
+  t-16.5min rows=18400
+  t-16.3min rows=19292
+  t-16.2min rows=20171
+  t-16.0min rows=21044
+  t-15.8min rows=21935
+  t-15.7min rows=22841
+  t-15.5min rows=23692
+  t-15.3min rows=24561
+  t-15.2min rows=25430
+  t-15.0min rows=26289
+  t-14.8min rows=27158
+  t-14.7min rows=28035
+  t-14.5min rows=28898
+[pyth] reconnect: Response ended prematurely
+  t-14.3min rows=29763
+  t-14.2min rows=30660
+  t-14.0min rows=31516
+  t-13.8min rows=32389
+  t-13.7min rows=33282
+  t-13.5min rows=34180
+  t-13.3min rows=35037
+  t-13.2min rows=35913
+  t-13.0min rows=36772
+  t-12.8min rows=37627
+  t-12.7min rows=38517
+  t-12.5min rows=39402
+  t-12.3min rows=40268
+  t-12.2min rows=41138
+  t-12.0min rows=42008
+  t-11.8min rows=42833
+  t-11.7min rows=43743
+  t-11.5min rows=44629
+  t-11.3min rows=45517
+  t-11.2min rows=46374
+  t-11.0min rows=47236
+  t-10.8min rows=48091
+  t-10.7min rows=48998
+  t-10.5min rows=49942
+  t-10.3min rows=50862
+  t-10.2min rows=51793
+  t-10.0min rows=52716
+  t-9.8min rows=53618
+  t-9.7min rows=54540
+  t-9.5min rows=55450
+  t-9.3min rows=56343
+[pyth] reconnect: Response ended prematurely
+  t-9.2min rows=57201
+  t-9.0min rows=58103
+  t-8.8min rows=58995
+  t-8.7min rows=59885
+  t-8.5min rows=60808
+  t-8.3min rows=61714
+  t-8.2min rows=62634
+  t-8.0min rows=63567
+  t-7.8min rows=64482
+  t-7.7min rows=65380
+  t-7.5min rows=66300
+  t-7.3min rows=67205
+  t-7.2min rows=68110
+  t-7.0min rows=69016
+  t-6.8min rows=69904
+  t-6.7min rows=70805
+  t-6.5min rows=71732
+  t-6.3min rows=72628
+  t-6.2min rows=73496
+[pyth] reconnect: Response ended prematurely
+  t-6.0min rows=74337
+  t-5.8min rows=75240
+  t-5.7min rows=76143
+[binance] reconnect: no close frame received or sent
+  t-5.5min rows=76946
+  t-5.3min rows=77821
+  t-5.2min rows=78716
+  t-5.0min rows=79601
+  t-4.8min rows=80489
+  t-4.7min rows=81382
+  t-4.5min rows=82294
+  t-4.3min rows=83175
+  t-4.2min rows=84094
+  t-4.0min rows=84963
+  t-3.8min rows=85864
+  t-3.7min rows=86755
+  t-3.5min rows=87648
+  t-3.3min rows=88506
+  t-3.2min rows=89400
+  t-3.0min rows=90288
+  t-2.8min rows=91154
+  t-2.7min rows=92057
+  t-2.5min rows=92954
+  t-2.3min rows=93820
+  t-2.2min rows=94719
+  t-2.0min rows=95591
+  t-1.8min rows=96453
+  t-1.7min rows=97343
+  t-1.5min rows=98261
+  t-1.3min rows=99152
+  t-1.2min rows=100058
+  t-1.0min rows=100907
+  t-0.8min rows=101768
+  t-0.7min rows=102635
+  t-0.5min rows=103500
+  t-0.3min rows=104372
+  t-0.2min rows=105274
+  t--0.0min rows=106063
+saved 106063 rows -> C:\Users\alexandre bandarra\Desktop\global\strategy_lab\directional\_results\feed_bench_1781281434.parquet
+
+=== rows per feed/sym ===
+sym        btc    eth    sol
+feed                        
+arb         22     17     12
+binance   8849   7766   6537
+lazer    23943  23943  23943
+pyth      2499   2499   2499
+rtds      1178   1178   1178
+
+=== transport delay (local_arrival - feed_ts) p50/p90 ms ===
+                0.5     0.9
+feed    sym                
+arb     btc  4603.0  6014.0
+        eth  4477.0  6212.0
+        sol  4481.0  5723.0
+binance btc     1.0     1.0
+        eth     1.0     1.0
+        sol     0.0     1.0
+lazer   btc  2941.0  2958.0
+        eth  2941.0  2958.0
+        sol  2941.0  2958.0
+pyth    btc  5712.0  9155.0
+        eth  5712.0  9155.0
+        sol  5712.0  9155.0
+rtds    btc  4221.0  4624.0
+        eth  4204.0  4602.0
+        sol  4201.0  4611.0
+
+=== price lead/lag vs RTDS (negative = feed LEADS rtds) ===
+  btc lazer: best shift +2.6s (err 0.4bp)  -> LEADS rtds
+  btc binance: best shift +2.2s (err 6.3bp)  -> LEADS rtds
+  btc pyth: best shift -0.2s (err 0.6bp)  -> LAGS rtds
+  eth lazer: best shift +2.6s (err 0.6bp)  -> LEADS rtds
+  eth binance: best shift +2.8s (err 6.3bp)  -> LEADS rtds
+  eth pyth: best shift -0.4s (err 0.9bp)  -> LAGS rtds
+  sol lazer: best shift +2.6s (err 1.3bp)  -> LEADS rtds
+  sol binance: best shift +2.8s (err 5.6bp)  -> LEADS rtds
+  sol pyth: best shift -0.6s (err 1.2bp)  -> LAGS rtds
+
+=== move-event first-detection (RTDS moves >=5bp/2s) ===
+  btc lazer: n=4  median -1.34s  p25 -1.53s p75 -1.11s (negative = lazer saw the move BEFORE rtds)
+  btc binance: n=4  median -7.54s  p25 -9.93s p75 -5.14s (negative = binance saw the move BEFORE rtds)
+  btc pyth: n=4  median +1.65s  p25 +1.39s p75 +1.95s (negative = pyth saw the move BEFORE rtds)
+  eth lazer: n=9  median -1.56s  p25 -2.55s p75 -1.09s (negative = lazer saw the move BEFORE rtds)
+  eth binance: n=9  median -2.86s  p25 -5.64s p75 -1.63s (negative = binance saw the move BEFORE rtds)
+  eth pyth: n=8  median +1.33s  p25 -1.47s p75 +1.94s (negative = pyth saw the move BEFORE rtds)
+  sol lazer: n=13  median -1.78s  p25 -2.39s p75 -1.41s (negative = lazer saw the move BEFORE rtds)
+  sol binance: n=13  median -1.08s  p25 -4.79s p75 +0.56s (negative = binance saw the move BEFORE rtds)
+  sol pyth: n=13  median +1.70s  p25 +1.31s p75 +2.38s (negative = pyth saw the move BEFORE rtds)

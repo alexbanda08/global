@@ -1,0 +1,31 @@
+==========================================================================
+SHORT-SIDE ARB SCAN (sum_bid>1)
+==========================================================================
+PRE-REG thresholds [1.0, 1.02, 1.035, 1.05]; fee-breakeven ~1.035; native books
+btc-15m slugs 4729
+books 9458 t=22s
+scanned 4698 slugs t=23s
+
+--- ALL (n=4698) ---
+  per-slug median(max sum_bid)=1.0000  median(med sum_bid)=0.9900  global max=1.3300
+  sum_bid>1.0: time-frac=0.076%  slugs-with-any=48.9%  cap $/slug med=0.000 mean=0.236
+  sum_bid>1.02: time-frac=0.011%  slugs-with-any=10.9%  cap $/slug med=0.000 mean=0.232
+  sum_bid>1.035: time-frac=0.005%  slugs-with-any=4.1%  cap $/slug med=0.000 mean=0.229
+  sum_bid>1.05: time-frac=0.004%  slugs-with-any=2.7%  cap $/slug med=0.000 mean=0.218
+
+--- IS (n=2714) ---
+  per-slug median(max sum_bid)=1.0000  median(med sum_bid)=0.9900  global max=1.2700
+  sum_bid>1.0: time-frac=0.091%  slugs-with-any=58.1%  cap $/slug med=0.000 mean=0.073
+  sum_bid>1.02: time-frac=0.009%  slugs-with-any=12.8%  cap $/slug med=0.000 mean=0.069
+  sum_bid>1.035: time-frac=0.003%  slugs-with-any=4.7%  cap $/slug med=0.000 mean=0.067
+  sum_bid>1.05: time-frac=0.002%  slugs-with-any=2.7%  cap $/slug med=0.000 mean=0.054
+
+--- OOS (n=1984) ---
+  per-slug median(max sum_bid)=1.0000  median(med sum_bid)=0.9900  global max=1.3300
+  sum_bid>1.0: time-frac=0.055%  slugs-with-any=36.3%  cap $/slug med=0.000 mean=0.459
+  sum_bid>1.02: time-frac=0.013%  slugs-with-any=8.3%  cap $/slug med=0.000 mean=0.455
+  sum_bid>1.035: time-frac=0.008%  slugs-with-any=3.3%  cap $/slug med=0.000 mean=0.451
+  sum_bid>1.05: time-frac=0.008%  slugs-with-any=2.7%  cap $/slug med=0.000 mean=0.442
+
+VERDICT (net-of-fee sum_bid>1.035, OOS): slugs-with-any=3.3%  cap$/slug median=0.000  -> PARK
+==========================================================================

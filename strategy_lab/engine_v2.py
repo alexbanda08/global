@@ -315,8 +315,12 @@ def hold_pnl(fill: dict, *, won: bool, cfg: EngineConfig) -> float:
             return gross - (gross * cfg.legacy_fee_pct if gross > 0 else 0.0) - tx
     # lost
     if cfg.fee_model == "poly_taker_curve":
-        # paid entry fee + lost the principal
-        return -usd_in - float(fill.get("fee_in", 0.0)) - tx
+        # OPERATOR-CONFIRMED 2026-06-03 (CLAUDE.md): live Polymarket charges $0 fee
+        # on a losing hold-to-resolution trade — the loser pays exactly its principal,
+        # `pnl = -entry_qty * entry_price`, with NO taker fee on the losing leg.
+        # The winner branch above already matches live (qty*(1-p)*(1-0.07*p)); only
+        # this loser branch was overcharging the entry `fee_in` (~$0.87/loss at p≈0.51).
+        return -usd_in - tx
     else:
         return -usd_in - tx     # legacy: no fee on loss, but tx still applies
 

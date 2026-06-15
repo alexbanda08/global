@@ -1,0 +1,14 @@
+
+=== ETH 15m: 1113 windows, 26 offsets/window ===
+  [ckpt] ETH 15m: grid_rows=14926  |gap|>=.08 firstcross n= 829 $/tr=-0.270 t=-0.48 CI=[-1.141,+0.985] won=0.46
+
+=== ETH 5m: 3350 windows, 12 offsets/window ===
+  [ckpt] ETH 5m: grid_rows=20974  |gap|>=.08 firstcross n=1951 $/tr=+0.434 t=+0.83 CI=[-0.517,+1.577] won=0.47
+
+=== SOL 15m: 1082 windows, 26 offsets/window ===
+  [ckpt] SOL 15m: grid_rows=14522  |gap|>=.08 firstcross n= 690 $/tr=-1.678 t=-4.46 CI=[-2.393,-0.942] won=0.37
+
+=== SOL 5m: 3335 windows, 12 offsets/window ===
+  [ckpt] SOL 5m: grid_rows=19985  |gap|>=.08 firstcross n=1825 $/tr=-0.495 t=-1.17 CI=[-1.275,+0.341] won=0.41
+
+=== BTC 15m: 1132 windows, 26 offsets/window ===

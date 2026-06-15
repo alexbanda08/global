@@ -1,0 +1,34 @@
+{
+  "card_id": "v52_vp_link",
+  "fleet": "V52",
+  "name": "VP_LINK",
+  "coin": "LINK",
+  "tf": "4h",
+  "family": "volume (Volume-Profile)",
+  "signal": "Volume-profile rotation (win=60, n_bins=15)",
+  "variant": "baseline",
+  "gate": "ATR_NOTOPVOL",
+  "exit": "EXIT_4H (tp10/sl2/trail6/hold60)",
+  "weight": 0.1,
+  "new": false,
+  "validated": {
+    "sharpe": 1.634,
+    "cagr": 0.6497,
+    "mdd": -0.305,
+    "calmar": 2.13,
+    "sh_2024": 2.053,
+    "sh_2025": 2.107,
+    "sh_2026": -1.12
+  },
+  "notes": "Highest-fire-cadence sleeve. ATR_NOTOPVOL gate: Sharpe 1.35->1.63.",
+  "status": "shadow_paper",
+  "venue": "hyperliquid_perp",
+  "card_built": "2026-06-15T18:05:20.304629+00:00",
+  "live": {
+    "ledger_fires": 10,
+    "last_fire": "2026-06-14T08:00:00+00:00",
+    "ledger_paper_pnl": -61.74,
+    "ledger_win_rate": 10.0,
+    "current_state": "FLAT"
+  }
+}

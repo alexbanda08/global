@@ -1,0 +1,37 @@
+{
+  "card_id": "v52_mfi_eth",
+  "fleet": "V52",
+  "name": "MFI_ETH",
+  "coin": "ETH",
+  "tf": "4h",
+  "family": "volume (MFI)",
+  "signal": "MFI(14) extreme 25/75",
+  "variant": "baseline",
+  "gate": "ATR_NOTOPVOL",
+  "exit": "EXIT_4H (tp10/sl2/trail6/hold60)",
+  "weight": 0.1,
+  "new": false,
+  "validated": {
+    "sharpe": 0.683,
+    "cagr": 0.1729,
+    "mdd": -0.3196,
+    "calmar": 0.541,
+    "sh_2024": 1.088,
+    "sh_2025": 0.261,
+    "sh_2026": 0.975
+  },
+  "notes": "ATR_NOTOPVOL gate: Sharpe 0.27->0.68 (+0.47).",
+  "status": "shadow_paper",
+  "venue": "hyperliquid_perp",
+  "card_built": "2026-06-15T18:05:20.304629+00:00",
+  "live": {
+    "ledger_fires": 8,
+    "last_fire": "2026-05-29T00:00:00+00:00",
+    "ledger_paper_pnl": -40.5,
+    "ledger_win_rate": 12.5,
+    "current_state": "OPEN",
+    "open_dir": "LONG",
+    "open_entry_ts": "2026-06-11T12:00:00+00:00",
+    "unrealized_pct": 10.529
+  }
+}

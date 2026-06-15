@@ -1,0 +1,24 @@
+C:\Users\alexandre bandarra\Desktop\global\strategy_lab\directional\scalp_lowvol_gate_fixed_2026_06_10.py:32: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  fires["rv300"] = fires.groupby("coin", group_keys=False).apply(add_vol)
+gated OOS fires: 2254  coins={'SOL': 575, 'ETH': 509, 'XRP': 381, 'DOGE': 378, 'BTC': 329, 'BNB': 82}
+with vol: 2254
+
+BASELINE (all gated): n=2254 $/tr=+0.593 t=+2.97 CI=[+0.201,+0.975]
+
+===== SPLIT-1 TIME (low-vol gate must beat baseline on BOTH halves) =====
+  low-vol thr (train median rv300) = 0.89 bps
+  TRAIN base n=1127 $/tr=+0.765 t=+2.68 CI=[+0.206,+1.342]  | TRAIN lowVol n= 564 $/tr=+1.522 t=+4.20 CI=[+0.821,+2.226] | TRAIN hiVol n= 563 $/tr=+0.006 t=+0.01 CI=[-0.863,+0.857]
+  TEST  base n=1127 $/tr=+0.422 t=+1.51 CI=[-0.128,+0.986]  | TEST  lowVol n= 514 $/tr=+0.980 t=+2.48 CI=[+0.197,+1.775] | TEST  hiVol n= 613 $/tr=-0.046 t=-0.12 CI=[-0.804,+0.707]
+
+===== SPLIT-2 COIN (train BTC+ETH, test SOL) =====
+  low-vol thr (BTC+ETH median rv300) = 0.80 bps
+  TRAIN(BTC+ETH) base n= 838 $/tr=+0.736 t=+2.39 CI=[+0.143,+1.329] | lowVol n= 419 $/tr=+1.157 t=+2.98 CI=[+0.393,+1.948] | hiVol n= 419 $/tr=+0.314 t=+0.66 CI=[-0.620,+1.261]
+  TEST(SOL)      base n= 575 $/tr=+0.331 t=+0.84 CI=[-0.438,+1.103] | lowVol n=  98 $/tr=+1.272 t=+1.45 CI=[-0.436,+2.909] | hiVol n= 477 $/tr=+0.138 t=+0.31 CI=[-0.714,+0.980]
+
+===== terciles (pooled, for shape) =====
+  LOW  n= 752 $/tr=+1.521 t=+5.01 CI=[+0.922,+2.114]
+  MID  n= 750 $/tr=+0.006 t=+0.02 CI=[-0.663,+0.693]
+  HIGH n= 752 $/tr=+0.251 t=+0.66 CI=[-0.513,+1.021]
+
+READ: low-vol is a DEPLOYABLE gate only if lowVol>baseline AND lowVol CI>0 on BOTH test sides.
+If lowVol only wins in-sample/one split -> monitor, not a gate (same fate as every other regime lever).

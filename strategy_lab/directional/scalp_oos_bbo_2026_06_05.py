@@ -1,4 +1,9 @@
 """
+⛔ SUPERSEDED 2026-06-13 — DO NOT RERUN. Contains TWO known bugs:
+  (1) outcome-leak exit fallback `1.0 if won else 0.0` (line ~82) — fixed in scalp_oos_bbo_fixed_2026_06_10.py;
+  (2) bar-START signal asof = ~1s lookahead (line ~53) — fixed in the _fixed driver (causal end-time asof).
+Use scalp_oos_bbo_fixed_2026_06_10.py instead. Kept only for historical diff.
+
 SCALP DIFFERENT-WINDOW OOS (clean) — aliplayer BBO, Mar 30 -> Apr 21 (pre-search = disjoint from Apr22-Jun4).
 BBO is slot-aligned w/ full pre-slot coverage (load_orderbook_bbo), so we CAN fire at the deployed +5s.
 Rules: delta_bps=|binance-1s 5s return| at slot_start; fire @ slot_start+5s; lead=sign(ret);
@@ -20,7 +25,7 @@ SPREAD = 0.05; STAKE = 25.0; LAT_US = 85_000
 import os
 COINS = os.environ.get("OOS_COINS", "BTC,ETH,SOL").split(",")
 _FULL = ("2026-03-30", "2026-04-21"); _NEW = ("2026-04-06", "2026-04-21")  # DOGE/BNB markets+1s align Apr6-21
-WIN = {"BTC": _FULL, "ETH": _FULL, "SOL": _FULL, "DOGE": _NEW, "BNB": _NEW}
+WIN = {"BTC": _FULL, "ETH": _FULL, "SOL": _FULL, "DOGE": _NEW, "BNB": _NEW, "XRP": ("2026-04-07", "2026-04-21")}
 OUTTAG = os.environ.get("OOS_TAG", "")
 ALL_FIRES = []
 

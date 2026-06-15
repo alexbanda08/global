@@ -1,0 +1,38 @@
+=== BTC 15m: 130 candidates ===
+  [ckpt] rows=64
+=== BTC 5m: 336 candidates ===
+  [ckpt] rows=154
+=== ETH 15m: 212 candidates ===
+  [ckpt] rows=268
+=== ETH 5m: 522 candidates ===
+  [ckpt] rows=428
+=== SOL 15m: 248 candidates ===
+  [ckpt] rows=566
+=== SOL 5m: 625 candidates ===
+  [ckpt] rows=763
+
+saved 763 fires (gated <0.55)
+CLEAN n=677
+
+===== MICROPRICE TILT (normalized, lead-token book) vs scalp $/tr — CLEAN =====
+  tiltn>0 = book pressure ALREADY points the binance way (aligned).
+  OPPOSED (low)  n= 226 $/tr=+1.032 t=+1.65 CI=[-0.187,+2.286]
+  NEUTRAL        n= 225 $/tr=+2.435 t=+4.87 CI=[+1.447,+3.414]
+  ALIGNED (high) n= 226 $/tr=+2.079 t=+3.71 CI=[+0.965,+3.204]
+
+  -- sign buckets --
+  tilt<-0.05     n=   1 (few)
+  |tilt|<=0.05   n= 676 $/tr=+1.835 t=+5.63 CI=[+1.179,+2.465]
+  tilt>+0.05     n=   0 (few)
+
+===== time-split consistency (gate must hold on both halves) =====
+  H1 OPPOSED n= 113 $/tr=+1.144 t=+1.34 CI=[-0.564,+2.789] | ALIGNED n= 114 $/tr=+1.915 t=+2.50 CI=[+0.415,+3.408]
+  H2 OPPOSED n= 112 $/tr=+0.789 t=+0.86 CI=[-1.028,+2.631] | ALIGNED n= 113 $/tr=+2.638 t=+3.42 CI=[+1.136,+4.167]
+
+===== per-coin (OPPOSED tercile vs ALL) =====
+  BTC: ALL n= 135 $/tr=+2.060 t=+2.88 CI=[+0.640,+3.437] | OPPOSED n=  45 $/tr=+2.726 t=+2.23 CI=[+0.302,+5.150]
+  ETH: ALL n= 247 $/tr=+1.549 t=+2.66 CI=[+0.395,+2.704] | OPPOSED n=  82 $/tr=+0.088 t=+0.08 CI=[-2.146,+2.336]
+  SOL: ALL n= 295 $/tr=+2.000 t=+4.31 CI=[+1.107,+2.897] | OPPOSED n=  98 $/tr=+0.857 t=+0.92 CI=[-0.942,+2.590]
+
+READ: microprice adds value only if one tilt bucket beats ALL consistently (both halves, most coins).
+CAVEAT: burned search window — feature exploration only; any winner needs live confirmation.

@@ -1,0 +1,203 @@
+========================================================================
+MM HYBRID REPLICA — 2026-06-13
+Levers: multi-level depth (A) + taker completion (B)
+========================================================================
+
+Loading resolutions...
+  4729 btc-updown-15m slugs  (Apr22→Jun11)
+  IS=2721 slugs | OOS=2008 slugs
+
+Loading L25 books (full 25 levels)...
+  9458 book series  t=58s
+
+Loading taker sell trades...
+  7968 trade series  t=73s
+
+--- B945 GROUND TRUTH ---
+  pvs median=0.9674  net/slug median=+$3.18
+  maker=63%  taker=37%
+  IS (Apr22–May20) gt_pnl median=+$1.72  OOS (May21–Jun11) median=+$5.91
+  IS/OOS split: 2721/2008 slugs
+
+========================================================================
+STEP 1: VALIDATION — Tune taker_trigger to reproduce 63/37 split
+  Config: Q=20, gamma=0.05, budget=$332, offset=-3600s, n_levels=5
+  Grid: gate_G∈{0.985} × trigger∈{10,20,50}
+========================================================================
+
+  gate_G=0.985  trigger=10sh:
+      n=162 pvs=0.9593 pf=93.5% fills/sd=37.8 maker=79.5% taker=20.5%
+      net_mean=+2.55 net_med=+0.07 CI95=[+1.06,+4.35] ex2=+1.84 CI_ex2=[+0.66,+3.16]
+      paired=+10.70 resid=-7.99 rebate=+0.54/slug
+    -> maker_pct=79.5% (target 63±10%) | OUT OF RANGE
+
+  gate_G=0.985  trigger=20sh:
+      n=162 pvs=0.9542 pf=92.7% fills/sd=36.6 maker=85.9% taker=14.1%
+      net_mean=+5.97 net_med=+0.10 CI95=[+1.84,+13.46] ex2=+2.65 CI_ex2=[+1.23,+4.05]
+      paired=+10.17 resid=-4.28 rebate=+0.55/slug
+    -> maker_pct=85.9% (target 63±10%) | OUT OF RANGE
+
+  gate_G=0.985  trigger=50sh:
+      n=162 pvs=0.9553 pf=91.5% fills/sd=33.9 maker=98.4% taker=1.6%
+      net_mean=+2.91 net_med=-0.27 CI95=[+1.08,+4.79] ex2=+2.28 CI_ex2=[+0.71,+3.97]
+      paired=+8.17 resid=-5.72 rebate=+0.52/slug
+    -> maker_pct=98.4% (target 63±10%) | OUT OF RANGE
+
+========================================================================
+STEP 2: EXPERIMENT GRID — gate_G × trigger, full IS+OOS
+  Pre-registered: gate_G∈[0.97, 0.985, 1.0] × trigger∈[10, 20, 50] = 9 cells
+========================================================================
+
+  gate_G=0.970  trigger=10sh:
+  IS  [2162 slugs]:
+      n=2162 pvs=0.9564 pf=94.0% fills/sd=38.4 maker=79.4% taker=20.6%
+      net_mean=+2.56 net_med=+0.11 CI95=[+2.09,+3.06] ex2=+2.48 CI_ex2=[+2.06,+2.91]
+      paired=+11.34 resid=-8.65 rebate=+0.56/slug
+  OOS [1881 slugs]:
+      n=1881 pvs=0.9764 pf=91.4% fills/sd=24.8 maker=82.4% taker=17.6%
+      net_mean=-1.40 net_med=-1.12 CI95=[-1.72,-1.08] ex2=-1.46 CI_ex2=[-1.75,-1.13]
+      paired=+4.82 resid=-6.22 rebate=+0.35/slug
+    IS flow_capture=4.2% (maker 802318sh / market 19123458sh)
+
+  gate_G=0.970  trigger=20sh:
+  IS  [2162 slugs]:
+      n=2162 pvs=0.9543 pf=93.6% fills/sd=37.2 maker=84.7% taker=15.3%
+      net_mean=+3.23 net_med=+0.52 CI95=[+2.75,+3.71] ex2=+3.16 CI_ex2=[+2.70,+3.61]
+      paired=+11.15 resid=-7.99 rebate=+0.56/slug
+  OOS [1881 slugs]:
+      n=1881 pvs=0.9781 pf=90.8% fills/sd=24.0 maker=87.7% taker=12.3%
+      net_mean=-0.90 net_med=-0.92 CI95=[-1.24,-0.56] ex2=-0.95 CI_ex2=[-1.28,-0.63]
+      paired=+4.68 resid=-5.69 rebate=+0.35/slug
+    IS flow_capture=4.2% (maker 807141sh / market 19123458sh)
+
+  gate_G=0.970  trigger=50sh:
+  IS  [2162 slugs]:
+      n=2162 pvs=0.9566 pf=92.1% fills/sd=34.5 maker=97.6% taker=2.4%
+      net_mean=+3.56 net_med=+0.02 CI95=[+3.02,+4.12] ex2=+3.42 CI_ex2=[+2.90,+3.93]
+      paired=+9.33 resid=-6.23 rebate=+0.53/slug
+  OOS [1881 slugs]:
+      n=1881 pvs=0.9838 pf=89.6% fills/sd=22.8 maker=98.7% taker=1.3%
+      net_mean=-0.32 net_med=-0.86 CI95=[-0.73,+0.11] ex2=-0.40 CI_ex2=[-0.79,+0.00]
+      paired=+3.89 resid=-4.53 rebate=+0.34/slug
+    IS flow_capture=4.0% (maker 770977sh / market 19123458sh)
+
+  gate_G=0.985  trigger=10sh:
+  IS  [2162 slugs]:
+      n=2162 pvs=0.9579 pf=94.2% fills/sd=38.7 maker=78.2% taker=21.8%
+      net_mean=+2.32 net_med=-0.22 CI95=[+1.88,+2.77] ex2=+2.23 CI_ex2=[+1.79,+2.66]
+      paired=+11.20 resid=-8.68 rebate=+0.56/slug
+  OOS [1881 slugs]:
+      n=1881 pvs=0.9775 pf=91.7% fills/sd=25.0 maker=81.0% taker=19.0%
+      net_mean=-1.57 net_med=-1.17 CI95=[-1.89,-1.24] ex2=-1.63 CI_ex2=[-1.95,-1.33]
+      paired=+4.81 resid=-6.34 rebate=+0.35/slug
+    IS flow_capture=4.2% (maker 806721sh / market 19123458sh)
+
+  gate_G=0.985  trigger=20sh:
+  IS  [2162 slugs]:
+      n=2162 pvs=0.9549 pf=93.7% fills/sd=37.3 maker=83.9% taker=16.1%
+      net_mean=+3.51 net_med=+0.45 CI95=[+2.88,+4.23] ex2=+3.18 CI_ex2=[+2.71,+3.65]
+      paired=+11.31 resid=-7.83 rebate=+0.56/slug
+  OOS [1881 slugs]:
+      n=1881 pvs=0.9783 pf=90.8% fills/sd=24.2 maker=86.9% taker=13.1%
+      net_mean=-0.99 net_med=-0.97 CI95=[-1.33,-0.67] ex2=-1.04 CI_ex2=[-1.38,-0.71]
+      paired=+4.62 resid=-5.71 rebate=+0.35/slug
+    IS flow_capture=4.2% (maker 812640sh / market 19123458sh)
+
+  gate_G=0.985  trigger=50sh:
+  IS  [2162 slugs]:
+      n=2162 pvs=0.9565 pf=92.2% fills/sd=34.6 maker=97.4% taker=2.6%
+      net_mean=+3.50 net_med=+0.05 CI95=[+2.98,+4.05] ex2=+3.37 CI_ex2=[+2.87,+3.87]
+      paired=+9.27 resid=-6.22 rebate=+0.54/slug
+  OOS [1881 slugs]:
+      n=1881 pvs=0.9835 pf=89.7% fills/sd=22.8 maker=98.5% taker=1.5%
+      net_mean=-0.34 net_med=-0.87 CI95=[-0.74,+0.07] ex2=-0.42 CI_ex2=[-0.83,-0.05]
+      paired=+3.85 resid=-4.51 rebate=+0.34/slug
+    IS flow_capture=4.0% (maker 771644sh / market 19123458sh)
+
+  gate_G=1.000  trigger=10sh:
+  IS  [2162 slugs]:
+      n=2162 pvs=0.9582 pf=94.4% fills/sd=39.3 maker=76.6% taker=23.4%
+      net_mean=+2.39 net_med=-0.26 CI95=[+1.81,+3.03] ex2=+2.09 CI_ex2=[+1.66,+2.51]
+      paired=+11.40 resid=-8.71 rebate=+0.56/slug
+  OOS [1881 slugs]:
+      n=1881 pvs=0.9784 pf=92.0% fills/sd=25.3 maker=79.3% taker=20.7%
+      net_mean=-1.68 net_med=-1.18 CI95=[-1.97,-1.38] ex2=-1.73 CI_ex2=[-2.03,-1.44]
+      paired=+4.76 resid=-6.34 rebate=+0.36/slug
+    IS flow_capture=4.3% (maker 813140sh / market 19123458sh)
+
+  gate_G=1.000  trigger=20sh:
+  IS  [2162 slugs]:
+      n=2162 pvs=0.9551 pf=93.8% fills/sd=37.5 maker=83.1% taker=16.9%
+      net_mean=+3.35 net_med=+0.45 CI95=[+2.73,+4.07] ex2=+3.03 CI_ex2=[+2.55,+3.52]
+      paired=+11.31 resid=-7.95 rebate=+0.57/slug
+  OOS [1881 slugs]:
+      n=1881 pvs=0.9791 pf=91.1% fills/sd=24.3 maker=85.9% taker=14.1%
+      net_mean=-1.05 net_med=-1.02 CI95=[-1.37,-0.73] ex2=-1.11 CI_ex2=[-1.41,-0.80]
+      paired=+4.64 resid=-5.75 rebate=+0.36/slug
+    IS flow_capture=4.3% (maker 816523sh / market 19123458sh)
+
+  gate_G=1.000  trigger=50sh:
+  IS  [2162 slugs]:
+      n=2162 pvs=0.9569 pf=92.2% fills/sd=34.6 maker=97.3% taker=2.7%
+      net_mean=+3.51 net_med=+0.03 CI95=[+2.97,+4.07] ex2=+3.37 CI_ex2=[+2.87,+3.87]
+      paired=+9.27 resid=-6.21 rebate=+0.54/slug
+  OOS [1881 slugs]:
+      n=1881 pvs=0.9838 pf=89.7% fills/sd=22.8 maker=98.4% taker=1.6%
+      net_mean=-0.32 net_med=-0.87 CI95=[-0.73,+0.09] ex2=-0.40 CI_ex2=[-0.80,+0.01]
+      paired=+3.85 resid=-4.48 rebate=+0.34/slug
+    IS flow_capture=4.0% (maker 772240sh / market 19123458sh)
+
+========================================================================
+STEP 3: GUIDE FILTERS on best config (G=0.970, trig=50)
+========================================================================
+
+  (a) Profitable UTC hours (IS, n>=10): [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+      Profitable weekdays (IS, n>=20): [0, 1, 2, 3, 4, 5, 6]
+  Regime filter OOS (2008 slugs):
+      n=1881 pvs=0.9838 pf=89.6% fills/sd=22.8 maker=98.7% taker=1.3%
+      net_mean=-0.32 net_med=-0.86 CI95=[-0.73,+0.10] ex2=-0.40 CI_ex2=[-0.80,-0.00]
+      paired=+3.89 resid=-4.53 rebate=+0.34/slug
+
+  (b) Consecutive-loss pause K=2, N=1 OOS (1682 slugs):
+      n=1560 pvs=0.9854 pf=89.4% fills/sd=22.1 maker=98.7% taker=1.3%
+      net_mean=-0.34 net_med=-0.91 CI95=[-0.79,+0.13] ex2=-0.43 CI_ex2=[-0.88,+0.01]
+      paired=+3.65 resid=-4.31 rebate=+0.33/slug
+
+========================================================================
+STEP 4: WORKED EXAMPLES (3 slugs, G=0.970, trig=50)
+========================================================================
+
+========================================================================
+STEP 5: PRE-REGISTERED DECISION RULE
+  GO if OOS net CI95 lo > 0 AND ex-top2 > 0
+========================================================================
+
+  BEST CONFIG: gate_G=0.970  taker_trigger=50sh
+
+  IS  [2162 slugs]:
+      n=2162 pvs=0.9566 pf=92.1% fills/sd=34.5 maker=97.6% taker=2.4%
+      net_mean=+3.56 net_med=+0.02 CI95=[+2.99,+4.14] ex2=+3.42 CI_ex2=[+2.92,+3.91]
+      paired=+9.33 resid=-6.23 rebate=+0.53/slug
+
+  OOS [1881 slugs]:
+      n=1881 pvs=0.9838 pf=89.6% fills/sd=22.8 maker=98.7% taker=1.3%
+      net_mean=-0.32 net_med=-0.86 CI95=[-0.72,+0.13] ex2=-0.40 CI_ex2=[-0.81,+0.01]
+      paired=+3.89 resid=-4.53 rebate=+0.34/slug
+
+  VALIDATION CHECKS:
+    maker/taker split: 98.7%/1.3%  target 63/37  -> FAIL
+    pvs (OOS) = 0.9838  target ~0.967
+    flow_capture (IS maker only) = 4.0%  target ~28%  prior 7%
+
+  OOS CI95 lo = -0.72  ex-top2 = -0.40
+
+  VERDICT: NO-GO
+  -> Reason for NO-GO:
+     OOS CI95 lo = -0.72 (need > 0)
+     ex-top2 = -0.40 (need > 0)
+     maker/taker split 98.7% outside 53-73% range
+
+  Saved per-slug results: C:\Users\alexandre bandarra\Desktop\global\strategy_lab\wallet_hunt\cache\_mm_hybrid_results.parquet
+
+  Total runtime: 2715s
+========================================================================

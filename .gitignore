@@ -24,6 +24,8 @@ __pycache__/
 *.zip
 *.pkl
 *.h5
+# graphify knowledge graph (158MB, regenerable via `graphify update .`)
+graphify-out/
 
 # === Editor / OS ===
 .vscode/

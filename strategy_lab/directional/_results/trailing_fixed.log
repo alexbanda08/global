@@ -1,0 +1,54 @@
+
+=== ETH 15m: 212 candidate fires ===
+  [ckpt] ETH 15m: fires=111
+
+=== ETH 5m: 522 candidate fires ===
+  [ckpt] ETH 5m: fires=160
+
+=== SOL 15m: 248 candidate fires ===
+  [ckpt] SOL 15m: fires=132
+
+=== SOL 5m: 625 candidate fires ===
+  [ckpt] SOL 5m: fires=191
+
+=== BTC 15m: 130 candidate fires ===
+  [ckpt] BTC 15m: fires=64
+
+=== BTC 5m: 336 candidate fires ===
+  [ckpt] BTC 5m: fires=90
+
+saved 748 fires
+
+===== EXIT POLICY $/tr (pooled, cheap-gated fires)  ALL | CLEAN(frac_held==0) =====
+  f45              ALL n= 748 $/tr=+1.897 t=+4.89 CI=[+1.135,+2.657] | CLEAN n= 671 $/tr=+1.571 t=+5.45 CI=[+0.998,+2.123]
+  f60              ALL n= 748 $/tr=+1.935 t=+4.57 CI=[+1.092,+2.757] | CLEAN n= 663 $/tr=+1.869 t=+5.63 CI=[+1.214,+2.494]
+  f90              ALL n= 748 $/tr=+1.999 t=+4.33 CI=[+1.092,+2.899] | CLEAN n= 670 $/tr=+2.125 t=+5.32 CI=[+1.335,+2.928]
+  5s_.02           ALL n= 748 $/tr=+0.708 t=+1.89 CI=[-0.022,+1.446] | CLEAN n= 748 $/tr=+0.708 t=+1.89 CI=[-0.005,+1.453]
+  5s_.03           ALL n= 748 $/tr=+0.393 t=+1.02 CI=[-0.373,+1.146] | CLEAN n= 748 $/tr=+0.393 t=+1.02 CI=[-0.357,+1.152]
+  5s_.05           ALL n= 748 $/tr=-0.519 t=-1.26 CI=[-1.340,+0.319] | CLEAN n= 748 $/tr=-0.519 t=-1.26 CI=[-1.332,+0.283]
+  5s_.08           ALL n= 748 $/tr=-1.760 t=-3.90 CI=[-2.622,-0.855] | CLEAN n= 748 $/tr=-1.760 t=-3.90 CI=[-2.629,-0.888]
+  5s_arm05_.03     ALL n= 748 $/tr=+0.738 t=+1.75 CI=[-0.079,+1.548] | CLEAN n= 735 $/tr=+1.195 t=+2.92 CI=[+0.388,+1.995]
+  5s_arm05_.05     ALL n= 748 $/tr=-0.037 t=-0.08 CI=[-0.942,+0.815] | CLEAN n= 735 $/tr=+0.406 t=+0.93 CI=[-0.488,+1.253]
+  5s_peak          ALL n= 748 $/tr=+16.549 t=+42.69 CI=[+15.801,+17.304] | CLEAN n= 747 $/tr=+16.594 t=+43.04 CI=[+15.823,+17.358]
+  1s_.03           ALL n= 748 $/tr=-3.889 t=-8.25 CI=[-4.787,-2.961] | CLEAN n= 748 $/tr=-3.889 t=-8.25 CI=[-4.799,-2.969]
+  1s_.05           ALL n= 748 $/tr=-5.502 t=-11.34 CI=[-6.450,-4.544] | CLEAN n= 748 $/tr=-5.502 t=-11.34 CI=[-6.440,-4.551]
+  1s_arm05_.05     ALL n= 748 $/tr=-4.588 t=-9.18 CI=[-5.589,-3.606] | CLEAN n= 738 $/tr=-4.311 t=-8.64 CI=[-5.292,-3.345]
+  1s_peak          ALL n= 748 $/tr=+17.265 t=+45.07 CI=[+16.519,+17.994] | CLEAN n= 747 $/tr=+17.311 t=+45.46 CI=[+16.581,+18.042]
+
+===== PAIRED vs FIXED_60 (policy - f60), pooled (ALL fires) =====
+  f45              n= 748 $/tr=-0.038 t=-0.17 CI=[-0.497,+0.395]
+  f90              n= 748 $/tr=+0.064 t=+0.22 CI=[-0.522,+0.654]
+  5s_.02           n= 748 $/tr=-1.227 t=-2.52 CI=[-2.161,-0.282]
+  5s_.03           n= 748 $/tr=-1.542 t=-3.16 CI=[-2.510,-0.588]
+  5s_.05           n= 748 $/tr=-2.455 t=-4.79 CI=[-3.437,-1.450]
+  5s_.08           n= 748 $/tr=-3.695 t=-6.79 CI=[-4.793,-2.640]
+  5s_arm05_.03     n= 748 $/tr=-1.197 t=-2.52 CI=[-2.114,-0.268]
+  5s_arm05_.05     n= 748 $/tr=-1.972 t=-3.94 CI=[-2.944,-1.018]
+  5s_peak          n= 748 $/tr=+14.614 t=+37.30 CI=[+13.863,+15.375]
+  1s_.03           n= 748 $/tr=-5.824 t=-9.51 CI=[-6.977,-4.663]
+  1s_.05           n= 748 $/tr=-7.437 t=-11.65 CI=[-8.673,-6.173]
+  1s_arm05_.05     n= 748 $/tr=-6.523 t=-10.48 CI=[-7.754,-5.273]
+  1s_peak          n= 748 $/tr=+15.330 t=+39.17 CI=[+14.573,+16.099]
+
+READ: a trailing exit is deployable only if (policy - f60) paired CI>0 on a 5s grid (live polls 5s).
+peak = untradeable oracle upper bound. CAVEAT: BBO top-of-book; confirm on native-10Hz L25 if a 5s policy wins.

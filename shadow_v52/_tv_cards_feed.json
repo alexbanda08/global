@@ -1,0 +1,381 @@
+{
+  "generated": "2026-06-15T03:06:08.379697+00:00",
+  "mode": "shadow_paper",
+  "n_cards": 6,
+  "cards": [
+    {
+      "card": "V52-BTC",
+      "fleet": "V52",
+      "venue": "hyperliquid_perp",
+      "coin": "BTC",
+      "tf": "4h",
+      "bundle": [
+        "STF_BTC"
+      ],
+      "signal": "FLAT",
+      "confidence": 0,
+      "open_positions": [],
+      "pending": [],
+      "n_fires": 3,
+      "last_fire": "2026-05-27T16:00:00+00:00",
+      "recent_fires": [
+        {
+          "sleeve": "STF_BTC",
+          "dir": "SHORT",
+          "entry_ts": "2026-05-27T16:00:00+00:00",
+          "exit_ts": "2026-06-03T00:00:00+00:00",
+          "reason": "TP",
+          "ret_pct": 23.721,
+          "paper_pnl": 59.3
+        },
+        {
+          "sleeve": "STF_BTC",
+          "dir": "LONG",
+          "entry_ts": "2026-05-01T16:00:00+00:00",
+          "exit_ts": "2026-05-15T00:00:00+00:00",
+          "reason": "TIME",
+          "ret_pct": 6.261,
+          "paper_pnl": 15.65
+        },
+        {
+          "sleeve": "STF_BTC",
+          "dir": "LONG",
+          "entry_ts": "2026-04-13T20:00:00+00:00",
+          "exit_ts": "2026-04-27T04:00:00+00:00",
+          "reason": "TIME",
+          "ret_pct": 9.291,
+          "paper_pnl": 23.23
+        }
+      ],
+      "data_end": "2026-06-15T00:00:00+00:00"
+    },
+    {
+      "card": "V52-ETH",
+      "fleet": "V52",
+      "venue": "hyperliquid_perp",
+      "coin": "ETH",
+      "tf": "4h",
+      "bundle": [
+        "CCI_ETH",
+        "MFI_ETH"
+      ],
+      "signal": "LONG",
+      "confidence": 45,
+      "open_positions": [
+        {
+          "sleeve": "MFI_ETH",
+          "direction": "LONG",
+          "entry_ts": "2026-06-11T12:00:00+00:00",
+          "entry_price": 1665.8,
+          "unrealized_pct": 3.614,
+          "weight": 0.1
+        }
+      ],
+      "pending": [
+        {
+          "sleeve": "MFI_ETH",
+          "direction": "LONG",
+          "signal_bar_ts": "2026-06-15T00:00:00+00:00",
+          "weight": 0.1
+        }
+      ],
+      "n_fires": 11,
+      "last_fire": "2026-06-01T20:00:00+00:00",
+      "recent_fires": [
+        {
+          "sleeve": "CCI_ETH",
+          "dir": "LONG",
+          "entry_ts": "2026-06-01T20:00:00+00:00",
+          "exit_ts": "2026-06-02T00:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.178,
+          "paper_pnl": -7.94
+        },
+        {
+          "sleeve": "MFI_ETH",
+          "dir": "LONG",
+          "entry_ts": "2026-05-29T00:00:00+00:00",
+          "exit_ts": "2026-06-02T12:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.116,
+          "paper_pnl": -7.79
+        },
+        {
+          "sleeve": "MFI_ETH",
+          "dir": "LONG",
+          "entry_ts": "2026-05-23T16:00:00+00:00",
+          "exit_ts": "2026-05-28T00:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.123,
+          "paper_pnl": -7.81
+        },
+        {
+          "sleeve": "MFI_ETH",
+          "dir": "LONG",
+          "entry_ts": "2026-05-18T08:00:00+00:00",
+          "exit_ts": "2026-05-22T16:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.14,
+          "paper_pnl": -7.85
+        },
+        {
+          "sleeve": "MFI_ETH",
+          "dir": "LONG",
+          "entry_ts": "2026-05-16T04:00:00+00:00",
+          "exit_ts": "2026-05-16T08:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.144,
+          "paper_pnl": -7.86
+        }
+      ],
+      "data_end": "2026-06-15T00:00:00+00:00"
+    },
+    {
+      "card": "V52-SOL",
+      "fleet": "V52",
+      "venue": "hyperliquid_perp",
+      "coin": "SOL",
+      "tf": "4h",
+      "bundle": [
+        "STF_SOL",
+        "MFI_SOL"
+      ],
+      "signal": "LONG",
+      "confidence": 45,
+      "open_positions": [
+        {
+          "sleeve": "MFI_SOL",
+          "direction": "LONG",
+          "entry_ts": "2026-06-11T12:00:00+00:00",
+          "entry_price": 65.866,
+          "unrealized_pct": 8.215,
+          "weight": 0.1
+        }
+      ],
+      "pending": [],
+      "n_fires": 13,
+      "last_fire": "2026-05-31T04:00:00+00:00",
+      "recent_fires": [
+        {
+          "sleeve": "MFI_SOL",
+          "dir": "SHORT",
+          "entry_ts": "2026-05-31T04:00:00+00:00",
+          "exit_ts": "2026-06-04T00:00:00+00:00",
+          "reason": "TP",
+          "ret_pct": 23.832,
+          "paper_pnl": 59.58
+        },
+        {
+          "sleeve": "STF_SOL",
+          "dir": "SHORT",
+          "entry_ts": "2026-05-28T04:00:00+00:00",
+          "exit_ts": "2026-06-04T00:00:00+00:00",
+          "reason": "TP",
+          "ret_pct": 14.898,
+          "paper_pnl": 37.24
+        },
+        {
+          "sleeve": "STF_SOL",
+          "dir": "SHORT",
+          "entry_ts": "2026-05-23T08:00:00+00:00",
+          "exit_ts": "2026-05-23T16:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.105,
+          "paper_pnl": -7.76
+        },
+        {
+          "sleeve": "STF_SOL",
+          "dir": "LONG",
+          "entry_ts": "2026-05-21T20:00:00+00:00",
+          "exit_ts": "2026-05-22T16:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.118,
+          "paper_pnl": -7.8
+        },
+        {
+          "sleeve": "MFI_SOL",
+          "dir": "SHORT",
+          "entry_ts": "2026-05-11T00:00:00+00:00",
+          "exit_ts": "2026-05-24T08:00:00+00:00",
+          "reason": "TIME",
+          "ret_pct": 12.74,
+          "paper_pnl": 31.85
+        }
+      ],
+      "data_end": "2026-06-15T00:00:00+00:00"
+    },
+    {
+      "card": "V52-AVAX",
+      "fleet": "V52",
+      "venue": "hyperliquid_perp",
+      "coin": "AVAX",
+      "tf": "4h",
+      "bundle": [
+        "STF_AVAX",
+        "LATBB_AVAX",
+        "SVD_AVAX"
+      ],
+      "signal": "LONG",
+      "confidence": 35,
+      "open_positions": [
+        {
+          "sleeve": "SVD_AVAX",
+          "direction": "LONG",
+          "entry_ts": "2026-06-11T00:00:00+00:00",
+          "entry_price": 6.3771,
+          "unrealized_pct": 6.258,
+          "weight": 0.1
+        }
+      ],
+      "pending": [
+        {
+          "sleeve": "LATBB_AVAX",
+          "direction": "LONG",
+          "signal_bar_ts": "2026-06-15T00:00:00+00:00",
+          "weight": 0.12
+        }
+      ],
+      "n_fires": 10,
+      "last_fire": "2026-06-01T20:00:00+00:00",
+      "recent_fires": [
+        {
+          "sleeve": "LATBB_AVAX",
+          "dir": "LONG",
+          "entry_ts": "2026-06-01T20:00:00+00:00",
+          "exit_ts": "2026-06-02T12:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.095,
+          "paper_pnl": -7.74
+        },
+        {
+          "sleeve": "SVD_AVAX",
+          "dir": "SHORT",
+          "entry_ts": "2026-06-01T04:00:00+00:00",
+          "exit_ts": "2026-06-04T00:00:00+00:00",
+          "reason": "TP",
+          "ret_pct": 14.892,
+          "paper_pnl": 37.23
+        },
+        {
+          "sleeve": "STF_AVAX",
+          "dir": "SHORT",
+          "entry_ts": "2026-05-28T04:00:00+00:00",
+          "exit_ts": "2026-06-05T12:00:00+00:00",
+          "reason": "TP",
+          "ret_pct": 23.836,
+          "paper_pnl": 59.59
+        },
+        {
+          "sleeve": "STF_AVAX",
+          "dir": "SHORT",
+          "entry_ts": "2026-05-23T08:00:00+00:00",
+          "exit_ts": "2026-05-23T16:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.128,
+          "paper_pnl": -7.82
+        },
+        {
+          "sleeve": "SVD_AVAX",
+          "dir": "SHORT",
+          "entry_ts": "2026-05-21T04:00:00+00:00",
+          "exit_ts": "2026-05-31T04:00:00+00:00",
+          "reason": "TIME",
+          "ret_pct": 4.181,
+          "paper_pnl": 10.45
+        }
+      ],
+      "data_end": "2026-06-15T00:00:00+00:00"
+    },
+    {
+      "card": "V52-LINK",
+      "fleet": "V52",
+      "venue": "hyperliquid_perp",
+      "coin": "LINK",
+      "tf": "4h",
+      "bundle": [
+        "VP_LINK"
+      ],
+      "signal": "SHORT",
+      "confidence": 100,
+      "open_positions": [
+        {
+          "sleeve": "VP_LINK",
+          "direction": "SHORT",
+          "entry_ts": "2026-06-14T08:00:00+00:00",
+          "entry_price": 7.9018,
+          "unrealized_pct": -3.595,
+          "weight": 0.1
+        }
+      ],
+      "pending": [],
+      "n_fires": 9,
+      "last_fire": "2026-05-28T16:00:00+00:00",
+      "recent_fires": [
+        {
+          "sleeve": "VP_LINK",
+          "dir": "LONG",
+          "entry_ts": "2026-05-28T16:00:00+00:00",
+          "exit_ts": "2026-06-02T12:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.089,
+          "paper_pnl": -7.72
+        },
+        {
+          "sleeve": "VP_LINK",
+          "dir": "LONG",
+          "entry_ts": "2026-05-25T04:00:00+00:00",
+          "exit_ts": "2026-05-28T00:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.094,
+          "paper_pnl": -7.73
+        },
+        {
+          "sleeve": "VP_LINK",
+          "dir": "LONG",
+          "entry_ts": "2026-05-21T04:00:00+00:00",
+          "exit_ts": "2026-05-22T16:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.111,
+          "paper_pnl": -7.78
+        },
+        {
+          "sleeve": "VP_LINK",
+          "dir": "LONG",
+          "entry_ts": "2026-05-16T00:00:00+00:00",
+          "exit_ts": "2026-05-16T08:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.087,
+          "paper_pnl": -7.72
+        },
+        {
+          "sleeve": "VP_LINK",
+          "dir": "SHORT",
+          "entry_ts": "2026-05-05T00:00:00+00:00",
+          "exit_ts": "2026-05-05T04:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.132,
+          "paper_pnl": -7.83
+        }
+      ],
+      "data_end": "2026-06-15T00:00:00+00:00"
+    },
+    {
+      "card": "V52-XSM",
+      "fleet": "XSM",
+      "venue": "hyperliquid_perp",
+      "coin": "9-coin-basket",
+      "tf": "4h",
+      "bundle": [
+        "V24_multifilter"
+      ],
+      "signal": "FLAT",
+      "confidence": 0,
+      "filter_state": "FLAT",
+      "breadth": "1/9",
+      "btc_above_100dma": false,
+      "btc_50dma_rising": false,
+      "target_basket": "FLAT",
+      "note": "0% live allocation; only 5/9 coins HL-tradeable"
+    }
+  ]
+}

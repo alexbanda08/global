@@ -1,0 +1,54 @@
+
+=== BTC OOS 2026-03-30..2026-04-21: candidate fires (delta>=3) = 466 ===
+  filled fires: 435 (of 466 candidates)  old-fallback-incidence=0
+  frac_held: mean=0.041 held_full=0.041 clean(frac==0)=0.959 entry_carried=0.517 exit_carried=0.453
+  ALL filled                 ALL   n= 435 $/tr=+0.874 t=+2.00 CI=[+0.007,+1.682] won=0.582
+                             CLEAN n= 417 $/tr=+0.919 t=+2.42 CI=[+0.159,+1.655]
+  GATED vwap<0.55            ALL   n= 153 $/tr=+1.798 t=+1.92 CI=[-0.075,+3.597] won=0.562
+                             CLEAN n= 135 $/tr=+2.060 t=+2.88 CI=[+0.645,+3.441]
+  GATED vwap<0.55 & d>=5     ALL   n=  45 $/tr=+3.431 t=+2.05 CI=[+0.083,+6.444] won=0.489
+                             CLEAN n=  41 $/tr=+3.831 t=+2.78 CI=[+1.140,+6.453]
+
+=== ETH OOS 2026-03-30..2026-04-21: candidate fires (delta>=3) = 734 ===
+  filled fires: 677 (of 734 candidates)  old-fallback-incidence=0
+  frac_held: mean=0.043 held_full=0.043 clean(frac==0)=0.957 entry_carried=0.495 exit_carried=0.424
+  ALL filled                 ALL   n= 677 $/tr=+0.153 t=+0.42 CI=[-0.545,+0.882] won=0.576
+                             CLEAN n= 648 $/tr=+0.191 t=+0.59 CI=[-0.446,+0.810]
+  GATED vwap<0.55            ALL   n= 273 $/tr=+1.470 t=+2.06 CI=[+0.060,+2.848] won=0.564
+                             CLEAN n= 246 $/tr=+1.510 t=+2.58 CI=[+0.340,+2.637]
+  GATED vwap<0.55 & d>=5     ALL   n=  94 $/tr=+1.474 t=+1.14 CI=[-1.074,+3.901] won=0.553
+                             CLEAN n=  83 $/tr=+2.623 t=+2.50 CI=[+0.611,+4.676]
+
+=== SOL OOS 2026-03-30..2026-04-21: candidate fires (delta>=3) = 873 ===
+  filled fires: 750 (of 873 candidates)  old-fallback-incidence=0
+  frac_held: mean=0.053 held_full=0.053 clean(frac==0)=0.947 entry_carried=0.465 exit_carried=0.436
+  ALL filled                 ALL   n= 750 $/tr=+0.372 t=+1.06 CI=[-0.304,+1.079] won=0.587
+                             CLEAN n= 710 $/tr=+0.207 t=+0.69 CI=[-0.393,+0.775]
+  GATED vwap<0.55            ALL   n= 325 $/tr=+2.204 t=+3.48 CI=[+0.958,+3.442] won=0.542
+                             CLEAN n= 285 $/tr=+2.051 t=+4.29 CI=[+1.102,+3.005]
+  GATED vwap<0.55 & d>=5     ALL   n=  85 $/tr=+3.711 t=+2.69 CI=[+0.993,+6.430] won=0.529
+                             CLEAN n=  71 $/tr=+5.146 t=+5.66 CI=[+3.374,+6.921]
+
+VERDICT: gated $/tr>0 with CI>0 on Mar30-Apr21 (disjoint) = scalp survives clean OOS (corrected exit).
+CAVEAT: BBO top-of-book fill (no L25 depth walk) -> entry slightly optimistic; re-check on full L25 if it passes.
+
+===== STOP SIM (paired pnl_stop - pnl60), gated vwap<0.55 =====
+  ALL                    stopON n= 751 $/tr=-0.936 t=-1.91 CI=[-1.916,+0.014]
+                         stopOFFn= 751 $/tr=+1.854 t=+4.39 CI=[+1.009,+2.693]
+                         DIFF  mean=-2.7902 CI=[-3.4755,-2.1271] SIG-  (OLD CLAIM +0.88/tr)
+  CLEAN (frac_held==0)   stopON n= 666 $/tr=-1.293 t=-2.99 CI=[-2.169,-0.430]
+                         stopOFFn= 666 $/tr=+1.853 t=+5.60 CI=[+1.199,+2.498]
+                         DIFF  mean=-3.1463 CI=[-3.8680,-2.4181] SIG-  (OLD CLAIM +0.88/tr)
+
+===== TIME-OF-DAY OOS (pooled, gated vwap<0.55, n=751) =====
+  base (all hours)        ALL   n= 751 $/tr=+1.854 t=+4.39 CI=[+1.016,+2.675]
+                          CLEAN n= 666 $/tr=+1.853 t=+5.60 CI=[+1.191,+2.501]
+  22-02 UTC               ALL   n= 160 $/tr=+4.357 t=+5.69 CI=[+2.842,+5.835]
+                          CLEAN n= 152 $/tr=+3.670 t=+5.21 CI=[+2.263,+5.036]
+  exclude dead {12,17}    ALL   n= 700 $/tr=+1.952 t=+4.40 CI=[+1.095,+2.808]
+                          CLEAN n= 617 $/tr=+1.954 t=+5.66 CI=[+1.253,+2.630]
+  exclude {2,12,16,17,18} ALL   n= 565 $/tr=+1.812 t=+3.87 CI=[+0.901,+2.731]
+                          CLEAN n= 513 $/tr=+2.231 t=+5.90 CI=[+1.471,+2.945]
+  dead hours {12,17} only ALL   n=  51 $/tr=+0.519 t=+0.40 CI=[-2.027,+2.935]
+                          CLEAN n=  49 $/tr=+0.578 t=+0.51 CI=[-1.642,+2.785]
+READ: time-of-day gate validated OOS if 22-02 > base and exclude-dead >= base on Mar30-Apr21.

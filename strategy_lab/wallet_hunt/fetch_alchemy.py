@@ -75,13 +75,26 @@ def fetch_transfers_one_direction(wallet: str, direction: str,
             params["toAddress"] = wallet
         if page_key:
             params["pageKey"] = page_key
-        try:
-            d = rpc("alchemy_getAssetTransfers", [params])
-        except urllib.error.HTTPError as e:
-            print(f"    [{direction}] page {page+1} HTTP {e.code}: {e.read()[:200].decode()}")
+        # Retry transient network errors (IncompleteRead, timeouts) instead of
+        # aborting — a blip mid-backfill otherwise silently drops the OLDEST
+        # transfers (desc order) and truncates history.
+        d = None
+        for attempt in range(6):
+            try:
+                d = rpc("alchemy_getAssetTransfers", [params])
+                break
+            except urllib.error.HTTPError as e:
+                print(f"    [{direction}] page {page+1} HTTP {e.code}: {e.read()[:200].decode()}")
+                d = "fatal"
+                break
+            except Exception as e:
+                wait = 1.5 * (attempt + 1)
+                print(f"    [{direction}] page {page+1} ERR (attempt {attempt+1}/6): {str(e)[:80]} — retry in {wait:.1f}s")
+                time.sleep(wait)
+        if d is None:
+            print(f"    [{direction}] page {page+1} FAILED after 6 retries — stopping this direction")
             break
-        except Exception as e:
-            print(f"    [{direction}] page {page+1} ERR: {str(e)[:80]}")
+        if d == "fatal":
             break
         if "error" in d:
             print(f"    [{direction}] page {page+1} ERR: {d['error']}")

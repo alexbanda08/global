@@ -1,0 +1,27 @@
+
+=== ETH 15m: 1113 windows, 26 offsets/window ===
+  [ckpt] ETH 15m: grid_rows=28302  |gap|>=.08 firstcross ALL n= 977 $/tr=+0.943 t=+2.16 CI=[+0.150,+1.818] | CLEAN n= 909 $/tr=+0.402 t=+1.28 CI=[-0.197,+1.055]
+
+=== ETH 5m: 3350 windows, 12 offsets/window ===
+  [ckpt] ETH 5m: grid_rows=39502  |gap|>=.08 firstcross ALL n=2524 $/tr=+0.929 t=+1.93 CI=[+0.138,+1.949] | CLEAN n=2387 $/tr=+0.346 t=+1.29 CI=[-0.155,+0.894]
+
+=== SOL 15m: 1082 windows, 26 offsets/window ===
+  [ckpt] SOL 15m: grid_rows=27036  |gap|>=.08 firstcross ALL n= 837 $/tr=-0.274 t=-0.56 CI=[-1.228,+0.723] | CLEAN n= 753 $/tr=-0.207 t=-0.48 CI=[-1.032,+0.671]
+
+=== SOL 5m: 3335 windows, 12 offsets/window ===
+  [ckpt] SOL 5m: grid_rows=37337  |gap|>=.08 firstcross ALL n=2439 $/tr=+0.131 t=+0.35 CI=[-0.581,+0.866] | CLEAN n=2287 $/tr=+0.027 t=+0.08 CI=[-0.648,+0.719]
+
+saved 132177 grid rows -> scalp_fvg_grid_fixed_2026_06_10.parquet
+
+===== FVG first-cross (1 entry/window) — pooled ETH+SOL 15m+5m, vol_lb=300 =====
+  |gap|>=0.04  ALL n=8751 $/tr=-0.145 t=-1.15 CI=[-0.383,+0.108] | CLEAN n=8404 $/tr=-0.215 t=-1.87 CI=[-0.441,+0.007]  mean_off=48s
+  |gap|>=0.06  ALL n=8072 $/tr=+0.224 t=+1.16 CI=[-0.132,+0.623] | CLEAN n=7685 $/tr=+0.009 t=+0.06 CI=[-0.254,+0.285]  mean_off=86s
+  |gap|>=0.08  ALL n=6777 $/tr=+0.495 t=+2.07 CI=[+0.050,+1.001] | CLEAN n=6336 $/tr=+0.173 t=+0.98 CI=[-0.160,+0.512]  mean_off=118s
+  |gap|>=0.10  ALL n=5331 $/tr=+1.234 t=+3.26 CI=[+0.558,+2.032] | CLEAN n=4871 $/tr=+0.548 t=+2.49 CI=[+0.118,+0.977]  mean_off=145s
+  |gap|>=0.12  ALL n=4074 $/tr=+2.019 t=+4.77 CI=[+1.258,+2.903] | CLEAN n=3594 $/tr=+1.197 t=+4.44 CI=[+0.688,+1.739]  mean_off=164s
+
+  -- |gap|>=0.08 split open(+5..60) vs mid(>=120) --
+     OPEN  off<120  ALL n=4294 $/tr=+0.664 t=+3.54 CI=[+0.308,+1.036] | CLEAN n=4005 $/tr=+0.442 t=+2.57 CI=[+0.106,+0.773]
+     MID   off>=120 ALL n=2483 $/tr=+0.202 t=+0.36 CI=[-0.825,+1.412] | CLEAN n=2331 $/tr=-0.290 t=-0.77 CI=[-1.042,+0.492]
+
+READ: if MID (off>=120) $/tr>0 CI>0 at some threshold -> real mid-window FVG scalp. CAVEAT: BBO top-of-book.

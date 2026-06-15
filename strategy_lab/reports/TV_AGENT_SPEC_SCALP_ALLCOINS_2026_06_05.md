@@ -17,7 +17,8 @@ gated cell `entry_band=(0.0,0.55)`; gate `g_oracle_lag_with(lo,hi)` (δ≥3 `(3,
 | BTC | +2.38 [0.62,4.09] | OK (live) | already live |
 | ETH | +1.92 [0.53,3.33] | OK (live) | already live |
 | SOL | +2.16 [1.03,3.25] | **thin (0.5% at $25 in main window!)** | **$5 only** (BBO OOS fill was optimistic) |
-| DOGE | +1.40 [0.19,2.61] | unknown live | **$5** (validated, thinner market) |
+| DOGE | +1.40 [0.19,2.61] ✓ | unknown live | **$5** (validated, thinner market) |
+| XRP | +2.20 [0.63,3.76] ✓ | unknown live | **$5** (validated, on par with BTC/ETH) |
 | BNB | +1.39 [−2.29,5.10] thin | unknown live | **$5, accrue power** |
 
 ## New sleeves (add to `app/strategies/polymarket/sniper_v5_sleeves.py`)
@@ -38,7 +39,7 @@ Mirror the existing scalp generator; add SOL/DOGE/BNB at **$5** (thin-book frien
                        (("lo_bps", "3.0" if _dl == "_d3" else "5.0"), ("hi_bps", "12.0")),
                        f"g_oracle_lag_with({'3.0' if _dl=='_d3' else '5.0'},12.0)"),),
     )
-    for _sym in ("SOL", "DOGE", "BNB")
+    for _sym in ("SOL", "DOGE", "XRP", "BNB")
     for _tf in ("5m", "15m")
     for _dl in ("_d3", "")           # "" = δ≥5
     for _ctl in ("_v1", "_control_v1")

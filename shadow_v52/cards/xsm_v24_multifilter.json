@@ -1,0 +1,34 @@
+{
+  "card_id": "xsm_v24_multifilter",
+  "fleet": "XSM",
+  "name": "V24-XSM",
+  "coin": "9-coin basket",
+  "tf": "4h",
+  "family": "cross-sectional momentum",
+  "signal": "Long top-4 of 9 by 14d momentum, weekly rebalance",
+  "variant": "multi_filter (breadth>=5/9 + BTC>100dMA + BTC 50dMA rising)",
+  "gate": "regime filter (the multi_filter itself)",
+  "exit": "weekly rebalance / filter-off -> cash",
+  "weight": 0.0,
+  "new": false,
+  "validated": {
+    "sharpe": 0.69,
+    "cagr": null,
+    "mdd": null,
+    "calmar": null,
+    "sh_2024": null,
+    "sh_2025": null,
+    "sh_2026": null
+  },
+  "notes": "Separate book. 0% live allocation until more coins join HL (only 5/9 HL-tradeable). Defensive by design: filter passed only ~4.5% of 2026 bars. Relaxations all hurt.",
+  "status": "shadow_paper",
+  "venue": "hyperliquid_perp",
+  "card_built": "2026-06-15T18:05:20.304629+00:00",
+  "live": {
+    "state": "FLAT",
+    "breadth": "1/9",
+    "btc_above_100dma": false,
+    "btc_50dma_rising": false,
+    "target_basket": "FLAT"
+  }
+}

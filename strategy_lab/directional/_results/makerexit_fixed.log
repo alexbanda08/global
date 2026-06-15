@@ -1,0 +1,35 @@
+gated scalp fires (BTC/ETH vwap<0.55) w/ direction = 780
+  [BTC] done rows=503
+  [ETH] done rows=780
+
+=== ALL n=780 ===
+  taker60 [baseline]     n= 780 $/tr=+2.280 t=+4.82 CI=[+1.359,+3.226] POS
+  maker queue-fixed      n= 780 $/tr=+2.207 t=+4.83 CI=[+1.322,+3.113] POS
+  maker peg-trail        n= 780 $/tr=+2.207 t=+5.27 CI=[+1.373,+3.027] POS
+    maker_fix - taker60: -0.0730 CI=[-0.2958,+0.1519] ns
+      CLEAN(frac==0) n=50 diff=+0.3184 CI=[-2.6380,+3.4199]
+    maker_trail - taker60: -0.0732 CI=[-0.3636,+0.2205] ns
+      CLEAN(frac==0) n=42 diff=-0.4613 CI=[-4.1185,+3.3549]
+
+=== IS n=468 ===
+  taker60 [baseline]     n= 468 $/tr=+1.792 t=+2.80 CI=[+0.512,+3.055] POS
+  maker queue-fixed      n= 468 $/tr=+1.812 t=+2.88 CI=[+0.566,+3.009] POS
+  maker peg-trail        n= 468 $/tr=+1.746 t=+3.04 CI=[+0.622,+2.909] POS
+    maker_fix - taker60: +0.0196 CI=[-0.1933,+0.2489] ns
+      CLEAN(frac==0) n=24 diff=+0.5465 CI=[-3.5243,+4.7433]
+    maker_trail - taker60: -0.0466 CI=[-0.4316,+0.3320] ns
+      CLEAN(frac==0) n=28 diff=-0.3486 CI=[-4.6691,+4.2711]
+
+=== OOS n=312 ===
+  taker60 [baseline]     n= 312 $/tr=+3.012 t=+4.36 CI=[+1.626,+4.371] POS
+  maker queue-fixed      n= 312 $/tr=+2.800 t=+4.34 CI=[+1.566,+4.071] POS
+  maker peg-trail        n= 312 $/tr=+2.899 t=+4.89 CI=[+1.732,+3.998] POS
+    maker_fix - taker60: -0.2121 CI=[-0.6407,+0.2303] ns
+      CLEAN(frac==0) n=26 diff=+0.1078 CI=[-4.1088,+4.7880]
+    maker_trail - taker60: -0.1132 CI=[-0.5469,+0.3261] ns
+      CLEAN(frac==0) n=14 diff=-0.6866 CI=[-6.8672,+5.1135]
+  [BTC] maker_trail-taker60: -0.2235 CI=[-0.6171,+0.1656]
+  [ETH] maker_trail-taker60: +0.1995 CI=[-0.1913,+0.5987]
+
+READ: deploy maker-exit only if (queue-fixed OR peg-trail) beats taker60 paired CI>0 AND both BTC+ETH positive.
+CAVEAT: maker fill = trade-tape volume past L25 queue (optimistic on queue priority); corrected exit model.

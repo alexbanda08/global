@@ -1,0 +1,66 @@
+=== ETH 15m: 1113 windows ===
+  [ckpt] total rows=2007
+=== ETH 5m: 3350 windows ===
+  [ckpt] total rows=8119
+=== SOL 15m: 1082 windows ===
+  [ckpt] total rows=10009
+=== SOL 5m: 3335 windows ===
+  [ckpt] total rows=15833
+=== XRP 15m: 1055 windows ===
+  [ckpt] total rows=17698
+=== XRP 5m: 3306 windows ===
+  [ckpt] total rows=23431
+=== DOGE 15m: 962 windows ===
+  [ckpt] total rows=24578
+=== DOGE 5m: 3228 windows ===
+  [ckpt] total rows=29063
+=== BNB 15m: 891 windows ===
+  [ckpt] total rows=30100
+=== BNB 5m: 3224 windows ===
+  [ckpt] total rows=34670
+
+saved 34670 candidate evals
+
+##### PRIMARY (pre-registered): T-30s, |z|>=2.0, ask<=0.95, margin>=0.02 #####
+  POOLED  n= 471 $/tr=+0.528 t=+1.50 CI=[-0.198,+1.184]  WR=0.930
+  BNB 15m: n=  14 $/tr=+0.468 t=+0.23 CI=[-3.719,+2.983]  WR=0.929
+  BNB 5m: n= 152 $/tr=+1.366 t=+2.95 CI=[+0.351,+2.201]  WR=0.961
+  DOGE 15m: n=   9 $/tr=-0.741 t=-0.24 CI=[-7.190,+3.236]  WR=0.889
+  DOGE 5m: n=  32 $/tr=+1.147 t=+1.28 CI=[-0.809,+2.499]  WR=0.969
+  ETH 15m: n=  20 $/tr=-0.932 t=-0.37 CI=[-6.083,+3.431]  WR=0.850
+  ETH 5m: n= 150 $/tr=+0.125 t=+0.17 CI=[-1.399,+1.562]  WR=0.907
+  SOL 15m: n=   3 (few)  WR=0.667
+  SOL 5m: n=  14 $/tr=-0.327 t=-0.17 CI=[-4.279,+1.860]  WR=0.929
+  XRP 15m: n=   7 $/tr=+1.857 t=+6.38 CI=[+1.456,+2.433]  WR=1.000
+  XRP 5m: n=  70 $/tr=+0.238 t=+0.27 CI=[-1.575,+1.786]  WR=0.929
+
+##### EXPLORATORY SWEEP (multiplicity! deflate before believing) #####
+  T-30s z>=1.5 ask<=0.93: n= 516 $/tr=+0.245 t=+0.52 CI=[-0.688,+1.154] WR=0.864
+  T-30s z>=1.5 ask<=0.97: n=1323 $/tr=+0.242 t=+1.13 CI=[-0.172,+0.646] WR=0.924
+  T-30s z>=2.0 ask<=0.93: n= 184 $/tr=+1.044 t=+1.41 CI=[-0.351,+2.476] WR=0.891
+  T-30s z>=2.0 ask<=0.97: n= 770 $/tr=+0.430 t=+1.83 CI=[-0.048,+0.881] WR=0.947
+  T-30s z>=3.0 ask<=0.93: n=  34 $/tr=+3.336 t=+1.66 CI=[-0.643,+7.252] WR=0.912
+  T-30s z>=3.0 ask<=0.97: n= 174 $/tr=+0.832 t=+1.60 CI=[-0.215,+1.851] WR=0.954
+  T-15s z>=1.5 ask<=0.93: n= 529 $/tr=+0.852 t=+1.17 CI=[-0.494,+2.417] WR=0.838
+  T-15s z>=1.5 ask<=0.97: n=1139 $/tr=+0.453 t=+1.26 CI=[-0.197,+1.190] WR=0.902
+  T-15s z>=2.0 ask<=0.93: n= 241 $/tr=+1.544 t=+1.19 CI=[-0.630,+4.507] WR=0.855
+  T-15s z>=2.0 ask<=0.97: n= 730 $/tr=+0.579 t=+1.27 CI=[-0.232,+1.501] WR=0.925
+  T-15s z>=3.0 ask<=0.93: n=  57 $/tr=+3.574 t=+1.99 CI=[+0.169,+7.014] WR=0.897
+  T-15s z>=3.0 ask<=0.97: n= 199 $/tr=+1.306 t=+2.24 CI=[+0.152,+2.418] WR=0.950
+
+  -- margin requirement ablation (T-30, z>=2, ask<=0.95) --
+  margin>=0.00: n= 471 $/tr=+0.528 t=+1.50 CI=[-0.161,+1.196] WR=0.930
+  margin>=0.01: n= 471 $/tr=+0.528 t=+1.50 CI=[-0.161,+1.198] WR=0.930
+  margin>=0.02: n= 471 $/tr=+0.528 t=+1.50 CI=[-0.170,+1.178] WR=0.930
+  margin>=0.04: n= 432 $/tr=+0.525 t=+1.39 CI=[-0.218,+1.241] WR=0.926
+
+  -- MICROPRICE tilt on primary cell --
+  OPPOSED  n= 157 $/tr=+0.176 t=+0.27 CI=[-1.191,+1.378]
+  NEUTRAL  n= 157 $/tr=+0.686 t=+1.13 CI=[-0.541,+1.864]
+  ALIGNED  n= 157 $/tr=+0.721 t=+1.30 CI=[-0.422,+1.756]
+
+  -- time-split (primary cell) --
+  H1 n= 236 $/tr=+0.586 t=+1.14 CI=[-0.423,+1.555] | H2 n= 235 $/tr=+0.469 t=+0.98 CI=[-0.512,+1.390]
+
+READ: edge real iff PRIMARY cell $/tr>0 CI>0 pooled AND holds the time-split. CAVEATS: binance-vs-chainlink
+settlement basis noise; BBO top-of-book; fills at extreme asks may be thin (size carry-aware but verify live).

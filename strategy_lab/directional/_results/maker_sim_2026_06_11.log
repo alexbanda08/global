@@ -1,0 +1,60 @@
+
+=== BTC 2026-03-30..2026-04-21: 4518 slugs ===
+  A: candidates=466 filled(>=50%)=0  B: candidates(|z|>=2)=4874 filled(join)=1
+
+=== ETH 2026-03-30..2026-04-21: 4463 slugs ===
+  A: candidates=734 filled(>=50%)=0  B: candidates(|z|>=2)=4572 filled(join)=0
+
+=== SOL 2026-03-30..2026-04-21: 4417 slugs ===
+  A: candidates=872 filled(>=50%)=0  B: candidates(|z|>=2)=3053 filled(join)=0
+
+=== XRP 2026-04-07..2026-04-21: 4361 slugs ===
+  A: candidates=609 filled(>=50%)=0  B: candidates(|z|>=2)=3877 filled(join)=0
+
+##### saved A n=2681  B n=32720 #####
+
+==============================================================================
+EXPERIMENT A — MAKER ENTRY (open scalp). Gate: maker entry price ev<0.55, delta>=3
+==============================================================================
+candidates(gated)=1380  fill_rate(>=50%)=0.000
+WR(all candidates)=0.553  WR(filled)=nan  ADVERSE-SELECTION DELTA = WR(filled)-WR(all) = +nan
+
+-- MAKER $/tr (filled only, n=0), rebate at k grid --
+
+-- TAKER baseline $/tr (SAME candidate set, n=1380) --
+  taker(all candidates)          n=1380 $/tr=+0.759 t=+2.54 CI=[+0.149,+1.342]
+  taker(on filled-subset)        n=   0 (few)
+
+-- PAIRED maker - taker on the FILLED subset (apples-to-apples) --
+
+-- per coin-tf (maker filled $/tr at k=0.05 vs taker) --
+
+-- [UPPER-BOUND fill: queue=0] fill_rate=0.030 --
+  WR(filled_ub)=0.293 advsel=-0.260
+  maker_ub(filled)               k=0.0:n=  41 $/tr=-5.445 t=-4.99 CI=[-7.630,-3.382]  k=0.05:n=  41 $/tr=-5.409 t=-4.96 CI=[-7.558,-3.339]  k=0.2:n=  41 $/tr=-5.300 t=-4.86 CI=[-7.466,-3.219]
+  k=0.0: maker_ub-taker mean=+1.9398 CI=[+1.3863,+2.5320] SIG+
+  k=0.05: maker_ub-taker mean=+1.9762 CI=[+1.4174,+2.5725] SIG+
+  k=0.2: maker_ub-taker mean=+2.0853 CI=[+1.5429,+2.6804] SIG+
+
+==============================================================================
+EXPERIMENT B — LATE-WINDOW FAVORED-SIDE MAKER BID (oracle-snipe pocket, maker version)
+==============================================================================
+
+### variant=join  candidates=16376 fill_rate=0.000
+  WR(candidates)=0.981  WR(filled)=1.000  ADVERSE-SELECTION DELTA=+0.019
+  -- [UPPER-BOUND fill: queue=0] fill_rate=0.047 n_filled=768 --
+    WR(filled_ub)=0.823 advsel=-0.158
+  pooled_ub                      k=0.0:n= 768 $/tr=-2.835 t=-7.83 CI=[-3.534,-2.132]  k=0.05:n= 768 $/tr=-2.830 t=-7.81 CI=[-3.569,-2.147]  k=0.2:n= 768 $/tr=-2.813 t=-7.77 CI=[-3.565,-2.123]
+
+### variant=improve_m1c  candidates=16344 fill_rate=0.000
+  WR(candidates)=0.981  WR(filled)=1.000  ADVERSE-SELECTION DELTA=+0.019
+  -- [UPPER-BOUND fill: queue=0] fill_rate=0.038 n_filled=629 --
+    WR(filled_ub)=0.787 advsel=-0.194
+  pooled_ub                      k=0.0:n= 629 $/tr=-3.588 t=-8.45 CI=[-4.409,-2.745]  k=0.05:n= 629 $/tr=-3.582 t=-8.43 CI=[-4.401,-2.758]  k=0.2:n= 629 $/tr=-3.563 t=-8.39 CI=[-4.403,-2.741]
+
+VERDICTS:
+  A: maker WINS only if maker(k=0.05) $/tr > taker baseline w/ paired CI>0 (else taker stays).
+  B: pocket real-as-maker iff filled $/tr>0 CI>0 AND adverse-sel delta not strongly negative.
+CAVEATS: conservative fill = LOWER BOUND on fills (queue-ahead full, side-true prints only);
+  trades coverage Mar30-Apr21 (XRP Apr7+); BBO top-of-book (no L25 depth); Mar30-Apr21 OOS window
+  is BURNED for the open-scalp (used in 06-05 OOS) -> A is a fill/economics test, not fresh OOS.

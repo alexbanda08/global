@@ -1,0 +1,72 @@
+==========================================================================
+TIGHTER GLT-CAP SWEEP (maker-only)
+==========================================================================
+PRE-REG: Q∈[5, 8, 12, 16, 20] γ=0.05 budget=$350 offset=-3600s FIFO maker-only
+DECISION: GO if any Q OOS CI95 lo>0 AND ex2>0
+B945 GT: pvs=0.967 net=+$3.18/slug(med) fills/sd=44
+slugs 4729 IS=2721 OOS=2008
+books 9458 t=22s
+trades 7968 t=36s
+
+--- Q=5: running full universe ---
+    saved C:\Users\alexandre bandarra\Desktop\global\strategy_lab\wallet_hunt\cache\_mm_q5_full.parquet  t=94s
+  IS :
+    n=2161 pvs=0.988 pf=94.6% fills/sd=56.0 paired=+5.18 resid=-3.41 reb=+0.83
+    net_mean=+2.60 net_med=+1.48 CI95=[+2.31,+2.92] ex2=+2.46
+  OOS:
+    n=1569 pvs=0.991 pf=93.9% fills/sd=34.9 paired=+2.34 resid=-2.46 reb=+0.51
+    net_mean=+0.39 net_med=-0.17 CI95=[+0.18,+0.61] ex2=+0.33
+  -> Q=5 OOS verdict: GO
+
+--- Q=8: running full universe ---
+    saved C:\Users\alexandre bandarra\Desktop\global\strategy_lab\wallet_hunt\cache\_mm_q8_full.parquet  t=151s
+  IS :
+    n=2161 pvs=0.988 pf=94.7% fills/sd=58.9 paired=+5.37 resid=-3.41 reb=+0.87
+    net_mean=+2.84 net_med=+1.35 CI95=[+2.47,+3.27] ex2=+2.63
+  OOS:
+    n=1569 pvs=0.992 pf=94.2% fills/sd=36.8 paired=+2.22 resid=-2.52 reb=+0.54
+    net_mean=+0.24 net_med=-0.37 CI95=[-0.04,+0.53] ex2=+0.14
+  -> Q=8 OOS verdict: NO-GO
+
+--- Q=12: running full universe ---
+    saved C:\Users\alexandre bandarra\Desktop\global\strategy_lab\wallet_hunt\cache\_mm_q12_full.parquet  t=209s
+  IS :
+    n=2161 pvs=0.987 pf=94.6% fills/sd=61.4 paired=+5.70 resid=-3.77 reb=+0.91
+    net_mean=+2.84 net_med=+1.51 CI95=[+2.50,+3.24] ex2=+2.70
+  OOS:
+    n=1569 pvs=0.992 pf=93.9% fills/sd=38.5 paired=+2.43 resid=-3.05 reb=+0.56
+    net_mean=-0.06 net_med=-0.54 CI95=[-0.39,+0.31] ex2=-0.20
+  -> Q=12 OOS verdict: NO-GO
+
+--- Q=16: running full universe ---
+    saved C:\Users\alexandre bandarra\Desktop\global\strategy_lab\wallet_hunt\cache\_mm_q16_full.parquet  t=265s
+  IS :
+    n=2161 pvs=0.987 pf=94.3% fills/sd=63.0 paired=+6.03 resid=-4.25 reb=+0.94
+    net_mean=+2.72 net_med=+1.35 CI95=[+2.36,+3.11] ex2=+2.59
+  OOS:
+    n=1569 pvs=0.993 pf=94.2% fills/sd=39.7 paired=+2.08 resid=-3.03 reb=+0.58
+    net_mean=-0.37 net_med=-0.62 CI95=[-0.72,+0.02] ex2=-0.51
+  -> Q=16 OOS verdict: NO-GO
+
+--- Q=20: running full universe ---
+    saved C:\Users\alexandre bandarra\Desktop\global\strategy_lab\wallet_hunt\cache\_mm_q20_full.parquet  t=321s
+  IS :
+    n=2161 pvs=0.986 pf=94.2% fills/sd=64.1 paired=+6.28 resid=-4.48 reb=+0.96
+    net_mean=+2.76 net_med=+1.22 CI95=[+2.38,+3.19] ex2=+2.60
+  OOS:
+    n=1569 pvs=0.992 pf=93.4% fills/sd=40.4 paired=+2.28 resid=-3.56 reb=+0.60
+    net_mean=-0.69 net_med=-0.78 CI95=[-1.05,-0.31] ex2=-0.82
+  -> Q=20 OOS verdict: NO-GO
+
+==========================================================================
+SUMMARY — OOS net by Q (residual-drag lever)
+==========================================================================
+  Q= 5: IS net=+2.60 pvs=0.988 | OOS net=+0.39 [+0.18,+0.61] ex2=+0.33 resid=-2.46 paired=+2.34 pvs=0.991 fills/sd=35 -> GO
+  Q= 8: IS net=+2.84 pvs=0.988 | OOS net=+0.24 [-0.04,+0.53] ex2=+0.14 resid=-2.52 paired=+2.22 pvs=0.992 fills/sd=37 -> NO-GO
+  Q=12: IS net=+2.84 pvs=0.987 | OOS net=-0.06 [-0.39,+0.31] ex2=-0.20 resid=-3.05 paired=+2.43 pvs=0.992 fills/sd=39 -> NO-GO
+  Q=16: IS net=+2.72 pvs=0.987 | OOS net=-0.37 [-0.72,+0.02] ex2=-0.51 resid=-3.03 paired=+2.08 pvs=0.993 fills/sd=40 -> NO-GO
+  Q=20: IS net=+2.76 pvs=0.986 | OOS net=-0.69 [-1.05,-0.31] ex2=-0.82 resid=-3.56 paired=+2.28 pvs=0.992 fills/sd=40 -> NO-GO
+
+  ANY Q GO: True
+  total t=321s
+==========================================================================

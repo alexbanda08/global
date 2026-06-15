@@ -60,7 +60,17 @@ Operator extended binance 1s for DOGE/BNB to Apr 21. Re-ran on their market wind
 - Time-of-day 22–02 boost did NOT replicate on DOGE/BNB (n=20, +0.76 < base) → the TOD pattern looks
   BTC/ETH/SOL-specific (or underpowered on new coins). Fires: `_results/scalp_oos_bbo_fires_2026_06_05_doge_bnb.parquet`.
 
-## Still blocked — XRP / HYPE
+## XRP OOS-validated (2026-06-05, after 1s extended to Apr 21)
+XRP 1s was extended to Apr 21; its markets+BBO+signal now overlap on **Apr 7–21**. Result:
+| XRP | n | $/tr | t | CI |
+|---|---|---|---|---|
+| all-filled | 252 | +1.83 | 3.62 | [+0.83,+2.80] |
+| **gated vwap<0.55** | 125 | **+2.20** | 2.78 | **[+0.63,+3.76]** ✓ |
+| gated & d≥5 | 41 | +4.62 | 2.78 | [+1.34,+7.75] |
+→ **XRP passes** (on par with BTC/ETH/SOL). **Validated scalp universe = BTC/ETH/SOL/DOGE/XRP (5 coins).**
+Fires: `_results/scalp_oos_bbo_fires_2026_06_05_xrp.parquet`.
+
+## Still blocked — BNB (power) / HYPE (signal)
 - DOGE/BNB: markets Apr 6–21 but binance 1s ends Apr 6 → no signal overlap. Need 1s extended to Apr 21.
 - XRP: its 5m/15m markets sit in March; BBO starts Mar 30 → 0 overlap in the BBO∩1s window. Need aligned XRP book/signal.
 - HYPE: no binance 1s at all (HL only, hourly — too coarse). Operator data needed before new-coin scalp OOS.

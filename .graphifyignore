@@ -1,0 +1,23 @@
+# graphify scope guard for `global` — keep the 39GB data OUT of the graph
+data/
+external/**/data/
+**/*.parquet
+**/*.csv
+**/*.feather
+**/*.arrow
+**/*.npy
+**/*.npz
+**/*.pkl
+**/*.h5
+# caches / envs
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.hypothesis/
+node_modules/
+# large session handoff markdown (huge, costs vision tokens on full builds)
+NEXT_SESSION_*.md
+SESSION_HANDOFF_*.md
+STRATEGY_*.md
+MORNING_READ_*.md

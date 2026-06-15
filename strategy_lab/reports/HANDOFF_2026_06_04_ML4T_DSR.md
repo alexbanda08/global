@@ -18,7 +18,9 @@ it on a genuine different-window OOS. Stop hunting direction.**
 - **Intra-window EXIT-SCALP** — buy lag-token cheap (entry_vwap<0.55, δ≥5), **SELL on the book at TIME+45–60s**
   (not hold to resolution). Deployed as 16 shadow sleeves on VPS3. **Passes Deflated Sharpe** (pre-registered,
   prob 1.0, is_significant) at +45 (Sharpe 0.635) and +60. BTC≫ETH. `ML4T_DSR_JUDGE_2026_06_04.md`.
-  - Refinement: **+45s ≥ +60s** (higher t, tighter CI). Per-cell exit table in `SCALP_SLEEVE_AUDIT_2026_06_03.md`.
+  - Exit timing: **+45s and +60s are statistically TIED** (verified 2026-06-06 paired bootstrap, every cell CI incl 0);
+    by mean +60 is argmax for BTC + pooled, +45 only edges ETH5m/δ≥5 by ~$0.003 = noise. The old "+45≥+60" was a
+    marginally-tighter-t artifact, NOT higher return. **Use +60.** Per-cell exit table in `SCALP_SLEEVE_AUDIT_2026_06_03.md`.
   - ✅ EXIT LOCKED 2026-06-04 (`SCALP_DYNAMIC_EXIT_2026_06_04.md`): tested take-profit + longer-hold policies w/
     bootstrap+CPCV+DSR — **none beat fixed +45s (cell)/+60s (broad)**; TP caps the runners (paired CI [−1.63,−0.39]
     broad), longer holds decay, $/tr peaks exactly at +45/+60. Oracle pathmax (+$18.5) is a transient inter-sample
@@ -29,9 +31,11 @@ it on a genuine different-window OOS. Stop hunting direction.**
     ([0.53,3.33]), SOL +$2.16 ([1.03,3.25]). Used aliplayer BBO (slot-aligned, full pre-slot → valid +5s fire) +
     full 1s + resolutions_hf. Caveat: BBO top-of-book fill (no L25 walk), slightly optimistic. The §D-2 gate is
     CLEARED. Validation chain now: in-sample + DSR + live-shadow + disjoint-OOS all positive.
-    **+ DOGE OOS-validated 2026-06-05** (after 1s backfill to Apr21): gated +$1.40/tr CI [0.19,2.61] on Apr6–21
-    → validated universe now BTC/ETH/SOL/DOGE. BNB positive but thin/underpowered (n=22). Time-of-day 22–02
-    boost is BTC/ETH/SOL-specific (didn't replicate on DOGE/BNB). XRP/HYPE still blocked on data.
+    **+ DOGE & XRP OOS-validated 2026-06-05** (after 1s extended to Apr21): DOGE gated +$1.40/tr CI [0.19,2.61]
+    (Apr6–21); XRP gated +$2.20/tr CI [0.63,3.76] (Apr7–21, on par w/ BTC/ETH). **Validated scalp universe =
+    BTC/ETH/SOL/DOGE/XRP (5 coins).** BNB positive but thin/underpowered (n=22). HYPE blocked (no sub-min signal).
+    Time-of-day 22–02 boost is BTC/ETH/SOL-specific (didn't replicate on DOGE/BNB). Deploy spec for all coins:
+    `TV_AGENT_SPEC_SCALP_ALLCOINS_2026_06_05.md` (markets confirmed tradeable; needs live DOGE/BNB/XRP 1s feed + BookMirror).
   - 🔴 REMAINING GATE: only **≥200 LIVE forward fires + live-wallet CI** now stands before real (small) capital.
 - **DISAGR-HAWKES SOL 5m DN** (`mp_skew<0 ∧ imb5_diff>0 ∧ hawkes_imb<−0.2`) — the only cross-feature survivor of
   production fills (+$3.70/tr, clean fill-selection). Spec'd as shadow sleeve
@@ -60,6 +64,16 @@ it on a genuine different-window OOS. Stop hunting direction.**
   hold variance kills the thin edge. **print≠fill** (new rule, alongside WR≠edge). Closed.
 
 ### 🔴 DEAD / NOISE (do NOT re-try)
+- **Cross-timeframe arb** (Poly 5m vs 15m, 2026-06-05, `CROSS_TIMEFRAME_ARB_2026_06_05.md`) — NULL. Poly 15m token
+  adjusts immediately to the known binance price; no mid-window lag, no inversions. Efficiently priced.
+- ⭐ **Poly × Kalshi 15m cross-venue DEEP-DIP arb — REAL, net-positive** (2026-06-05, `POLY_KALSHI_ARB_2026_06_05.md`,
+  numbers in `poly_kalshi_arb_numbers_2026_06_05.py`). Kalshi `KX{A}15M` == Poly `{a}-updown-15m` (same contract,
+  96.0% settlement agreement). Shallow dips fee-eaten, but DEPTH-SELECTIVE entry is significant: complete-set
+  cost<0.95 → **net +2.7¢/set CI[+1.1,+4.2]**; cost<0.90 → **+6.6¢/set CI[+4.8,+8.4]**; ~200–240 chances/day
+  (~$644–1,346/day @ $100/set net). Per asset SOL/ETH CI>0, BTC marginal. 🔴 GATED on: Kalshi ask SIZE unknown
+  (re-export jsonb book `yes_bids/no_bids` from kalshi_orderbook_v2 — deep dips may be tiny size) + near-simultaneous
+  2-venue fills + only 2.6-day sample. Loaders `load_kalshi_markets/orderbook` added to load.py. Data in canonical.
+  (NOTE: my first pass wrongly called this "no edge" — wrong threshold 0.98 + harsh flat fee; corrected.)
 - **SOL exit-scalp** (2026-06-05, `SOL_SCALP_AND_MAKER_ENTRY_2026_06_05.md`) — edge mechanism present (7 gated
   fills +$6.5/tr CI>0) but **untradeable: 0.5% fill rate at $25** (SOL up/down books too thin/spready). BTC/ETH only.
 - **Maker ENTRY for the scalp** (rebate + spread capture) — **adverse selection kills it**: resting bid fills on
