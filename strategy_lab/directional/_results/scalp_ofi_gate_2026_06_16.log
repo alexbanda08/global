@@ -1,0 +1,35 @@
+=== BTC 5m: 1400 slugs — scanning L25 + OFI ===
+=== BTC 15m: 1400 slugs — scanning L25 + OFI ===
+=== ETH 5m: 1400 slugs — scanning L25 + OFI ===
+=== ETH 15m: 1400 slugs — scanning L25 + OFI ===
+=== SOL 5m: 1400 slugs — scanning L25 + OFI ===
+=== SOL 15m: 1400 slugs — scanning L25 + OFI ===
+
+==========================================================================================
+SCALP × OFI GATE (production window, gated ev<0.55). fires=293, with OFI=125 (43%)
+
+BASE (ungated by OFI):           n= 293 $/tr=+2.229 t=+5.14 CI=[+1.378,+3.074]
+
+--- DOSE-RESPONSE: $/tr by ofi_aligned quintile (pooled) ---
+  Q1 ofi_al∈[-0.72,+0.37]  n=  25 $/tr=+2.390 t=+1.78 CI=[-0.196,+4.899]  won=0.72
+  Q2 ofi_al∈[+0.37,+0.77]  n=  25 $/tr=-1.258 t=-1.08 CI=[-3.710,+0.903]  won=0.64
+  Q3 ofi_al∈[+0.79,+0.95]  n=  25 $/tr=+2.622 t=+1.89 CI=[-0.167,+5.287]  won=0.64
+  Q4 ofi_al∈[+0.96,+0.99]  n=  25 $/tr=+1.835 t=+1.59 CI=[-0.219,+4.165]  won=0.60
+  Q5 ofi_al∈[+0.99,+1.00]  n=  25 $/tr=+0.916 t=+0.88 CI=[-0.986,+2.960]  won=0.56
+
+--- GATE TEST: $/tr for ofi_aligned > threshold (pooled) ---
+  ofi_al > -0.2  (keep   97%)  n= 121 $/tr=+1.126 t=+2.02 CI=[+0.049,+2.199]
+  ofi_al > +0.0  (keep   93%)  n= 116 $/tr=+1.120 t=+1.94 CI=[+0.002,+2.271]
+  ofi_al > +0.2  (keep   88%)  n= 110 $/tr=+1.083 t=+1.85 CI=[-0.053,+2.227]
+  ofi_al > +0.4  (keep   78%)  n=  98 $/tr=+1.064 t=+1.73 CI=[-0.116,+2.273]
+
+--- per-coin/tf: base vs ofi_al>0 ---
+  BTC 15m:  base n=  13 $/tr=+1.586 t=+1.41 CI=[-0.656,+3.606]  |  ofi>0 n=  12 $/tr=+1.142 t=+1.02 CI=[-1.081,+3.138]
+  BTC 5m:  base n=   7 $/tr=-1.766 t=-0.45 CI=[-9.351,+4.937]  |  ofi>0 n=   7 $/tr=-1.766 t=-0.45 CI=[-9.603,+4.696]
+  ETH 15m:  base n=  29 $/tr=+1.268 t=+1.17 CI=[-0.810,+3.394]  |  ofi>0 n=  27 $/tr=+1.221 t=+1.05 CI=[-0.935,+3.477]
+  ETH 5m:  base n=  14 $/tr=+4.378 t=+1.99 CI=[+0.052,+8.467]  |  ofi>0 n=  14 $/tr=+4.378 t=+1.99 CI=[+0.211,+8.520]
+  SOL 15m:  base n=  47 $/tr=+0.109 t=+0.15 CI=[-1.266,+1.476]  |  ofi>0 n=  42 $/tr=-0.100 t=-0.14 CI=[-1.514,+1.365]
+  SOL 5m:  base n=  15 $/tr=+3.411 t=+1.93 CI=[+0.111,+6.696]  |  ofi>0 n=  14 $/tr=+2.751 t=+1.56 CI=[-0.553,+6.126]
+
+READ: monotone-↑ dose-response + ofi_al>0 $/tr > base = OFI gate trims losers → deploy shadow, judge live.
+CAVEAT: production (in-sample) window — taker_buy only on live-WS rows; OOS BBO window has it NULL.

@@ -94,7 +94,67 @@ Script `directional/cyclops_l25_backtest_2026_06_15.py`. Real poly entry via L25
 ### Residual nuance (not actionable yet)
 BTC gap is **consistently +1.0–1.5pp across every thr/cap cell** (robust sign, n~800) — a *real but tiny* lag, just too small to monetize as a taker at $1 after tx. The only way it becomes interesting is **as a MAKER** (post the favorite bid below the lagging ask → fee $0 + rebate flips the thin gap positive) — but the b945 queue-sim already showed maker policies ≤0 here. Parked.
 
-## 7. Next step (superseded — edge is not there)
+## 6b. SLUG SELECTOR decoded + edge RESCUED on BTC (RAN 2026-06-15)
+
+Operator was right: there is a slug selector beyond the loose trigger. Cyclops actually trades **285 BTC + 4 ETH over 21d (~14/day), 26 in the last 5d** — but the *new* (last-5d) regime fires **mid-window (~120s), not the old late/small-move regime (offset 229s, ~1.6bps) seen over 21d.**
+
+**Selector decode** (`wallet_hunt/cyclops_selector_decode_2026_06_15.py`, last-5d scope, fired vs signaling-not-fired):
+- **`move_120` is the discriminator: fired +6.5bps vs universe +1.4bps** (4–5× more directional displacement by mid-window).
+- **monotonic 90%** (no opposite >2bps excursion before fire), **moderate vol** (lower zmove 0.85 vs 1.12 — it does NOT chase outsized moves), slight trend-continuation (run_len≥1 55% vs 49%), mild TOD lean to 11–12 UTC.
+- → the selector = *"binance has an early (by 120s), sustained, monotonic ~6bps move in one direction"*. That's why ~5/day not ~100/day.
+
+**Selector L25 $-backtest** (`directional/cyclops_l25_selector_bt_2026_06_15.py`, fire@120 iff |move120|≥thr & monotonic, hold, real L25 entry, Jun1→Jun15):
+
+| asset | thr | cap | n | WR % | entry | gap_pp | $/trade | ex-top2 |
+|---|---|---|---|---|---|---|---|---|
+| btc | 3 | 0.88 | 393 | 78.9 | 0.762 | **+2.7** | **+0.0179** | **+0.0139** |
+| btc | 5 | 1.00 | 333 | 83.8 | 0.815 | +2.3 | +0.0148 | +0.0104 |
+| btc | 8 | 1.00 | 196 | 86.2 | 0.839 | +2.4 | +0.0181 | +0.0130 |
+| eth | 5 | 0.90 | 239 | 76.6 | 0.786 | −2.0 | −0.0350 | −0.0428 |
+
+**The selector roughly DOUBLES the BTC edge vs the loose trigger** (gap +1.5→+2.5pp; ex-top2 +$0.006→+$0.013). On BTC it is **consistently positive across every threshold AND ex-top2 stays positive** — i.e. NOT outlier-driven, NOT the favorite-longshot trap. ETH stays negative (poly prices ETH efficiently/over).
+
+### Revised verdict
+- **BTC-5m monotonic-early-move favorite-hold IS a real (thin) edge.** ~WR 79–86%, entry 0.76–0.84, **gap +2.3–2.7pp**, **$/trade +$0.014–0.018**, ex-top2 +$0.010–0.014, n=200–400 over 14d.
+- Net of ~$0.011 tx → **≈ +$0.003–0.007 per $1**; at ~5–13 BTC fires/day this is small but positive — matches Cyclops's actual realized (+$11/5d ≈ +$2.2/day on ~$13/day deployed).
+- **ETH must be excluded** (negative). Cyclops's own 4 ETH trades / the 1 loss confirm it.
+- Cyclops's 96% live WR is still a hot streak over the structural ~80%.
+
+### Caveats before any capital
+1. **1Hz L25 is optimistic** (convention: over-fills tight-book moments) → re-run at **native 10Hz** before trusting the +$0.015 magnitude; real edge likely thinner.
+2. **No DSR** yet — consistent positive sign across thr∈{3,5,8} + positive ex-top2 is encouraging but not deflation-tested. Run DSR/CPCV on the BTC cell.
+3. Fill rate only **29–36%** (favorite book often absent at fire second) — capacity-limited.
+4. Edge is **BTC-only, thin, regime-dependent** — deploy as a **$1 shadow A/B** (selector ON vs OFF), judge by ≥200 live fires, not the backtest.
+
+## 6c. NATIVE 10Hz + DSR (RAN 2026-06-15) — edge real in $ but FAILS deflation
+
+`directional/cyclops_l25_selector_10hz_dsr_2026_06_15.py` — BTC only, `subsample_1hz=False`, snapshot nearest fire_us (±1s), batched load, self-contained DSR (Bailey & López de Prado), n_trials=16.
+
+| thr | cap | n | WR % | $/trade | ex-top2 | per-trade Sharpe |
+|---|---|---|---|---|---|---|
+| 3 | 0.88 | 395 | 78.7 | +0.0143 | +0.0106 | 0.026 |
+| 5 | 1.00 | 334 | 83.8 | +0.0130 | +0.0087 | 0.028 |
+| 8 | 0.90 | 148 | 83.1 | +0.0153 | +0.0084 | 0.033 |
+| 8 | 1.00 | 195 | 86.7 | **+0.0202** | +0.0150 | 0.049 |
+
+**1Hz was ~20% optimistic** (thr3/cap.88 +0.0179→**+0.0143**) — exactly the convention warning. Positive $/trade **survives** at 10Hz for cap≥0.88; net of ~$0.011 tx ≈ **+$0.001–0.009/$1** (thin).
+
+**DSR verdict (the decider):**
+| cell | n | Sharpe | SR0(null) | **DSR** | skew | kurt |
+|---|---|---|---|---|---|---|
+| thr3 cap0.88 | 395 | 0.0265 | 0.0416 | **0.384** | −1.22 | 2.81 |
+| thr5 cap1.00 | 334 | 0.0283 | 0.0416 | **0.406** | −1.60 | 4.01 |
+| thr8 cap1.00 (best $) | 195 | 0.049 | 0.0416 | **0.538** | — | — |
+
+**FAILS DSR (0.38–0.54 « 0.95).** Per-trade Sharpe (0.026–0.049) is at or below the multiple-testing null (SR0=0.042); the favorite-hold's **negative skew (−1.2 to −1.6)** — wins small, loses full stake — sinks it. The 80–87% WR masks a fat left tail. ex-top2 staying positive (+$0.015) is mildly reassuring but does not rescue DSR.
+
+### FINAL VERDICT
+- Cyclops's selector strategy is **real but marginal and statistically fragile**: thin positive $ at realistic 10Hz fills (+$0.012–0.020 gross, ~breakeven-to-thin net of tx), **but does not pass deflation** (DSR ≤0.54). Consistent with the wallet's actual profile (lifetime −$210, recent +$11 = hot streak, not a robust money-printer).
+- **Do NOT deploy real capital on the backtest.** The negative skew + no-stop means full-stake loss tail.
+- **Only valid path:** $1 live **shadow A/B** (selector ON vs OFF), judge by **≥200 live fires + CI>0**, never the backtest (project standard). BTC-only; ETH excluded (dead).
+- The decode itself is solid and banked: selector = *early (by 120s), monotonic, ~6bps binance move → buy that favorite, hold*. It just isn't a deflation-significant edge at our fee/skew.
+
+## 7. Next step
 
 Build the **L25 mid-window favorite-hold backtest** on canonical Apr22→Jun11:
 - For each BTC/ETH 5m slug, at first offset t∈[90,180]s where Binance moved ≥{5,8}bps aligned, **walk the L25 book** for the favorite ask (`book_walk_fill`, native 10Hz, cross-token spread filter).

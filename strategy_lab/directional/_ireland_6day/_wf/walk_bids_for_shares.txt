@@ -1,0 +1,50 @@
+    def _walk_bids_for_shares(
+        bids: list[dict[str, Any]], shares: float,
+    ) -> float | None:
+        """Size-weighted sell vwap from walking the bid book for ``shares``.
+
+        Walks best-bid-first (``bids[0]`` is the highest bid). Stops once
+        ``shares`` are filled; if the book is thinner than ``shares`` it
+        returns the vwap over whatever liquidity exists (a thin book is
+        itself a bearish tell). Returns None when no usable bid exists.
+        """
+        if shares is None or shares <= 0:
+            return None
+        got_shares = 0.0
+        got_notional = 0.0
+        for lvl in bids[:25]:
+            try:
+                price = float(lvl["price"])
+                size = float(lvl["size"])
+            except (KeyError, TypeError, ValueError):
+                continue
+            if price <= 0 or size <= 0:
+                continue
+            remaining = shares - got_shares
+            take = size if size < remaining else remaining
+            got_shares += take
+            got_notional += take * price
+            if got_shares >= shares:
+                break
+        if got_shares <= 0:
+            return None
+        return got_notional / got_shares
+
+    async def _check_sleeve_06_monitor(self, fire_us: int, won: bool) -> None:
+        """First-30-fires WR<80% auto-suspend per spec §10.2."""
+        if len(self._sleeve_06_resolutions) >= self.SLEEVE_06_MONITOR_N:
+            return  # already evaluated
+        self._sleeve_06_resolutions.append((fire_us, won))
+        if len(self._sleeve_06_resolutions) == self.SLEEVE_06_MONITOR_N:
+            wins = sum(1 for _, w in self._sleeve_06_resolutions if w)
+            wr = wins / self.SLEEVE_06_MONITOR_N
+            if wr < self.SLEEVE_06_MIN_WR:
+                if self._alert_service is not None:
+                    try:
+                        await self._alert_service.emit(
+                            severity="CRITICAL",
+                            kind="poly_sniper_v5_sleeve_06_wr_below_80",
+                            sleeve_id=self.SLEEVE_06_ID,
+                            wr=wr,
+                            wins=wins,
+                            losses=self.SLEEVE_06_MONITOR_N - wins,

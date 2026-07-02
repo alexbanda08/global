@@ -1,0 +1,10 @@
+SET
+{
+    "fee_usd": 0.021874,
+    "sim_gas": true,
+    "tx_hash": "sim_0054ab5e-1131-4bab-a583-42aaa80e8171",
+    "gas_used": 559404,
+    "matic_usd": 0.07162,
+    "settled_at": "2026-06-29T08:26:47.797408+00:00",
+    "source_event_id": "0054ab5e-1131-4bab-a583-42aaa80e8171"
+}

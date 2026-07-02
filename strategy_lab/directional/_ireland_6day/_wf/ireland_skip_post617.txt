@@ -1,0 +1,11 @@
+SET
+g_oracle_lag_with(3.0,12.0)=False|7566
+entry_vwap_out_of_band_0.6000|36
+entry_vwap_out_of_band_0.6500|33
+entry_vwap_out_of_band_0.6600|27
+entry_vwap_out_of_band_0.6400|26
+entry_vwap_out_of_band_0.6100|25
+entry_vwap_out_of_band_0.6200|24
+entry_vwap_out_of_band_0.5900|22
+entry_vwap_out_of_band_0.5800|22
+spread_bidask_too_wide_0.0500_>_0.0500|20

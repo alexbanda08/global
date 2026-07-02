@@ -1,0 +1,282 @@
+    async def maybe_scalp_exit(
+        self,
+        sleeve: SniperV5Sleeve,
+        slot: SlotInfo,
+        fr: FireResult,
+        *,
+        mode: str,
+    ) -> bool:
+        """SCALP_EXIT (TV_AGENT_SPEC_SCALP_EXIT_SHADOW_2026_06_02) — sell the held
+        side ON THE BOOK mid-window instead of holding to chainlink resolution.
+
+        ``mode="poll"``: exit iff best_bid >= ``scalp_tp_bid`` (TP) OR best_bid <=
+        ``fill_vwap - scalp_stop_delta`` (stop). Returns False to keep polling.
+        ``mode="deadline"``: time exit at fire_us + ``scalp_exit_offset_s`` — sell
+        at the bid. Returns False ONLY when the book is empty (caller then falls
+        back to hold-to-resolution and logs the empty-book risk case).
+
+        On a real exit: walk the bid for the full position, compute the
+        round-trip PnL (buy fee $0 taker; sell fee logged — $0 proxy until the
+        live taker-sell fee is verified, graduation gate §7.2), and emit a
+        ``kind='poly_updown_scalp_exit'`` row (event_type='sleeve_scalp_exit').
+        This kind is DISTINCT from ``poly_updown_resolution`` so the scalp PnL
+        never double-counts in the main WR/PnL aggregations (spec §6). SHADOW
+        only — the scalp sleeves are paper.
+        """
+        if fr.fill_vwap is None or fr.fill_shares is None:
+            return False
+        key = (sleeve.sleeve_id, slot.slug)
+        if key in self._scalp_exited:
+            return True  # already exited this slug
+        token_id = slot.token_id_dn if fr.direction == "DOWN" else slot.token_id_up
+        try:
+            book = await self._fetch_book_via_snapshot_fn(token_id)
+        except Exception:  # noqa: BLE001 — can't read book → keep/hold
+            return False
+        bids = book.get("bids") or []
+        if not bids:
+            return False  # empty book — poll: wait; deadline: fall back to hold
+        try:
+            best_bid = float(bids[0]["price"])
+        except (KeyError, TypeError, ValueError, IndexError):
+            return False
+        if mode == "poll":
+            # SCALP_EXIT_CONFIG_BY_TF_2026_06_06: taker-TP@scalp_tp_bid OFF by
+            # default (leaks edge); stop stays ON (protective). getattr-safe.
+            tp_on = False  # 0.65 TP REMOVED 2026-06-11 (operator): bad for strategy - time exit only
+            stop_on = False  # STOPS REMOVED 2026-06-11 (operator): bad for strategy - time exit only
+            if tp_on and best_bid >= float(sleeve.scalp_tp_bid):
+                trigger = "tp065"
+            elif stop_on and best_bid <= fr.fill_vwap - float(sleeve.scalp_stop_delta):
+                trigger = "stop"
+            else:
+                return False
+        else:  # deadline → time exit
+            trigger = "time60"
+        sell_vwap = self._walk_bids_for_shares(bids, fr.fill_shares)
+        if sell_vwap is None:
+            return False
+        # FIX (shadow-audit F4, 2026-06-10): charge the live taker fee on the
+        # SELL leg (was 0.0 = optimistic). Polymarket per-share fee curve
+        # 0.07*p*(1-p) at the sell vwap, times shares. Mirrors entry-side.
+        sell_leg_fee = 0.07 * sell_vwap * (1.0 - sell_vwap) * fr.fill_shares
+        pnl = (sell_vwap - fr.fill_vwap) * fr.fill_shares - sell_leg_fee
+        exit_depth = 0.0
+        for lvl in bids[:25]:
+            try:
+                exit_depth += float(lvl["price"]) * float(lvl["size"])
+            except (KeyError, TypeError, ValueError):
+                continue
+        self._scalp_exited.add(key)
+        fr.exit_type = f"scalp_{trigger}"
+        fr.hedge_sell_vwap = sell_vwap
+        tf_s = 300 if slot.tf == "5m" else 900
+        slot_end_us = slot.slot_start_us + tf_s * 1_000_000
+        event = self._build_event(
+            sleeve, slot, slot_end_us, fr.offset_s, fr,
+            event_type="sleeve_scalp_exit", outcome=None, pnl_usd=pnl,
+        )
+        event["scalp_exit"] = {
+            "entry_vwap": fr.fill_vwap,
+            "exit_vwap": sell_vwap,
+            "exit_trigger": trigger,
+            # 2026-06-03 — the TP / stop LEVELS so the trade card can show
+            # entry · TP · SL for every scalp round-trip (not just the exit).
+            "tp_bid": float(sleeve.scalp_tp_bid),
+            "stop_bid": fr.fill_vwap - float(sleeve.scalp_stop_delta),
+            "sell_leg_fee_charged": sell_leg_fee,
+            "exit_book_depth": exit_depth,
+            "delta_bps": fr.oracle_lag_bps,
+            "shares": fr.fill_shares,
+            "scalp_pnl_usd": pnl,
+            "side": fr.direction,
+            "best_bid_at_exit": best_bid,
+        }
+        self._logger.log(event)
+        self._write_audit_row(
+            sleeve.sleeve_id, "poly_updown_scalp_exit", event,
+        )
+        logger.info(
+            "sniper_v5.scalp_exit",
+            sleeve_id=sleeve.sleeve_id, slug=slot.slug, trigger=trigger,
+            entry_vwap=fr.fill_vwap, exit_vwap=sell_vwap, pnl_usd=pnl,
+        )
+        return True
+
+    # ------------------------------------------------------------------ #
+    # SCALP MAKER EXIT (TV_AGENT_SPEC_SCALP_MAKER_EXIT_2026_06_06)        #
+    # Poly 15m: rest a maker SELL on entry, keep the stop, taker-cross the #
+    # remainder at +60. SHADOW (this box) simulates the fill from the book.#
+    # ------------------------------------------------------------------ #
+    async def scalp_maker_post(
+        self, sleeve: SniperV5Sleeve, slot: SlotInfo, fr: FireResult
+    ) -> None:
+        """Post the resting maker SELL at the start of a maker-mode scalp window.
+
+        SHADOW records a virtual order (no venue call). LIVE posts a real GTC
+        maker SELL (Ireland only). Fail-safe: failed/absent post → taker fallback.
+        """
+        if fr.fill_vwap is None or fr.fill_shares is None:
+            return
+        key = (sleeve.sleeve_id, slot.slug)
+        if key in self._scalp_maker_orders or key in self._scalp_exited:
+            return
+        token_id = slot.token_id_dn if fr.direction == "DOWN" else slot.token_id_up
+        mode = str(getattr(sleeve, "scalp_exit_mode", "taker"))
+        maker_price = float(getattr(sleeve, "scalp_maker_tp", 0.60))
+        if mode == "maker_peg":
+            try:
+                book = await self._fetch_book_via_snapshot_fn(token_id)
+                asks = book.get("asks") or []
+                if asks:
+                    maker_price = float(asks[0]["price"])
+            except Exception:  # noqa: BLE001
+                pass
+        state: dict = {"maker_price": maker_price, "order_id": None, "mode": mode}
+        if self._is_live_fire(sleeve) and self._live_executor is not None:
+            try:
+                result = await self._live_executor.place_maker_sell(
+                    token_id=int(token_id),
+                    qty=Decimal(str(fr.fill_shares)),
+                    limit_px=Decimal(str(round(maker_price, 4))),
+                    sleeve_id=f"{sleeve.sleeve_id}_LIVE",
+                )
+                state["order_id"] = (
+                    str(getattr(result, "order_id", "") or "") or None
+                )
+            except Exception as exc:  # noqa: BLE001 — taker fallback at +60
+                logger.warning(
+                    "poly_sniper_v5.scalp_maker_post_failed",
+                    sleeve_id=f"{sleeve.sleeve_id}_LIVE", slug=slot.slug,
+                    error=str(exc),
+                )
+        self._scalp_maker_orders[key] = state
+
+    async def _scalp_maker_live_filled(
+        self, token_id: str, total_shares: float
+    ) -> float | None:
+        """LIVE: maker-filled shares = total − current conditional balance."""
+        if self._live_executor is None:
+            return None
+        try:
+            bal = await self._live_executor.conditional_balance(int(token_id))
+            return max(0.0, total_shares - float(bal))
+        except Exception:  # noqa: BLE001
+            return None
+
+    async def maybe_scalp_maker_exit(
+        self, sleeve: SniperV5Sleeve, slot: SlotInfo, fr: FireResult, *, mode: str
+    ) -> bool:
+        """Maker-mode scalp exit poll/deadline. True when fully resolved."""
+        if fr.fill_vwap is None or fr.fill_shares is None:
+            return False
+        key = (sleeve.sleeve_id, slot.slug)
+        if key in self._scalp_exited:
+            return True
+        state = self._scalp_maker_orders.get(key) or {}
+        token_id = slot.token_id_dn if fr.direction == "DOWN" else slot.token_id_up
+        try:
+            book = await self._fetch_book_via_snapshot_fn(token_id)
+        except Exception:  # noqa: BLE001
+            return False
+        bids = book.get("bids") or []
+        best_bid: float | None = None
+        if bids:
+            try:
+                best_bid = float(bids[0]["price"])
+            except (KeyError, TypeError, ValueError, IndexError):
+                best_bid = None
+        maker_price = float(
+            state.get("maker_price", getattr(sleeve, "scalp_maker_tp", 0.60))
+        )
+        stop_on = False  # STOPS REMOVED 2026-06-11 (operator): bad for strategy - time exit only
+        stop_px = fr.fill_vwap - float(sleeve.scalp_stop_delta)
+        live = self._is_live_fire(sleeve)
+
+        if mode == "poll":
+            total = float(fr.fill_shares)
+            if live:
+                mf = await self._scalp_maker_live_filled(token_id, total)
+                if mf is not None and mf >= total - 1e-6:
+                    return self._emit_maker_scalp_exit(
+                        sleeve, slot, fr, bids=bids, trigger="maker_lift",
+                        maker_shares=mf, maker_vwap=maker_price,
+                        taker_shares=0.0, taker_vwap=None,
+                        best_bid=best_bid, live=True,
+                    )
+            elif best_bid is not None and best_bid >= maker_price:
+                return self._emit_maker_scalp_exit(
+                    sleeve, slot, fr, bids=bids, trigger="maker_lift",
+                    maker_shares=total, maker_vwap=maker_price,
+                    taker_shares=0.0, taker_vwap=None,
+                    best_bid=best_bid, live=False,
+                )
+            if stop_on and best_bid is not None and best_bid <= stop_px:
+                return await self._scalp_maker_taker_remainder(
+                    sleeve, slot, fr, state, token_id, bids, best_bid,
+                    trigger="stop", live=live,
+                )
+            return False
+        return await self._scalp_maker_taker_remainder(
+            sleeve, slot, fr, state, token_id, bids, best_bid,
+            trigger="time60", live=live,
+        )
+
+    async def _scalp_maker_taker_remainder(
+        self, sleeve, slot, fr, state, token_id, bids, best_bid, *, trigger, live
+    ) -> bool:
+        """Stop/deadline: cancel resting maker, taker-sell the unfilled remainder.
+        SHADOW walks the book; LIVE attributes maker-fill from the held balance."""
+        key = (sleeve.sleeve_id, slot.slug)
+        if key in self._scalp_exited:
+            return True
+        total = float(fr.fill_shares)
+        maker_vwap = float(
+            state.get("maker_price", getattr(sleeve, "scalp_maker_tp", 0.60))
+        )
+        maker_shares = 0.0
+        taker_shares = 0.0
+        taker_vwap: float | None = None
+        if live:
+            oid = state.get("order_id")
+            if oid and self._live_executor is not None:
+                with contextlib.suppress(Exception):
+                    await self._live_executor.cancel_order(oid)
+            mf = await self._scalp_maker_live_filled(token_id, total)
+            maker_shares = mf if mf is not None else 0.0
+            remaining = max(0.0, total - maker_shares)
+            if remaining <= 1e-6:
+                return self._emit_maker_scalp_exit(
+                    sleeve, slot, fr, bids=bids, trigger="maker_lift",
+                    maker_shares=maker_shares, maker_vwap=maker_vwap,
+                    taker_shares=0.0, taker_vwap=None, best_bid=best_bid, live=True,
+                )
+            sold = await self._place_live_scalp_sell(
+                sleeve, slot, fr, token_id, best_bid or 0.0, trigger,
+                qty=Decimal(str(round(remaining, 6))),
+            )
+            if sold is None:
+                if maker_shares > 1e-6:
+                    return self._emit_maker_scalp_exit(
+                        sleeve, slot, fr, bids=bids, trigger="maker_lift",
+                        maker_shares=maker_shares, maker_vwap=maker_vwap,
+                        taker_shares=0.0, taker_vwap=None,
+                        best_bid=best_bid, live=True,
+                    )
+                return False
+            taker_vwap, taker_shares = sold
+        else:
+            sv = self._walk_bids_for_shares(bids, total)
+            if sv is None:
+                return False
+            taker_shares = total
+            taker_vwap = sv
+        return self._emit_maker_scalp_exit(
+            sleeve, slot, fr, bids=bids, trigger=trigger,
+            maker_shares=maker_shares, maker_vwap=maker_vwap,
+            taker_shares=taker_shares, taker_vwap=taker_vwap,
+            best_bid=best_bid, live=live,
+        )
+
+    def _emit_maker_scalp_exit(
+        self, sleeve, slot, fr, *, bids, trigger,

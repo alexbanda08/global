@@ -23,15 +23,12 @@
   "notes": "Range-bound fade (low ADX). Rarest fire cadence (~8/yr). FUND_Z gate lifts 1.52->1.59.",
   "status": "shadow_paper",
   "venue": "hyperliquid_perp",
-  "card_built": "2026-06-15T18:05:20.304629+00:00",
+  "card_built": "2026-07-02T11:05:17.308708+00:00",
   "live": {
-    "ledger_fires": 3,
-    "last_fire": "2026-06-01T20:00:00+00:00",
-    "ledger_paper_pnl": 38.01,
-    "ledger_win_rate": 66.7,
-    "current_state": "OPEN",
-    "open_dir": "LONG",
-    "open_entry_ts": "2026-06-15T04:00:00+00:00",
-    "unrealized_pct": 3.965
+    "ledger_fires": 5,
+    "last_fire": "2026-06-24T08:00:00+00:00",
+    "ledger_paper_pnl": 22.41,
+    "ledger_win_rate": 40.0,
+    "current_state": "FLAT"
   }
 }

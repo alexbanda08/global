@@ -1,0 +1,80 @@
+  SAMPLED to 456 slugs (bound 150/coin)
+Universe: 456 slugs (2026-04-24 .. 2026-06-15)
+
+=== BTC 5m ===
+  BTC 152/152  t=40s
+  Checkpoint saved for BTC  t=40s
+
+=== ETH 5m ===
+  ETH 152/152  t=53s
+  Checkpoint saved for ETH  t=53s
+
+=== SOL 5m ===
+  SOL 152/152  t=62s
+  Checkpoint saved for SOL  t=62s
+
+Final dataset: 2280 rows  coins=['BTC', 'ETH', 'SOL']  t=62s
+
+Loading cached markout from C:\Users\alexandre bandarra\Desktop\global\strategy_lab\directional\_results\sumpair_v2_markout_2026_06_14.parquet
+Markout: 300 observations  t=62s
+
+====================================================================================================
+DEPTH-REALISM + RESIDUAL-EXIT RESULTS (2026-06-14)
+====================================================================================================
+
+--- CLIPS-PER-SIDE DISTRIBUTION (unlimited, OOS, fired slugs) ---
+  Up: n=39 mean=2.33 p25=1.0 p50=2.0 p75=3.0 p90=5.0 p95=5.1 p99=7.2
+  Down: n=40 mean=1.77 p25=1.0 p50=1.0 p75=2.0 p90=3.1 p95=4.0 p99=5.0
+
+  Real depth (non-artifact, avg per clip) Up: mean=5.70 clips  Dn: mean=7.03 clips
+  (real_depth_clips < 1 → real non-artifact book supports <1 $5 clip per snapshot)
+
+--- NET/SLUG VS MAX-CLIPS (ARM A: hold residual to resolution) ---
+  OOS fired slugs only (slot_start_us >= 2026-05-21):
+     clips    net/slug                    CI95        t       n    both%    pnl_vs_1clip
+         1      +0.554  [-2.035,+4.492]    +0.33      69    14.5%    (baseline)
+         2      +1.926  [-3.234,+10.186]    +0.51      69    14.5%    +1.372
+         4      +2.872  [-4.699,+15.357]    +0.51      69    14.5%    +2.319
+         8      +2.470  [-5.444,+15.375]    +0.43      69    14.5%    +1.916
+     unlim      +2.470  [-5.297,+15.822]    +0.43      69    14.5%    +1.916
+
+--- NET/SLUG VS MAX-CLIPS (ARM B: SCALP residual at +60s) ---
+  OOS fired slugs only:
+     clips  net/slug arm_b                    CI95     residual_drag (A-B)
+         1     +922111.274  [+296824.483,+1756225.700]  drag(A−B)=-922110.720 CI=[-1766448.795,-296961.103]
+         2    +1582508.077  [+514556.749,+3028864.291]  drag(A−B)=-1582506.151 CI=[-3068320.074,-492385.396]
+         4    +2138631.750  [+595920.658,+4284117.210]  drag(A−B)=-2138628.877 CI=[-4336598.482,-554504.516]
+         8    +2138631.691  [+548388.055,+4277417.094]  drag(A−B)=-2138629.221 CI=[-4316776.180,-549283.814]
+     unlim    +2138631.691  [+581264.101,+4333125.578]  drag(A−B)=-2138629.221 CI=[-4301982.463,-551259.978]
+
+--- PER-COIN ARM B OOS (max_clips=1 vs unlimited) ---
+  max_clips=1:
+    BTC: n=  12 $/tr=+1759556.631 t=+1.00 CI=[-1.911,+5278670.637]  both%=16.7%
+    ETH: n=  26 $/tr=+699987.515 t=+1.51 CI=[+25064.891,+1749435.117]  both%=15.4%
+    SOL: n=  31 $/tr=+784236.225 t=+2.26 CI=[+202267.809,+1498192.239]  both%=12.9%
+  max_clips=unlim:
+    BTC: n=  12 $/tr=+4586720.770 t=+1.00 CI=[-6.239,+13760168.775]  both%=16.7%
+    ETH: n=  26 $/tr=+1715355.759 t=+1.26 CI=[+37599.555,+4694251.583]  both%=15.4%
+    SOL: n=  31 $/tr=+1545989.925 t=+2.20 CI=[+342453.382,+2986957.689]  both%=12.9%
+
+--- MARKOUT RE-VERIFICATION (independent sample, causal bar-END fills) ---
+  Total observations: 300
+  mo_1s: n=100  median=+0.00¢  mean=+1.92¢  CI=[+1.12,+2.82]¢
+  mo_5s: n=100  median=+1.00¢  mean=+3.66¢  CI=[+2.01,+5.40]¢
+  mo_30s: n=100  median=+0.00¢  mean=+2.50¢  CI=[-0.57,+5.64]¢
+  Per coin:
+    BTC mo_1s: median=+0.00¢  n=100
+    BTC mo_30s: median=+0.00¢  n=100
+
+--- FINAL VERDICT (DEPTH-REALISM 2026-06-14) ---
+
+  1-clip ARM A (hold residual): +0.554/slug OOS CI=[-2.043,+4.327]
+  1-clip ARM B (scalp residual): +922111.274/slug OOS CI=[+287709.441,+1752493.051]
+  unlim ARM B (scalp residual): +2138631.691/slug OOS CI=[+553348.590,+4252992.430]
+
+  Markout +30s positive (>+1¢): YES — lag is real
+
+  VERDICT: EDGE SURVIVES DEPTH REALISM at 1-clip-per-side (realistic), ARM B (scalp residual).
+  Deployable config: 1 clip per side, $5, +60s scalp on residual, pair held to resolution.
+  DO NOT scale to multi-clip without live depth confirmation.
+

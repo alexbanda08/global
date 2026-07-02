@@ -1,0 +1,3 @@
+SET
+shadow_scalp_exit_btc_5m_d3_v1_LIVE
+shadow_scalp_exit_btc_5m_d3_v1

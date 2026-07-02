@@ -1,0 +1,14 @@
+== systemd units ==
+setvtrgb.service
+tv-ai-bot.service
+tv-api.service
+tv-engine.service
+tv-rust-api.service
+tv-rust-engine.service
+== env from main unit ==
+EnvironmentFile=/etc/tv/tradingvenue.env
+EnvironmentFile=/etc/tv/tv-ro.env
+Environment=TV_UNIT=tv-engine
+Environment=PYTHONPATH=/opt/tradingvenue
+== psql roles ==
+postgres pg_database_owner pg_read_all_data pg_write_all_data pg_monitor pg_read_all_settings pg_read_all_stats pg_stat_scan_tables pg_read_server_files pg_write_server_files pg_execute_server_program pg_signal_backend pg_checkpoint pg_use_reserved_connections pg_create_subscription tradingvenue tradingvenue_ro 

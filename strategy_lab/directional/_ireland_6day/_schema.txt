@@ -1,0 +1,44 @@
+== COLUMNS ==
+event_id:uuid
+at:timestamp with time zone
+sleeve_id:text
+position_id:uuid
+order_id:uuid
+kind:text
+data:jsonb
+== KINDS last 7d (count) ==
+ERROR:  column "ts" does not exist
+LINE 1: select kind, count(*) from trading.events where ts > now() -...
+                                                        ^
+== TIME RANGE ==
+ERROR:  column "ts" does not exist
+LINE 1: select min(ts), max(ts) from trading.events where kind='ladd...
+                   ^
+== SAMPLE ladder_summary payload ==
+ERROR:  column "payload" does not exist
+LINE 1: select payload from trading.events where kind='ladder_summar...
+               ^
+== SAMPLE feed_quality payload ==
+ERROR:  column "payload" does not exist
+LINE 1: select payload from trading.events where kind='feed_quality'...
+               ^
+== SAMPLE tick_latency payload ==
+ERROR:  column "payload" does not exist
+LINE 1: select payload from trading.events where kind='tick_latency'...
+               ^
+== SAMPLE ladder_tick payload ==
+ERROR:  column "payload" does not exist
+LINE 1: select payload from trading.events where kind='ladder_tick' ...
+               ^
+== SAMPLE fire payload ==
+ERROR:  column "payload" does not exist
+LINE 1: select payload from trading.events where kind='fire' order b...
+               ^
+== SAMPLE order_placed payload ==
+ERROR:  column "payload" does not exist
+LINE 1: select payload from trading.events where kind='order_placed'...
+               ^
+== SAMPLE resolve payload ==
+ERROR:  column "payload" does not exist
+LINE 1: select payload from trading.events where kind='resolve' orde...
+               ^

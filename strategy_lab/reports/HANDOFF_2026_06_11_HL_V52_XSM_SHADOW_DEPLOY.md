@@ -112,6 +112,45 @@ Live example from the reference feed: **V52-AVAX = LONG conf 29** (one AVAX slee
 
 ---
 
+## 5c. 2026-06-16 INCIDENT — Postgres OOM outage + card signal endpoint isolation
+
+**Symptom:** operator reported HL cards still empty (`SIGNAL FLAT / CONFIDENCE —`) after 5b, even
+though headers now showed `bundle: HL_V52_SHADOW` (the bundles fix held).
+
+**Root cause chain (deeper than 5b):**
+1. The card `SIGNAL/CONFIDENCE` (both collapsed header + expanded) is rendered from the
+   `/sleeves/{id}/signal/current` endpoint (NOT `SleeveManifestRow`, which has no direction field).
+2. My 5b patch read `_deps.pool` — but the shared tv-api pool was throwing `acquire` TimeoutErrors.
+3. **The actual cause: Postgres (`postgresql@17-main`) was OOM-killed at 2026-06-16 08:53 CEST and
+   stayed DOWN ~5h** (`Restart=no`, no swap). No DB → tv-api pool dead → every card fell to the stub.
+
+**Fixes applied (VPS3):**
+- **Restarted Postgres** (RAM was free again; `systemctl start postgresql@17-main`), then restarted
+  tv-engine + tv-api to reconnect. Verified: regime models intact (5), hl_bars fresh, DB accepting.
+- **Made the card signal endpoint resilient to shared-pool exhaustion:** rewrote
+  `backend/app/api/_hl_signal.py` to use its OWN small asyncpg pool (`TV_DB_URL`, max 2,
+  `command_timeout=10`) + a 60s TTL cache (one query burst / 60s for all 6 cards), and re-patched
+  `get_signal_current` to call `compute_hl_signal(sleeve_id)` with NO `_deps.pool` guard. So the cards
+  keep working even when the busy write pool times out. Patch/helper: `migration_2026_06_08/
+  {_hl_signal.py,_patch_sleeves2.py}`; backups `sleeves.py.bak-hlcards2-*`.
+
+**Verified live (DB up):** `V52-SOL=LONG conf 0.333`, `V52-AVAX=SHORT conf 0.333`, ETH/LINK FLAT,
+BTC no-stream, XSM FLAT — all `blocked=False` (UI shows real signal). Signals evolve per bar.
+
+**RELIABILITY FIXES APPLIED 2026-06-16 (operator-authorized "wire everything"):**
+- **8 GB swap** added (`/swapfile`, persisted in `/etc/fstab`, `vm.swappiness=10` via
+  `/etc/sysctl.d/99-tv-swappiness.conf`) — active now; prevents the OOM-kill that took the DB down.
+- **Postgres auto-restart** drop-in `/etc/systemd/system/postgresql@17-main.service.d/override.conf`
+  (`Restart=on-failure`, `RestartSec=10`, `StartLimitBurst=5`, `OOMScoreAdjust=-600` so the kernel
+  kills other processes before the DB). Source: `migration_2026_06_08/postgres_override.conf`.
+  `OOMScoreAdjust` applies on the next DB restart; swap is the active protection meanwhile.
+- `tv-engine` + `tv-api` already had `Restart=on-failure` → the whole stack now self-heals.
+- HL cards bypass the busy shared write pool entirely (own pool + 60s cache), so they keep serving
+  even under DB pressure. Other endpoints still use the shared pool (separate scaling concern).
+
+**Remaining (optional):** root-cause the memory spike that triggered the original OOM (lower
+`shared_buffers`, or profile the engine's peak); not required now that swap + OOMScoreAdjust protect it.
+
 ## 5b. RESOLVED 2026-06-14 — production TV dashboard HL cards wired LIVE on VPS3
 
 The `SHADOW (6)` HL cards (`V52-BTC/ETH/SOL/AVAX/LINK` + `V24-XSM`) were dead (`bundle: none`,

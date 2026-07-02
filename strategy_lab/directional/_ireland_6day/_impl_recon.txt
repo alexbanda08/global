@@ -1,0 +1,52 @@
+== ALL sleeve x kind since Jun 30 ==
+kalshi_scalp_exit_btc_15m_d3_v1|fire_skip|178|2026-07-01 22:46:00.199748+00
+kalshi_scalp_exit_btc_15m_d3_v1|resolve|10|2026-07-01 22:32:02.009438+00
+kalshi_scalp_exit_btc_15m_d3_v1|order_placed|10|2026-07-01 22:31:00.19872+00
+kalshi_sniper_btc_15m_ema50_ema800_off600_down_H|fire_skip|144|2026-07-01 22:40:00.184438+00
+kalshi_sniper_btc_15m_ema50_ema800_off600_down_H|resolve|43|2026-07-01 13:00:45.095126+00
+kalshi_sniper_btc_15m_ema50_ema800_off600_down_H|order_placed|43|2026-07-01 12:55:00.190036+00
+poly_ladder_btc_15m|feed_quality|25973|2026-06-30 14:31:40.056636+00
+poly_ladder_btc_15m|ladder_tick|25973|2026-06-30 14:31:40.055925+00
+poly_ladder_btc_15m|tick_latency|25973|2026-06-30 14:31:40.057528+00
+poly_ladder_btc_15m|ladder_summary|59|2026-06-30 14:30:00.020732+00
+poly_ladder_btc_15m_v2|tick_latency|55975|2026-07-01 22:53:00.090289+00
+poly_ladder_btc_15m_v2|feed_quality|55975|2026-07-01 22:53:00.089765+00
+poly_ladder_btc_15m_v2|ladder_tick|55975|2026-07-01 22:53:00.089227+00
+poly_ladder_btc_15m_v2|ladder_summary|129|2026-07-01 22:45:00.054785+00
+poly_sniper_v5_btc_15m_ema50_ema800_off600_down|fire_skip|106|2026-07-01 22:40:00.002052+00
+poly_sniper_v5_btc_15m_ema50_ema800_off600_down|fire|81|2026-07-01 12:55:00.00414+00
+poly_sniper_v5_btc_15m_ema50_ema800_off600_down|resolve|80|2026-07-01 13:01:45.026533+00
+poly_sniper_v5_eth_5m_l_ema50_hurst_grandparent_V10|fire_skip|559|2026-07-01 22:51:00.003156+00
+poly_sniper_v5_eth_5m_l_ema50_hurst_grandparent_V10|resolve|4|2026-07-01 15:32:15.035491+00
+poly_sniper_v5_eth_5m_l_ema50_hurst_grandparent_V10|fire|4|2026-07-01 15:26:00.002828+00
+shadow_scalp_exit_btc_5m_d3_v1|fire_skip|487|2026-07-01 22:50:05.003857+00
+shadow_scalp_exit_btc_5m_d3_v1|resolve|74|2026-07-01 22:00:45.027997+00
+shadow_scalp_exit_btc_5m_d3_v1|fire|74|2026-07-01 21:55:05.002401+00
+== services (tv*, watchdog) ==
+setvtrgb.service active exited
+tv-ai-bot.service active running
+tv-api.service active running
+tv-engine.service active running
+tv-populate-markets.service inactive dead
+tv-rust-api.service active running
+tv-rust-engine.service active running
+tv-shadow-sync.service inactive dead
+== engine env flags (sumpair/ladder/watchdog) ==
+# moat-infra I0-I4 (2026-06-16) — PAPER, isolated to the ladder mirrors
+TV_POLY_LADDER_ENABLED=true
+TV_POLY_LADDER_LIVE_ENABLED=false
+TV_POLY_RACER_ENABLED=true
+TV_POLY_RACER_N_CONNS=4
+# Ladder v2 (2026-06-30): fresh _v2 namespace + pvs gate (G3 ON)
+TV_POLY_LADDER_SLEEVE_ID=poly_ladder_btc_15m_v2
+TV_LADDER_PAIR_MAX_SUM=0.99
+== sample sumpair_osc event (if any) ==
+== distinct kinds all-time-recent ==
+tick_latency|112679
+feed_quality|112638
+ladder_tick|112637
+fire_skip|2050
+resolve|261
+ladder_summary|256
+fire|196
+order_placed|69

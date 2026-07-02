@@ -1,0 +1,50 @@
+Universe: 40356 slugs (2026-04-24 .. 2026-06-15)
+
+=== BTC 5m ===
+  BTC 400/13447  t=49s
+  BTC 2400/13447  t=316s
+  BTC 4400/13447  t=511s
+  BTC 6400/13447  t=695s
+  BTC 8400/13447  t=870s
+  BTC 10400/13447  t=1050s
+  BTC 12400/13447  t=1253s
+  Checkpoint saved for BTC  t=1339s
+
+=== ETH 5m ===
+  ETH 400/13454  t=1356s
+  ETH 2400/13454  t=1392s
+  ETH 4400/13454  t=1429s
+  ETH 6400/13454  t=1465s
+  ETH 8400/13454  t=1503s
+  ETH 10400/13454  t=1538s
+  ETH 12400/13454  t=1573s
+  Checkpoint saved for ETH  t=1594s
+
+=== SOL 5m ===
+  SOL 400/13455  t=1608s
+  SOL 2400/13455  t=1632s
+  SOL 4400/13455  t=1656s
+  SOL 6400/13455  t=1680s
+  SOL 8400/13455  t=1703s
+  SOL 10400/13455  t=1728s
+  SOL 12400/13455  t=1752s
+  Checkpoint saved for SOL  t=1766s
+
+Final dataset: 201725 rows  coins=['BTC', 'ETH', 'SOL']  t=1766s
+
+Running markout sample...
+Markout: 300 observations  t=1793s
+Traceback (most recent call last):
+  File "C:\Users\alexandre bandarra\Desktop\global\strategy_lab\directional\_sumpair_v2_depth_realism.py", line 585, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\alexandre bandarra\Desktop\global\strategy_lab\directional\_sumpair_v2_depth_realism.py", line 427, in main
+    report(R, mo)
+    ~~~~~~^^^^^^^
+  File "C:\Users\alexandre bandarra\Desktop\global\strategy_lab\directional\_sumpair_v2_depth_realism.py", line 580, in report
+    print("\n".join(str(x) for x in lines))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 584: character maps to <undefined>

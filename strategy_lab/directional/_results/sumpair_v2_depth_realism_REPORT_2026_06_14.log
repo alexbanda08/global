@@ -1,0 +1,74 @@
+Universe: 40356 slugs (2026-04-24 .. 2026-06-15)
+  Found cached coins: {'BTC', 'ETH', 'SOL'}
+
+=== BTC 5m: CACHED, skipping ===
+
+=== ETH 5m: CACHED, skipping ===
+
+=== SOL 5m: CACHED, skipping ===
+
+Final dataset: 201725 rows  coins=['BTC', 'ETH', 'SOL']  t=18s
+
+Loading cached markout from C:\Users\alexandre bandarra\Desktop\global\strategy_lab\directional\_results\sumpair_v2_markout_2026_06_14.parquet
+Markout: 300 observations  t=18s
+
+====================================================================================================
+DEPTH-REALISM + RESIDUAL-EXIT RESULTS (2026-06-14)
+====================================================================================================
+
+--- CLIPS-PER-SIDE DISTRIBUTION (unlimited, OOS, fired slugs) ---
+  Up: n=4912 mean=2.40 p25=1.0 p50=2.0 p75=3.0 p90=5.0 p95=7.0 p99=10.0
+  Down: n=4933 mean=2.19 p25=1.0 p50=2.0 p75=3.0 p90=4.0 p95=6.0 p99=9.0
+
+  Real depth (non-artifact, avg per clip) Up: mean=9.06 clips  Dn: mean=8.67 clips
+  (real_depth_clips < 1 → real non-artifact book supports <1 $5 clip per snapshot)
+
+--- NET/SLUG VS MAX-CLIPS (ARM A: hold residual to resolution) ---
+  OOS fired slugs only (slot_start_us >= 2026-05-21):
+     clips    net/slug                    CI95        t       n    both%    pnl_vs_1clip
+         1      +0.638  [+0.416,+0.867]    +5.62    7814    26.0%    (baseline)
+         2      +1.093  [+0.724,+1.470]    +5.75    7814    26.0%    +0.455
+         4      +1.752  [+1.185,+2.383]    +5.88    7814    26.0%    +1.113
+         8      +2.297  [+1.536,+3.095]    +5.69    7814    26.0%    +1.659
+     unlim      +2.449  [+1.635,+3.305]    +5.73    7814    26.0%    +1.811
+
+--- NET/SLUG VS MAX-CLIPS (ARM B: SCALP residual at +60s) ---
+  OOS fired slugs only:
+     clips  net/slug arm_b                    CI95     residual_drag (A-B)
+         1          +0.401  [+0.258,+0.551]  drag(A−B)=+0.237 CI=[+0.092,+0.393]
+         2          +0.866  [+0.624,+1.120]  drag(A−B)=+0.227 CI=[-0.032,+0.491]
+         4          +1.371  [+1.017,+1.731]  drag(A−B)=+0.380 CI=[-0.083,+0.845]
+         8          +1.724  [+1.267,+2.196]  drag(A−B)=+0.574 CI=[-0.037,+1.245]
+     unlim          +1.767  [+1.282,+2.272]  drag(A−B)=+0.682 CI=[+0.050,+1.398]
+
+--- PER-COIN ARM B OOS (max_clips=1 vs unlimited) ---
+  max_clips=1:
+    BTC: n=1854 $/tr=+0.912 t=+5.53 CI=[+0.596,+1.247]  both%=23.0%
+    ETH: n=2521 $/tr=+0.412 t=+3.12 CI=[+0.165,+0.677]  both%=26.3%
+    SOL: n=3439 $/tr=+0.117 t=+1.13 CI=[-0.080,+0.327]  both%=27.4%
+  max_clips=unlim:
+    BTC: n=1854 $/tr=+3.317 t=+6.29 CI=[+2.372,+4.425]  both%=23.0%
+    ETH: n=2521 $/tr=+2.226 t=+5.22 CI=[+1.441,+3.091]  both%=26.3%
+    SOL: n=3439 $/tr=+0.595 t=+1.50 CI=[-0.138,+1.402]  both%=27.4%
+
+--- MARKOUT RE-VERIFICATION (independent sample, causal bar-END fills) ---
+  Total observations: 300
+  mo_1s: n=100  median=+0.00¢  mean=+1.92¢  CI=[+1.12,+2.84]¢
+  mo_5s: n=100  median=+1.00¢  mean=+3.66¢  CI=[+2.04,+5.45]¢
+  mo_30s: n=100  median=+0.00¢  mean=+2.50¢  CI=[-0.65,+5.63]¢
+  Per coin:
+    BTC mo_1s: median=+0.00¢  n=100
+    BTC mo_30s: median=+0.00¢  n=100
+
+--- FINAL VERDICT (DEPTH-REALISM 2026-06-14) ---
+
+  1-clip ARM A (hold residual): +0.638/slug OOS CI=[+0.421,+0.863]
+  1-clip ARM B (scalp residual): +0.401/slug OOS CI=[+0.259,+0.549]
+  unlim ARM B (scalp residual): +1.767/slug OOS CI=[+1.292,+2.268]
+
+  Markout +30s positive (>+1¢): YES — lag is real
+
+  VERDICT: EDGE SURVIVES DEPTH REALISM at 1-clip-per-side (realistic), ARM B (scalp residual).
+  Deployable config: 1 clip per side, $5, +60s scalp on residual, pair held to resolution.
+  DO NOT scale to multi-clip without live depth confirmation.
+

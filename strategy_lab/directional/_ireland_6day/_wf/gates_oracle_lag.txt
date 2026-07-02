@@ -1,0 +1,281 @@
+    """Helper: True if close > vwap, False if below, None if no row / no vwap.
+
+    Direction-agnostic helper consumed by `g_above_1h_dailyvwap_with`. Spec §3.10
+    exports this as a primitive distinct from the gate-form so downstream callers
+    (e.g., shadow log enrichment) can record the tri-state.
+    """
+    row = daily_vwap_panel.lookup(asset, fire_us)
+    if row is None or row.vwap is None or row.close is None:
+        return None
+    return row.close > row.vwap
+
+
+def g_above_1h_dailyvwap_with(
+    direction: str,
+    fire_us: int,
+    *,
+    asset: str,
+    daily_vwap_panel: Any,
+    **_kw: Any,
+) -> bool:
+    """Pass iff above_1h_dailyvwap == True for UP, == False for DOWN.
+
+    Returns False on None (graceful skip per the gate contract).
+    """
+    above = above_1h_dailyvwap(asset, fire_us, daily_vwap_panel=daily_vwap_panel)
+    if above is None:
+        return False
+    return (above and direction == "UP") or ((not above) and direction == "DOWN")
+
+
+# =====================================================================
+# §3.11 — Pivot proximity (TradersRealityPanel)
+# =====================================================================
+
+
+def g_near_pivot(
+    direction: str, fire_us: int, *, asset: str, tr_panel: Any, **_kw: Any,
+) -> bool:
+    """Pass iff |close - pp_classic_daily| / close < 0.5% (direction-independent)."""
+    row = _tr_row(tr_panel, asset, fire_us)
+    if (
+        row is None
+        or row.pp_classic_daily is None
+        or row.close == 0
+    ):
+        return False
+    return abs(row.close - row.pp_classic_daily) / row.close < NEAR_PIVOT_PCT_THR
+
+
+# =====================================================================
+# §3.12 — Offset / time-of-day / direction gates
+# =====================================================================
+
+
+def g_offset_early(
+    direction: str, fire_us: int, *, slot_start_us: int, **_kw: Any,
+) -> bool:
+    """Pass iff 0 <= (fire_us - slot_start_us) / 1e6 <= 60.
+
+    Filter for offsets in the first 60 seconds of a slot. Pre-slot fires
+    (offset < 0) explicitly fail (defensive against scheduling races).
+    """
+    offset_s = (fire_us - slot_start_us) / 1_000_000
+    return 0 <= offset_s <= OFFSET_EARLY_MAX_S
+
+
+def g_hod_us_afternoon(direction: str, fire_us: int, **_kw: Any) -> bool:
+    """Pass iff hour-of-day-UTC in [18, 19, 20, 21, 22] (US afternoon)."""
+    hour_utc = (fire_us // 1_000_000 // 3600) % 24
+    return hour_utc in HOD_US_AFTERNOON_UTC
+
+
+def g_dir_up(direction: str, *_args: Any, **_kw: Any) -> bool:
+    """Pass iff direction == 'UP'. Accepts arbitrary extra args for uniform callsig."""
+    return direction == "UP"
+
+
+def g_dir_down(direction: str, *_args: Any, **_kw: Any) -> bool:
+    """Pass iff direction == 'DOWN'. Accepts arbitrary extra args for uniform callsig."""
+    return direction == "DOWN"
+
+
+def g_oracle_lag_bps_ge(
+    direction: str,
+    fire_us: int,
+    *,
+    oracle_lag: Any = None,
+    threshold_bps: str = "3.0",
+    **_kw: Any,
+) -> bool:
+    """fast_taker fire signal: binance-vs-chainlink staleness exceeds threshold,
+    AND the proposed ``direction`` matches the LEADING side.
+
+    ``oracle_lag`` is the ``OracleLagSnapshot`` (``price_delta_bps`` =
+    (feed - oracle)/oracle * 10_000) supplied by the controller at fire time
+    (see ``_build_gate_kwargs``); ``None`` when the feed/oracle isn't readable
+    → graceful skip (no fire), matching every other gate's missing-data
+    contract.
+
+    Sign convention: ``price_delta_bps > 0`` means binance (feed) is ABOVE the
+    chainlink oracle → the up-leg is the stale-cheap leading side → fire UP.
+    ``< 0`` → fire DOWN. So for a BOTH sleeve only the leading side passes; the
+    other side fails on the sign check and never fires.
+
+    ``threshold_bps`` arrives as a string from the GateRef static kwargs
+    (3.0 = the OOS sweet spot per LATENCY_EDGE_FINDING).
+    """
+    if oracle_lag is None:
+        return False
+    try:
+        thr = float(threshold_bps)
+    except (TypeError, ValueError):
+        thr = 3.0
+    bps = float(oracle_lag.price_delta_bps)
+    if abs(bps) < thr:
+        return False
+    return (direction == "UP") if bps > 0 else (direction == "DOWN")
+
+
+# =====================================================================
+# FAST_TAKER_LAGV2 gates (2026-05-29) — directional oracle-lag taker.
+# Pure + direction-aware; runtime kwargs routed in the controller's
+# _build_gate_kwargs. See docs spec TV_AGENT_SPEC_FAST_TAKER_LAGV2.
+# =====================================================================
+
+# Hours-of-day (UTC) where the lag edge degrades — rejected by
+# g_not_us_close_hours (LAG_TAKER_GATES: OOS t=3.29 standalone).
+_LAGV2_EXCLUDE_HOURS_UTC = frozenset({18, 19, 20, 21, 22, 23})
+
+
+def _top_ask_depth_usd(book: dict | None) -> float:
+    """Resting $ at the BEST ask level (price*size of asks[0]). 0.0 if missing.
+
+    Top-of-book (NOT cumulative) — matches the LAG_TAKER_GATES "best-ask $"
+    median semantics, distinct from _cum_depth_usd's L25 sum.
+    """
+    if not book:
+        return 0.0
+    asks = book.get("asks") or []
+    if not asks:
+        return 0.0
+    try:
+        return float(asks[0]["price"]) * float(asks[0]["size"])
+    except (KeyError, TypeError, ValueError, IndexError):
+        return 0.0
+
+
+def g_oracle_lag_with(
+    direction: str,
+    fire_us: int,
+    *,
+    oracle_lag: Any = None,
+    lo_bps: str = "3.0",
+    hi_bps: str = "12.0",
+    **_kw: Any,
+) -> bool:
+    """LAGV2 fire signal + direction selector.
+
+    Pass iff |price_delta_bps| is in [lo,hi] AND its sign matches ``direction``
+    (>0 ⇒ feed above oracle ⇒ leading side UP; <0 ⇒ DOWN). For a BOTH sleeve
+    only the leading side passes. The ``hi`` cap is LOAD-BEARING: moves > hi are
+    already priced and REVERSE (−EV, WR 56%). Stale snapshots fail (no fire).
+    ``lo_bps``/``hi_bps`` arrive as strings from the GateRef static kwargs.
+    """
+    if oracle_lag is None:
+        return False
+    if getattr(oracle_lag, "stale", False):
+        return False
+    try:
+        lo = float(lo_bps)
+        hi = float(hi_bps)
+    except (TypeError, ValueError):
+        lo, hi = 3.0, 12.0
+    bps = float(oracle_lag.price_delta_bps)
+    if not (lo <= abs(bps) <= hi):
+        return False
+    leading = "UP" if bps > 0 else "DOWN"
+    return direction == leading
+
+
+def g_not_us_close_hours(direction: str, fire_us: int, **_kw: Any) -> bool:
+    """Reject fires in 18-23 UTC (the lag edge degrades there)."""
+    hour_utc = (fire_us // 1_000_000 // 3600) % 24
+    return hour_utc not in _LAGV2_EXCLUDE_HOURS_UTC
+
+
+def g_cross_asset_lag_confluence(
+    direction: str,
+    fire_us: int,
+    *,
+    oracle_lag_other: Any = None,
+    conf_bps: str = "3.0",
+    **_kw: Any,
+) -> bool:
+    """Pass iff the OTHER asset (BTC↔ETH) is leading the SAME ``direction`` by
+    >= conf_bps. Sharpens WR + cuts maxDD. ``oracle_lag_other`` is the paired
+    asset's OracleLagSnapshot, injected by the controller (SOL not used).
+    """
+    if oracle_lag_other is None:
+        return False
+    if getattr(oracle_lag_other, "stale", False):
+        return False
+    try:
+        conf = float(conf_bps)
+    except (TypeError, ValueError):
+        conf = 3.0
+    bps = float(oracle_lag_other.price_delta_bps)
+    other_leading = "UP" if bps > 0 else "DOWN"
+    return abs(bps) >= conf and other_leading == direction
+
+
+def g_lag_momentum_align(
+    direction: str,
+    fire_us: int,
+    *,
+    oracle_lag: Any = None,
+    vwap_store: Any = None,
+    asset: str = "",
+    mom_win_s: str = "30",
+    **_kw: Any,
+) -> bool:
+    """TV_AGENT_SPEC_SCALP_MOMALIGN_BTC5M_2026_06_09 — momentum-alignment refinement
+    of the lag scalp (``shadow_scalp_momalign_btc_5m_v1``).
+
+    Pass iff the oracle-lag direction AGREES with the trailing ``mom_win_s``-second
+    binance return AND it is the leading side. The momalign gate is what adds the
+    edge (OOS +4.24/tr vs +2.77 without).
+
+    ``oracle_lag`` = the SAME OracleLagSnapshot the lag scalp reads (intra-window
+    binance return, ``price_delta_bps``). ``vwap_store`` = the engine's 1s binance
+    store (injected by the controller, mirroring g_disagr_hawkes) so the gate stays
+    pure — ``vwap_store.close_at`` is exactly what the controller's
+    ``_binance_close_at`` calls. ``asset`` / ``mom_win_s`` arrive as GateRef static
+    kwargs (strings). Fail-CLOSED on any missing input (no snapshot / stale / no 1s
+    bar / zero sign).
+    """
+    if oracle_lag is None or getattr(oracle_lag, "stale", False):
+        return False
+    if vwap_store is None:
+        return False
+    try:
+        lag = float(oracle_lag.price_delta_bps)
+        win_s = int(mom_win_s)
+    except (TypeError, ValueError):
+        return False
+    px_now = vwap_store.close_at(asset, fire_us)
+    px_then = vwap_store.close_at(asset, fire_us - win_s * 1_000_000)
+    if not px_now or not px_then or px_then <= 0:
+        return False  # fail-closed on missing 1s data
+    mom = px_now / px_then - 1.0
+    if lag == 0 or mom == 0:
+        return False
+    if (lag > 0) != (mom > 0):  # signs must AGREE
+        return False
+    return direction == ("UP" if lag > 0 else "DOWN")  # leading side only
+
+
+def g_oracle_decided(
+    direction: str,
+    fire_us: int,
+    *,
+    book_mirror: Any = None,
+    token_id_up: str = "",
+    token_id_dn: str = "",
+    chainlink_price: Any = None,
+    strike_price: Any = None,
+    dist_bp_min: Any = "15.0",
+    max_ask: Any = "0.95",
+    **_kw: Any,
+) -> bool:
+    """TV_AGENT_SPEC_SHADOW_ORACLE_SETTLE_2026_06_05 — STRUCTURAL settlement edge
+    (NOT prediction). Fire iff the Chainlink oracle has effectively DECIDED the
+    window outcome AND the oracle-implied winner token is still cheap (the poly
+    price lags the oracle). The direction is SET BY THE ORACLE — this gate only
+    passes for the winner side, so the BOTH-direction sleeve fires the winner.
+
+      strike      = Chainlink price at slot_start (``get_boundary_snapshot`` — the
+                    value the market settles against), injected per fire.
+      chainlink   = current live RTDS chainlink value at fire (``get_chainlink_price``).
+      winner side = 'UP' if chainlink > strike else 'DOWN'  (MUST equal direction)
+      decided     = |chainlink - strike| / strike * 1e4 >= dist_bp_min  (default 15bp)

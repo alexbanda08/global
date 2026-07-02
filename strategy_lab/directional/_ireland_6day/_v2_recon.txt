@@ -1,0 +1,12 @@
+== DBs ==
+storedata|680 MB
+tradingvenue_rust|1283 MB
+== v2 events by kind ==
+psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "tradingvenue_rust_v2" does not exist
+== v2 sample ladder_summary (latest, pretty) ==
+psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "tradingvenue_rust_v2" does not exist
+== old DB still there? ==
+1
+== engine service ==
+active
+Tue 2026-06-30 17:45:53 UTC

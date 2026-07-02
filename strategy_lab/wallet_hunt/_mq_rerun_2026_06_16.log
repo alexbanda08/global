@@ -1,0 +1,15 @@
+universe: 300 slugs (of 5143)
+sell prints: 78535  t=13s
+tob series: 600  t=29s
+  0/300 t=29s
+  200/300 t=29s
+
+simulated 300 windows over 54 days  t=29s
+
+ARM A [fifo]: windows w/ fill 66%  both-sides 65%  $/window(fired) -0.0537 CI[-0.1314,+0.0296]  deployed/window $1.93  total $-10.57 ($-0.20/day)
+
+ARM A [prop]: windows w/ fill 68%  both-sides 67%  $/window(fired) -0.0612 CI[-0.1382,+0.0172]  deployed/window $1.87  total $-12.43 ($-0.23/day)
+
+ARM B [fifo]: windows w/ fill 33%  both-sides 0%  $/window(fired) -0.0214 CI[-0.1549,+0.1087]  deployed/window $0.94  total $-2.12 ($-0.04/day)
+
+ARM B [prop]: windows w/ fill 33%  both-sides 0%  $/window(fired) -0.0231 CI[-0.1535,+0.1048]  deployed/window $0.93  total $-2.31 ($-0.04/day)

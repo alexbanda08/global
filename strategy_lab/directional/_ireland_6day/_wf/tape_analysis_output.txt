@@ -1,0 +1,60 @@
+Total rows parsed: 94
+sleeve_scalp_exit rows: 77
+
+=== First/last fire ===
+2026-06-11 00:25:00+00:00 -> 2026-06-29 08:30:00+00:00
+Span: 18.34 days
+
+Distinct active dates: 16 -> [datetime.date(2026, 6, 11), datetime.date(2026, 6, 12), datetime.date(2026, 6, 14), datetime.date(2026, 6, 15), datetime.date(2026, 6, 17), datetime.date(2026, 6, 18), datetime.date(2026, 6, 19), datetime.date(2026, 6, 20), datetime.date(2026, 6, 22), datetime.date(2026, 6, 23), datetime.date(2026, 6, 24), datetime.date(2026, 6, 25), datetime.date(2026, 6, 26), datetime.date(2026, 6, 27), datetime.date(2026, 6, 28), datetime.date(2026, 6, 29)]
+
+fires/day (n / distinct active days) = 77 / 16 = 4.81
+fires/day (n / full calendar span incl gaps) = 77 / 18.34 = 4.20
+
+Gap stats (hours): min=0.08 median=1.46 max=53.33
+Gaps > 6h: 19 (sum 358.3h)
+
+Exit trigger breakdown: {'time60': 77}
+
+Fires within 60s of prior fire (2-way overlap events): 0
+
+Max concurrent open positions (sweep, hold=60s/300s): 1
+
+=== PnL stats (n=77) at observed $5 clip ===
+mean = 0.7826
+stdev = 1.8723
+sum = 60.26
+min = -3.7283  max = 4.4668
+win rate = 50/77 = 64.9%
+avg win = 1.8736  avg loss = -1.2379
+
+placed_size_usd values seen: {5.0}
+
+=== Daily PnL ===
+2026-06-11  daily=+1.85  cum=+1.85  dd=0.00
+2026-06-12  daily=-1.67  cum=+0.18  dd=1.67
+2026-06-14  daily=+1.92  cum=+2.10  dd=0.00
+2026-06-15  daily=-1.45  cum=+0.64  dd=1.45
+2026-06-17  daily=+0.17  cum=+0.82  dd=1.28
+2026-06-18  daily=+0.04  cum=+0.85  dd=1.24
+2026-06-19  daily=+7.51  cum=+8.37  dd=0.00
+2026-06-20  daily=-2.36  cum=+6.01  dd=2.36
+2026-06-22  daily=+0.16  cum=+6.17  dd=2.20
+2026-06-23  daily=+13.39  cum=+19.56  dd=0.00
+2026-06-24  daily=+0.29  cum=+19.85  dd=0.00
+2026-06-25  daily=-3.42  cum=+16.43  dd=3.42
+2026-06-26  daily=+18.49  cum=+34.92  dd=0.00
+2026-06-27  daily=+6.68  cum=+41.59  dd=0.00
+2026-06-28  daily=+16.19  cum=+57.79  dd=0.00
+2026-06-29  daily=+2.47  cum=+60.26  dd=0.00
+
+Max drawdown (daily-agg, $5 clip): $3.42
+Max drawdown (trade-level running equity, $5 clip): $8.42
+
+=== Exit book depth vs scaled clip check ===
+exit_book_depth: min=920 median=5696 max=14413
+$25-clip scaled exit notional / exit_book_depth: mean=0.6% median=0.5% max=1.9%
+P(95% CI lower bound > 0) at N=100: 98.7%
+P(95% CI lower bound > 0) at N=200: 100.0%
+P(95% CI lower bound > 0) at N=400: 100.0%
+Days to reach 200 fires (active-day cadence 4.81/day): 41.6 days
+Days to reach 400 fires (active-day cadence 4.81/day): 83.1 days

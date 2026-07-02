@@ -1,0 +1,281 @@
+                else None
+            )
+            if other_asset is not None:
+                try:
+                    ft_oracle_lag_other = _binance_lag_snapshot(
+                        other_asset, slot.slot_start_us, fire_us,
+                    )
+                except Exception:  # noqa: BLE001
+                    ft_oracle_lag_other = None
+        ft_bps = (
+            float(ft_oracle_lag.price_delta_bps)
+            if ft_oracle_lag is not None
+            else None
+        )
+
+        for direction in directions:
+            # TV_AGENT_SPEC_SCALP_LAZER_DELTA_AB_2026_06_12 — lazer mirror stale
+            # at eval time: emit an eval-only skip (so the skip-stale rate is
+            # measurable per §3) and do NOT fire. No binance fallback.
+            if _lazer_skip:
+                fr = FireResult(
+                    direction=direction,
+                    all_gates_passed=False,
+                    eval_only=True,
+                    gates_evaluated={},
+                    skip_reason="lazer.skipped_stale",
+                    offset_s=offset_s,
+                )
+                event = self._build_event(sleeve, slot, fire_us, offset_s, fr)
+                self._logger.log(event)
+                self._write_audit_row(
+                    sleeve.sleeve_id, "poly_updown_signal", event,
+                )
+                results.append(fr)
+                continue
+
+            # Step 2 — sleeve 01 S6 precondition.
+            if sleeve.s6_precondition and not await self._check_s6_fired(
+                slot.slug, slot.ws_s
+            ):
+                fr = FireResult(
+                    direction=direction,
+                    all_gates_passed=False,
+                    eval_only=True,
+                    gates_evaluated={"s6_precondition": False},
+                    skip_reason="s6_precondition_failed",
+                    offset_s=offset_s,
+                )
+                event = self._build_event(sleeve, slot, fire_us, offset_s, fr)
+                self._logger.log(event)
+                self._write_audit_row(
+                    sleeve.sleeve_id, "poly_updown_signal", event,
+                )
+                results.append(fr)
+                continue
+
+            # Step 3 — L25 snapshot (needed for spread + placement).
+            # TV_FIX_UNIFY_BOOK_READ_PATH_2026_05_27 — snapshot build is
+            # async now (routes through paper.get_orderbook_snapshot).
+            l25_snap = await self._build_l25_snapshot(slot)
+
+            # Step 4 — spread filter (spec §0).
+            # V5+V6+V7+V8 fix (2026-05-27): same-token bid-ask via
+            # _sniper_spread.compute_spread; pass direction for the
+            # side-being-bought selection.
+            spread = self._compute_spread(l25_snap, direction)
+            sf = float(sleeve.spread_filter)
+            if spread is not None and round(spread, 4) > sf:  # FIX 2026-06-11: float noise (0.51-0.46=0.05000000000000004) rejected exact-boundary spreads ("0.0500_>_0.0500"), blocking all XRP scalp fires
+                fr = FireResult(
+                    direction=direction,
+                    all_gates_passed=False,
+                    eval_only=True,
+                    gates_evaluated={},
+                    skip_reason=f"spread_bidask_too_wide_{spread:.4f}_>_{sf:.4f}",
+                    l25_book_snapshot=l25_snap,
+                    offset_s=offset_s,
+                    oracle_lag_bps=ft_bps,
+                )
+                event = self._build_event(sleeve, slot, fire_us, offset_s, fr)
+                self._logger.log(event)
+                self._write_audit_row(
+                    sleeve.sleeve_id, "poly_updown_signal", event,
+                )
+                results.append(fr)
+                continue
+
+            # Step 5 — run all gates (uniform signature). No try/except
+            # fallback — TypeError from a gate is a planner bug per
+            # CONTEXT.md WARNING 8, MUST bubble up loudly.
+            gates_evaluated: dict[str, bool] = {}
+            all_pass = True
+            for gate_ref in sleeve.gates:
+                runtime_kwargs = self._build_gate_kwargs(
+                    gate_ref, sleeve, slot,
+                    oracle_lag=ft_oracle_lag,
+                    oracle_lag_other=ft_oracle_lag_other,
+                )
+                static_kwargs = gate_ref.bound_kwargs()
+                ok = bool(gate_ref.gate(
+                    direction, fire_us, **runtime_kwargs, **static_kwargs,
+                ))
+                gates_evaluated[gate_ref.name] = ok
+                if not ok:
+                    all_pass = False
+
+            fr = FireResult(
+                direction=direction,
+                all_gates_passed=all_pass,
+                eval_only=not all_pass,
+                gates_evaluated=gates_evaluated,
+                skip_reason=None if all_pass else self._first_failing_gate(
+                    gates_evaluated
+                ),
+                l25_book_snapshot=l25_snap,
+                offset_s=offset_s,
+                oracle_lag_bps=ft_bps,
+            )
+
+            # Step 6+7 — sparse-book + L25 walk placement on all-pass.
+            if all_pass:
+                token_id = (slot.token_id_up if direction == "UP"
+                            else slot.token_id_dn)
+                _be_win = getattr(
+                    sleeve, "book_event_window_s", _BOOK_EVENT_WINDOW_S,
+                )
+                if not self._book_dense_enough(token_id, fire_us, _be_win):
+                    fr = replace(
+                        fr,
+                        all_gates_passed=False,
+                        eval_only=True,
+                        skip_reason=(
+                            f"sparse_book_under_25_events_{int(_be_win)}s"
+                        ),
+                    )
+                elif _live_sleeve:
+                    # LIVE — place a REAL marketable-taker Polymarket order for
+                    # the allowlisted sleeve ($1.50, hard-capped). Fail-closed:
+                    # any reject / empty book / exception SKIPS the fire with a
+                    # distinct skip_reason (NO synthetic fallback on a live box)
+                    # and emits a critical alert inside _place_live_order.
+                    live_notional = float(self._live_notional_usd)
+                    live_result = await self._place_live_order(
+                        token_id, live_notional, sleeve, slot,
+                    )
+                    if isinstance(live_result, str):
+                        # V10 entry-band: out-of-band → intentional skip (NOT an
+                        # exec failure), logged as an eval row with the reason.
+                        fr = replace(
+                            fr,
+                            all_gates_passed=False,
+                            eval_only=True,
+                            skip_reason=live_result,
+                            book_source="live",
+                        )
+                    elif live_result is None:
+                        fr = replace(
+                            fr,
+                            all_gates_passed=False,
+                            eval_only=True,
+                            skip_reason="live_exec_failed",
+                            book_source="live",
+                        )
+                    else:
+                        fill_vwap, fill_shares, book_source = live_result
+                        # TV_FIX_BOOKMIRROR_2026_06_02 (bookfill-3) — the live
+                        # fill reports an opaque "live" book_source; compare the
+                        # gate-time tier against the INNER sizing-walk tier
+                        # (captured by _place_live_order) to surface gate/fill
+                        # book drift. Observability only — never changes the
+                        # live fill (Ireland real money).
+                        bsm_live = self._record_book_source_consistency(
+                            sleeve_id=sleeve.sleeve_id,
+                            slug=slot.slug,
+                            direction=direction,
+                            gate_source=self._gate_book_source(
+                                l25_snap, direction,
+                            ),
+                            fill_source=(
+                                self._last_live_walk_source or "empty"
+                            ),
+                        )
+                        fr = replace(
+                            fr,
+                            fill_vwap=fill_vwap,
+                            fill_shares=fill_shares,
+                            placed_size_usd=live_notional,
+                            fill_latency_ms=0.0,
+                            fill_method="live",
+                            book_source=book_source,
+                            entry_delta_bps=ft_bps,
+                            book_source_mismatch=bsm_live,
+                        )
+                        # one real entry per slot.
+                        self._one_shot_fired.add(
+                            (sleeve.sleeve_id, slot.slug)
+                        )
+                else:
+                    # Shadow-allowlist sleeves (paper on the live box) use the
+                    # shadow notional; everything else uses the per-sleeve
+                    # override or the default paper notional.
+                    if sleeve.sleeve_id in self._shadow_allowlist:
+                        notional = self._shadow_notional_usd
+                    else:
+                        notional = (
+                            sleeve.notional_usd_override
+                            if sleeve.notional_usd_override is not None
+                            else self._settings.tv_poly_sniper_v5_notional_usd
+                        )
+                    # TV_FIX_UNIFY_BOOK_READ_PATH_2026_05_27 — _simulate_l25_walk
+                    # is async + returns None when ALL tiers (WS/CLOB/Storedata)
+                    # came back empty or stale. SUPERSEDES the prior synthetic
+                    # 0.5-vwap/10-share placeholder path. On None we skip the
+                    # fire with a distinct skip_reason so the dashboard can
+                    # count empty-tier blackouts without polluting WR/PnL.
+                    walk_result = await self._simulate_l25_walk(
+                        token_id, float(notional),
+                    )
+                    if walk_result is None:
+                        fr = replace(
+                            fr,
+                            all_gates_passed=False,
+                            eval_only=True,
+                            skip_reason="empty_book_all_tiers_failed",
+                            book_source="empty",
+                        )
+                    elif sleeve.entry_band is not None and not (
+                        sleeve.entry_band[0] <= walk_result[0] < sleeve.entry_band[1]
+                    ):
+                        # V10 entry-band gate — paper fire skipped out-of-band.
+                        fr = replace(
+                            fr,
+                            all_gates_passed=False,
+                            eval_only=True,
+                            skip_reason=(
+                                f"entry_vwap_out_of_band_{walk_result[0]:.4f}"
+                            ),
+                            book_source=walk_result[3],
+                        )
+                    elif sleeve.sleeve_id.startswith("shadow_disagr_hawkes") and (
+                        walk_result[0] * walk_result[1] < 0.5 * float(notional)
+                    ):
+                        # TV_AGENT_SPEC_SHADOW_DISAGR_HAWKES fill guard — reject
+                        # under-fills (<50% of stake spent on the L25 walk).
+                        # walk_result = (vwap, shares, latency, source).
+                        fr = replace(
+                            fr,
+                            all_gates_passed=False,
+                            eval_only=True,
+                            skip_reason="underfill_lt_50pct",
+                            book_source=walk_result[3],
+                        )
+                    else:
+                        fill_vwap, fill_shares, latency_ms, book_source = walk_result
+                        # TV_FIX_BOOKMIRROR_2026_06_02 (bookfill-3) — gate gates
+                        # read the gate-time L25 snapshot tier; the fill walked a
+                        # separately-fetched book (``book_source``). Record
+                        # whether they came from the SAME tier so gate/fill book
+                        # drift (e.g. gate saw ws_mirror, fill fell through to
+                        # clob) is observable. Pure observability — never alters
+                        # the paper fill.
+                        bsm_paper = self._record_book_source_consistency(
+                            sleeve_id=sleeve.sleeve_id,
+                            slug=slot.slug,
+                            direction=direction,
+                            gate_source=self._gate_book_source(
+                                l25_snap, direction,
+                            ),
+                            fill_source=book_source,
+                        )
+                        # TV_FIX_SPRINT_2026_06_02 (strategies-3) — on a thin
+                        # book the L25 walk acquires fewer shares than the full
+                        # stake would buy, so the actually-spent notional
+                        # (vwap*shares) is below the requested ``notional``.
+                        # Record the SPENT notional (not the full stake) so
+                        # placed_size_usd, fill_shares and the resolution PnL
+                        # (1-vwap)*shares stay internally consistent (inv #2 —
+                        # partial-fill consistency). On a full fill this equals
+                        # ``float(notional)`` (within float epsilon), so the
+                        # happy path is unchanged.
+                        spent_usd = fill_vwap * fill_shares
+                        placed_usd = min(float(notional), spent_usd)

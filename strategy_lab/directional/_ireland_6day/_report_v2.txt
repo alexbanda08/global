@@ -1,0 +1,44 @@
+WINDOWS: 124  span 2026-06-30 14:31:45.335373+00:00 -> 2026-07-01 21:30:00.090076+00:00  (31.0h)
+skipped_reason: {None: 118, 'warmup_fail': 4, 'no_book': 2}
+TRADED: 116/124 = 94%
+
+== INTEGRITY ==
+total_net == paired+rebate+residual: maxdiff = 0.000000
+paired_pnl == paired_sh*(1-pvs): maxdiff = 0.000000
+residual_pnl formula: maxdiff = 8.048761
+G3 GATE: windows pvs>=0.99: 0/96  max pvs=0.9715
+pair_gate_bound_sh: >0 in 0 wins, mean=0.00, max=0.00, sum=0.0
+
+== HEADLINE (traded) ==
+paired_pnl_locked_usd    sum=$  +182.94  mean=$+1.5771/win  med=$+1.1061
+rebate_usd               sum=$    +5.35  mean=$+0.0461/win  med=$+0.0416
+residual_pnl_usd         sum=$  -232.98  mean=$-2.0085/win  med=$-2.1077
+total_net_usd            sum=$   -44.69  mean=$-0.3853/win  med=$-0.9225
+per-day: total_net $-34.63/d   paired $+141.76/d
+
+residual: wins 17/116 = 14.7%
+residual entry_vwap: mean 0.397 med 0.383
+residual_sh: mean 8.32 (v1 was 9.34)
+
+== v2 vs v1 (v1 13.4d baselines) ==
+pair_frac    v2 0.599  v1 0.799
+pvs          v2 0.859  v1 0.956
+pvs>1 wins   v2 0 (0%)  v1 33%
+flow_capture v2 0.0081  v1 0.0170
+net_paired   v2 +1.623/win  v1 +1.416/win
+residual_sh  v2 8.32  v1 9.34
+
+== BOOTSTRAP total_net_usd mean: -0.385/win  CI95 [-0.949, +0.215]  P(mean>0)=10.0%
+   net_paired only:            +1.623/win  CI95 [+1.311, +1.974]
+pre-restart   n= 11  pvs_max=0.950  gate_bound_mean=0.00  total_net=$+25.86
+post-restart  n=105  pvs_max=0.972  gate_bound_mean=0.00  total_net=$-70.55
+
+== tails ==
+                              ts      pvs  paired_sh  residual_sh residual_side outcome  residual_pnl_usd  total_net_usd
+2026-07-01 14:45:00.034070+00:00 0.828711   9.000000    20.230769            up      dn         -7.616650      -6.017700
+2026-07-01 17:15:00.064806+00:00 0.928167  14.624082    26.625918            up      dn         -6.953399      -5.819101
+2026-07-01 02:30:00.095243+00:00      NaN   0.000000    10.000000            dn      up         -5.400000      -5.385000
+                              ts      pvs  paired_sh  residual_sh residual_side outcome  residual_pnl_usd  total_net_usd
+2026-06-30 19:30:00.090870+00:00 0.916932  45.914894    13.936624            dn      dn          7.198025      11.170741
+2026-06-30 21:45:00.038088+00:00 0.882913  24.092971    14.088077            up      up          6.637246       9.551620
+2026-06-30 21:15:00.089518+00:00 0.846267  34.521515     6.839720            dn      dn          3.257983       8.678905

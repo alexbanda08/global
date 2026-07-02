@@ -1,0 +1,53 @@
+SET
+{
+    "tf": "5m",
+    "won": null,
+    "slug": "btc-updown-5m-1782756000",
+    "ws_s": 1782756000,
+    "asset": "BTC",
+    "fire_us": 1782756005000000,
+    "outcome": null,
+    "pnl_usd": null,
+    "delta_ab": {
+        "delta_value": -2.646737949272282,
+        "rtds_age_ms": 837.672,
+        "delta_source": "rtds",
+        "lazer_age_ms": null,
+        "delta_rtds_at_fire": null
+    },
+    "direction": "DOWN",
+    "exit_type": null,
+    "fill_vwap": null,
+    "sleeve_id": "shadow_scalp_exit_btc_5m_d3_v1",
+    "event_type": "sleeve_fire_eval",
+    "book_source": null,
+    "fill_method": null,
+    "fill_shares": null,
+    "skip_reason": "g_oracle_lag_with(3.0,12.0)=False",
+    "condition_id": "0xbe743207bbcdf830c33f14277f379730bc5eab0a6385dc9847a7ca4f8daccb9e",
+    "fire_offset_s": 5,
+    "slot_start_us": 1782756000000000,
+    "fill_latency_ms": null,
+    "gates_evaluated": {
+        "g_oracle_lag_with(3.0,12.0)": false
+    },
+    "hedge_sell_vwap": null,
+    "placed_size_usd": null,
+    "all_gates_passed": false,
+    "intended_size_usd": 5.0,
+    "l25_book_snapshot": {
+        "dn_ask0": 0.66,
+        "dn_bid0": 0.65,
+        "dn_vwap": 0.7786207881673783,
+        "up_ask0": 0.35,
+        "up_bid0": 0.34,
+        "up_vwap": 0.4676885725103785,
+        "dn_depth_usd": 16325.435499999996,
+        "up_depth_usd": 8300.5742,
+        "dn_book_source": "ws_mirror",
+        "up_book_source": "ws_mirror",
+        "cross_spread_old": 0.24630936067775683
+    },
+    "resolution_source": "chainlink",
+    "book_source_mismatch": null
+}

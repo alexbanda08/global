@@ -1,0 +1,60 @@
+"""Phase 35-12 Task 2 — Offset-anchored fire scheduler (RAIL-35-OFFSET-FIRE-01).
+
+Parallel to ``poly_updown_loop``: NOT a reuse of the bar-boundary dispatch
+mechanism. Per the spec §1, each sniper-v5 sleeve fires at the offsets
+declared in its ``SniperV5Sleeve.offsets`` tuple. ``fire_us`` is computed
+deterministically as ``slot.slot_start_us + offset_s * 1_000_000``.
+
+Architecture:
+
+    1. Slot discovery (``_slot_discovery_loop``): every ``SLOT_DISCOVERY_TICK_S``
+       (5.0s), polls the injected ``slot_observer()`` callable for the current
+       set of active slots.
+    2. For each NEW slot (deduped via ``seen_slot_keys``) AND for each sleeve
+       where ``sleeve.asset == slot.asset AND sleeve.tf == slot.tf AND
+       sleeve.sleeve_id not in kill_set``, schedule one ``_fire_at_offset``
+       task per offset in ``sleeve.offsets``.
+    3. ``_fire_at_offset``: sleeps until wall-clock reaches ``fire_us``, then
+       calls ``controller.eval_sleeve_fire(sleeve, slot, offset_s, fire_us)``.
+       If the controller returns any placed FireResult (``all_gates_passed
+       AND fill_vwap is not None``), spawns one ``_resolve_at_slot_end`` task
+       per placed direction.
+    4. ``_resolve_at_slot_end``: sleeps until ``slot.slot_end_us +
+       RESOLUTION_BUFFER_S`` (60s default), then awaits
+       ``oracle_resolve(condition_id)`` and calls
+       ``controller.book_event_for_resolution``.
+
+Why offset-anchored (not bar-boundary):
+    The 16 sniper-v5 sleeves fire at 0/30/60/90/120/150/180/240/480/600/720/840
+    seconds INTO each slot — not at slot_start. This is by design: the spec §1
+    table shows each sleeve has its own latency target driven by the gate
+    library it consumes. A 1s sleeve (sleeve 06 at offset=30s) wants to read
+    panels that have ingested 30 1s bars; a 1m sleeve (sleeve 01 at offset=30s)
+    wants the BookMirror to have warmed up its L25 mirror. Bar-boundary
+    dispatch can't express this — hence the dedicated scheduler.
+
+CLAUDE.md inv #4: gates fire pre-signal; controller (Plan 35-12 Task 1)
+enforces this — the loop is just dispatch glue.
+CLAUDE.md inv #11+#12: NEVER calls trader_writes (controller is paper-only).
+"""
+from __future__ import annotations
+
+import asyncio
+import contextlib
+import time
+from collections.abc import Awaitable, Callable
+from typing import Any
+
+import structlog
+
+from backend.app.controllers.polymarket_sniper_v5 import SlotInfo
+from backend.app.strategies.polymarket.sniper_v5_sleeves import (
+    SNIPER_V5_SLEEVES,
+    SniperV5Sleeve,
+)
+
+log = structlog.get_logger("backend.app.engine.poly_sniper_v5_loop")
+
+
+# Slot discovery tick — how often the loop polls slot_observer.
+SLOT_DISCOVERY_TICK_S = 5.0

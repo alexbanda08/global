@@ -1,0 +1,9 @@
+== tv-rust-engine env files ==
+EnvironmentFile=/etc/tv/tvrust.env
+== DATABASE_URL (masked) ==
+-- /etc/tv/tradingvenue.env --
+-- /etc/tv/tv-ro.env --
+== which db has trading.events ==
+tradingvenue_rust
+== events table exists in tradingvenue_rust? ==
+1576578

@@ -1,0 +1,24 @@
+== DISK ==
+/dev/mapper/ubuntu--vg-ubuntu--lv   72G   16G   53G  23% /
+== tradingvenue_rust DB size ==
+1159 MB
+== top tables in tradingvenue_rust ==
+trading.events_2026_06|1149 MB|70580
+engine.equity_snapshots|1168 kB|162
+trading.events_default|40 kB|0
+trading.secrets_history|40 kB|0
+trading.events_2026_03|40 kB|0
+trading.events_dblres_backup_20260602|40 kB|0
+trading.events_2026_05|40 kB|0
+trading.events_2026_04|40 kB|0
+trading.supervisor_audit|32 kB|0
+trading.backtest_runs|32 kB|0
+engine.bar_runs|32 kB|0
+trading.positions|24 kB|0
+== trading.events row count + min/max ==
+1636236|2026-06-06 19:40:00.037485+00|2026-06-30 12:21:10.064579+00
+== other DBs ==
+tradingvenue_rust|1159 MB
+storedata|675 MB
+== pg_dump available? ==
+/usr/bin/pg_dump

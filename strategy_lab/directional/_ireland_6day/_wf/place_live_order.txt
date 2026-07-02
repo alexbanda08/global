@@ -1,0 +1,137 @@
+    async def _place_live_order(
+        self,
+        token_id: str,
+        notional_usd: float,
+        sleeve: SniperV5Sleeve,
+        slot: SlotInfo,
+    ) -> tuple[float, float, str] | str | None:
+        """Place a REAL marketable-taker buy on ``token_id`` for the
+        allowlisted live sleeve. Returns ``(fill_vwap, fill_shares, "live")``
+        on a real fill; ``None`` (fail-closed) on empty book / reject / any
+        exception (caller → skip ``live_exec_failed``, NO synthetic fallback);
+        or a ``str`` skip_reason when the V10 entry-band gate blocks the fire
+        (caller → skip that reason, NOT an exec failure).
+
+        Sizing: walk the live L25 book for ``notional_usd`` to derive the
+        share count, then submit a ``limit_px=0.99`` buy (venue caps to best
+        ask — same taker entry as the shadow L25 walk + Kalshi live). PnL is
+        computed from the REAL fill at resolution; the position is held to
+        on-chain resolution and redeemed by ``poly_redeemer``.
+        """
+        # 1. Derive share count from the real book (also our empty-book guard).
+        # TV_FIX_BOOKMIRROR_2026_06_02 (bookfill-3) — reset + capture the inner
+        # sizing-walk tier so the caller can compare gate-time vs fill-time book
+        # source on the live path (the public return still reports "live").
+        self._last_live_walk_source = None
+        walk = await self._simulate_l25_walk(token_id, notional_usd)
+        if walk is None:
+            return None
+        est_vwap, est_shares, _, _live_walk_src = walk
+        self._last_live_walk_source = _live_walk_src
+        if est_shares <= 0:
+            return None
+        # V10 entry-band gate — skip the fire (BEFORE placing any real order)
+        # when the bet-side entry vwap is outside the band. Returns a skip
+        # reason string (distinct from the None exec-failure path).
+        band = sleeve.entry_band
+        if band is not None and not (band[0] <= est_vwap < band[1]):
+            return f"entry_vwap_out_of_band_{est_vwap:.4f}"
+        live_sleeve_id = f"{sleeve.sleeve_id}_LIVE"
+        try:
+            result = await self._live_executor.place_entry_order(
+                token_id=int(token_id),
+                qty=Decimal(str(est_shares)),
+                limit_px=_SNIPER_V5_LIVE_LIMIT_PX,
+                sleeve_id=live_sleeve_id,
+                side="buy",
+            )
+        except Exception as exc:  # noqa: BLE001 — fail-closed on any exec error
+            logger.exception(
+                "poly_sniper_v5.live_order_failed",
+                sleeve_id=live_sleeve_id, slug=slot.slug, token_id=token_id,
+            )
+            await self._emit_live_alert(
+                live_sleeve_id, slot.slug, reason=f"exception: {exc!r}"[:160],
+            )
+            return None
+        status_str = str(getattr(result, "status", "")).split(".")[-1].lower()
+        # TV_FIX_LIVE_FILL_ACCOUNTING_2026_06_02 (Bug A) — book a position ONLY
+        # off a venue-CONFIRMED fill, never off the bare order ACK.
+        #
+        # 1. Accept ONLY filled / partial. A Polymarket CLOB post_order can ack
+        #    success:true with status ∈ {live, delayed, unmatched} → these map to
+        #    FillStatus.PENDING and carry NO fill detail. `live` = resting on the
+        #    book (ZERO filled); `delayed` = in the 1s match window (not yet
+        #    matched). Booking either records a phantom position. PENDING is now
+        #    fail-closed (skip + alert), NOT an accepted fill.
+        if not any(s in status_str for s in ("filled", "partial")):
+            logger.warning(
+                "poly_sniper_v5.live_order_not_filled",
+                sleeve_id=live_sleeve_id, slug=slot.slug, status=status_str,
+                reason=str(getattr(result, "reason", "") or ""),
+            )
+            await self._emit_live_alert(
+                live_sleeve_id, slot.slug,
+                reason=f"not_filled: {status_str}",
+            )
+            return None
+        # 2. Require a REAL venue fill amount. Do NOT fall back to the L25-walk
+        #    estimate (`est_vwap`/`est_shares` are valid ONLY as the sizing input
+        #    that derived `qty` above — never as the booked fill). When the ack
+        #    omits avg_price/filled_shares we cannot prove the order filled →
+        #    fail-closed (skip + alert), book NOTHING (no synthetic/estimate).
+        raw = getattr(result, "raw_response", None) or {}
+        try:
+            _fs = raw.get("filled_shares") or raw.get("filled")
+            real_shares = float(_fs) if _fs else 0.0
+        except (TypeError, ValueError):
+            real_shares = 0.0
+        try:
+            real_vwap = float(raw.get("avg_price")) if raw.get("avg_price") else None
+        except (TypeError, ValueError):
+            real_vwap = None
+        if real_shares <= 0 or real_vwap is None:
+            logger.warning(
+                "poly_sniper_v5.live_ack_without_fill",
+                sleeve_id=live_sleeve_id, slug=slot.slug, status=status_str,
+                filled_shares=real_shares, avg_price=real_vwap,
+            )
+            await self._emit_live_alert(
+                live_sleeve_id, slot.slug, reason="ack_without_fill",
+            )
+            return None
+        logger.info(
+            "poly_sniper_v5.live_fill",
+            sleeve_id=live_sleeve_id, slug=slot.slug,
+            fill_vwap=real_vwap, fill_shares=real_shares,
+            order_id=str(getattr(result, "order_id", "") or ""),
+            notional_usd=notional_usd,
+        )
+        return real_vwap, real_shares, "live"
+
+    async def _emit_live_alert(
+        self, sleeve_id: str, slug: str, *, reason: str,
+    ) -> None:
+        """Fire-and-forget CRITICAL alert on a live-execution failure."""
+        if self._alert_service is None:
+            return
+        try:
+            await self._alert_service.emit(
+                severity="CRITICAL",
+                kind="poly_sniper_v5_live_exec_failed",
+                sleeve_id=sleeve_id, slug=slug, reason=reason,
+            )
+        except Exception:  # noqa: BLE001 — alert failure never blocks flow
+            logger.exception("poly_sniper_v5.live_alert_emit_failed")
+
+    def _build_gate_kwargs(
+        self, gate_ref: GateRef, sleeve: SniperV5Sleeve, slot: SlotInfo,
+        *, oracle_lag: Any = None, oracle_lag_other: Any = None,
+    ) -> dict[str, Any]:
+        """Route runtime kwargs to a gate based on the gate's name family.
+
+        Routing is name-keyed so the controller stays decoupled from gate
+        internals — adding a new gate family is one tuple-membership check
+        away.
+
+        ``oracle_lag`` is the precomputed fast_taker OracleLagSnapshot (or None)

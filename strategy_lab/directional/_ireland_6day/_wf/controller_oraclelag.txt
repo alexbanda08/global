@@ -1,0 +1,171 @@
+# the A/B family to _resolve_fast_taker (legacy_2pct).
+_FAST_TAKER_LAGV2_PREFIX: Final[str] = "poly_fast_taker_lagv2_"
+
+# Live promotion (TV_AGENT_SPEC 2026-06-01) — hard cap on the per-fire REAL
+# notional for an allowlisted sniper-v5 sleeve. Mirrors the live-mirror
+# LIVE_MIRROR_MAX_NOTIONAL=$1 discipline; sized with headroom over the $1.50
+# stake. ANY requested live notional is clamped to this before placement.
+SNIPER_V5_LIVE_MAX_NOTIONAL: Final[Decimal] = Decimal("2.00")
+# Marketable-limit price for the live taker buy: 0.99 takes liquidity and the
+# venue caps it to the best ask (same as the momo live-mirror entry + the
+# shadow L25-walk taker assumption). Operator-confirmed: entry identical to
+# Kalshi-live + Poly-shadow.
+_SNIPER_V5_LIVE_LIMIT_PX: Final[Decimal] = Decimal("0.99")
+
+
+def _is_fast_taker_lagv2(sleeve: SniperV5Sleeve) -> bool:
+    return sleeve.sleeve_id.startswith(_FAST_TAKER_LAGV2_PREFIX)
+
+
+def _is_fast_taker(sleeve: SniperV5Sleeve) -> bool:
+    return (
+        sleeve.sleeve_id.startswith(_FAST_TAKER_PREFIX)
+        and not _is_fast_taker_lagv2(sleeve)
+    )
+
+
+# ---------------------------------------------------------------------
+# fast_taker fire signal — INTRA-WINDOW BINANCE RETURN
+# (TV_AGENT_FIX_LAGV2_SIGNAL_2026_06_01)
+# ---------------------------------------------------------------------
+#
+# BUG: every poly_fast_taker sleeve (both the A/B `g_oracle_lag_bps_ge` family
+# AND the LAGV2 `g_oracle_lag_with` family) fired UP on ~100% of slots / 0 DOWN
+# → coin-flip WR. Root cause: both gates pick the side by sign(price_delta_bps)
+# where the controller fed the OracleLagSnapshot's feed-vs-chainlink-oracle
+# basis ((binance − oracle)/oracle). On the live box that sits persistently
+# positive → always-UP. The BACKTESTED signal is the binance INTRA-WINDOW
+# return (px@fire / px@slot_open − 1), which swings ± symmetrically → ~50/50
+# UP/DOWN, 68% WR.
+#
+# FIX (spec Option 2): feed the binance return through the SAME field both
+# gates already read (`oracle_lag.price_delta_bps`). One controller change
+# fixes all 8 sleeves with NO gate-code or sleeve-roster edits. The snapshot
+# class below is a drop-in for OracleLagSnapshot for that single field + stale.
+@dataclass(frozen=True, slots=True)
+class _BinanceLagSnapshot:
+    """Drop-in for OracleLagSnapshot consumed by ``g_oracle_lag_with`` /
+    ``g_oracle_lag_bps_ge`` / ``g_cross_asset_lag_confluence``.
+
+    ``price_delta_bps`` is the INTRA-WINDOW BINANCE RETURN
+    ``(px@fire / px@slot_open − 1) × 1e4`` — the backtested fast_taker signal,
+    NOT the feed-vs-oracle basis. ``stale`` is always False (the binance 1s
+    feed drives staleness independently; a missing read returns None instead).
+    """
+
+    price_delta_bps: float
+    stale: bool = False
+
+
+def _binance_close_at(asset: str, ts_us: int) -> float | None:
+    """Binance 1s close at-or-before ``ts_us`` from the engine's in-memory
+    vwap_store (the TV-native binance feed; CLAUDE.md inv #13). None when the
+    feed/store is unbound or holds no bar ≤ ts_us → caller treats as no-signal
+    → graceful skip (matches every other gate's missing-data contract).
+    """
+    feed = get_feed_instance()
+    store = getattr(feed, "vwap_store", None) if feed is not None else None
+    if store is None:
+        return None
+    return store.close_at(asset, ts_us)
+
+
+def _binance_lag_snapshot(
+    asset: str, slot_start_us: int, fire_us: int,
+) -> _BinanceLagSnapshot | None:
+    """Intra-window binance-return snapshot for the fast_taker families.
+
+    ``delta_bps = (px_fire / px_open − 1) × 1e4`` where ``px_open`` = binance 1s
+    close at ``slot_start_us`` and ``px_fire`` = binance 1s close at ``fire_us``.
+    Returns None when either price is unreadable (graceful skip — both gates
+    fail on a None snapshot). Sign is symmetric ± → fires UP and DOWN.
+    """
+    px_open = _binance_close_at(asset, slot_start_us)
+    px_fire = _binance_close_at(asset, fire_us)
+    if not px_open or not px_fire or px_open <= 0:
+        return None
+    return _BinanceLagSnapshot(
+        price_delta_bps=(px_fire / px_open - 1.0) * 1e4,
+    )
+
+
+# TV_AGENT_SPEC_SCALP_LAZER_DELTA_AB_2026_06_12 — sentinel: a lazer-source sleeve
+# whose mirror is stale/unreadable SKIPS the window rather than falling back to
+# the binance path (a silent fallback would contaminate the A/B). Distinct from
+# None (= no oracle snapshot for a non-lazer reason).
+_LAZER_STALE = object()
+
+
+def _lazer_lag_snapshot(
+    asset: str, slot_start_us: int, fire_us: int,
+) -> _BinanceLagSnapshot | object | None:
+    """PURE-LAZER intra-window δ snapshot — BOTH endpoints from the Lazer mirror.
+
+    ``δ = (lazer_px@fire / lazer_px@slot_start − 1) × 1e4``. Both the strike
+    (``slot_start_us``, only ~+5s/+3s before fire for the scalp → well inside the
+    mirror's ring) AND ``px@fire`` come from Lazer, so the lazer↔binance price-
+    LEVEL basis (~6bp, observed live 2026-06-12) CANCELS. The result is a clean
+    intra-window lazer return, directly A/B-comparable to the control's binance
+    intra-window return (``_binance_lag_snapshot``); the difference isolates
+    lazer's sharpness/lead, not a constant feed-basis offset.
+
+    (Was binance-strike + lazer-fire per the original spec; switched to pure-lazer
+    2026-06-12 after the live basis came in at ~6bp ≫ the research's ≤1.3bp,
+    confounding the binance-strike design.)
+
+    Returns ``_BinanceLagSnapshot(price_delta_bps=...)`` on success, else
+    ``_LAZER_STALE`` when the mirror is unbound/stale or either lazer read is
+    missing (caller SKIPS — no rtds fallback, which would contaminate the A/B).
+    """
+    mirror = get_lazer_instance()
+    if mirror is None or mirror.is_stale(asset):
+        return _LAZER_STALE
+    px_open = mirror.price_at(asset, slot_start_us)   # lazer strike (window-open)
+    px_fire = mirror.price_at(asset, fire_us)         # lazer px@fire
+    if not px_open or not px_fire or px_open <= 0:
+        return _LAZER_STALE
+    return _BinanceLagSnapshot(
+        price_delta_bps=(px_fire / px_open - 1.0) * 1e4,
+    )
+
+
+# ---------------------------------------------------------------------
+# Shared dataclasses (also imported by the loop in Plan 35-12 Task 2)
+# ---------------------------------------------------------------------
+
+
+@dataclass(frozen=True, slots=True)
+class SlotInfo:
+    """Per-slot context for sniper-v5 eval/resolution dispatch."""
+
+    slug: str                  # e.g. "btc-updown-5m-1779815400"
+    asset: str                 # "BTC" | "ETH" | "SOL"
+    tf: str                    # "5m" | "15m"
+    slot_start_us: int         # window_start unix * 1e6
+    ws_s: int                  # window_start unix (seconds)
+    condition_id: str          # on-chain condition_id (for OnchainOracle.get_resolution)
+    token_id_up: str           # YES (UP) token CLOB id
+    token_id_dn: str           # NO  (DOWN) token CLOB id
+
+
+@dataclass(slots=True)
+class L25BookSnapshot:
+    """L25-derived per-direction VWAP/depth snapshot used for spread + placement.
+
+    V5+V6+V7+V8 spread-filter fix (2026-05-27): adds ``up_ask0``, ``up_bid0``,
+    ``dn_ask0``, ``dn_bid0`` top-of-book fields. The spread metric is now the
+    same-token bid-ask on the direction's side (matching backtest
+    ``engine_v2.fill_at_book``); see ``_sniper_spread.compute_spread``. The
+    prior cross-token arb metric (``abs(up_vwap - (1 - dn_vwap))``) blocked
+    100 % of fires on thin-inside books and is preserved only in the JSONL
+    audit row as ``cross_spread_old`` for historical comparison.
+
+    TV_FIX_UNIFY_BOOK_READ_PATH_2026_05_27: adds ``up_book_source``,
+    ``dn_book_source`` so the dashboard + post-mortems can see which tier
+    (ws_mirror / clob / storedata / empty) answered each side. Aligns the
+    sniper-v5 JSONL row with the canonical momo ``paper.book_fetched``
+    telemetry shape.
+    """
+
+    up_vwap: float | None = None
+    dn_vwap: float | None = None

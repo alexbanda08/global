@@ -1,0 +1,6 @@
+SET
+poly_updown_signal'|'10646
+poly_updown_scalp_exit'|'94
+poly_fee_settled'|'79
+---payload---
+SET

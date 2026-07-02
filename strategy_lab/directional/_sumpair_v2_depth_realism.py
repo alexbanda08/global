@@ -42,6 +42,10 @@ import numpy as np
 import pandas as pd
 
 warnings.filterwarnings("ignore"); np.random.seed(42)
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # avoid Windows cp1252 crash on → chars
+except Exception:
+    pass
 ROOT = Path(r"C:\Users\alexandre bandarra\Desktop\global")
 sys.path.insert(0, str(ROOT / "data" / "v4" / "canonical"))
 sys.path.insert(0, str(ROOT / "strategy_lab" / "directional"))
@@ -338,6 +342,12 @@ def main():
     t0 = time.time()
     res = load_resolutions()
     res5m = res[res.ticker.isin(COINS) & (res.timeframe == TF)].drop_duplicates("slug").copy()
+    import sys as _sys
+    if len(_sys.argv) > 1:   # bounded re-run: argv[1] = ~slugs/coin (stride sample)
+        _n = int(_sys.argv[1])
+        res5m = (res5m.sort_values("slot_start_us").groupby("ticker", group_keys=False)
+                 .apply(lambda g: g.iloc[::max(1, len(g) // _n)]).reset_index(drop=True))
+        print(f"  SAMPLED to {len(res5m)} slugs (bound {_n}/coin)", flush=True)
     print(f"Universe: {len(res5m)} slugs ({pd.to_datetime(res5m.slot_start_us.min(), unit='us', utc=True).date()} "
           f".. {pd.to_datetime(res5m.slot_start_us.max(), unit='us', utc=True).date()})")
 

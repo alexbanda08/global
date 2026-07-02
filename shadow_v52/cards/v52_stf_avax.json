@@ -23,12 +23,12 @@
   "notes": "STRONGEST sleeve. FUND_Z gate: Sharpe 2.10->2.30, MDD -16.3%->-12.8%. Permutation p=0.000.",
   "status": "shadow_paper",
   "venue": "hyperliquid_perp",
-  "card_built": "2026-06-15T18:05:20.304629+00:00",
+  "card_built": "2026-07-02T11:05:17.308708+00:00",
   "live": {
-    "ledger_fires": 4,
-    "last_fire": "2026-05-28T04:00:00+00:00",
-    "ledger_paper_pnl": 39.3,
-    "ledger_win_rate": 25.0,
+    "ledger_fires": 5,
+    "last_fire": "2026-06-25T00:00:00+00:00",
+    "ledger_paper_pnl": 31.4,
+    "ledger_win_rate": 20.0,
     "current_state": "FLAT"
   }
 }

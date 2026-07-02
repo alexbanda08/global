@@ -1,0 +1,90 @@
+TOTAL ladder_summary windows: 1161
+date range: 2026-06-16 16:02:31.237236+00:00 -> 2026-06-30 01:15:00.073391+00:00 = 13.4 days
+
+== skipped_reason breakdown (ALL windows) ==
+skipped_reason
+None           1150
+warmup_fail       7
+no_book           4
+
+TRADED windows (any fill): 1138 / 1161 = 98.0%
+
+================ TRADED WINDOWS ONLY (n=1138) ================
+pair_frac                mean=   0.7993 med=   0.8751 p10=  0.5185 p90=  0.9782 min=  0.0000 max=   1.0000 sum=   909.549
+pvs                      mean=   0.9557 med=   0.9665 p10=  0.8382 p90=  1.0666 min=  0.4900 max=   1.4345 sum=  1040.704
+flow_capture             mean=   0.0170 med=   0.0162 p10=  0.0055 p90=  0.0300 min=  0.0002 max=   0.0784 sum=    19.371
+filled_up_sh             mean=  35.0517 med=  29.4372 p10= 10.0000 p90= 68.0288 min=  0.0000 max= 198.4407 sum= 39888.852
+filled_dn_sh             mean=  34.3148 med=  28.3211 p10= 10.0000 p90= 67.6122 min=  0.0000 max= 201.9269 sum= 39050.287
+paired_sh                mean=  30.0110 med=  24.3313 p10=  5.1970 p90= 61.8019 min=  0.0000 max= 189.2538 sum= 34152.548
+residual_sh              mean=   9.3445 med=   6.4556 p10=  1.6918 p90= 17.8762 min=  0.0000 max= 128.7441 sum= 10634.045
+maker_pct                mean=   1.0000 med=   1.0000 p10=  1.0000 p90=  1.0000 min=  1.0000 max=   1.0000 sum=  1138.000
+taker_pct                mean=   0.0000 med=   0.0000 p10=  0.0000 p90=  0.0000 min=  0.0000 max=   0.0000 sum=     0.000
+taker_completions        mean=   0.0000 med=   0.0000 p10=  0.0000 p90=  0.0000 min=  0.0000 max=   0.0000 sum=     0.000
+market_sell_total_sh     mean=4244.8620 med=3730.6200 p10=1969.5250 p90=7082.1320 min=793.9000 max=18486.6800 sum=4830652.960
+rebate_usd               mean=   0.1040 med=   0.0876 p10=  0.0231 p90=  0.2027 min=  0.0005 max=   0.5815 sum=   118.409
+paired_pnl_locked_usd    mean=   1.3118 med=   0.6248 p10= -1.3548 p90=  4.8512 min= -9.1776 max=  29.9485 sum=  1492.862
+net_paired_estimate_usd  mean=   1.4159 med=   0.7154 p10= -1.2901 p90=  5.0556 min= -8.8993 max=  30.5300 sum=  1611.271
+rejected_delta           mean=   0.1494 med=   0.0000 p10=  0.0000 p90=  0.0000 min=  0.0000 max=  10.0000 sum=   170.000
+
+== residual_side dist (traded) ==
+residual_side
+up      635
+dn      499
+none      4
+== pvs null? == 49 of 1138
+
+== HEADLINE TOTALS (traded windows) ==
+  paired_pnl_locked_usd  TOTAL = $1492.86
+  net_paired_estimate    TOTAL = $1611.27  (mean $1.4159/win)
+  rebate_usd             TOTAL = $118.41  (mean $0.1040/win)
+  residual_sh            TOTAL = 10634.0 sh held directional (PnL NOT logged)
+  paired vs net: corr=1.000 maxdiff=0.5815 (same metric?)
+
+== pair_frac buckets (traded) ==
+pair_frac
+(-0.01, 0.01]     49
+(0.01, 0.25]       5
+(0.25, 0.5]       49
+(0.5, 0.75]      179
+(0.75, 0.99]     829
+(0.99, 1.01]      27
+
+================ PER-DAY (traded windows) ================
+             n  pair_frac    pvs  flow_cap  net_paired  rebate  resid_sh  fill_up  fill_dn
+day                                                                                       
+2026-06-16  29      0.812  0.968     0.015      25.412   3.091   228.540   35.636   35.416
+2026-06-17  94      0.817  0.948     0.018     193.172  10.549   920.158   38.667   36.148
+2026-06-18  93      0.825  0.979     0.016     100.570   9.149   752.284   33.855   31.728
+2026-06-19  92      0.793  0.934     0.016     114.708   7.898   714.642   30.029   27.202
+2026-06-20  96      0.820  0.955     0.019     129.540  10.329   847.075   36.376   35.350
+2026-06-21  96      0.729  0.938     0.016     145.104   8.911  1194.075   29.572   32.310
+2026-06-22  95      0.795  0.941     0.017     149.381   9.028   841.421   31.411   31.945
+2026-06-23  94      0.784  0.955     0.015     126.359   9.170   955.553   34.202   30.833
+2026-06-24  92      0.833  0.965     0.019     169.491  12.728   956.605   45.751   46.478
+2026-06-25  95      0.798  0.970     0.016     118.251  10.566   894.257   37.260   36.891
+2026-06-26  95      0.810  0.958     0.016     143.779  11.123  1085.538   39.321   38.733
+2026-06-27  94      0.757  0.965     0.018     105.101   8.205   725.969   29.381   28.810
+2026-06-28  65      0.832  0.962     0.020      79.830   6.925   458.135   35.286   35.742
+2026-06-29   2      0.850  0.825     0.017       3.319   0.107    10.613   16.532   19.199
+2026-06-30   6      0.873  0.961     0.022       7.254   0.631    49.181   34.479   35.595
+
+================ FEED_QUALITY (per-slug, n=1169) ================
+windows with ANY warmup_pass=true: 1154 / 1169 = 98.7%
+avg_book_age_ms: warmup-pass windows  median=71678  mean=77645
+avg_book_age_ms: warmup-FAIL windows   median=124214  mean=151833
+total rejected_delta (sum of per-slug max): 448672
+total level_updates_applied: 468326273
+n_conns dist: {4: 1169}
+total dedup_first_wins (sum per-slug max): 15731291
+total recorder_dropped: 0
+total culled: 1956
+
+slugs traded but NOT warmup-pass: 0
+slugs warmup-pass but NOT traded: 16
+intersection traded&warmup: 1138
+
+================ LADDER_TICK rollup (per-slug, n=1169) ================
+total ticks: 518444 median ticks/window: 450
+windows reaching max_pair_frac>0.5: 1081
+max flow_capture ever in a window: 1.0000
+windows with any taker_completion>0: 0

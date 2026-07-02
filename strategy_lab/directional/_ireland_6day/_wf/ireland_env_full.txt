@@ -1,0 +1,171 @@
+# Tradingvenue runtime environment — written by bootstrap.sh 2026-04-28T23:00:56Z
+# Mode: 0600 root:tv. Do NOT commit or log this file.
+
+# === Redis (shared Storedata Redis, DB 1) ===
+REDIS_URL=redis://127.0.0.1:6379/0
+
+# === Storedata read-only DB ===
+TV_STOREDATA_DB_NAME=storedata
+TV_STOREDATA_DB_URL=postgresql://tradingvenue_ro:QurLWO1haVKHFUzodVOE1qiuAAa2u1@127.0.0.1:5432/storedata?sslmode=disable
+
+# === VPS identity ===
+TV_VPS_IP6=2a02:c207:2326:6171::1
+
+# Phase 17 · operator login (HS256 JWT for tv_jwt cookie)
+TV_JWT_SECRET=***MASKED***
+TV_JWT_TTL_SECONDS=2592000
+TV_FERNET_KEY=***MASKED***
+TV_OPERATOR_PASSWORD=***MASKED***
+
+# Phase 17.2 production env layout (operator-appended post-bootstrap)
+TV_DB_URL=postgresql://tradingvenue:mFmf5Z2JKZ0et3jkooVsQMd1rdB6Qc@127.0.0.1:5432/storedata?sslmode=disable
+TV_BAR_SOURCE=hl_live
+TV_HL_SYMBOLS=BTC,ETH,AVAX,SOL,LINK
+TV_HL_TFS=5m,15m,1h,4h,1d
+TV_V52_REBALANCE_ENABLED=1
+TV_SNAPSHOT_DIR=/var/lib/tradingvenue/snapshots
+POLYGON_RPC_URL=https://polygon-mainnet.g.alchemy.com/v2/CkcB0ru1bUfColNdPoTLO
+
+# Phase 18.1 — VPS3 reads native Binance ingestor (no geo block)
+TV_POLY_UPDOWN_ENABLED=1
+TV_POLY_UPDOWN_KLINE_FEED=binance
+TV_POLY_HEDGE_POLICY=HEDGE_HOLD
+TV_POLY_STRATEGY_MODES=momo,momo_v2
+TV_POLY_PAPER_REST_TIMEOUT_S=2.0
+TV_POLY_PAPER_REST_RETRY_ATTEMPTS=2
+TV_POLY_PAPER_BOOK_CACHE_TTL=1
+TV_POLY_PAPER_DB_FALLBACK=true
+V3_1_ENABLED=true
+V3_2_ENABLED=false
+V4_ENABLED=true
+V3_1_ASYMMETRIC_QUANTILE_ENABLED=true
+V3_1_REGIME_OVERLAY_ENABLED=true
+V3_1_SOL_UP_LIVE_DISABLED=true
+V3_2_HOUR_BLOCK_ENABLED=true
+V3_2_MACRO_2OF3_ENABLED=true
+
+# Phase 18.3 (2026-05-04) — per-asset V3 spread filter (Fix A) + V3.3 A/B sleeve.
+# SOL filter loosened from BTC-calibrated 0.02 to 0.025 (median Poly SOL spread
+# is 4-6%, min observed 2.02%). BTC/ETH unchanged. Operator-tunable per asset.
+TV_POLY_V3_SPREAD_FILTER_BTC=0.02
+TV_POLY_V3_SPREAD_FILTER_ETH=0.02
+TV_POLY_V3_SPREAD_FILTER_SOL=0.025
+
+# V3.3 A/B sleeve — V3.2 + multi-horizon for SOL only. Paper-only until 7-day
+# A/B verdict per SOL_V3_FIX_SPEC_2026_05_04 §Decision protocol.
+V3_3_LIVE_DISABLED=true
+
+# Phase 18.4 — Inverse sleeves (anti-edge shadow, paper-only)
+# Default false. Flip to true after D+1 acceptance gate completes
+# (Phase B). 8 inverse sleeves activate on next tv-engine restart:
+#   poly_updown_{btc,eth,sol}_{5m,15m}_volume_INV_NIGHT (6)
+#   poly_updown_sol_5m_sniper_INV
+#   poly_updown_eth_5m_sniper_DOWN_INV
+TV_INVERSE_SLEEVES_ENABLED=false
+
+# Phase 24 (2026-05-05) — single-master-scheduler dispatch (collapses multi-controller race)
+TV_POLY_USE_MASTER_SCHEDULER=true
+TV_POLY_MOMO_ENABLED=false
+TV_POLY_MOMO_HEDGE_POLICIES=HOLD_ONLY,HEDGE_HOLD,SELL_BID
+TV_POLY_BOOK_MIRROR=true
+
+# Phase 18.5+ momo_v2 — 18 paper-mode shadow sleeves at ws+60s. Coexists w/ v1.
+TV_POLY_MOMO_V2_ENABLED=false
+TV_POLY_MOMO_V2_GATE_QUANTILE=0.90
+TV_POLY_MOMO_V2_LOOKBACK_DAYS=14
+TV_POLY_MOMO_V2_MIN_SAMPLES=50
+TV_POLY_MOMO_V2_REV_BP=5
+TV_POLY_MOMO_V2_T_PLUS_SECONDS=60
+TV_POLY_MOMO_V2_NOTIONAL_USD=25
+TV_POLY_MOMO_V2_SPREAD_BTC=0.02
+TV_POLY_MOMO_V2_SPREAD_ETH=0.02
+TV_POLY_MOMO_V2_SPREAD_SOL=0.025
+
+# Phase 25 Tier A — TCA cost baselines (added 2026-05-08)
+TV_POLY_FEE_USD_PER_FILL=0.50
+TV_POLY_PREDICTED_EDGE_PP=3.0
+TV_POLY_PREDICTED_COST_BPS=400
+TV_COOKIE_SECURE=false
+
+# Phase 26.2/26.3 deploy — 2026-05-14 autonomous gate run
+TV_POLY_NEG_RISK_ADAPTER_ADDRESS=0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296
+TV_POLY_USDC_E_ADDRESS=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174
+TV_POLY_CTF_ADDRESS=0x4D97DCd97eC945f40cF65F87097ACe5EA0476045
+TV_POLY_GAMMA_API_URL=https://gamma-api.polymarket.com
+TV_POLY_RPC_URL=https://polygon-mainnet.g.alchemy.com/v2/P-4a73Mf_vmStjVfqHPfN
+TV_POLY_REDEEMER_ENABLED=true
+
+# Phase 26.3 Gate 5 — live allowlist flip 2026-05-14 (autonomous)
+# Per .planning/phases/26.3-poly-live-mirror-twins/ALLOWLIST.md — 7 sleeves
+# 6 deduped controllers (master scheduler fans out per symbol+tf)
+TV_POLY_LIVE_ALLOWLIST=
+TV_POLY_LIVE_NOTIONAL_INVERSE_USD=0.20
+TV_POLY_LIVE_NOTIONAL_MOMO_USD=1.00
+TV_POLY_LIVE_PREFLIGHT_MIN_USDC_ALLOWANCE=100.0
+TV_POLY_GAMMA_CACHE_PATH=/var/lib/tradingvenue/poly_gamma_cache.json
+TV_POLY_USDC_ADDRESS=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174
+
+# Phase 27 Ireland VPS — live mirrors only, no paper controllers (2026-05-15)
+TV_VPS_ID=ireland
+
+# 2026-05-15 — Phase 27 Ireland: hide paper sleeves from dashboard manifest
+TV_DASHBOARD_LIVE_MIRRORS_ONLY=true
+
+# Phase 30 — maker-arb suite (shadow mode, deployed 2026-05-19 by Claude)
+TV_POLY_MAKER_ENABLED=true
+TV_POLY_MAKER_SHADOW_MODE=true
+TV_POLY_MAKER_MERGE_CONTRACT=vanilla_ctf
+
+# Phase 32 — maker fill simulator (deployed 2026-05-20 by Claude — pre-flight gate 1: 76/79 pass; 3 pre-existing failures)
+TV_POLY_MAKER_ADV_SEL_BPS=25
+TV_POLY_MERGE_GAS_USD=0.05
+TV_POLY_MAKER_REBATE_BPS=0
+TV_POLY_TAKER_FEE_BPS=0
+TV_POLY_MAKER_SIM_DISABLED=false
+TV_POLY_LIVE_ACK_DISABLED=true
+
+# 2026-05-20 — bypass CoinGecko 429s; redeemer uses override
+# TV_MATIC_USD_PRICE disabled 20260603 — settler now fetches live POLUSDT from Binance
+#TV_MATIC_USD_PRICE=0.20
+TV_POLY_REDEEM_TICK_SECONDS=60
+
+# 2026-05-22 — maker tuning per .planning/reports/2026-05-22-maker-tuning-recommendations.md
+# Disable acc_h on btc_5m (worst cell, -$1129 over 3 days).
+TV_POLY_MAKER_ACC_H_CELLS=btc_15m
+# Limit MAS dust blast radius (was 2; mas_btc_5m leaked 182 dust events on 614 windows).
+TV_POLY_MAKER_MAS_MAX_CONCURRENT_SLUGS=1
+TV_POLY_DEPRECATED_SLEEVES=poly_updown_btc_15m_momo_HEDGE,poly_updown_eth_15m_momo_v2_HOLD,poly_updown_eth_15m_momo_v2_HOLD_f7,shadow_poly_updown_ALL_15m_S4_prewindow,shadow_poly_updown_ALL_15m_S4_prewindow_LIVE,kalshi_sniper_all_15m_s4_prewindow,poly_updown_btc_15m_momo_HOLD,poly_updown_btc_15m_momo_HOLD_f7,poly_updown_sol_5m_momo_v2_HOLD,poly_updown_sol_5m_momo_v2_HOLD_f7
+TV_POLY_REDEEM_MAX_PER_TICK=200
+TV_POLY_MAKER_KILL=pat_shadow:btc_5m
+TV_POLY_MAKER_ACC_M_ENABLE_PAT=false
+TV_POLY_MAKER_FILL_REALISM=true
+# Kalshi live-pilot (paper-first validation 2026-05-31) — sniper_v5 enabled for the traders_reality panel the ema gates need
+TV_POLY_SNIPER_V5_ENABLED=true
+TV_KALSHI_ENABLED=true
+TV_KALSHI_MODE=live
+TV_KALSHI_NOTIONAL_USD=1.0
+TV_KALSHI_LIVE_ENABLED=true
+TV_KALSHI_LIVE_ALLOWLIST=KXBTC15M,KXETH15M,KXSOL15M
+TV_KALSHI_LIVE_SLEEVE_IDS=kalshi_sniper_btc_15m_ema50_ema800_off600_down
+TV_POLY_SNIPER_V5_PANELS_ONLY=true
+TV_POLY_VWAP_CONT_ENABLED=false
+
+# Sniper-v5 live promotion (TV_AGENT_SPEC 2026-06-01) — ema50/ema800/off600 DOWN @ $1.50
+TV_POLY_SNIPER_V5_LIVE_ENABLED=true
+TV_POLY_SNIPER_V5_LIVE_ALLOWLIST=shadow_scalp_exit_btc_5m_d3_v1,shadow_scalp_exit_btc_15m_d3_v1,shadow_scalp_momalign_btc_5m_v1
+TV_POLY_SNIPER_V5_LIVE_NOTIONAL_USD=1.0
+
+# Sniper-v5 shadow on the live box (TV_AGENT_SPEC 2026-06-01) — eth_5m_l_ema50_hurst_grandparent_v8 PAPER @ $1
+TV_POLY_SNIPER_V5_SHADOW_ALLOWLIST=
+TV_POLY_SNIPER_V5_SHADOW_NOTIONAL_USD=1.0
+
+# Poly-live S4 (2026-06-02) — surface + live-trade ALL_15m_S4_prewindow at $1/symbol-fire
+TV_POLY_S4_LIVE_ENABLED=false
+TV_POLY_S4_LIVE_ALLOWLIST=shadow_poly_updown_ALL_15m_S4_prewindow
+TV_POLY_S4_LIVE_NOTIONAL_USD=1.0
+TV_POLY_FEE_SETTLER_ENABLED=true
+TV_POLYGON_RPC_URL=https://polygon-mainnet.g.alchemy.com/v2/CkcB0ru1bUfColNdPoTLO
+TV_BINANCE_PANEL_SEED_DAYS=8
+TV_INTERNAL_TOKEN=ba1976b20fe11bafd0e8cb784537a70bdae2d8d6b0e92d7e9b4393e19418fb5a
+TV_VPS3_API_URL=https://185.190.143.7:8443
+TV_VPS3_TLS_INSECURE=true

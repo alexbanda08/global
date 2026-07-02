@@ -1,0 +1,44 @@
+== schemas ==
+public
+engine
+trading
+== sleeves with v2 in name ==
+poly_ladder_btc_15m_v2|feed_quality|53830|2026-06-30 14:36:18.633502+00|2026-07-01 21:41:30.020895+00
+poly_ladder_btc_15m_v2|ladder_tick|53830|2026-06-30 14:36:18.631493+00|2026-07-01 21:41:30.020059+00
+poly_ladder_btc_15m_v2|tick_latency|53830|2026-06-30 14:36:18.635087+00|2026-07-01 21:41:30.021856+00
+poly_ladder_btc_15m_v2|ladder_summary|124|2026-06-30 14:31:45.335373+00|2026-07-01 21:30:00.090076+00
+== ladder_summary rows AFTER engine restart (Jun30 17:45) ==
+poly_ladder_btc_15m_v2|112|2026-06-30 17:45:00.043573+00|2026-07-01 21:30:00.090076+00
+== latest ladder_summary payload keys ==
+{
+    "tf": "15m",
+    "pvs": 0.8635331994693627,
+    "slug": "btc-updown-15m-1782940500",
+    "asset": "BTC",
+    "outcome": "up",
+    "maker_sh": 139.2741469921302,
+    "taker_sh": 0.0,
+    "maker_pct": 1.0,
+    "pair_frac": 0.8315982055556855,
+    "paired_sh": 57.91006535947712,
+    "taker_pct": 0.0,
+    "rebate_usd": 0.2089112204881953,
+    "residual_sh": 23.454016273175945,
+    "condition_id": "0xeaa36b7122de82464ef813a649d01d50075b682ec7f00b5504b516d4b2a5a418",
+    "filled_dn_sh": 81.36408163265307,
+    "filled_up_sh": 57.91006535947712,
+    "flow_capture": 0.025067476424842146,
+    "residual_side": "dn",
+    "total_net_usd": -0.9205227397625713,
+    "filled_dn_vwap": 0.3851039921341212,
+    "filled_up_vwap": 0.47842920733524147,
+    "rejected_delta": 0,
+    "skipped_reason": null,
+    "residual_pnl_usd": -9.0322352983787,
+    "taker_completions": 0,
+    "pair_gate_bound_sh": 0.0,
+    "residual_entry_vwap": 0.3851039921341212,
+    "market_sell_total_sh": 5555.969999999999,
+    "paired_pnl_locked_usd": 7.902801338127934,
+    "net_paired_estimate_usd": 8.111712558616128
+}

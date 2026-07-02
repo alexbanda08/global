@@ -1,0 +1,50 @@
+== snapshots_v2 columns ==
+timestamp_us:bigint
+local_timestamp_us:bigint
+exchange:text
+market_id:text
+slug:text
+asset_id:text
+outcome:text
+bid_price_0:numeric
+bid_size_0:numeric
+bid_price_1:numeric
+bid_size_1:numeric
+bid_price_2:numeric
+bid_size_2:numeric
+bid_price_3:numeric
+bid_size_3:numeric
+bid_price_4:numeric
+bid_size_4:numeric
+bid_price_5:numeric
+bid_size_5:numeric
+bid_price_6:numeric
+bid_size_6:numeric
+bid_price_7:numeric
+bid_size_7:numeric
+bid_price_8:numeric
+bid_size_8:numeric
+bid_price_9:numeric
+bid_size_9:numeric
+bid_price_10:numeric
+bid_size_10:numeric
+bid_price_11:numeric
+== retention ==
+4735475|2026-06-19|2026-07-02 04:23:21.311+02
+== btc-5m coverage ==
+ERROR:  column "market_slug" does not exist
+LINE 1: select count(*) from orderbook_snapshots_v2 where market_slu...
+== sample row keys (first row, col names guessed) ==
+   timestamp_us   | local_timestamp_us |  exchange  |                             market_id                              |           slug           |                                    asset_id                                    | outcome | bid_price_0 | bid_size_0 | bid_price_1 | bid_size_1 | bid_price_2 | bid_size_2 | bid_price_3 | bid_size_3 | bid_price_4 | bid_size_4 | bid_price_5 | bid_size_5 | bid_price_6 | bid_size_6 | bid_price_7 | bid_size_7 | bid_price_8 | bid_size_8  | bid_price_9 | bid_size_9 | bid_price_10 | bid_size_10 | bid_price_11 | bid_size_11 | bid_price_12 | bid_size_12 | bid_price_13 | bid_size_13 | bid_price_14 | bid_size_14 | bid_price_15 | bid_size_15 | bid_price_16 | bid_size_16 | bid_price_17 | bid_size_17 | bid_price_18 | bid_size_18 | bid_price_19 | bid_size_19 | bid_price_20 | bid_size_20 | bid_price_21 | bid_size_21 | bid_price_22 | bid_size_22 | bid_price_23 | bid_size_23 | bid_price_24 | bid_size_24 | ask_price_0 | ask_size_0  | ask_price_1 | ask_size_1 | ask_price_2 | ask_size_2  | ask_price_3 | ask_size_3 | ask_price_4 | ask_size_4  | ask_price_5 | ask_size_5 | ask_price_6 | ask_size_6  | ask_price_7 | ask_size_7 | ask_price_8 | ask_size_8  | ask_price_9 | ask_size_9 | ask_price_10 | ask_size_10 | ask_price_11 | ask_size_11 | ask_price_12 | ask_size_12 | ask_price_13 | ask_size_13 | ask_price_14 | ask_size_14 | ask_price_15 | ask_size_15 | ask_price_16 | ask_size_16 | ask_price_17 | ask_size_17 | ask_price_18 | ask_size_18 | ask_price_19 | ask_size_19 | ask_price_20 | ask_size_20 | ask_price_21 | ask_size_21 | ask_price_22 | ask_size_22 | ask_price_23 | ask_size_23 | ask_price_24 | ask_size_24 | outcome_id | source 
+------------------+--------------------+------------+--------------------------------------------------------------------+--------------------------+--------------------------------------------------------------------------------+---------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+-------------+-------------+-------------+------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+-------------+-------------+-------------+------------+-------------+-------------+-------------+------------+-------------+-------------+-------------+------------+-------------+-------------+-------------+------------+-------------+-------------+-------------+------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+------------+--------
+ 1781831764750000 |   1781831764832899 | polymarket | 0x32734b81a8ec9c1192967d8afcd5e0911240b6727bbd889cd700377421262663 | btc-updown-5m-1781831700 | 100040400449860653157995684127481004838293343961953665865344865163471319449180 | Up      |      0.7100 | 331.400000 |   1257.6600 |   0.580000 |      0.7000 | 265.300000 |    465.1400 |   0.570000 |      0.6900 | 156.300000 |    439.1000 |   0.560000 |      0.6800 | 101.300000 |    781.0000 |   0.550000 |      0.6700 | 2356.300000 |    461.6000 |   0.540000 |       0.6600 |  110.450000 |     375.8000 |    0.530000 |       0.6500 |  146.200000 |     369.7000 |    0.520000 |       0.6400 |  106.200000 |     229.1700 |    0.510000 |       0.6300 |  146.200000 |     171.6000 |    0.500000 |       0.6200 |   91.200000 |     881.3400 |    0.490000 |       0.6100 |  146.200000 |     437.0000 |    0.480000 |       0.6000 |   89.590000 |     268.1800 |    0.470000 |       0.5900 |  121.200000 |      0.7200 | 1295.450000 |     11.0000 |   0.850000 |      0.7300 | 1691.590000 |    705.3700 |   0.860000 |      0.7400 | 1558.610000 |    699.1700 |   0.870000 |      0.7500 | 1647.060000 |    752.8800 |   0.880000 |      0.7600 | 2134.920000 |    779.3600 |   0.890000 |       0.7700 | 2234.720000 |     776.6600 |    0.900000 |       0.7800 | 2175.830000 |     795.9100 |    0.910000 |       0.7900 | 2215.260000 |     885.0200 |    0.920000 |       0.8000 | 2986.290000 |    1085.9800 |    0.930000 |       0.8100 | 2972.910000 |    1156.0100 |    0.940000 |       0.8200 | 4134.770000 |    1177.4100 |    0.950000 |       0.8300 | 5295.110000 |    1440.1600 |    0.960000 |       0.8400 | 6169.510000 |          0 | live
+(1 row)
+
+== tables like market ==
+market_resolutions_v2
+markets
+asset_market_map
+kalshi_markets
+polymarket_markets
+physics_market_ctx_v2
+kalshi_markets_v2
