@@ -1,0 +1,111 @@
+== ladder sleeves all versions ==
+poly_ladder_btc_15m_v2|feed_quality|16522|2026-07-02 00:00:00.08597+00|2026-07-02 09:22:20.028477+00
+poly_ladder_btc_15m_v2|ladder_summary|38|2026-07-02 00:00:00.096917+00|2026-07-02 09:15:00.036618+00
+poly_ladder_btc_15m_v2|ladder_tick|16522|2026-07-02 00:00:00.084723+00|2026-07-02 09:22:20.027757+00
+poly_ladder_btc_15m_v2|tick_latency|16522|2026-07-02 00:00:00.087043+00|2026-07-02 09:22:20.029187+00
+poly_ladder_btc_15m_v3|feed_quality|252253|2026-07-02 09:22:46.419+00|2026-07-08 12:33:00.108397+00
+poly_ladder_btc_15m_v3|feed_watchdog|32|2026-07-05 00:16:58.366332+00|2026-07-05 01:55:57.87559+00
+poly_ladder_btc_15m_v3|ladder_summary|589|2026-07-02 09:22:22.975178+00|2026-07-08 12:15:20.050862+00
+poly_ladder_btc_15m_v3|ladder_tick|252252|2026-07-02 09:22:46.417992+00|2026-07-08 12:33:00.107217+00
+poly_ladder_btc_15m_v3|tick_latency|252253|2026-07-02 09:22:46.419821+00|2026-07-08 12:33:00.109238+00
+poly_ladder_btc_15m_v4_coc|feed_quality|148842|2026-07-05 01:49:37.810433+00|2026-07-08 12:33:00.02158+00
+poly_ladder_btc_15m_v4_coc|feed_watchdog|14|2026-07-05 01:49:35.559047+00|2026-07-05 01:55:57.759606+00
+poly_ladder_btc_15m_v4_coc|ladder_summary|330|2026-07-05 01:48:32.621989+00|2026-07-08 12:15:20.060392+00
+poly_ladder_btc_15m_v4_coc|ladder_tick|148842|2026-07-05 01:49:37.808608+00|2026-07-08 12:33:00.020728+00
+poly_ladder_btc_15m_v4_coc|tick_latency|148842|2026-07-05 01:49:37.811497+00|2026-07-08 12:33:00.022426+00
+poly_ladder_btc_5m_v3|feed_quality|647939|2026-07-02 09:22:26.393693+00|2026-07-08 12:33:00.117147+00
+poly_ladder_btc_5m_v3|feed_watchdog|3|2026-07-05 00:16:58.372428+00|2026-07-05 00:18:05.188101+00
+poly_ladder_btc_5m_v3|ladder_summary|1765|2026-07-02 09:22:23.050526+00|2026-07-08 12:30:20.115272+00
+poly_ladder_btc_5m_v3|ladder_tick|647938|2026-07-02 09:22:26.391371+00|2026-07-08 12:33:00.116077+00
+poly_ladder_btc_5m_v3|tick_latency|647939|2026-07-02 09:22:26.395322+00|2026-07-08 12:33:00.118055+00
+poly_ladder_eth_5m_v3|feed_quality|488188|2026-07-04 02:24:01.460463+00|2026-07-08 12:33:00.071045+00
+poly_ladder_eth_5m_v3|feed_watchdog|6|2026-07-05 00:16:58.366134+00|2026-07-05 00:23:53.425476+00
+poly_ladder_eth_5m_v3|ladder_summary|1272|2026-07-04 02:23:20.204464+00|2026-07-08 12:30:50.104873+00
+poly_ladder_eth_5m_v3|ladder_tick|488188|2026-07-04 02:24:01.459143+00|2026-07-08 12:33:00.070303+00
+poly_ladder_eth_5m_v3|tick_latency|488188|2026-07-04 02:24:01.461681+00|2026-07-08 12:33:00.071836+00
+== sumpair + scalp since Jul 2 ==
+sumpair_osc_eth_5m|sumpair_osc|2170|2026-07-08 12:16:01.011135+00
+sumpair_osc_btc_5m|sumpair_osc|1219|2026-07-08 12:16:00.999154+00
+shadow_scalp_exit_btc_5m_d3_v1|scalp_exit|11|2026-07-08 09:01:05.001541+00
+== env ladder/sumpair flags ==
+# moat-infra I0-I4 (2026-06-16) — PAPER, isolated to the ladder mirrors
+TV_POLY_LADDER_ENABLED=true
+TV_POLY_LADDER_LIVE_ENABLED=false
+# Ladder v2 (2026-06-30): fresh _v2 namespace + pvs gate (G3 ON)
+# removed 2026-07-05 (L4 hygiene; v3 ids are in-code): TV_POLY_LADDER_SLEEVE_ID=poly_ladder_btc_15m_v2
+TV_LADDER_PAIR_MAX_SUM=0.99
+# sumpair_osc V2 $0 shadow (2026-07-01 PART 1) — BTC,ETH 5m; THR 3bp; EV<0.55; $5 clip; MAX_CLIPS=1 FIRM; LIVE=false FIRM
+TV_SUMPAIR_OSC_ENABLED=true
+TV_SUMPAIR_OSC_LIVE_ENABLED=false
+TV_SUMPAIR_OSC_COINS=BTC,ETH
+TV_SUMPAIR_OSC_TF=5m
+TV_SUMPAIR_OSC_THR_BPS=3
+TV_SUMPAIR_OSC_EV_GATE=0.55
+TV_SUMPAIR_OSC_CLIP_USD=5
+TV_SUMPAIR_OSC_MAX_CLIPS_PER_SIDE=1
+TV_SUMPAIR_OSC_DECISION_STEP_S=5
+TV_SUMPAIR_OSC_LOOKBACK_S=5
+TV_SUMPAIR_OSC_RESIDUAL_EXIT_S=60
+# Ladder v3 (2026-07-02): deep quotes (rest below touch) + btc-5m mirror + T-tail
+# residual backstop. Spawns poly_ladder_btc_15m_v3 + poly_ladder_btc_5m_v3 (the old
+# TV_POLY_LADDER_SLEEVE_ID is IGNORED by v3 — ids are built in-code). d4 A/B off for now.
+TV_LADDER_QUOTE_DEPTH_TICKS=2
+# v4 COC shadow (spec 2026-07-04) — read ONLY by poly_ladder_btc_15m_v4_coc
+TV_LADDER_COC_ENABLED=true
+TV_LADDER_COC_WAIT_S=75
+TV_LADDER_COC_MAX_SUM=0.995
+TV_LADDER_COC_MIN_TRIGGER_SH=2.0
+TV_LADDER_COC_PAUSE_AFTER_CUT_S=120
+== engine restart time ==
+Sun 2026-07-05 01:48:31 UTC
+== latest v3 15m summary ==
+{
+    "tf": "15m",
+    "pvs": null,
+    "slug": "btc-updown-15m-1783510200",
+    "asset": "BTC",
+    "outcome": "up",
+    "coc_cuts": 0,
+    "maker_sh": 6.0,
+    "taker_sh": 0.0,
+    "maker_pct": 1.0,
+    "pair_frac": 0.0,
+    "paired_sh": 0.0,
+    "taker_pct": 0.0,
+    "rebate_usd": 0.009000000000000001,
+    "residual_sh": 6.0,
+    "coc_triggers": 0,
+    "condition_id": "0x8c0404156d17ddc031a918a1bdbe4805134e0f28bbc53b12d269c5a3238998ab",
+    "filled_dn_sh": 0.0,
+    "filled_up_sh": 6.0,
+    "flow_capture": 0.002305404636937193,
+    "residual_side": "up",
+    "total_net_usd": 1.328999999999999,
+    "filled_dn_vwap": null,
+    "filled_up_vwap": 0.77,
+    "outcome_source": "gamma_chainlink",
+    "rejected_delta": 0,
+    "skipped_reason": null,
+    "coc_completions": 0,
+    "outcome_binance": "up",
+    "settle_attempts": 1,
+    "coc_cut_cost_usd": 0.0,
+    "residual_pnl_usd": 1.3199999999999992,
+    "coc_taker_fee_usd": 0.0,
+    "quote_depth_ticks": 2,
+    "taker_completions": 0,
+    "pair_gate_bound_sh": 0.0,
+    "rebate_rate_assumed": 0.0015,
+    "residual_entry_vwap": 0.77,
+    "market_sell_total_sh": 2602.58,
+    "outcome_none_held_sh": 0.0,
+    "paired_pnl_locked_usd": 0.0,
+    "residual_flattened_sh": 6.0,
+    "coc_completion_cost_usd": 0.0,
+    "net_paired_estimate_usd": 0.009000000000000001,
+    "coc_pnl_delta_vs_hold_usd": 0.0,
+    "fill_below_touch_ticks_dn": null,
+    "fill_below_touch_ticks_up": 2.0000000000000018,
+    "residual_backstop_cost_usd": -1.3199999999999992,
+    "coc_completion_sum_at_trigger": null
+}

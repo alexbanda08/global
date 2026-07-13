@@ -1,0 +1,1687 @@
+{
+ "btc-updown-15m-1783603800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783604700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783605600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783606500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783607400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783608300": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783609200": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783610100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783611000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783611900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783612800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783613700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783614600": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783615500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783616400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783617300": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783618200": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783619100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783668600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783669500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783670400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783671300": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783672200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783673100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783674000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783674900": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783675800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783676700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783677600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783678500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783679400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783680300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783681200": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783682100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783683000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783683900": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783684800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783685700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783686600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783687500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783688400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783689300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783690200": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783691100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783692000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783692900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783693800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783694700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783695600": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783696500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783697400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783698300": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783699200": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783700100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783701000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783701900": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783702800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783703700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783704600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783705500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783954800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783955700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783956600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783957500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783958400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783959300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783960200": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783961100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783962000": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783962900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-15m-1783963800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783603500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783603800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783604100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783604400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783604700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783608900": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783609200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783618500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783618800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783619100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783619400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783628100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783628400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783628700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783629300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783629600": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783629900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783630200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783630500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783630800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783631100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783631400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783631700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783632300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783632600": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783632900": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783633200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783633500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783633800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783634100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783634400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783634700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783635000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783635300": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783635600": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783635900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783636200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783636500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783636800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783637100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783637400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783637700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783638000": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783638300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783638600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783638900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783639200": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783639500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783640100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783640400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783640700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783641000": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783641300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783641600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783641900": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783642200": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783666200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783666500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783666800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783667100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783667400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783667700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783668000": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783668300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783668600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783668900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783669200": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783669500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783669800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783670100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783670400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783670700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783671000": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783671300": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783671600": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783671900": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783672200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783672500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783672800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783673100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783673700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783674000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783674300": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783674600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783675200": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783675500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783675800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783676100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783676400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783676700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783677000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783677300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783677600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783677900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783678200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783678500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783678800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783679100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783679400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783679700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783680000": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783681800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783682100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783682400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783682700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783683300": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783683600": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783683900": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783684200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783684500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783684800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783685100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783685400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783685700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783686000": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783686300": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783686600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783686900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783687200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783687500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783687800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783688100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783688400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783688700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783689000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783689600": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783689900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783690200": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783690500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783690800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783691400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783691700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783692300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783692900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783693200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783693500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783693800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783694100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783694400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783695600": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783702500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783702800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783703100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783703700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783704000": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783704300": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783704900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783705200": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783705500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783705800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783706100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783706400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783706700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783707000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783707300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783707600": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783707900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783708200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783708500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783708800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783709100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783709400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783709700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783710000": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783710300": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783710600": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783710900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783711200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783711500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783711800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783712100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783712400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783712700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783713000": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783713300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783713600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783713900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783714200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783714500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783714800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783715100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783715400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783715700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783716000": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783716300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783716600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783716900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783717200": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783938900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783939200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783939500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783939800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783940100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783940400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783940700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783941000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783941300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783943400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783943700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783944000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783944300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783944600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783944900": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783945200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783945500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783945800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783946100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783946400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783946700": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783947000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783947300": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783947600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783947900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783948500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783948800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783949100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783949700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783954200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783954800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783957200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783958100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783958400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783958700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783959000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783959300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783959900": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783960200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783960500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783960800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783961100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783961400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783961700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783962000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783962300": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783962600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783962900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783963200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783963500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783963800": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783964100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783964400": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783965000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783965300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783971300": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783971600": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783971900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783972200": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783972500": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783972800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783973100": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783973400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783973700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783974000": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783974300": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783974600": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783974900": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783975200": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783975500": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783975800": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783976100": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783976400": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783976700": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783977000": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783977300": {
+  "outcomePrices": "[\"1\", \"0\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783977600": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ },
+ "btc-updown-5m-1783977900": {
+  "outcomePrices": "[\"0\", \"1\"]",
+  "outcomes": "[\"Up\", \"Down\"]",
+  "closed": true
+ }
+}

@@ -1,0 +1,167 @@
+# Ladder compile (refresh2)
+rows_loaded=5763
+
+## poly_ladder_btc_15m_v2  (n=37, span=0.39d)
+**FULL Jul2-now**: n=37, span=0.39d
+- total_net: mean=-1.1502 CI95[-3.2635,1.0309] sum=-42.56 $/day=-110.42
+- ex-top2: mean=-2.0876 CI95[-3.8962,-0.5545]
+- median=-1.0864 pos%=29.7
+- decomp means: paired=2.1833 rebate=0.0457 residual=-3.3792 coc_cut=nan coc_taker=nan
+- fills up/dn mean=15.56/14.91 fill_below_touch pooled mean=nan min=nan
+**NEW Jul9 12:00-now**: n=0
+
+## poly_ladder_btc_15m_v3  (n=348, span=8.40d)
+**FULL Jul2-now**: n=348, span=8.40d
+- total_net: mean=0.1667 CI95[-0.3102,0.6605] sum=58.00 $/day=6.91
+- ex-top2: mean=0.0298 CI95[-0.4093,0.4757]
+- median=0.1665 pos%=52.3
+- decomp means: paired=0.4736 rebate=0.0198 residual=-0.3268 coc_cut=0.0000 coc_taker=0.0000
+- fills up/dn mean=6.66/6.56 fill_below_touch pooled mean=2.05 min=1.00
+**NEW Jul9 12:00-now**: n=64, span=1.30d
+- total_net: mean=0.4830 CI95[-0.7708,1.8537] sum=30.91 $/day=23.74
+- ex-top2: mean=-0.2705 CI95[-1.2055,0.5675]
+- median=0.4728 pos%=54.7
+- decomp means: paired=0.6117 rebate=0.0200 residual=-0.1487 coc_cut=0.0000 coc_taker=0.0000
+- fills up/dn mean=7.51/5.83 fill_below_touch pooled mean=2.04 min=1.00
+
+## poly_ladder_btc_15m_v4_coc  (n=193, span=5.71d)
+**FULL Jul2-now**: n=193, span=5.71d
+- total_net: mean=0.9803 CI95[0.3373,1.7617] sum=189.19 $/day=33.16
+- ex-top2: mean=0.5936 CI95[0.1685,1.0392]
+- median=0.5300 pos%=60.1
+- decomp means: paired=1.0760 rebate=0.0215 residual=0.2133 coc_cut=0.2490 coc_taker=0.0815
+- fills up/dn mean=8.49/8.01 fill_below_touch pooled mean=2.06 min=1.50
+**NEW Jul9 12:00-now**: n=53, span=1.30d
+- total_net: mean=1.4990 CI95[0.0046,3.8794] sum=79.45 $/day=61.02
+- ex-top2: mean=0.3866 CI95[-0.2712,0.9835]
+- median=0.6104 pos%=60.4
+- decomp means: paired=1.7785 rebate=0.0268 residual=0.1751 coc_cut=0.3812 coc_taker=0.1002
+- fills up/dn mean=10.52/10.14 fill_below_touch pooled mean=2.12 min=1.93
+
+## poly_ladder_btc_5m_v3  (n=1776, span=8.42d)
+**FULL Jul2-now**: n=1776, span=8.42d
+- total_net: mean=1.0396 CI95[0.7954,1.3129] sum=1846.29 $/day=219.34
+- ex-top2: mean=0.9241 CI95[0.7310,1.1251]
+- median=0.5771 pos%=60.4
+- decomp means: paired=0.9829 rebate=0.0269 residual=0.0298 coc_cut=0.0000 coc_taker=0.0000
+- fills up/dn mean=8.95/8.97 fill_below_touch pooled mean=2.03 min=1.00
+**NEW Jul9 12:00-now**: n=305, span=1.32d
+- total_net: mean=1.2673 CI95[0.7311,1.8816] sum=386.52 $/day=292.86
+- ex-top2: mean=0.9982 CI95[0.5818,1.4237]
+- median=0.7606 pos%=61.3
+- decomp means: paired=0.9887 rebate=0.0262 residual=0.2524 coc_cut=0.0000 coc_taker=0.0000
+- fills up/dn mean=8.96/8.53 fill_below_touch pooled mean=2.07 min=1.00
+
+## poly_ladder_eth_5m_v3  (n=668, span=6.71d)
+**FULL Jul2-now**: n=668, span=6.71d
+- total_net: mean=0.3098 CI95[0.0976,0.5195] sum=206.95 $/day=30.84
+- ex-top2: mean=0.2761 CI95[0.0720,0.4803]
+- median=0.1519 pos%=53.6
+- decomp means: paired=0.1815 rebate=0.0123 residual=0.1160 coc_cut=0.0000 coc_taker=0.0000
+- fills up/dn mean=3.96/4.24 fill_below_touch pooled mean=2.03 min=1.00
+**NEW Jul9 12:00-now**: n=132, span=1.31d
+- total_net: mean=0.3040 CI95[-0.1792,0.7899] sum=40.12 $/day=30.66
+- ex-top2: mean=0.1405 CI95[-0.2934,0.5784]
+- median=0.2277 pos%=54.5
+- decomp means: paired=0.1900 rebate=0.0126 residual=0.1014 coc_cut=0.0000 coc_taker=0.0000
+- fills up/dn mean=4.04/4.35 fill_below_touch pooled mean=2.03 min=2.00
+
+## Trust checks (ladder)
+- poly_ladder_btc_15m_v2: max|total_net-recon|=0.0000 (n=37)
+  outcome_binance mismatch: 0/0
+  unsettled traded >1h old: 0
+- poly_ladder_btc_15m_v3: max|total_net-recon|=0.0000 (n=348)
+  outcome_binance mismatch: 8/284
+  unsettled traded >1h old: 0
+- poly_ladder_btc_15m_v4_coc: max|total_net-recon|=0.0000 (n=193)
+  outcome_binance mismatch: 5/193
+  unsettled traded >1h old: 0
+- poly_ladder_btc_5m_v3: max|total_net-recon|=0.0000 (n=1776)
+  outcome_binance mismatch: 50/1480
+  unsettled traded >1h old: 1
+- poly_ladder_eth_5m_v3: max|total_net-recon|=0.0000 (n=668)
+  outcome_binance mismatch: 20/668
+  unsettled traded >1h old: 0
+total mode=live rows across sleeves: 0
+
+## Per-day net table (ladder, FULL period)
+
+**poly_ladder_btc_15m_v2**
+- 2026-07-02: -42.56
+
+**poly_ladder_btc_15m_v3**
+- 2026-07-02: -2.10
+- 2026-07-03: 26.12
+- 2026-07-04: -62.83
+- 2026-07-05: 48.64
+- 2026-07-06: -14.19
+- 2026-07-07: -19.55
+- 2026-07-08: 41.83
+- 2026-07-09: 47.18
+- 2026-07-10: -7.10
+
+**poly_ladder_btc_15m_v4_coc**
+- 2026-07-05: 39.12
+- 2026-07-06: -0.63
+- 2026-07-07: 1.20
+- 2026-07-08: 62.76
+- 2026-07-09: 71.31
+- 2026-07-10: 15.45
+
+**poly_ladder_btc_5m_v3**
+- 2026-07-02: 99.41
+- 2026-07-03: 375.44
+- 2026-07-04: 190.43
+- 2026-07-05: 266.11
+- 2026-07-06: 138.20
+- 2026-07-07: 153.68
+- 2026-07-08: 187.46
+- 2026-07-09: 235.08
+- 2026-07-10: 200.48
+
+**poly_ladder_eth_5m_v3**
+- 2026-07-04: 57.73
+- 2026-07-05: 23.78
+- 2026-07-06: -1.13
+- 2026-07-07: 47.43
+- 2026-07-08: 40.06
+- 2026-07-09: 13.24
+- 2026-07-10: 25.85
+
+
+# Sumpair compile (refresh2)
+rows_loaded=4539
+
+## sumpair_osc_btc_5m (n=749)
+**FULL Jul2-now** net_pnl_level0: mean=0.9681 CI95[0.4152,1.8016] n=749
+**FULL Jul2-now** net_pnl_walk: mean=0.9891 CI95[0.4261,1.8318] n=749
+**NEW Jul9 12:00-now** net_pnl_level0: mean=2.5355 CI95[-0.2540,7.5995] n=107
+**NEW Jul9 12:00-now** net_pnl_walk: mean=2.6205 CI95[-0.1974,7.7383] n=107
+
+## sumpair_osc_eth_5m (n=1316)
+**FULL Jul2-now** net_pnl_level0: mean=0.0045 CI95[-0.1982,0.2253] n=1316
+**FULL Jul2-now** net_pnl_walk: mean=-0.0273 CI95[-0.2679,0.2492] n=1316
+**NEW Jul9 12:00-now** net_pnl_level0: mean=0.2252 CI95[-0.2291,0.6919] n=181
+**NEW Jul9 12:00-now** net_pnl_walk: mean=0.3825 CI95[-0.1823,0.9697] n=181
+
+
+# Scalp_exit compile (refresh2)
+rows_loaded=14
+entries<0.55: 100.0%
+fires in NEW period (Jul9 12:00-now): 1
+
+Raw rows dump:
+- 2026-07-10 01:56:05.000891+00:00 shadow_scalp_exit_btc_5m_d3_v1 {'mode': 'paper', 'slug': 'btc-updown-5m-1783648500', 'entry_sh': 9.433962264150942, 'direction': 'UP', 'sell_vwap': 0.38, 'entry_vwap': 0.53, 'exit_at_us': 1783648565000000, 'sell_source': 'book', 'pnl_exit_usd': -1.4150943396226416, 'sell_filled_sh': 9.433962264150942}
+- 2026-07-08 14:46:05.000973+00:00 shadow_scalp_exit_btc_5m_d3_v1 {'mode': 'paper', 'slug': 'btc-updown-5m-1783521900', 'entry_sh': 10.204081632653061, 'direction': 'DOWN', 'sell_vwap': 0.88, 'entry_vwap': 0.49000000000000005, 'exit_at_us': 1783521965000000, 'sell_source': 'book', 'pnl_exit_usd': 3.979591836734693, 'sell_filled_sh': 10.204081632653061}
+- 2026-07-08 13:56:05.000809+00:00 shadow_scalp_exit_btc_5m_d3_v1 {'mode': 'paper', 'slug': 'btc-updown-5m-1783518900', 'entry_sh': 10.0, 'direction': 'DOWN', 'sell_vwap': 0.36, 'entry_vwap': 0.5, 'exit_at_us': 1783518965000000, 'sell_source': 'book', 'pnl_exit_usd': -1.4000000000000001, 'sell_filled_sh': 10.0}
+- 2026-07-08 09:01:05.001541+00:00 shadow_scalp_exit_btc_5m_d3_v1 {'mode': 'paper', 'slug': 'btc-updown-5m-1783501200', 'entry_sh': 9.615384615384615, 'direction': 'DOWN', 'sell_vwap': 0.55, 'entry_vwap': 0.52, 'exit_at_us': 1783501265000000, 'sell_source': 'book', 'pnl_exit_usd': 0.2884615384615387, 'sell_filled_sh': 9.615384615384615}
+- 2026-07-07 14:56:05.001680+00:00 shadow_scalp_exit_btc_5m_d3_v1 {'mode': 'paper', 'slug': 'btc-updown-5m-1783436100', 'entry_sh': 9.615384615384615, 'direction': 'UP', 'sell_vwap': 0.57, 'entry_vwap': 0.52, 'exit_at_us': 1783436165000000, 'sell_source': 'book', 'pnl_exit_usd': 0.4807692307692301, 'sell_filled_sh': 9.615384615384615}
+- 2026-07-07 14:41:05.000658+00:00 shadow_scalp_exit_btc_5m_d3_v1 {'mode': 'paper', 'slug': 'btc-updown-5m-1783435200', 'entry_sh': 9.433962264150942, 'direction': 'UP', 'sell_vwap': 0.78, 'entry_vwap': 0.53, 'exit_at_us': 1783435265000000, 'sell_source': 'book', 'pnl_exit_usd': 2.3584905660377355, 'sell_filled_sh': 9.433962264150942}
+- 2026-07-07 14:31:05.000740+00:00 shadow_scalp_exit_btc_5m_d3_v1 {'mode': 'paper', 'slug': 'btc-updown-5m-1783434600', 'entry_sh': 9.25925925925926, 'direction': 'UP', 'sell_vwap': 0.58, 'entry_vwap': 0.54, 'exit_at_us': 1783434665000000, 'sell_source': 'book', 'pnl_exit_usd': 0.3703703703703697, 'sell_filled_sh': 9.25925925925926}
+- 2026-07-07 13:31:05.001811+00:00 shadow_scalp_exit_btc_5m_d3_v1 {'mode': 'paper', 'slug': 'btc-updown-5m-1783431000', 'entry_sh': 9.25925925925926, 'direction': 'UP', 'sell_vwap': 0.76, 'entry_vwap': 0.54, 'exit_at_us': 1783431065000000, 'sell_source': 'book', 'pnl_exit_usd': 2.0370370370370368, 'sell_filled_sh': 9.25925925925926}
+- 2026-07-06 15:11:05.001411+00:00 shadow_scalp_exit_btc_5m_d3_v1 {'mode': 'paper', 'slug': 'btc-updown-5m-1783350600', 'entry_sh': 10.416666666666668, 'direction': 'UP', 'sell_vwap': 0.57, 'entry_vwap': 0.48, 'exit_at_us': 1783350665000000, 'sell_source': 'book', 'pnl_exit_usd': 0.9374999999999998, 'sell_filled_sh': 10.416666666666668}
+- 2026-07-04 17:36:05.000504+00:00 shadow_scalp_exit_btc_5m_d3_v1 {'mode': 'paper', 'slug': 'btc-updown-5m-1783186500', 'entry_sh': 9.433962264150942, 'direction': 'UP', 'sell_vwap': 0.26, 'entry_vwap': 0.53, 'exit_at_us': 1783186565000000, 'sell_source': 'book', 'pnl_exit_usd': -2.5471698113207544, 'sell_filled_sh': 9.433962264150942}
+- 2026-07-04 15:36:05.000833+00:00 shadow_scalp_exit_btc_5m_d3_v1 {'mode': 'paper', 'slug': 'btc-updown-5m-1783179300', 'entry_sh': 9.433962264150942, 'direction': 'UP', 'sell_vwap': 0.63, 'entry_vwap': 0.53, 'exit_at_us': 1783179365000000, 'sell_source': 'book', 'pnl_exit_usd': 0.943396226415094, 'sell_filled_sh': 9.433962264150942}
+- 2026-07-02 13:41:05.000894+00:00 shadow_scalp_exit_btc_5m_d3_v1 {'mode': 'paper', 'slug': 'btc-updown-5m-1782999600', 'entry_sh': 10.0, 'direction': 'DOWN', 'sell_vwap': 0.68, 'entry_vwap': 0.5, 'exit_at_us': 1782999665000000, 'sell_source': 'book', 'pnl_exit_usd': 1.8000000000000005, 'sell_filled_sh': 10.0}
+- 2026-07-02 09:56:05.000789+00:00 shadow_scalp_exit_btc_5m_d3_v1 {'mode': 'paper', 'slug': 'btc-updown-5m-1782986100', 'entry_sh': 10.638297872340425, 'direction': 'UP', 'sell_vwap': 0.66, 'entry_vwap': 0.47000000000000003, 'exit_at_us': 1782986165000000, 'sell_source': 'book', 'pnl_exit_usd': 2.021276595744681, 'sell_filled_sh': 10.638297872340425}
+- 2026-07-02 06:56:05.001100+00:00 shadow_scalp_exit_btc_5m_d3_v1 {'mode': 'paper', 'slug': 'btc-updown-5m-1782975300', 'entry_sh': 9.25925925925926, 'direction': 'DOWN', 'sell_vwap': 0.57, 'entry_vwap': 0.54, 'exit_at_us': 1782975365000000, 'sell_source': 'book', 'pnl_exit_usd': 0.277777777777777, 'sell_filled_sh': 9.25925925925926}

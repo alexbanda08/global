@@ -1,0 +1,78 @@
+====================================================================================================
+A. PER-SLEEVE PERFORMANCE (settled traded windows)
+====================================================================================================
+
+[poly_ladder_btc_15m_v3]  span 6.1d  windows 589  traded 246 (42%)  settled-traded 246
+  TOTAL NET  +0.013/win  CI[-0.531,+0.561]  sum +3.3  ($+0.5/day)
+  decomp: paired +0.449  rebate +0.0198  residual -0.456
+  pair_frac 0.169  pvs mean 0.799 max 0.990  pvs>=0.99: 1
+  fills up/dn 6.3/6.9 sh  flow_cap 0.26%  maker 100%
+  fill_below_touch: mean 2.04 ticks  min 1.00  <1 tick: 0/307
+  backstop: flattened_sh mean 6.4 (>0 in 179 wins)  cost mean -0.027
+  pair_gate_bound_sh>0: 16 wins (mean 0.42)
+
+[poly_ladder_btc_15m_v4_coc]  span 3.4d  windows 330  traded 110 (33%)  settled-traded 110
+  TOTAL NET  +0.609/win  CI[-0.016,+1.283]  sum +67.0  ($+19.5/day)
+  decomp: paired +0.750  rebate +0.0182  residual +0.144
+  pair_frac 0.517  pvs mean 0.841 max 0.990  pvs>=0.99: 3
+  fills up/dn 6.9/6.5 sh  flow_cap 0.27%  maker 80%
+  fill_below_touch: mean 2.05 ticks  min 1.57  <1 tick: 0/143
+  backstop: flattened_sh mean 2.2 (>0 in 68 wins)  cost mean -0.292
+  pair_gate_bound_sh>0: 11 wins (mean 0.68)
+  COC: triggers 87  completions 61  cuts 26  delta_vs_hold sum -32.10  fees 7.10
+
+[poly_ladder_btc_5m_v3]  span 6.1d  windows 1765  traded 1262 (72%)  settled-traded 1262
+  TOTAL NET  +1.028/win  CI[+0.736,+1.377]  sum +1297.8  ($+211.7/day)
+  decomp: paired +1.013  rebate +0.0272  residual -0.012
+  pair_frac 0.331  pvs mean 0.822 max 0.990  pvs>=0.99: 16
+  fills up/dn 9.0/9.1 sh  flow_cap 0.21%  maker 100%
+  fill_below_touch: mean 2.03 ticks  min 1.00  <1 tick: 23/1863
+  backstop: flattened_sh mean 5.6 (>0 in 941 wins)  cost mean -0.146
+  pair_gate_bound_sh>0: 243 wins (mean 1.96)
+
+[poly_ladder_eth_5m_v3]  span 4.4d  windows 1272  traded 435 (34%)  settled-traded 435
+  TOTAL NET  +0.422/win  CI[+0.159,+0.691]  sum +183.7  ($+41.5/day)
+  decomp: paired +0.197  rebate +0.0126  residual +0.213
+  pair_frac 0.101  pvs mean 0.809 max 0.990  pvs>=0.99: 1
+  fills up/dn 4.0/4.4 sh  flow_cap 1.09%  maker 100%
+  fill_below_touch: mean 2.00 ticks  min 1.00  <1 tick: 2/505
+  backstop: flattened_sh mean 4.5 (>0 in 282 wins)  cost mean -0.302
+  pair_gate_bound_sh>0: 19 wins (mean 0.37)
+
+====================================================================================================
+B. TRUST AUDIT (all sleeves, settled traded)
+====================================================================================================
+total_net == paired+rebate+residual: maxdiff 5.933565  rows>1e-6: 77
+  DIVERGING sample:
+                    sleeve                               ts  total_net_usd  paired_pnl_locked_usd  rebate_usd  residual_pnl_usd  coc_pnl_delta_vs_hold_usd  coc_taker_fee_usd  coc_cut_cost_usd
+poly_ladder_btc_15m_v4_coc 2026-07-05 02:33:50.100209+00:00      -2.573301               0.000000    0.047568          3.312696                 -16.505777           0.000000          5.933565
+poly_ladder_btc_15m_v4_coc 2026-07-05 03:00:35.071325+00:00      -0.627903               0.212766    0.031582          1.950355                  -0.736645           0.218440          2.604167
+poly_ladder_btc_15m_v4_coc 2026-07-05 03:30:35.015677+00:00       2.152431               1.250000    0.015625          0.930556                  -0.572937           0.043750          0.000000
+poly_ladder_btc_15m_v4_coc 2026-07-05 08:15:35.089349+00:00       6.146694               5.997867    0.041718          0.175164                  -0.946750           0.068056          0.000000
+  with +coc_delta: maxdiff 13.478723
+paired_pnl == paired_sh*(1-pvs): maxdiff 0.000000
+outcome cross-check: outcome_binance present 1693  MISMATCH vs outcome: 66
+outcome_source dist: {'gamma_chainlink': 1693, nan: 360}
+settle_attempts: max 25  >1: 1322
+unsettled traded windows (outcome null, excl last hour): 0  ()
+rebate model: rate_assumed uniq [0.0015]
+taker_completions total: 0  outcome_none_held_sh total: 0.0
+
+====================================================================================================
+C. V3-15M vs V2 BASELINE (the fix working?)
+====================================================================================================
+v2 baseline: net −0.91/win, residual −2.46/win (win-rate 14.1% at 0.396)
+v3 15m: net +0.013/win, residual -0.456/win
+v3 residual entries: med 0.497 | flattened fully 72% of windows
+v3 residual heavy-side win-rate (info): 47.5% (n=244)
+
+per-day net by sleeve:
+sleeve      poly_ladder_btc_15m_v3  poly_ladder_btc_15m_v4_coc  poly_ladder_btc_5m_v3  poly_ladder_eth_5m_v3
+day                                                                                                         
+2026-07-02                    -2.1                         NaN                   99.4                    NaN
+2026-07-03                    26.1                         NaN                  375.4                    NaN
+2026-07-04                   -62.8                         NaN                  190.4                   57.7
+2026-07-05                    48.6                        39.1                  266.1                   23.8
+2026-07-06                   -14.2                        -0.6                  138.2                   -1.1
+2026-07-07                   -19.5                         1.2                  153.7                   47.4
+2026-07-08                    27.2                        27.3                   74.5                   55.9

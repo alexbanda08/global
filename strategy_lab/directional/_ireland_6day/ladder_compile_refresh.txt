@@ -1,0 +1,123 @@
+# Ladder compile
+
+## poly_ladder_btc_15m_v2  (n=37, span=0.39d, w/day=96.0)
+**Jul2-Jul8 12:15**: n=37, span=0.39d
+- total_net: mean=-1.1502 CI95[-3.2635,1.0309] sum=-42.56 $/day=-110.42
+- ex-top2: mean=-2.0876 CI95[-3.8962,-0.5545]
+- median=-1.0864 pos%=29.7
+- decomp means: paired=2.1833 rebate=0.0457 residual=-3.3792 coc_cut=nan coc_taker=nan
+- pair_frac mean=0.489 pvs mean=0.804 max=0.966 fills up/dn mean=15.56/14.91 fill_below_touch pooled mean=nan min=nan
+**Jul8 12:15-now**: n=0
+
+## poly_ladder_btc_15m_v3  (n=284, span=7.08d, w/day=40.1)
+**Jul2-Jul8 12:15**: n=246, span=6.07d
+- total_net: mean=0.0132 CI95[-0.5294,0.5620] sum=3.26 $/day=0.54
+- ex-top2: mean=-0.1322 CI95[-0.6495,0.3767]
+- median=0.1358 pos%=52.0
+- decomp means: paired=0.4493 rebate=0.0198 residual=-0.4559 coc_cut=0.0000 coc_taker=0.0000
+- pair_frac mean=0.169 pvs mean=0.799 max=0.990 fills up/dn mean=6.27/6.94 fill_below_touch pooled mean=2.04 min=1.00
+**Jul8 12:15-now**: n=38, span=0.95d
+- total_net: mean=0.6271 CI95[-0.5963,1.9620] sum=23.83 $/day=25.07
+- ex-top2: mean=0.0286 CI95[-0.9698,1.0363]
+- median=-0.1395 pos%=50.0
+- decomp means: paired=0.3986 rebate=0.0195 residual=0.2090 coc_cut=0.0000 coc_taker=0.0000
+- pair_frac mean=0.178 pvs mean=0.789 max=0.990 fills up/dn mean=7.74/5.28 fill_below_touch pooled mean=2.12 min=1.90
+
+## poly_ladder_btc_15m_v4_coc  (n=140, span=4.39d, w/day=31.9)
+**Jul2-Jul8 12:15**: n=110, span=3.38d
+- total_net: mean=0.6089 CI95[-0.0212,1.2996] sum=66.98 $/day=19.84
+- ex-top2: mean=0.3127 CI95[-0.1976,0.8102]
+- median=0.3179 pos%=56.4
+- decomp means: paired=0.7505 rebate=0.0182 residual=0.1436 coc_cut=0.2388 coc_taker=0.0646
+- pair_frac mean=0.517 pvs mean=0.841 max=0.990 fills up/dn mean=6.92/6.52 fill_below_touch pooled mean=2.05 min=1.57
+**Jul8 12:15-now**: n=30, span=0.95d
+- total_net: mean=1.4255 CI95[0.0222,3.2917] sum=42.77 $/day=44.98
+- ex-top2: mean=0.5308 CI95[-0.3860,1.3002]
+- median=0.9009 pos%=73.3
+- decomp means: paired=1.0281 rebate=0.0241 residual=0.5365 coc_cut=0.0526 coc_taker=0.1106
+- pair_frac mean=0.647 pvs mean=0.856 max=0.990 fills up/dn mean=10.64/9.72 fill_below_touch pooled mean=2.01 min=1.50
+
+## poly_ladder_btc_5m_v3  (n=1471, span=7.09d, w/day=207.5)
+**Jul2-Jul8 12:15**: n=1260, span=6.10d
+- total_net: mean=1.0255 CI95[0.7288,1.3767] sum=1292.13 $/day=211.91
+- ex-top2: mean=0.8668 CI95[0.6532,1.0869]
+- median=0.5845 pos%=60.8
+- decomp means: paired=1.0123 rebate=0.0272 residual=-0.0140 coc_cut=0.0000 coc_taker=0.0000
+- pair_frac mean=0.331 pvs mean=0.822 max=0.990 fills up/dn mean=9.03/9.10 fill_below_touch pooled mean=2.03 min=1.00
+**Jul8 12:15-now**: n=211, span=0.98d
+- total_net: mean=0.7945 CI95[0.2582,1.4321] sum=167.64 $/day=171.14
+- ex-top2: mean=0.5459 CI95[0.1112,0.9799]
+- median=0.4098 pos%=56.9
+- decomp means: paired=0.7984 rebate=0.0260 residual=-0.0299 coc_cut=0.0000 coc_taker=0.0000
+- pair_frac mean=0.291 pvs mean=0.831 max=0.990 fills up/dn mean=8.48/8.85 fill_below_touch pooled mean=1.99 min=1.00
+
+## poly_ladder_eth_5m_v3  (n=536, span=5.39d, w/day=99.5)
+**Jul2-Jul8 12:15**: n=434, span=4.39d
+- total_net: mean=0.4245 CI95[0.1602,0.6940] sum=184.21 $/day=41.95
+- ex-top2: mean=0.3839 CI95[0.1227,0.6459]
+- median=0.2186 pos%=54.8
+- decomp means: paired=0.1972 rebate=0.0126 residual=0.2147 coc_cut=0.0000 coc_taker=0.0000
+- pair_frac mean=0.101 pvs mean=0.809 max=0.990 fills up/dn mean=3.99/4.40 fill_below_touch pooled mean=2.00 min=1.00
+**Jul8 12:15-now**: n=102, span=0.97d
+- total_net: mean=-0.1704 CI95[-0.5898,0.2509] sum=-17.38 $/day=-17.86
+- ex-top2: mean=-0.2620 CI95[-0.6907,0.1401]
+- median=-0.0627 pos%=47.1
+- decomp means: paired=0.1039 rebate=0.0106 residual=-0.2850 coc_cut=0.0000 coc_taker=0.0000
+- pair_frac mean=0.101 pvs mean=0.819 max=0.990 fills up/dn mean=3.70/3.38 fill_below_touch pooled mean=2.14 min=1.00
+
+## Trust checks
+- poly_ladder_btc_15m_v2: max|total_net-recon|=0.0000 (n=37)
+  outcome_binance mismatch: 0/0
+  unsettled traded >1h old: 0
+- poly_ladder_btc_15m_v3: max|total_net-recon|=0.0000 (n=284)
+  outcome_binance mismatch: 7/220
+  unsettled traded >1h old: 0
+- poly_ladder_btc_15m_v4_coc: max|total_net-recon|=0.0000 (n=140)
+  outcome_binance mismatch: 4/140
+  unsettled traded >1h old: 0
+- poly_ladder_btc_5m_v3: max|total_net-recon|=0.0000 (n=1471)
+  outcome_binance mismatch: 41/1175
+  unsettled traded >1h old: 0
+- poly_ladder_eth_5m_v3: max|total_net-recon|=0.0000 (n=536)
+  outcome_binance mismatch: 18/536
+  unsettled traded >1h old: 0
+
+## Per-day net table
+
+**poly_ladder_btc_15m_v2**
+- 2026-07-02: -42.56
+
+**poly_ladder_btc_15m_v3**
+- 2026-07-02: -2.10
+- 2026-07-03: 26.12
+- 2026-07-04: -62.83
+- 2026-07-05: 48.64
+- 2026-07-06: -14.19
+- 2026-07-07: -19.55
+- 2026-07-08: 41.83
+- 2026-07-09: 9.17
+
+**poly_ladder_btc_15m_v4_coc**
+- 2026-07-05: 39.12
+- 2026-07-06: -0.63
+- 2026-07-07: 1.20
+- 2026-07-08: 62.76
+- 2026-07-09: 7.31
+
+**poly_ladder_btc_5m_v3**
+- 2026-07-02: 99.41
+- 2026-07-03: 375.44
+- 2026-07-04: 190.43
+- 2026-07-05: 266.11
+- 2026-07-06: 138.20
+- 2026-07-07: 153.68
+- 2026-07-08: 187.46
+- 2026-07-09: 49.04
+
+**poly_ladder_eth_5m_v3**
+- 2026-07-04: 57.73
+- 2026-07-05: 23.78
+- 2026-07-06: -1.13
+- 2026-07-07: 47.43
+- 2026-07-08: 40.06
+- 2026-07-09: -1.04

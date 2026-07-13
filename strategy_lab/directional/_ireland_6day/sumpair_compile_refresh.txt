@@ -1,0 +1,13 @@
+# Sumpair compile
+
+## sumpair_osc_btc_5m (n=642)
+**Jul2-Jul8 12:15** net_pnl_level0: mean=0.5120 CI95[0.2165,0.8240] n=551
+**Jul2-Jul8 12:15** net_pnl_walk: mean=0.5269 CI95[0.2069,0.8642] n=551
+**Jul8 12:15-now** net_pnl_level0: mean=1.8870 CI95[0.4576,3.7798] n=91
+**Jul8 12:15-now** net_pnl_walk: mean=1.8696 CI95[0.4353,3.7653] n=91
+
+## sumpair_osc_eth_5m (n=1135)
+**Jul2-Jul8 12:15** net_pnl_level0: mean=-0.0575 CI95[-0.3007,0.2079] n=986
+**Jul2-Jul8 12:15** net_pnl_walk: mean=-0.1139 CI95[-0.4033,0.2176] n=986
+**Jul8 12:15-now** net_pnl_level0: mean=0.1462 CI95[-0.2900,0.5976] n=149
+**Jul8 12:15-now** net_pnl_walk: mean=0.0487 CI95[-0.4434,0.5566] n=149

@@ -1,0 +1,16 @@
+{
+  "total_rows": 3500,
+  "buy_rows": 3500,
+  "pct_sells": 0.0,
+  "n_slugs": 337,
+  "fills_per_slug_mean": 10.385756676557863,
+  "fills_per_slug_median": 7.0,
+  "clip_notional_median": 12.8,
+  "clip_notional_mean": 14.608572819713682,
+  "timing_p10": 106.0,
+  "timing_p50": 275.0,
+  "timing_p90": 818.0,
+  "pair_rate_pct": 72.70029673590504,
+  "pair_frac_median": 0.15384616101683365,
+  "pvs_median": 0.9732164064891338
+}
