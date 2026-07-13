@@ -39,5 +39,11 @@ Findings: corr(fill $, net) = +0.41; we capture only 0.22% of ~8,800 sh/window s
 3. rcg rows show `rcg_flattened_sh>0` with `residual_pnl_virtual_hold_usd` populated on gated windows.
 4. ~1 week accrual → research side computes **matched-window paired diffs** (variant − base, same slugs) per variant — the decision metric (much more powerful than independent CIs).
 
+## 7. PRE-REGISTERED EXPECTATIONS (counterfactual on the existing 11.5d tape — added 2026-07-13 late)
+Computed by simulating the rcg gate on the realized v3 windows (`analyze_extras_0713.py`):
+- **btc rcg:** uplift **+0.097/win CI[+0.006,+0.187] ≈ +$21/day** if the early flatten costs ~0.5 ticks; +$17/day at 1 tick; +$10/day at 2 ticks. **Judge the variant against this curve** — if its realized flatten cost exceeds ~2 ticks, the gate is not worth it.
+- **eth rcg twin: DOWNGRADED TO OPTIONAL** — counterfactual only +$1.3/day at best, CI spans 0. Ship it only if it's zero marginal effort; don't debug anything for it.
+- **v4_coc context:** matched-slug paired test at full n (282 shared slugs): v4−v3 diff **+0.058 CI[−0.39,+0.50], median $0.00** — COC adds nothing on identical windows; its standalone edge is window-mix. **No COC variant for 5m; v4_coc is a kill-candidate at the 2-week mark** (frees box load).
+
 ## Provenance
 Lever evidence: `SHADOW_IMPROVE_B945_ALIGNMENT_2026_07_13.md`. b945 aggression shift: `B945_REDECODE_2026_07_13.md` (per-slug PnL therein NOT reliable — row-cap truncation; the depth/clip signature IS). Base semantics: `TV_AGENT_SPEC_LADDER_V3_DEEPQUOTES_5M_2026_07_02.md`. Coinflip-gate pattern precedent: `TV_AGENT_SPEC_CLOUDVWAP_V7_COINFLIP_FILTER_2026_06_09.md`.
