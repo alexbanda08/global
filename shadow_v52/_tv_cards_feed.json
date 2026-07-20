@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-02T11:05:17.930974+00:00",
+  "generated": "2026-07-20T22:05:15.050153+00:00",
   "mode": "shadow_paper",
   "n_cards": 6,
   "cards": [
@@ -16,9 +16,27 @@
       "confidence": 0,
       "open_positions": [],
       "pending": [],
-      "n_fires": 3,
-      "last_fire": "2026-05-27T16:00:00+00:00",
+      "n_fires": 5,
+      "last_fire": "2026-07-13T08:00:00+00:00",
       "recent_fires": [
+        {
+          "sleeve": "STF_BTC",
+          "dir": "SHORT",
+          "entry_ts": "2026-07-13T08:00:00+00:00",
+          "exit_ts": "2026-07-14T16:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -2.961,
+          "paper_pnl": -7.4
+        },
+        {
+          "sleeve": "STF_BTC",
+          "dir": "SHORT",
+          "entry_ts": "2026-07-06T16:00:00+00:00",
+          "exit_ts": "2026-07-10T12:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.34,
+          "paper_pnl": -8.35
+        },
         {
           "sleeve": "STF_BTC",
           "dir": "SHORT",
@@ -47,7 +65,7 @@
           "paper_pnl": 23.23
         }
       ],
-      "data_end": "2026-07-02T08:00:00+00:00"
+      "data_end": "2026-07-20T20:00:00+00:00"
     },
     {
       "card": "V52-ETH",
@@ -59,22 +77,47 @@
         "CCI_ETH",
         "MFI_ETH"
       ],
-      "signal": "LONG",
+      "signal": "SHORT",
       "confidence": 45,
-      "open_positions": [
+      "open_positions": [],
+      "pending": [
         {
           "sleeve": "MFI_ETH",
-          "direction": "LONG",
-          "entry_ts": "2026-06-26T20:00:00+00:00",
-          "entry_price": 1573.3,
-          "unrealized_pct": 2.816,
+          "direction": "SHORT",
+          "signal_bar_ts": "2026-07-20T20:00:00+00:00",
           "weight": 0.1
         }
       ],
-      "pending": [],
-      "n_fires": 17,
-      "last_fire": "2026-06-30T08:00:00+00:00",
+      "n_fires": 21,
+      "last_fire": "2026-07-18T00:00:00+00:00",
       "recent_fires": [
+        {
+          "sleeve": "MFI_ETH",
+          "dir": "SHORT",
+          "entry_ts": "2026-07-18T00:00:00+00:00",
+          "exit_ts": "2026-07-20T04:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.209,
+          "paper_pnl": -8.02
+        },
+        {
+          "sleeve": "CCI_ETH",
+          "dir": "SHORT",
+          "entry_ts": "2026-07-15T08:00:00+00:00",
+          "exit_ts": "2026-07-15T12:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.235,
+          "paper_pnl": -8.09
+        },
+        {
+          "sleeve": "MFI_ETH",
+          "dir": "LONG",
+          "entry_ts": "2026-07-10T16:00:00+00:00",
+          "exit_ts": "2026-07-15T12:00:00+00:00",
+          "reason": "TP",
+          "ret_pct": 14.804,
+          "paper_pnl": 37.01
+        },
         {
           "sleeve": "CCI_ETH",
           "dir": "SHORT",
@@ -85,43 +128,16 @@
           "paper_pnl": -8.1
         },
         {
-          "sleeve": "CCI_ETH",
-          "dir": "LONG",
-          "entry_ts": "2026-06-24T04:00:00+00:00",
-          "exit_ts": "2026-06-24T16:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.269,
-          "paper_pnl": -8.17
-        },
-        {
           "sleeve": "MFI_ETH",
           "dir": "LONG",
-          "entry_ts": "2026-06-23T08:00:00+00:00",
-          "exit_ts": "2026-06-24T16:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.217,
-          "paper_pnl": -8.04
-        },
-        {
-          "sleeve": "MFI_ETH",
-          "dir": "LONG",
-          "entry_ts": "2026-06-21T04:00:00+00:00",
-          "exit_ts": "2026-06-22T00:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.219,
-          "paper_pnl": -8.05
-        },
-        {
-          "sleeve": "CCI_ETH",
-          "dir": "SHORT",
-          "entry_ts": "2026-06-16T04:00:00+00:00",
-          "exit_ts": "2026-06-22T12:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": 1.25,
-          "paper_pnl": 3.12
+          "entry_ts": "2026-06-26T20:00:00+00:00",
+          "exit_ts": "2026-07-06T20:00:00+00:00",
+          "reason": "TIME",
+          "ret_pct": 13.449,
+          "paper_pnl": 33.62
         }
       ],
-      "data_end": "2026-07-02T08:00:00+00:00"
+      "data_end": "2026-07-20T20:00:00+00:00"
     },
     {
       "card": "V52-SOL",
@@ -134,68 +150,76 @@
         "MFI_SOL"
       ],
       "signal": "LONG",
-      "confidence": 45,
+      "confidence": 100,
       "open_positions": [
+        {
+          "sleeve": "STF_SOL",
+          "direction": "LONG",
+          "entry_ts": "2026-07-19T20:00:00+00:00",
+          "entry_price": 75.846,
+          "unrealized_pct": 2.288,
+          "weight": 0.12
+        },
         {
           "sleeve": "MFI_SOL",
           "direction": "LONG",
-          "entry_ts": "2026-06-26T00:00:00+00:00",
-          "entry_price": 67.685,
-          "unrealized_pct": 15.436,
+          "entry_ts": "2026-07-18T16:00:00+00:00",
+          "entry_price": 74.931,
+          "unrealized_pct": 3.537,
           "weight": 0.1
         }
       ],
       "pending": [],
-      "n_fires": 18,
-      "last_fire": "2026-06-24T00:00:00+00:00",
+      "n_fires": 23,
+      "last_fire": "2026-07-14T20:00:00+00:00",
       "recent_fires": [
         {
           "sleeve": "MFI_SOL",
           "dir": "LONG",
-          "entry_ts": "2026-06-24T00:00:00+00:00",
-          "exit_ts": "2026-06-24T16:00:00+00:00",
+          "entry_ts": "2026-07-14T20:00:00+00:00",
+          "exit_ts": "2026-07-16T12:00:00+00:00",
           "reason": "SL",
-          "ret_pct": -3.221,
-          "paper_pnl": -8.05
+          "ret_pct": -3.274,
+          "paper_pnl": -8.18
         },
         {
           "sleeve": "STF_SOL",
-          "dir": "SHORT",
-          "entry_ts": "2026-06-23T04:00:00+00:00",
-          "exit_ts": "2026-06-26T16:00:00+00:00",
+          "dir": "LONG",
+          "entry_ts": "2026-07-14T20:00:00+00:00",
+          "exit_ts": "2026-07-16T20:00:00+00:00",
           "reason": "SL",
-          "ret_pct": 1.687,
-          "paper_pnl": 4.22
+          "ret_pct": -3.205,
+          "paper_pnl": -8.01
         },
         {
           "sleeve": "MFI_SOL",
           "dir": "LONG",
-          "entry_ts": "2026-06-20T20:00:00+00:00",
-          "exit_ts": "2026-06-23T08:00:00+00:00",
+          "entry_ts": "2026-07-13T08:00:00+00:00",
+          "exit_ts": "2026-07-13T20:00:00+00:00",
           "reason": "SL",
-          "ret_pct": -3.214,
-          "paper_pnl": -8.04
-        },
-        {
-          "sleeve": "STF_SOL",
-          "dir": "SHORT",
-          "entry_ts": "2026-06-17T16:00:00+00:00",
-          "exit_ts": "2026-06-21T00:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": 1.764,
-          "paper_pnl": 4.41
+          "ret_pct": -3.293,
+          "paper_pnl": -8.23
         },
         {
           "sleeve": "MFI_SOL",
           "dir": "LONG",
-          "entry_ts": "2026-06-11T12:00:00+00:00",
-          "exit_ts": "2026-06-18T16:00:00+00:00",
+          "entry_ts": "2026-07-06T04:00:00+00:00",
+          "exit_ts": "2026-07-06T12:00:00+00:00",
           "reason": "SL",
-          "ret_pct": 4.599,
-          "paper_pnl": 11.5
+          "ret_pct": -3.272,
+          "paper_pnl": -8.18
+        },
+        {
+          "sleeve": "MFI_SOL",
+          "dir": "LONG",
+          "entry_ts": "2026-06-26T00:00:00+00:00",
+          "exit_ts": "2026-07-02T12:00:00+00:00",
+          "reason": "TP",
+          "ret_pct": 23.846,
+          "paper_pnl": 59.62
         }
       ],
-      "data_end": "2026-07-02T08:00:00+00:00"
+      "data_end": "2026-07-20T20:00:00+00:00"
     },
     {
       "card": "V52-AVAX",
@@ -208,60 +232,69 @@
         "LATBB_AVAX",
         "SVD_AVAX"
       ],
-      "signal": "FLAT",
-      "confidence": 0,
-      "open_positions": [],
+      "signal": "LONG",
+      "confidence": 29,
+      "open_positions": [
+        {
+          "sleeve": "SVD_AVAX",
+          "direction": "LONG",
+          "entry_ts": "2026-07-19T16:00:00+00:00",
+          "entry_price": 6.4532,
+          "unrealized_pct": 1.619,
+          "weight": 0.1
+        }
+      ],
       "pending": [],
-      "n_fires": 15,
-      "last_fire": "2026-06-25T00:00:00+00:00",
+      "n_fires": 20,
+      "last_fire": "2026-07-19T16:00:00+00:00",
       "recent_fires": [
         {
           "sleeve": "STF_AVAX",
           "dir": "SHORT",
-          "entry_ts": "2026-06-25T00:00:00+00:00",
-          "exit_ts": "2026-06-27T00:00:00+00:00",
+          "entry_ts": "2026-07-19T16:00:00+00:00",
+          "exit_ts": "2026-07-20T04:00:00+00:00",
           "reason": "SL",
-          "ret_pct": -3.16,
-          "paper_pnl": -7.9
+          "ret_pct": -3.291,
+          "paper_pnl": -8.23
         },
         {
           "sleeve": "LATBB_AVAX",
+          "dir": "LONG",
+          "entry_ts": "2026-07-12T20:00:00+00:00",
+          "exit_ts": "2026-07-19T12:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -0.03,
+          "paper_pnl": -0.08
+        },
+        {
+          "sleeve": "STF_AVAX",
           "dir": "SHORT",
-          "entry_ts": "2026-06-24T08:00:00+00:00",
-          "exit_ts": "2026-06-27T00:00:00+00:00",
+          "entry_ts": "2026-07-12T04:00:00+00:00",
+          "exit_ts": "2026-07-13T12:00:00+00:00",
           "reason": "SL",
-          "ret_pct": -3.124,
-          "paper_pnl": -7.81
-        },
-        {
-          "sleeve": "SVD_AVAX",
-          "dir": "LONG",
-          "entry_ts": "2026-06-19T08:00:00+00:00",
-          "exit_ts": "2026-06-29T08:00:00+00:00",
-          "reason": "TIME",
-          "ret_pct": 7.284,
-          "paper_pnl": 18.21
+          "ret_pct": -3.241,
+          "paper_pnl": -8.1
         },
         {
           "sleeve": "LATBB_AVAX",
           "dir": "LONG",
-          "entry_ts": "2026-06-15T04:00:00+00:00",
-          "exit_ts": "2026-06-18T16:00:00+00:00",
+          "entry_ts": "2026-07-06T20:00:00+00:00",
+          "exit_ts": "2026-07-07T04:00:00+00:00",
           "reason": "SL",
-          "ret_pct": -3.118,
-          "paper_pnl": -7.79
+          "ret_pct": -3.158,
+          "paper_pnl": -7.89
         },
         {
           "sleeve": "SVD_AVAX",
-          "dir": "LONG",
-          "entry_ts": "2026-06-11T00:00:00+00:00",
-          "exit_ts": "2026-06-18T16:00:00+00:00",
+          "dir": "SHORT",
+          "entry_ts": "2026-07-04T08:00:00+00:00",
+          "exit_ts": "2026-07-04T16:00:00+00:00",
           "reason": "SL",
-          "ret_pct": 1.285,
-          "paper_pnl": 3.21
+          "ret_pct": -3.196,
+          "paper_pnl": -7.99
         }
       ],
-      "data_end": "2026-07-02T08:00:00+00:00"
+      "data_end": "2026-07-20T20:00:00+00:00"
     },
     {
       "card": "V52-LINK",
@@ -274,18 +307,63 @@
       ],
       "signal": "SHORT",
       "confidence": 100,
-      "open_positions": [],
+      "open_positions": [
+        {
+          "sleeve": "VP_LINK",
+          "direction": "SHORT",
+          "entry_ts": "2026-07-20T20:00:00+00:00",
+          "entry_price": 8.5629,
+          "unrealized_pct": 0.298,
+          "weight": 0.1
+        }
+      ],
       "pending": [
         {
           "sleeve": "VP_LINK",
           "direction": "SHORT",
-          "signal_bar_ts": "2026-07-02T08:00:00+00:00",
+          "signal_bar_ts": "2026-07-20T20:00:00+00:00",
           "weight": 0.1
         }
       ],
-      "n_fires": 11,
-      "last_fire": "2026-06-16T20:00:00+00:00",
+      "n_fires": 15,
+      "last_fire": "2026-07-15T20:00:00+00:00",
       "recent_fires": [
+        {
+          "sleeve": "VP_LINK",
+          "dir": "LONG",
+          "entry_ts": "2026-07-15T20:00:00+00:00",
+          "exit_ts": "2026-07-17T00:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.172,
+          "paper_pnl": -7.93
+        },
+        {
+          "sleeve": "VP_LINK",
+          "dir": "SHORT",
+          "entry_ts": "2026-07-13T00:00:00+00:00",
+          "exit_ts": "2026-07-14T16:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.234,
+          "paper_pnl": -8.08
+        },
+        {
+          "sleeve": "VP_LINK",
+          "dir": "SHORT",
+          "entry_ts": "2026-07-12T00:00:00+00:00",
+          "exit_ts": "2026-07-12T04:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.262,
+          "paper_pnl": -8.15
+        },
+        {
+          "sleeve": "VP_LINK",
+          "dir": "SHORT",
+          "entry_ts": "2026-07-02T12:00:00+00:00",
+          "exit_ts": "2026-07-03T12:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.173,
+          "paper_pnl": -7.93
+        },
         {
           "sleeve": "VP_LINK",
           "dir": "SHORT",
@@ -294,45 +372,9 @@
           "reason": "TP",
           "ret_pct": 14.831,
           "paper_pnl": 37.08
-        },
-        {
-          "sleeve": "VP_LINK",
-          "dir": "SHORT",
-          "entry_ts": "2026-06-14T08:00:00+00:00",
-          "exit_ts": "2026-06-15T00:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.178,
-          "paper_pnl": -7.95
-        },
-        {
-          "sleeve": "VP_LINK",
-          "dir": "LONG",
-          "entry_ts": "2026-05-28T16:00:00+00:00",
-          "exit_ts": "2026-06-02T12:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.089,
-          "paper_pnl": -7.72
-        },
-        {
-          "sleeve": "VP_LINK",
-          "dir": "LONG",
-          "entry_ts": "2026-05-25T04:00:00+00:00",
-          "exit_ts": "2026-05-28T00:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.094,
-          "paper_pnl": -7.73
-        },
-        {
-          "sleeve": "VP_LINK",
-          "dir": "LONG",
-          "entry_ts": "2026-05-21T04:00:00+00:00",
-          "exit_ts": "2026-05-22T16:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.111,
-          "paper_pnl": -7.78
         }
       ],
-      "data_end": "2026-07-02T08:00:00+00:00"
+      "data_end": "2026-07-20T20:00:00+00:00"
     },
     {
       "card": "V52-XSM",
@@ -346,7 +388,7 @@
       "signal": "FLAT",
       "confidence": 0,
       "filter_state": "FLAT",
-      "breadth": "2/9",
+      "breadth": "4/9",
       "btc_above_100dma": false,
       "btc_50dma_rising": false,
       "target_basket": "FLAT",

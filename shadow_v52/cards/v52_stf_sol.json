@@ -23,12 +23,15 @@
   "notes": "FUND_Z gate lifts Sharpe 0.99->1.15. Weak in 2026 low-vol SOL regime.",
   "status": "shadow_paper",
   "venue": "hyperliquid_perp",
-  "card_built": "2026-07-02T11:05:17.308708+00:00",
+  "card_built": "2026-07-20T22:05:14.528188+00:00",
   "live": {
-    "ledger_fires": 7,
-    "last_fire": "2026-06-23T04:00:00+00:00",
-    "ledger_paper_pnl": 59.67,
-    "ledger_win_rate": 57.1,
-    "current_state": "FLAT"
+    "ledger_fires": 8,
+    "last_fire": "2026-07-14T20:00:00+00:00",
+    "ledger_paper_pnl": 51.66,
+    "ledger_win_rate": 50.0,
+    "current_state": "OPEN",
+    "open_dir": "LONG",
+    "open_entry_ts": "2026-07-19T20:00:00+00:00",
+    "unrealized_pct": 2.288
   }
 }
