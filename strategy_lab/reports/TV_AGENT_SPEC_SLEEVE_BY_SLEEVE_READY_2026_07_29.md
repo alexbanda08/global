@@ -22,6 +22,9 @@
 ## 4. The pending restart (execute AFTER 09:36Z, one boot)
 Carries, together: twins retirement per `PENDING_ENGINE_RESTART_RETIRE_TWINS_2026_07_28.md` (verify post-boot sleeve list in the log — ladder fleet + sumpair + live sleeve ONLY, no 120-sleeve accident) + anything else queued engine-side. After boot: confirm boot_reset row, cadence healthy on /health/tick-cadence, strip shows the rewired families, twins absent.
 
+### 4b. Retire the :8443 zombie dashboard (same post-window deploy; caddy reload only)
+The old Python dashboard's static shell still serves on :8443 (backend dead since Phase 0) — operator keeps landing on WATCHER-OFFLINE/zero panels and it reads as a broken system. Replace the :8443 Caddy site block's handlers with a single static response: "This dashboard is retired (python stack shut down 2026-07-28). Use https://85.137.174.152:8444" (HTTP 410, keep the TLS lines so bookmarks get the message, not a connection error). Back up the Caddyfile first; graceful `caddy reload`; verify :8443 shows the retirement page and :8444 is untouched. Do NOT delete /opt/tradingvenue or its frontend-out (archive stays).
+
 ## 5. READY-STATE checklist (deliver as the final section of your report)
 - [ ] Latency after-table delivered (say plainly if pinning is neutral)
 - [ ] Restart done; roster = ladder fleet + sumpair + live sleeve; boot_reset verified
