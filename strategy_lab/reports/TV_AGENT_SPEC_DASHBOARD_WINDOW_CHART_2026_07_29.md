@@ -31,8 +31,16 @@
 4. WS payload sample + ring-buffer memory bound stated (≤ ~50MB all sleeves).
 5. No engine restart used for any of this (tv-api + frontend only).
 
-## 4. Small engine add (rides the NEXT scheduled restart — do NOT restart for it)
+## 4. ORACLE price underlay (IN SCOPE — operator requirement, and it must be the ORACLE, not Binance)
+The window resolves on the Chainlink oracle print. Binance leads it by 3–7s and sits ~6bp off the settlement value — drawing Binance would show the WRONG winner on knife-edge windows. So the price pane must use the SAME oracle source Polymarket's own event page charts:
+1. Open a live btc-updown event page, capture from the network tab the price-history/stream endpoint its chart uses (Polymarket exposes the oracle price feed publicly to render that chart — take exactly that API/WS, it is the resolution-truth series as displayed to every trader).
+2. tv-api subscribes/polls it (read-only, public, no auth, no venue coupling) and republishes on the `chart:{sleeve}` WS channel alongside the book ticks.
+3. **Layout: two stacked panes, Polymarket-style.** Top pane: oracle price line vs the window STRIKE (horizontal line at the window-open oracle print; green/red fill above/below strike). Bottom pane (taller): the Up-probability line + our resting/fill overlay per §2. Shared X axis/cursor.
+4. Fallback ONLY if the public endpoint proves unusable: read-only relay of `oracle_prices_v2` from VPS3 storedata (our own Chainlink RTDS collector, ~2.8/s) — flag before building it (cross-host dependency, non-critical path only).
+5. NEVER substitute a Binance/CEX price in this pane. If the oracle feed is unavailable, show the pane empty with a "feed down" badge rather than a wrong line.
+
+## 5. Small engine add (rides the NEXT scheduled restart — do NOT restart for it)
 Add `best_ask_up/dn` to `ladder_tick` so `mid` becomes exact instead of the two-bid proxy; switch the chart source when available. Flag in report when it lands.
 
 ## Out of scope
-Candles/volume bars (line only), order MODIFICATION from the chart (buttons stay on Live page per ARMCTL spec), BTC spot underlay (nice-to-have later — needs a binance feed proxy we don't have in tv-api).
+Candles/volume bars (line only), order MODIFICATION from the chart (buttons stay on Live page per ARMCTL spec).
