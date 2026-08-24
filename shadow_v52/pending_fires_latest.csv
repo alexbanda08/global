@@ -1,3 +1,1 @@
-sleeve,coin,direction,signal_bar_ts,signal_close,action
-VP_LINK,LINK,SHORT,2026-07-20T20:00:00+00:00,8.5374,ENTER_NEXT_OPEN
-MFI_ETH,ETH,SHORT,2026-07-20T20:00:00+00:00,1897.3,ENTER_NEXT_OPEN
+sleeve,coin,direction,signal_bar_ts,signal_close,act_at

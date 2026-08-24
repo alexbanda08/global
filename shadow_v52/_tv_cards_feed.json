@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-20T22:05:15.050153+00:00",
+  "generated": "2026-08-24T13:05:31.270800+00:00",
   "mode": "shadow_paper",
   "n_cards": 6,
   "cards": [
@@ -16,9 +16,36 @@
       "confidence": 0,
       "open_positions": [],
       "pending": [],
-      "n_fires": 5,
-      "last_fire": "2026-07-13T08:00:00+00:00",
+      "n_fires": 8,
+      "last_fire": "2026-07-31T16:00:00+00:00",
       "recent_fires": [
+        {
+          "sleeve": "STF_BTC",
+          "dir": "SHORT",
+          "entry_ts": "2026-07-31T16:00:00+00:00",
+          "exit_ts": "2026-08-02T04:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -2.853,
+          "paper_pnl": -7.13
+        },
+        {
+          "sleeve": "STF_BTC",
+          "dir": "LONG",
+          "entry_ts": "2026-07-29T12:00:00+00:00",
+          "exit_ts": "2026-07-29T16:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -2.808,
+          "paper_pnl": -7.02
+        },
+        {
+          "sleeve": "STF_BTC",
+          "dir": "LONG",
+          "entry_ts": "2026-07-27T04:00:00+00:00",
+          "exit_ts": "2026-07-27T16:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -2.161,
+          "paper_pnl": -5.4
+        },
         {
           "sleeve": "STF_BTC",
           "dir": "SHORT",
@@ -36,36 +63,9 @@
           "reason": "SL",
           "ret_pct": -3.34,
           "paper_pnl": -8.35
-        },
-        {
-          "sleeve": "STF_BTC",
-          "dir": "SHORT",
-          "entry_ts": "2026-05-27T16:00:00+00:00",
-          "exit_ts": "2026-06-03T00:00:00+00:00",
-          "reason": "TP",
-          "ret_pct": 23.721,
-          "paper_pnl": 59.3
-        },
-        {
-          "sleeve": "STF_BTC",
-          "dir": "LONG",
-          "entry_ts": "2026-05-01T16:00:00+00:00",
-          "exit_ts": "2026-05-15T00:00:00+00:00",
-          "reason": "TIME",
-          "ret_pct": 6.261,
-          "paper_pnl": 15.65
-        },
-        {
-          "sleeve": "STF_BTC",
-          "dir": "LONG",
-          "entry_ts": "2026-04-13T20:00:00+00:00",
-          "exit_ts": "2026-04-27T04:00:00+00:00",
-          "reason": "TIME",
-          "ret_pct": 9.291,
-          "paper_pnl": 23.23
         }
       ],
-      "data_end": "2026-07-20T20:00:00+00:00"
+      "data_end": "2026-08-24T12:00:00+00:00"
     },
     {
       "card": "V52-ETH",
@@ -77,67 +77,60 @@
         "CCI_ETH",
         "MFI_ETH"
       ],
-      "signal": "SHORT",
-      "confidence": 45,
+      "signal": "FLAT",
+      "confidence": 0,
       "open_positions": [],
-      "pending": [
-        {
-          "sleeve": "MFI_ETH",
-          "direction": "SHORT",
-          "signal_bar_ts": "2026-07-20T20:00:00+00:00",
-          "weight": 0.1
-        }
-      ],
-      "n_fires": 21,
-      "last_fire": "2026-07-18T00:00:00+00:00",
+      "pending": [],
+      "n_fires": 33,
+      "last_fire": "2026-08-18T08:00:00+00:00",
       "recent_fires": [
         {
-          "sleeve": "MFI_ETH",
-          "dir": "SHORT",
-          "entry_ts": "2026-07-18T00:00:00+00:00",
-          "exit_ts": "2026-07-20T04:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.209,
-          "paper_pnl": -8.02
-        },
-        {
           "sleeve": "CCI_ETH",
           "dir": "SHORT",
-          "entry_ts": "2026-07-15T08:00:00+00:00",
-          "exit_ts": "2026-07-15T12:00:00+00:00",
+          "entry_ts": "2026-08-18T08:00:00+00:00",
+          "exit_ts": "2026-08-18T16:00:00+00:00",
           "reason": "SL",
-          "ret_pct": -3.235,
-          "paper_pnl": -8.09
+          "ret_pct": -2.206,
+          "paper_pnl": -5.52
         },
         {
           "sleeve": "MFI_ETH",
           "dir": "LONG",
-          "entry_ts": "2026-07-10T16:00:00+00:00",
-          "exit_ts": "2026-07-15T12:00:00+00:00",
+          "entry_ts": "2026-08-16T20:00:00+00:00",
+          "exit_ts": "2026-08-19T16:00:00+00:00",
           "reason": "TP",
-          "ret_pct": 14.804,
-          "paper_pnl": 37.01
-        },
-        {
-          "sleeve": "CCI_ETH",
-          "dir": "SHORT",
-          "entry_ts": "2026-06-30T08:00:00+00:00",
-          "exit_ts": "2026-07-01T16:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.24,
-          "paper_pnl": -8.1
+          "ret_pct": 8.322,
+          "paper_pnl": 20.8
         },
         {
           "sleeve": "MFI_ETH",
           "dir": "LONG",
-          "entry_ts": "2026-06-26T20:00:00+00:00",
-          "exit_ts": "2026-07-06T20:00:00+00:00",
-          "reason": "TIME",
-          "ret_pct": 13.449,
-          "paper_pnl": 33.62
+          "entry_ts": "2026-08-12T00:00:00+00:00",
+          "exit_ts": "2026-08-15T08:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -1.03,
+          "paper_pnl": -2.58
+        },
+        {
+          "sleeve": "CCI_ETH",
+          "dir": "SHORT",
+          "entry_ts": "2026-08-06T08:00:00+00:00",
+          "exit_ts": "2026-08-10T08:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.191,
+          "paper_pnl": -7.98
+        },
+        {
+          "sleeve": "MFI_ETH",
+          "dir": "LONG",
+          "entry_ts": "2026-08-03T04:00:00+00:00",
+          "exit_ts": "2026-08-10T16:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": 2.121,
+          "paper_pnl": 5.3
         }
       ],
-      "data_end": "2026-07-20T20:00:00+00:00"
+      "data_end": "2026-08-24T12:00:00+00:00"
     },
     {
       "card": "V52-SOL",
@@ -149,77 +142,60 @@
         "STF_SOL",
         "MFI_SOL"
       ],
-      "signal": "LONG",
-      "confidence": 100,
-      "open_positions": [
-        {
-          "sleeve": "STF_SOL",
-          "direction": "LONG",
-          "entry_ts": "2026-07-19T20:00:00+00:00",
-          "entry_price": 75.846,
-          "unrealized_pct": 2.288,
-          "weight": 0.12
-        },
-        {
-          "sleeve": "MFI_SOL",
-          "direction": "LONG",
-          "entry_ts": "2026-07-18T16:00:00+00:00",
-          "entry_price": 74.931,
-          "unrealized_pct": 3.537,
-          "weight": 0.1
-        }
-      ],
+      "signal": "FLAT",
+      "confidence": 0,
+      "open_positions": [],
       "pending": [],
-      "n_fires": 23,
-      "last_fire": "2026-07-14T20:00:00+00:00",
+      "n_fires": 35,
+      "last_fire": "2026-08-17T12:00:00+00:00",
       "recent_fires": [
         {
           "sleeve": "MFI_SOL",
           "dir": "LONG",
-          "entry_ts": "2026-07-14T20:00:00+00:00",
-          "exit_ts": "2026-07-16T12:00:00+00:00",
+          "entry_ts": "2026-08-17T12:00:00+00:00",
+          "exit_ts": "2026-08-19T16:00:00+00:00",
+          "reason": "TP",
+          "ret_pct": 16.192,
+          "paper_pnl": 40.48
+        },
+        {
+          "sleeve": "STF_SOL",
+          "dir": "SHORT",
+          "entry_ts": "2026-08-17T04:00:00+00:00",
+          "exit_ts": "2026-08-18T12:00:00+00:00",
           "reason": "SL",
-          "ret_pct": -3.274,
-          "paper_pnl": -8.18
+          "ret_pct": -3.105,
+          "paper_pnl": -7.76
         },
         {
           "sleeve": "STF_SOL",
           "dir": "LONG",
-          "entry_ts": "2026-07-14T20:00:00+00:00",
-          "exit_ts": "2026-07-16T20:00:00+00:00",
+          "entry_ts": "2026-08-12T12:00:00+00:00",
+          "exit_ts": "2026-08-12T12:00:00+00:00",
           "reason": "SL",
-          "ret_pct": -3.205,
-          "paper_pnl": -8.01
+          "ret_pct": -3.256,
+          "paper_pnl": -8.14
         },
         {
           "sleeve": "MFI_SOL",
           "dir": "LONG",
-          "entry_ts": "2026-07-13T08:00:00+00:00",
-          "exit_ts": "2026-07-13T20:00:00+00:00",
+          "entry_ts": "2026-08-08T08:00:00+00:00",
+          "exit_ts": "2026-08-16T20:00:00+00:00",
           "reason": "SL",
-          "ret_pct": -3.293,
-          "paper_pnl": -8.23
+          "ret_pct": 1.049,
+          "paper_pnl": 2.62
         },
         {
           "sleeve": "MFI_SOL",
-          "dir": "LONG",
-          "entry_ts": "2026-07-06T04:00:00+00:00",
-          "exit_ts": "2026-07-06T12:00:00+00:00",
+          "dir": "SHORT",
+          "entry_ts": "2026-08-07T04:00:00+00:00",
+          "exit_ts": "2026-08-07T12:00:00+00:00",
           "reason": "SL",
-          "ret_pct": -3.272,
-          "paper_pnl": -8.18
-        },
-        {
-          "sleeve": "MFI_SOL",
-          "dir": "LONG",
-          "entry_ts": "2026-06-26T00:00:00+00:00",
-          "exit_ts": "2026-07-02T12:00:00+00:00",
-          "reason": "TP",
-          "ret_pct": 23.846,
-          "paper_pnl": 59.62
+          "ret_pct": -3.359,
+          "paper_pnl": -8.4
         }
       ],
-      "data_end": "2026-07-20T20:00:00+00:00"
+      "data_end": "2026-08-24T12:00:00+00:00"
     },
     {
       "card": "V52-AVAX",
@@ -232,69 +208,60 @@
         "LATBB_AVAX",
         "SVD_AVAX"
       ],
-      "signal": "LONG",
-      "confidence": 29,
-      "open_positions": [
-        {
-          "sleeve": "SVD_AVAX",
-          "direction": "LONG",
-          "entry_ts": "2026-07-19T16:00:00+00:00",
-          "entry_price": 6.4532,
-          "unrealized_pct": 1.619,
-          "weight": 0.1
-        }
-      ],
+      "signal": "FLAT",
+      "confidence": 0,
+      "open_positions": [],
       "pending": [],
-      "n_fires": 20,
-      "last_fire": "2026-07-19T16:00:00+00:00",
+      "n_fires": 29,
+      "last_fire": "2026-08-19T20:00:00+00:00",
       "recent_fires": [
         {
           "sleeve": "STF_AVAX",
-          "dir": "SHORT",
-          "entry_ts": "2026-07-19T16:00:00+00:00",
-          "exit_ts": "2026-07-20T04:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.291,
-          "paper_pnl": -8.23
+          "dir": "LONG",
+          "entry_ts": "2026-08-19T20:00:00+00:00",
+          "exit_ts": "2026-08-21T08:00:00+00:00",
+          "reason": "TP",
+          "ret_pct": 23.764,
+          "paper_pnl": 59.41
+        },
+        {
+          "sleeve": "SVD_AVAX",
+          "dir": "LONG",
+          "entry_ts": "2026-08-16T04:00:00+00:00",
+          "exit_ts": "2026-08-21T00:00:00+00:00",
+          "reason": "TP",
+          "ret_pct": 14.869,
+          "paper_pnl": 37.17
         },
         {
           "sleeve": "LATBB_AVAX",
           "dir": "LONG",
-          "entry_ts": "2026-07-12T20:00:00+00:00",
-          "exit_ts": "2026-07-19T12:00:00+00:00",
+          "entry_ts": "2026-08-12T04:00:00+00:00",
+          "exit_ts": "2026-08-16T00:00:00+00:00",
           "reason": "SL",
-          "ret_pct": -0.03,
-          "paper_pnl": -0.08
+          "ret_pct": 0.596,
+          "paper_pnl": 1.49
         },
         {
           "sleeve": "STF_AVAX",
           "dir": "SHORT",
-          "entry_ts": "2026-07-12T04:00:00+00:00",
-          "exit_ts": "2026-07-13T12:00:00+00:00",
+          "entry_ts": "2026-08-06T16:00:00+00:00",
+          "exit_ts": "2026-08-15T04:00:00+00:00",
           "reason": "SL",
-          "ret_pct": -3.241,
-          "paper_pnl": -8.1
-        },
-        {
-          "sleeve": "LATBB_AVAX",
-          "dir": "LONG",
-          "entry_ts": "2026-07-06T20:00:00+00:00",
-          "exit_ts": "2026-07-07T04:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.158,
-          "paper_pnl": -7.89
+          "ret_pct": -3.22,
+          "paper_pnl": -8.05
         },
         {
           "sleeve": "SVD_AVAX",
           "dir": "SHORT",
-          "entry_ts": "2026-07-04T08:00:00+00:00",
-          "exit_ts": "2026-07-04T16:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.196,
-          "paper_pnl": -7.99
+          "entry_ts": "2026-08-04T08:00:00+00:00",
+          "exit_ts": "2026-08-14T08:00:00+00:00",
+          "reason": "TIME",
+          "ret_pct": 7.717,
+          "paper_pnl": 19.29
         }
       ],
-      "data_end": "2026-07-20T20:00:00+00:00"
+      "data_end": "2026-08-24T12:00:00+00:00"
     },
     {
       "card": "V52-LINK",
@@ -305,76 +272,60 @@
       "bundle": [
         "VP_LINK"
       ],
-      "signal": "SHORT",
-      "confidence": 100,
-      "open_positions": [
-        {
-          "sleeve": "VP_LINK",
-          "direction": "SHORT",
-          "entry_ts": "2026-07-20T20:00:00+00:00",
-          "entry_price": 8.5629,
-          "unrealized_pct": 0.298,
-          "weight": 0.1
-        }
-      ],
-      "pending": [
-        {
-          "sleeve": "VP_LINK",
-          "direction": "SHORT",
-          "signal_bar_ts": "2026-07-20T20:00:00+00:00",
-          "weight": 0.1
-        }
-      ],
-      "n_fires": 15,
-      "last_fire": "2026-07-15T20:00:00+00:00",
+      "signal": "FLAT",
+      "confidence": 0,
+      "open_positions": [],
+      "pending": [],
+      "n_fires": 21,
+      "last_fire": "2026-08-13T04:00:00+00:00",
       "recent_fires": [
         {
           "sleeve": "VP_LINK",
           "dir": "LONG",
-          "entry_ts": "2026-07-15T20:00:00+00:00",
-          "exit_ts": "2026-07-17T00:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.172,
-          "paper_pnl": -7.93
-        },
-        {
-          "sleeve": "VP_LINK",
-          "dir": "SHORT",
-          "entry_ts": "2026-07-13T00:00:00+00:00",
-          "exit_ts": "2026-07-14T16:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.234,
-          "paper_pnl": -8.08
-        },
-        {
-          "sleeve": "VP_LINK",
-          "dir": "SHORT",
-          "entry_ts": "2026-07-12T00:00:00+00:00",
-          "exit_ts": "2026-07-12T04:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.262,
-          "paper_pnl": -8.15
-        },
-        {
-          "sleeve": "VP_LINK",
-          "dir": "SHORT",
-          "entry_ts": "2026-07-02T12:00:00+00:00",
-          "exit_ts": "2026-07-03T12:00:00+00:00",
-          "reason": "SL",
-          "ret_pct": -3.173,
-          "paper_pnl": -7.93
-        },
-        {
-          "sleeve": "VP_LINK",
-          "dir": "SHORT",
-          "entry_ts": "2026-06-16T20:00:00+00:00",
-          "exit_ts": "2026-06-24T20:00:00+00:00",
+          "entry_ts": "2026-08-13T04:00:00+00:00",
+          "exit_ts": "2026-08-15T04:00:00+00:00",
           "reason": "TP",
-          "ret_pct": 14.831,
-          "paper_pnl": 37.08
+          "ret_pct": 14.804,
+          "paper_pnl": 37.01
+        },
+        {
+          "sleeve": "VP_LINK",
+          "dir": "SHORT",
+          "entry_ts": "2026-08-08T08:00:00+00:00",
+          "exit_ts": "2026-08-11T04:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.245,
+          "paper_pnl": -8.11
+        },
+        {
+          "sleeve": "VP_LINK",
+          "dir": "LONG",
+          "entry_ts": "2026-08-02T16:00:00+00:00",
+          "exit_ts": "2026-08-05T16:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.174,
+          "paper_pnl": -7.94
+        },
+        {
+          "sleeve": "VP_LINK",
+          "dir": "SHORT",
+          "entry_ts": "2026-07-27T00:00:00+00:00",
+          "exit_ts": "2026-07-28T12:00:00+00:00",
+          "reason": "TP",
+          "ret_pct": 14.705,
+          "paper_pnl": 36.76
+        },
+        {
+          "sleeve": "VP_LINK",
+          "dir": "LONG",
+          "entry_ts": "2026-07-24T00:00:00+00:00",
+          "exit_ts": "2026-07-25T00:00:00+00:00",
+          "reason": "SL",
+          "ret_pct": -3.228,
+          "paper_pnl": -8.07
         }
       ],
-      "data_end": "2026-07-20T20:00:00+00:00"
+      "data_end": "2026-08-24T12:00:00+00:00"
     },
     {
       "card": "V52-XSM",
@@ -385,13 +336,13 @@
       "bundle": [
         "V24_multifilter"
       ],
-      "signal": "FLAT",
-      "confidence": 0,
-      "filter_state": "FLAT",
-      "breadth": "4/9",
-      "btc_above_100dma": false,
-      "btc_50dma_rising": false,
-      "target_basket": "FLAT",
+      "signal": "LONG",
+      "confidence": 100,
+      "filter_state": "ACTIVE",
+      "breadth": "5/9",
+      "btc_above_100dma": true,
+      "btc_50dma_rising": true,
+      "target_basket": "LINKUSDT:0.25;ETHUSDT:0.25;SOLUSDT:0.25;BTCUSDT:0.25",
       "note": "0% live allocation; only 5/9 coins HL-tradeable"
     }
   ]

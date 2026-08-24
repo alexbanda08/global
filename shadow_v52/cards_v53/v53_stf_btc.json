@@ -1,0 +1,41 @@
+{
+  "card_id": "v53_stf_btc",
+  "fleet": "V53",
+  "name": "STF_BTC",
+  "arm": "DEPLOY",
+  "coin": "BTC",
+  "tf": "4h",
+  "venue": "Hyperliquid perp",
+  "mode": "PAPER (shadow, $0 real)",
+  "family": "trend (SuperTrend flip)",
+  "signal": "SuperTrend(10, 3.0) flip + EMA(200) regime filter",
+  "gate": "ATR_NOTOPVOL (ATR(14) 500-bar pct-rank < 0.80)",
+  "exit": "EXIT_4H static: tp 10 ATR / sl 2 ATR / trail 6 ATR / max_hold 60 bars. Kept after a 62-variant grid: incumbent ranked 7/62 on the untouched window and no variant beat it in both windows; marginals show tighter stops are better, so the ~70% stop-out rate is the intended positive-skew design.",
+  "family_validation": {
+    "untouched_window": "pre-2024-03 Binance 4h, 10 coins",
+    "n": 877,
+    "mean_ret_pct": 1.054,
+    "t": 5.01,
+    "breadth": "9/10 coins positive",
+    "ex_top2_usd": 124216,
+    "bonferroni": "PASSES (|t|>2.64 for 6 families)",
+    "sequential": [
+      "2017-22 +1.549 (t=5.28)",
+      "2022-24 +0.443 (t=1.49)",
+      "2024-25 +0.765 (t=1.51)",
+      "2025-26 +1.933 (t=4.47)",
+      "2026-04->now +1.144 (t=1.62)"
+    ]
+  },
+  "arm_rationale": "Positive in every sequential window tested and never negative. The only family that survives both an untouched window and the current regime.",
+  "state": "FLAT",
+  "open_position": null,
+  "pending_fire": null,
+  "live_shadow": {
+    "n_closed": 13,
+    "mean_ret_pct": 1.52,
+    "win_rate_pct": 46.2,
+    "paper_pnl_usd": 49.39
+  },
+  "built_at": "2026-08-24T13:05:30.644484+00:00"
+}

@@ -84,7 +84,7 @@ def refresh_funding(coin: str) -> str:
 
 def main():
     ts = datetime.now(timezone.utc).isoformat()
-    print(f"=== V52 shadow tick {ts} ===")
+    print(f"=== HL shadow tick {ts} (V52 fleet + V53 breadth + XSM) ===")
     print("--- data refresh ---")
     for coin in COINS:
         try:
@@ -103,6 +103,13 @@ def main():
     if res.returncode != 0:
         print("V52 RUNNER STDERR:\n" + res.stderr[-2000:])
 
+    print("--- V53 breadth shadow run (2 families x 10 coins) ---")
+    res53 = subprocess.run([sys.executable, str(here / "v53_shadow_runner.py"),
+                            "--backfill-days", "60"], capture_output=True, text=True)
+    print(res53.stdout.strip())
+    if res53.returncode != 0:
+        print("V53 RUNNER STDERR:\n" + res53.stderr[-2000:])
+
     print("--- XSM shadow run (basket) ---")
     res_x = subprocess.run([sys.executable, str(here / "xsm_shadow.py")],
                            capture_output=True, text=True)
@@ -116,6 +123,13 @@ def main():
     print(res_c.stdout.strip())
     if res_c.returncode != 0:
         print("CARDS STDERR:\n" + res_c.stderr[-1500:])
+
+    print("--- refresh V53 breadth cards ---")
+    res_c53 = subprocess.run([sys.executable, str(here / "build_v53_cards.py")],
+                             capture_output=True, text=True)
+    print(res_c53.stdout.strip())
+    if res_c53.returncode != 0:
+        print("V53 CARDS STDERR:\n" + res_c53.stderr[-1500:])
 
     print("--- TV dashboard cards feed (6 cards) ---")
     res_f = subprocess.run([sys.executable, str(here / "tv_cards_feed.py")],

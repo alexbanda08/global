@@ -1,6 +1,6 @@
 # HL Sleeve Cards
 
-**Built:** 2026-07-20T22:05:14.528188+00:00
+**Built:** 2026-08-24T13:05:30.068641+00:00
 **Mode:** shadow_paper | **Venue:** hyperliquid_perp
 **Fleet:** 9 V52 sleeves + 1 XSM basket
 
@@ -8,21 +8,21 @@
 
 | Card | Coin | TF | Family | Gate | Weight | Val Sharpe | 2026 Sh | Live state | Fires | Last fire |
 |---|---|---|---|---|---:|---:|---:|---|---:|---|
-| STF_BTC NEW | BTC | 4h | trend (SuperTrend) | FUND_Z<2 | 12% | 1.0 | 3.61 | FLAT | 5 | 2026-07-13T08:00 |
-| CCI_ETH | ETH | 4h | mean-reversion (CCI) | FUND_Z<2 | 12% | 1.411 | 0.42 | FLAT | 7 | 2026-07-15T08:00 |
-| STF_SOL | SOL | 4h | trend (SuperTrend) | FUND_Z<2 | 12% | 1.148 | -0.717 | OPEN | 8 | 2026-07-14T20:00 |
-| STF_AVAX | AVAX | 4h | trend (SuperTrend) | FUND_Z<2 | 12% | 2.3 | 0.422 | FLAT | 7 | 2026-07-19T16:00 |
-| LATBB_AVAX | AVAX | 4h | range-fade (Bollinger) | FUND_Z<2 | 12% | 1.59 | 0.148 | FLAT | 7 | 2026-07-12T20:00 |
-| MFI_SOL | SOL | 4h | volume (MFI) | ATR_NOTOPVOL | 10% | 1.12 | -0.083 | OPEN | 15 | 2026-07-14T20:00 |
-| VP_LINK | LINK | 4h | volume (Volume-Profile) | ATR_NOTOPVOL | 10% | 1.634 | -1.12 | OPEN | 15 | 2026-07-15T20:00 |
-| SVD_AVAX | AVAX | 4h | volume (Signed-Vol-Divergence) | ATR_NOTOPVOL | 10% | 0.538 | 2.072 | OPEN | 6 | 2026-07-04T08:00 |
-| MFI_ETH | ETH | 4h | volume (MFI) | ATR_NOTOPVOL | 10% | 0.683 | 0.975 | FLAT | 14 | 2026-07-18T00:00 |
+| STF_BTC NEW | BTC | 4h | trend (SuperTrend) | FUND_Z<2 | 12% | 1.0 | 3.61 | FLAT | 8 | 2026-07-31T16:00 |
+| CCI_ETH | ETH | 4h | mean-reversion (CCI) | FUND_Z<2 | 12% | 1.411 | 0.42 | FLAT | 12 | 2026-08-18T08:00 |
+| STF_SOL | SOL | 4h | trend (SuperTrend) | FUND_Z<2 | 12% | 1.148 | -0.717 | FLAT | 13 | 2026-08-17T04:00 |
+| STF_AVAX | AVAX | 4h | trend (SuperTrend) | FUND_Z<2 | 12% | 2.3 | 0.422 | FLAT | 10 | 2026-08-19T20:00 |
+| LATBB_AVAX | AVAX | 4h | range-fade (Bollinger) | FUND_Z<2 | 12% | 1.59 | 0.148 | FLAT | 9 | 2026-08-12T04:00 |
+| MFI_SOL | SOL | 4h | volume (MFI) | ATR_NOTOPVOL | 10% | 1.12 | -0.083 | FLAT | 22 | 2026-08-17T12:00 |
+| VP_LINK | LINK | 4h | volume (Volume-Profile) | ATR_NOTOPVOL | 10% | 1.634 | -1.12 | FLAT | 21 | 2026-08-13T04:00 |
+| SVD_AVAX | AVAX | 4h | volume (Signed-Vol-Divergence) | ATR_NOTOPVOL | 10% | 0.538 | 2.072 | FLAT | 10 | 2026-08-16T04:00 |
+| MFI_ETH | ETH | 4h | volume (MFI) | ATR_NOTOPVOL | 10% | 0.683 | 0.975 | FLAT | 21 | 2026-08-16T20:00 |
 
 ## XSM basket
 
 - **V24-XSM** — Long top-4 of 9 by 14d momentum, weekly rebalance
-- Filter: **FLAT** (breadth 4/9, BTC>100dMA=False, 50dMA_rising=False)
-- Current basket: `FLAT`
+- Filter: **ACTIVE** (breadth 5/9, BTC>100dMA=True, 50dMA_rising=True)
+- Current basket: `LINKUSDT:0.25;ETHUSDT:0.25;SOLUSDT:0.25;BTCUSDT:0.25`
 - Live allocation: **0%** (Separate book. 0% live allocation until more coins join HL (only 5/9 HL-tradeable). Defensive by design: filter passed only ~4.5% of 2026 bars. Relaxations all hurt.)
 
 ## Per-card files

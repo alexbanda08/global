@@ -23,12 +23,12 @@
   "notes": "Separate book. 0% live allocation until more coins join HL (only 5/9 HL-tradeable). Defensive by design: filter passed only ~4.5% of 2026 bars. Relaxations all hurt.",
   "status": "shadow_paper",
   "venue": "hyperliquid_perp",
-  "card_built": "2026-07-20T22:05:14.528188+00:00",
+  "card_built": "2026-08-24T13:05:30.068641+00:00",
   "live": {
-    "state": "FLAT",
-    "breadth": "4/9",
-    "btc_above_100dma": false,
-    "btc_50dma_rising": false,
-    "target_basket": "FLAT"
+    "state": "ACTIVE",
+    "breadth": "5/9",
+    "btc_above_100dma": true,
+    "btc_50dma_rising": true,
+    "target_basket": "LINKUSDT:0.25;ETHUSDT:0.25;SOLUSDT:0.25;BTCUSDT:0.25"
   }
 }

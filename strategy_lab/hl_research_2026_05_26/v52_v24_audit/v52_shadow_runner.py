@@ -294,7 +294,12 @@ def main():
     n_ledger = len(pd.read_csv(ledger_path)) if ledger_path.exists() else 0
 
     # --- Pending fires ---
-    pend_df = pd.DataFrame(pending_rows)
+    # Always emit the header row: with no pending fires (the common case) a bare
+    # DataFrame([]) writes a header-less file, and pd.read_csv on it raises
+    # EmptyDataError downstream — that crashed tv_cards_feed.py every run and left
+    # _tv_cards_feed.json stale.
+    PEND_COLS = ["sleeve", "coin", "direction", "signal_bar_ts", "signal_close", "act_at"]
+    pend_df = pd.DataFrame(pending_rows, columns=PEND_COLS if not pending_rows else None)
     pend_df.to_csv(OUT_DIR / "pending_fires_latest.csv", index=False)
 
     # --- Run log ---

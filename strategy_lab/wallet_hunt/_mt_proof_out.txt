@@ -1,0 +1,14 @@
+A) data-api /trades takerOnly probe
+  takerOnly=true: 500 trades in one page; 500-trade span = 9.4h
+  takerOnly=false: 500 trades in one page; 500-trade span = 1.1h
+
+C) MAKER_REBATE activity
+  93 rebate events (last page), $12,953.25, 04-21..08-13
+
+B) on-chain OrderFilled sample
+  sampled 40 txs, classified 0 (rpc-miss 40)
+  wallet appears as MAKER only: 0  (0.0%)
+  wallet appears as TAKER only: 0  (0.0%)
+  both in same tx:              0
+  OrderFilled events: wallet=maker 0, wallet=taker 0
+  txs with >2 OrderFilled (sweep filling several orders): 0

@@ -23,15 +23,12 @@
   "notes": "Highest-fire-cadence sleeve. ATR_NOTOPVOL gate: Sharpe 1.35->1.63.",
   "status": "shadow_paper",
   "venue": "hyperliquid_perp",
-  "card_built": "2026-07-20T22:05:14.528188+00:00",
+  "card_built": "2026-08-24T13:05:30.068641+00:00",
   "live": {
-    "ledger_fires": 15,
-    "last_fire": "2026-07-15T20:00:00+00:00",
-    "ledger_paper_pnl": -56.75,
-    "ledger_win_rate": 13.3,
-    "current_state": "OPEN",
-    "open_dir": "SHORT",
-    "open_entry_ts": "2026-07-20T20:00:00+00:00",
-    "unrealized_pct": 0.298
+    "ledger_fires": 21,
+    "last_fire": "2026-08-13T04:00:00+00:00",
+    "ledger_paper_pnl": -15.21,
+    "ledger_win_rate": 19.0,
+    "current_state": "FLAT"
   }
 }

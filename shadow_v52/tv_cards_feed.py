@@ -41,8 +41,20 @@ COIN_OF = {"V52-BTC": "BTC", "V52-ETH": "ETH", "V52-SOL": "SOL", "V52-AVAX": "AV
 
 
 def _load(name):
+    """Read a shadow CSV, tolerating the empty case.
+
+    pd.read_csv raises EmptyDataError ("No columns to parse from file") on a
+    zero-byte or header-less file. pending_fires_latest.csv is empty whenever no
+    sleeve fired on the last closed bar — i.e. most runs — which crashed this
+    whole feed and left _tv_cards_feed.json stale. Treat empty as no rows.
+    """
     p = OUT / name
-    return pd.read_csv(p) if p.exists() else pd.DataFrame()
+    if not p.exists() or p.stat().st_size == 0:
+        return pd.DataFrame()
+    try:
+        return pd.read_csv(p)
+    except pd.errors.EmptyDataError:
+        return pd.DataFrame()
 
 
 def build_feed():

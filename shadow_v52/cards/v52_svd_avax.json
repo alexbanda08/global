@@ -23,15 +23,12 @@
   "notes": "Weakest full-window Sharpe but +2.07 in 2026 (counter-cyclical). ATR gate lifts 0.38->0.54.",
   "status": "shadow_paper",
   "venue": "hyperliquid_perp",
-  "card_built": "2026-07-20T22:05:14.528188+00:00",
+  "card_built": "2026-08-24T13:05:30.068641+00:00",
   "live": {
-    "ledger_fires": 6,
-    "last_fire": "2026-07-04T08:00:00+00:00",
-    "ledger_paper_pnl": 59.48,
-    "ledger_win_rate": 66.7,
-    "current_state": "OPEN",
-    "open_dir": "LONG",
-    "open_entry_ts": "2026-07-19T16:00:00+00:00",
-    "unrealized_pct": 1.619
+    "ledger_fires": 10,
+    "last_fire": "2026-08-16T04:00:00+00:00",
+    "ledger_paper_pnl": 123.27,
+    "ledger_win_rate": 70.0,
+    "current_state": "FLAT"
   }
 }

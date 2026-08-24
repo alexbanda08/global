@@ -1,0 +1,69 @@
+==========================================================================================================================
+SHADOW RESULTS SINCE GO-LIVE — 2026-07-28 11:23 UTC
+==========================================================================================================================
+Counts LIVE-OBSERVED trades only (entry bar closed after the fleet went live).
+Backfill rows — trades recomputed from history at fleet creation — are excluded
+and reported separately, because they are not forward evidence.
+
+==========================================================================================================================
+V52 — 9 hand-picked sleeves (incumbent)
+   shadow live since 2026-06-11 00:00 UTC  (47.5 days)
+==========================================================================================================================
+   live-observed closed trades: 48     (backfill rows in ledger, excluded: 46)
+   open positions right now   : 4
+
+sleeve       | first fire       last  days | trades  win loss    WR% | avg win% avg loss%   best%  worst% |   paper$ |  TP TIME  SL | open?
+--------------------------------------------------------------------------------------------------------------------------------------------
+CCI_ETH      | 06-16 04:00 07-15    29 |      4    1    3   25.0 |    +1.25     -3.26   +1.25   -3.28 |   -21.35 |   0    0   4 | YES
+LATBB_AVAX   | 06-15 04:00 07-19    27 |      4    0    4    0.0 |     +nan     -2.36   -0.03   -3.16 |   -23.57 |   0    0   4 | 
+MFI_ETH      | 06-11 12:00 07-28    43 |      8    4    4   50.0 |    +9.11     -3.23  +14.80   -3.29 |   +58.78 |   1    1   6 | 
+MFI_SOL      | 06-11 12:00 07-28    44 |      9    3    6   33.3 |    +8.36     -3.24  +18.20   -3.35 |   +14.14 |   1    0   8 | 
+STF_AVAX     | 06-25 00:00 07-25    28 |      4    0    4    0.0 |     +nan     -3.24   -3.16   -3.29 |   -32.38 |   0    0   4 | 
+STF_BTC      | 07-06 16:00 07-27    20 |      3    0    3    0.0 |     +nan     -2.82   -2.16   -3.34 |   -21.15 |   0    0   3 | 
+STF_SOL      | 06-17 16:00 07-23    32 |      4    3    1   75.0 |    +1.32     -3.21   +1.76   -3.21 |    +1.91 |   0    0   4 | YES
+SVD_AVAX     | 06-11 00:00 07-23    38 |      4    2    2   50.0 |    +4.28     -2.22   +7.28   -3.20 |   +10.34 |   0    1   3 | YES
+VP_LINK      | 06-14 08:00 07-25    39 |      8    1    7   12.5 |   +14.83     -3.21  +14.83   -3.26 |   -19.14 |   1    0   7 | YES
+--------------------------------------------------------------------------------------------------------------------------------------------
+TOTAL        | 06-11 00:00 07-28    46 |     48   14   34   29.2 |    +6.44     -3.03  +18.20   -3.35 |   -32.42 |   3    2  43 |
+
+   mean -0.270%/trade   median -3.175%   payoff ratio 2.12x   breakeven WR needed 32.0% vs actual 29.2%
+
+==========================================================================================================================
+V53 — 20 breadth streams (2 families x 10 coins)
+   shadow live since 2026-07-27 21:16 UTC  (0.6 days)
+==========================================================================================================================
+   live-observed closed trades: 0     (backfill rows in ledger, excluded: 245)
+   open positions right now   : 11
+
+sleeve       | first fire       last  days | trades  win loss    WR% | avg win% avg loss%   best%  worst% |   paper$ |  TP TIME  SL | open?
+--------------------------------------------------------------------------------------------------------------------------------------------
+STF_ADA      |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | YES
+STF_AVAX     |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | YES
+STF_BNB      |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | 
+STF_BTC      |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | 
+STF_DOGE     |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | 
+STF_ETH      |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | 
+STF_LINK     |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | 
+STF_SOL      |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | YES
+STF_SUI      |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | YES
+STF_XRP      |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | YES
+VP_ADA       |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | YES
+VP_AVAX      |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | YES
+VP_BNB       |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | YES
+VP_BTC       |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | 
+VP_DOGE      |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | YES
+VP_ETH       |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | 
+VP_LINK      |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | YES
+VP_SOL       |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | 
+VP_SUI       |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | 
+VP_XRP       |           -     -     - |      -    -    -      - |        -         -       -       - |        - |   -    -   - | YES
+
+==========================================================================================================================
+HOW TO READ THIS
+==========================================================================================================================
+  * These are PAPER trades at $250 notional. $0 is at risk.
+  * The system is deliberately low win-rate / high payoff: it takes many small
+    stop-outs to pay for a few large winners. A WR near 33% is ON design, not a
+    malfunction — compare WR against the 'breakeven WR needed' line above.
+  * At these sample sizes per sleeve, individual sleeve numbers are noise. The
+    fleet-level and arm-level rows are the only ones with any weight yet.

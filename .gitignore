@@ -102,3 +102,28 @@ cyclops/_results/*.txt
 # === HF token (read) — local only ===
 telonex/.hf_token
 .hf_token
+
+# === Ladder sim 2026-08 — heavy re-pullable data (keep scripts + small tables) ===
+strategy_lab/ladder_sim_2026_08_21/round*_window_trades.json
+strategy_lab/ladder_sim_2026_08_21/*.csv.gz
+strategy_lab/ladder_sim_2026_08_21/sim_results.json
+strategy_lab/ladder_sim_2026_08_21/win_disp.json
+strategy_lab/ladder_sim_2026_08_21/vol_features.json
+strategy_lab/ladder_sim_2026_08_21/btc_1m_2wk.csv
+strategy_lab/ladder_sim_2026_08_21/btc5m_resolutions_2wk.csv
+strategy_lab/ladder_sim_2026_08_21/btc15m_resolutions_2wk.csv
+
+# === Wallet decode 2026-08-18 — heavy data (keep scripts) ===
+strategy_lab/wallet_hunt/_decode_2026_08_18/*.parquet
+strategy_lab/wallet_hunt/_decode_2026_08_18/*.pkl
+strategy_lab/wallet_hunt/_decode_2026_08_18/recent_*.json
+strategy_lab/wallet_hunt/_decode_2026_08_18/*.csv.gz
+strategy_lab/wallet_hunt/_decode_2026_08_18/*.log
+
+# === Stray logs / cached inputs ===
+/err*.log
+/ladder_err.log
+/scalp_err.log
+/sumpair_err.log
+strategy_lab/wallet_hunt/*.log
+strategy_lab/wallet_hunt/_klines_1m_jul25_aug13.csv

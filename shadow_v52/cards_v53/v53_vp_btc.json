@@ -1,0 +1,48 @@
+{
+  "card_id": "v53_vp_btc",
+  "fleet": "V53",
+  "name": "VP_BTC",
+  "arm": "OBSERVE",
+  "coin": "BTC",
+  "tf": "4h",
+  "venue": "Hyperliquid perp",
+  "mode": "PAPER (shadow, $0 real)",
+  "family": "rotation (volume profile)",
+  "signal": "volume_profile_rot(win=60, n_bins=15)",
+  "gate": "ATR_NOTOPVOL (ATR(14) 500-bar pct-rank < 0.80)",
+  "exit": "EXIT_4H static: tp 10 ATR / sl 2 ATR / trail 6 ATR / max_hold 60 bars. Kept after a 62-variant grid: incumbent ranked 7/62 on the untouched window and no variant beat it in both windows; marginals show tighter stops are better, so the ~70% stop-out rate is the intended positive-skew design.",
+  "family_validation": {
+    "untouched_window": "pre-2024-03 Binance 4h, 10 coins",
+    "n": 1914,
+    "mean_ret_pct": 0.501,
+    "t": 3.93,
+    "breadth": "10/10 coins positive",
+    "ex_top2_usd": 159319,
+    "bonferroni": "PASSES on the untouched window",
+    "sequential": [
+      "2017-22 +0.759 (t=4.27)",
+      "2022-24 +0.186 (t=1.03)",
+      "2024-25 +0.375 (t=1.30)",
+      "2025-26 +0.342 (t=1.48)",
+      "2026-04->now -1.091 (t=-3.38)"
+    ]
+  },
+  "arm_rationale": "Passed the untouched window but has decayed monotonically and is now SIGNIFICANTLY NEGATIVE (t=-3.38, n=161, only 2/10 coins positive). Logged at $0 to detect a recovery; never sized.",
+  "state": "OPEN",
+  "open_position": {
+    "direction": "SHORT",
+    "entry_ts": "2026-08-24T00:00:00+00:00",
+    "entry_price": 77805.0,
+    "bars_held": 3,
+    "unreal_pct": -0.603,
+    "unreal_usd": -1.51
+  },
+  "pending_fire": null,
+  "live_shadow": {
+    "n_closed": 23,
+    "mean_ret_pct": -1.979,
+    "win_rate_pct": 8.7,
+    "paper_pnl_usd": -113.8
+  },
+  "built_at": "2026-08-24T13:05:30.644484+00:00"
+}

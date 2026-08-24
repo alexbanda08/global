@@ -28,7 +28,11 @@ KLINE_DIR.mkdir(parents=True, exist_ok=True)
 FUNDING_DIR.mkdir(parents=True, exist_ok=True)
 
 API_URL = "https://api.hyperliquid.xyz/info"
-COINS = ["BTC", "ETH", "AVAX", "SOL", "LINK"]
+# 10-coin universe. The first five are the original V52 sleeve coins; ADA/BNB/DOGE/
+# XRP/SUI were added 2026-07-27 for the V53 breadth portfolio (see
+# hl_research_2026_05_26/retest_2026_07_27/ — the STF and VP families validated
+# across all ten, and breadth is what makes the fleet verifiable in finite time).
+COINS = ["BTC", "ETH", "AVAX", "SOL", "LINK", "ADA", "BNB", "DOGE", "XRP", "SUI"]
 
 # 4h bars in ms; HL uses standard intervals: 1m,5m,15m,1h,4h,1d
 INTERVAL = "4h"
